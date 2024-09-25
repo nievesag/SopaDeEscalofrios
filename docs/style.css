@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: bisque;
+}
+
+header {
+    background-color: antiquewhite;
+    color: black;
+    padding: 20px;
+    text-align: center;
+}
+
+h1{
+
+}
+
+nav{
+
+}
+
+nav ul {
+
+}
+
+nav ul li {
+
+}
+
+section{
+
+}
+
+footer {
+    background-color: antiquewhite;
+    color: blanchedalmond;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer img{
+    
+}
