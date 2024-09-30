@@ -2,7 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: bisque;
+    background-color: bisque; 
+    
+    /* background-image: url('images/bgProvisional.jpg');  Reemplaza con tu URL de imagen */
+    background-size: cover; /* La imagen cubre toda la pantalla */
+    background-repeat: no-repeat; /* No se repite la imagen */
+    background-position: center; /* Centra la imagen */ 
+
 }
 
 header {
@@ -12,25 +18,69 @@ header {
     text-align: center;
 }
 
-h1{
+nav {
+    background-color: #333;
+    padding: 1rem;
+  }
 
+  
+nav button {
+background-color: #444;
+color: white;
+border: none;
+padding: 10px 20px;
+cursor: pointer;
+margin: 0 10px;
+border-radius: 5px;
 }
 
-nav{
-
+nav button:hover {
+background-color: #666;
 }
 
-nav ul {
-
+.tab-content {
+display: none;
+padding: 20px;
+margin-left: 50px;
 }
 
-nav ul li {
-
+.active {
+display: block;
 }
 
-section{
-
+img {
+max-width: 100%;
+height: auto;
 }
+
+ul {
+    list-style-type: none; /* Elimina los puntos de la lista */
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+    display: flex; /* Permite alinear los elementos en línea */
+    align-items: center; /* Alinea verticalmente al centro */
+  }
+  
+  li img {
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+    width: 30px; /* Tamaño del ícono */
+    height: 30px; /* Tamaño del ícono */
+  }
+  
+  li a {
+    font-size: 16px; /* Tamaño del texto (ajusta según sea necesario) */
+    color: #333; /* Color del texto (ajusta según sea necesario) */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+  }
+  
+  li a:hover {
+    text-decoration: underline; /* Añade subrayado en el hover */
+  }
+
+
 
 footer {
     background-color: antiquewhite;
@@ -40,8 +90,6 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    margin-top: 20px;
 }
 
-footer img{
-    
-}
