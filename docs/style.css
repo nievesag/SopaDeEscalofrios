@@ -18,6 +18,26 @@ header {
     text-align: center;
 }
 
+.cuadro {
+	display: block;
+	position: relative;
+	background-color: #869f35;
+	color: #fff;
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 10px;
+	padding: 5px;
+	text-align: center;
+	border-radius: 30px;
+	background-image: url('cuadro.png');
+}
+
+h2 {
+	text-align: center;
+	color: white;
+	font-size: 40px;
+}
+
 nav {
     background-color: #333;
     padding: 1rem;
@@ -49,9 +69,16 @@ display: block;
 }
 
 img {
-max-width: 100%;
-height: auto;
+  width: auto;
+	height: auto;
+	position: relative;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	margin: 30px auto 0;
 }
+
+
 
 ul {
     list-style-type: none; /* Elimina los puntos de la lista */
@@ -84,9 +111,9 @@ ul {
 
 footer {
     background-color: antiquewhite;
-    color: blanchedalmond;
+    color: rgb(197, 132, 35);
     text-align: center;
-    padding: 20px;
+    padding: 0px;
     position: fixed;
     bottom: 0;
     width: 100%;
