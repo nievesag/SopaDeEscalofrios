@@ -4,10 +4,10 @@ body {
     padding: 0;
     background-color: bisque; 
     
-    /* background-image: url('images/bgProvisional.jpg');  Reemplaza con tu URL de imagen */
+    background-image: url('images/bgProvisional.jpg'); /* Reemplaza con tu URL de imagen */
     background-size: cover; /* La imagen cubre toda la pantalla */
     background-repeat: no-repeat; /* No se repite la imagen */
-    background-position: center; /* Centra la imagen */ 
+    background-position: top; /* Centra la imagen */ 
 
 }
 
