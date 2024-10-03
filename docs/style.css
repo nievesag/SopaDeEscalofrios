@@ -1,71 +1,72 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: bisque; 
-    
-    background-image: url('images/bgProvisional.jpg'); /* Reemplaza con tu URL de imagen */
-    background-size: cover; /* La imagen cubre toda la pantalla */
-    background-repeat: no-repeat; /* No se repite la imagen */
-    background-position: top; /* Centra la imagen */ 
-
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: bisque; 
+  background-image: url('images/bgProvisional.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
-header {
-    background-color: antiquewhite;
-    color: black;
-    padding: 20px;
-    text-align: center;
+.titulo {
+  text-align: center;
+  padding: 20px;
 }
 
-.cuadro {
-	display: block;
-	position: relative;
-	background-color: #869f35;
-	color: #fff;
-	margin-left: 100px;
-	margin-right: 100px;
-	margin-top: 10px;
-	padding: 5px;
-	text-align: center;
-	border-radius: 30px;
-	background-image: url('cuadro.png');
+.titulo h1 {
+  font-size: 3rem; /* Título grande */
+  color: white;
+  text-shadow: 2px 2px 5px #000;
+  margin: 0;
 }
 
-h2 {
-	text-align: center;
-	color: white;
-	font-size: 40px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 250px);
+  position: relative;
+  gap: 20px; /* Distancia entre las flechas y el rectángulo */
 }
 
-nav {
-    background-color: #333;
-    padding: 1rem;
-  }
-
-  
-nav button {
-background-color: #444;
-color: white;
-border: none;
-padding: 10px 20px;
-cursor: pointer;
-margin: 0 10px;
-border-radius: 5px;
+.content-wrapper {
+  position: relative; 
 }
 
-nav button:hover {
-background-color: #666;
+.rectangulo {
+  width: 1080px; 
+  height: 600px; 
+  background-color: #869f35;
+  padding: 20px;
+  border-radius: 30px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
-.tab-content {
-display: none;
-padding: 20px;
-margin-left: 50px;
+.arrow {
+  font-size: 40px;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+  padding: 15px;
+  background-color: #b67940; 
+  border-radius: 30%; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+  transition: background-color 0.3s ease;
+  position: absolute; 
 }
 
-.active {
-display: block;
+.left {
+  left: 300px; 
+}
+
+.right {
+  right: 300px;
+}
+
+.arrow:hover {
+  background-color: #b8482d; 
 }
 
 img {
@@ -78,45 +79,51 @@ img {
 	margin: 30px auto 0;
 }
 
-
-
-ul {
-    list-style-type: none; /* Elimina los puntos de la lista */
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-    display: flex; /* Permite alinear los elementos en línea */
-    align-items: center; /* Alinea verticalmente al centro */
-  }
-  
-  li img {
-    margin-right: 10px; /* Espacio entre la imagen y el texto */
-    width: 30px; /* Tamaño del ícono */
-    height: 30px; /* Tamaño del ícono */
-  }
-  
-  li a {
-    font-size: 16px; /* Tamaño del texto (ajusta según sea necesario) */
-    color: #333; /* Color del texto (ajusta según sea necesario) */
-    text-decoration: none; /* Elimina el subrayado del enlace */
-  }
-  
-  li a:hover {
-    text-decoration: underline; /* Añade subrayado en el hover */
-  }
-
-
-
-footer {
-    background-color: antiquewhite;
-    color: rgb(197, 132, 35);
-    text-align: center;
-    padding: 0px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    margin-top: 20px;
+.social-links {
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
 }
 
+.social-item {
+  display: flex; 
+  align-items: center; 
+  margin: 10px 0; 
+}
+
+.social-icon {
+  width: 30px; 
+  height: auto; 
+  margin-right: 10px;
+  margin-top: 0px;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+}
+
+.active {
+  display: block;
+}
+
+footer {
+  background-color: antiquewhite;
+  color: rgb(197, 132, 35);
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.tooltip {
+  display: none; /* Oculto por defecto */
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 100; /* Asegúrate de que esté por encima de otros elementos */
+}
