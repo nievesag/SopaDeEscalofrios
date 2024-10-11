@@ -10,7 +10,7 @@ let config = {
   width: 1280,              
   height: 720,            
   type: Phaser.AUTO,      
-  parent: 'juego',
+  parent: 'Juego',
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER, 
@@ -21,13 +21,13 @@ let config = {
   },
   
   scene: [MainMenu],
-  physics: {
-    default: 'arcade', 
-    arcade: {
-      gravity: { y : 500 }, 
-      debug: false,
-    }
-  },
+  // physics: {
+  //   default: 'arcade', 
+  //   arcade: {
+  //     gravity: { y : 500 }, 
+  //     debug: false,
+  //   }
+  // },
   title: "Introito",
   version: "1.0.0"
 }
