@@ -6,18 +6,18 @@ import MainMenu from './scenes/MainMenu.js';
  * Doc: https://photonstorm.github.io/phaser3-docs/Phaser.Types.Core.html#.GameConfig
  */
 
-let config = {
-  width: 1280,              
-  height: 720,            
+let config = {     
+  parent: 'Juego',  
   type: Phaser.AUTO,      
-  parent: 'Juego',
+
   scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER, 
-    max: {
-          width: 1280,
-          height: 720
+      autoCenter: Phaser.Scale.CENTER_HORIZONTALLY, 
+      mode: Phaser.Scale.FIT,  
+      max: {
+        width: 1000,   
+        height: 550, 
       }
+     
   },
   
   scene: [MainMenu],
