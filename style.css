@@ -120,12 +120,12 @@ footer {
 }
 
 .tooltip {
-  display: none; /* Oculto por defecto */
+  display: none; 
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
-  z-index: 100; /* Asegúrate de que esté por encima de otros elementos */
+  z-index: 100; 
 }
