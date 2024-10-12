@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: bisque; 
-  background-image: url('images/bgProvisional.jpg');
+  /*background-image: url('/assets/images/bgProvisional.jpg'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -27,7 +27,7 @@ body {
   align-items: center;
   height: calc(100vh - 250px);
   position: relative;
-  gap: 20px; /* Distancia entre las flechas y el rectángulo */
+  /* Distancia entre las flechas y el rectángulo */
 }
 
 .content-wrapper {
@@ -35,14 +35,17 @@ body {
 }
 
 .rectangulo {
-  width: 1080px; 
-  height: 600px; 
+  width: 60vw; /* 60% del ancho de la ventana */
+  height: calc(60vw * 9 / 16); /* Mantiene la relación de aspecto 16:9 */
+  max-width: 1080px; /* Máximo ancho para pantallas grandes */
+  max-height: 600px; /* Máxima altura para pantallas grandes */
   background-color: #869f35;
   padding: 20px;
   border-radius: 30px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
+
 
 .arrow {
   font-size: 40px;
@@ -54,40 +57,18 @@ body {
   border-radius: 30%; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
   transition: background-color 0.3s ease;
-  position: absolute; 
-  top: 50%;
-  transform: translateY(-50%); 
 }
 
 .left {
-  left: 300px;
+  margin-right: 10px; /* Espacio entre la flecha izquierda y el rectángulo */
 }
 
 .right {
-  right: 300px; 
+  margin-left: 10px; /* Espacio entre la flecha derecha y el rectángulo */
 }
 
 .arrow:hover {
   background-color: #b8482d; 
-}
-
-@media screen and (max-width: 1800px) {
-  .rectangulo {
-    width: 90vw; /* Cambia el ancho del rectángulo a 90% del viewport para pantallas más pequeñas */
-  }
-
-  .arrow {
-    font-size: 30px; /* Ajusta el tamaño de las flechas en pantallas más pequeñas */
-    padding: 10px;
-  }
-
-  .left {
-    left: -30px; /* Ajusta la posición de la flecha izquierda para pantallas más pequeñas */
-  }
-
-  .right {
-    right: -30px; /* Ajusta la posición de la flecha derecha para pantallas más pequeñas */
-  }
 }
 
 img {
