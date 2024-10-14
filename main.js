@@ -1,6 +1,7 @@
 let currentTab = 0; 
 const tabs = ["Juego", "Descripción del juego", "Sobre nosotros", "Nuestras redes"]; 
 
+//Enseña las flechas dependiendo de que pestaña se encuentra activa
 function updateArrows() {
     const leftArrow = document.querySelector('.left');
     const rightArrow = document.querySelector('.right');
@@ -17,6 +18,7 @@ function updateArrows() {
     }
 }
 
+//Funcion que se llama para enseñar pestaña
 function showTab(tabName) {
     tabs.forEach(tab => {
         document.getElementById(tab).classList.remove('active');
@@ -29,6 +31,7 @@ function showTab(tabName) {
     updateArrows();
     hideTooltip(); 
 }
+
 
 function nextTab() {
     if (currentTab < tabs.length - 1) {
@@ -44,33 +47,34 @@ function prevTab() {
     }
 }
 
-function showTooltip(text, x, y) {
-    const tooltip = document.getElementById('tooltip');
-    tooltip.innerText = text;
-    tooltip.style.display = 'block';
-    tooltip.style.left = `${x}px`;
-    tooltip.style.top = `${y}px`;
+//Metodo q muestra la ventanita con el texto si pones el raton encima de la flecha
+function showVentanita(text, x, y) {
+    const vent = document.getElementById('ventanita');
+    vent.innerText = text;
+    vent.style.display = 'block';
+    vent.style.left = `${x}px`;
+    vent.style.top = `${y}px`;
 }
 
-function hideTooltip() {
-    const tooltip = document.getElementById('tooltip');
-    tooltip.style.display = 'none';
+function hideVentanita() {
+    const vent = document.getElementById('ventanita');
+    vent.style.display = 'none';
 }
 
-// Agregar eventos para las flechas
+//Eventos de las flechas
 const leftArrow = document.querySelector('.left');
 const rightArrow = document.querySelector('.right');
 
 leftArrow.addEventListener('mouseover', (e) => {
-    showTooltip(tabs[currentTab - 1], e.clientX + 10, e.clientY);
+    showVentanita(tabs[currentTab - 1], e.clientX + 10, e.clientY);
 });
-leftArrow.addEventListener('mouseout', hideTooltip);
-leftArrow.addEventListener('click', hideTooltip); 
+leftArrow.addEventListener('mouseout', hideVentanita);
+leftArrow.addEventListener('click', hideVentanita); 
 
 rightArrow.addEventListener('mouseover', (e) => {
-    showTooltip(tabs[currentTab + 1], e.clientX + 10, e.clientY);
+    showVentanita(tabs[currentTab + 1], e.clientX + 10, e.clientY);
 });
-rightArrow.addEventListener('mouseout', hideTooltip);
-rightArrow.addEventListener('click', hideTooltip);
+rightArrow.addEventListener('mouseout', hideVentanita);
+rightArrow.addEventListener('click', hideVentanita);
 
 showTab(tabs[currentTab]);
