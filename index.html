@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/icon500.jpg" type="./assets/image/png">
+    <link rel="icon" href="/assets/images/icon500.jpg" type="./assets/image/png">
     <title>Introito Antiapotropaico</title>
 	<script src="./src/lib/phaser.js"></script> 
 </head>
@@ -17,6 +17,8 @@
 
     <!-- Contenedor principal con flechas -->
     <div class="container">
+
+        <div class="arrow left" onclick="prevTab()">&#9664;</div>     
     
         <div class="content-wrapper"> 
 
@@ -92,7 +94,7 @@
         </div>
       </div>
 
-        <div class="arrow left" onclick="prevTab()">&#9664;</div>      
+        
         <div class="arrow right" onclick="nextTab()">&#9654;</div>
     </div>
 
@@ -102,8 +104,7 @@
         </div>
     </footer>
 
-    <!-- Tooltip para mostrar el nombre de la pestaña -->
-    <div class="tooltip" id="tooltip"></div>
+    <div class="ventanita" id="ventanita"></div>
 
     <script src="main.js"></script>
 

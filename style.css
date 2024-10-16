@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: bisque; 
-  background-image: url('images/bgProvisional.jpg');
+  /*background-image: url('/assets/images/bgProvisional.jpg'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -15,7 +15,7 @@ body {
 }
 
 .titulo h1 {
-  font-size: 3rem; /* Título grande */
+  font-size: 3rem; 
   color: white;
   text-shadow: 2px 2px 5px #000;
   margin: 0;
@@ -27,7 +27,7 @@ body {
   align-items: center;
   height: calc(100vh - 250px);
   position: relative;
-  gap: 20px; /* Distancia entre las flechas y el rectángulo */
+
 }
 
 .content-wrapper {
@@ -35,14 +35,17 @@ body {
 }
 
 .rectangulo {
-  width: 1080px; 
-  height: 600px; 
+  width: 60vw; 
+  height: calc(60vw * 9 / 16); 
+  max-width: 1080px; 
+  max-height: 600px; 
   background-color: #869f35;
   padding: 20px;
   border-radius: 30px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
+
 
 .arrow {
   font-size: 40px;
@@ -54,40 +57,18 @@ body {
   border-radius: 30%; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
   transition: background-color 0.3s ease;
-  position: absolute; 
-  top: 50%;
-  transform: translateY(-50%); 
 }
 
 .left {
-  left: 300px;
+  margin-right: 10px; /* Espacio entre la flecha izquierda y el rectángulo */
 }
 
 .right {
-  right: 300px; 
+  margin-left: 10px; /* Espacio entre la flecha derecha y el rectángulo */
 }
 
 .arrow:hover {
   background-color: #b8482d; 
-}
-
-@media screen and (max-width: 1800px) {
-  .rectangulo {
-    width: 90vw; /* Cambia el ancho del rectángulo a 90% del viewport para pantallas más pequeñas */
-  }
-
-  .arrow {
-    font-size: 30px; /* Ajusta el tamaño de las flechas en pantallas más pequeñas */
-    padding: 10px;
-  }
-
-  .left {
-    left: -30px; /* Ajusta la posición de la flecha izquierda para pantallas más pequeñas */
-  }
-
-  .right {
-    right: -30px; /* Ajusta la posición de la flecha derecha para pantallas más pequeñas */
-  }
 }
 
 img {
@@ -138,13 +119,13 @@ footer {
   width: 100%;
 }
 
-.tooltip {
-  display: none; /* Oculto por defecto */
+.ventanita {
+  display: none; 
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
-  z-index: 100; /* Asegúrate de que esté por encima de otros elementos */
+  z-index: 100; 
 }
