@@ -8,6 +8,8 @@ export default class MainMenu extends Phaser.Scene {
 	}
 
 	create (){
+		this.add.image(500, 250, 'bgProvisional');
 
+		this.crateButton();
 	}
   }

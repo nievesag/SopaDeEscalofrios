@@ -31,13 +31,13 @@ let config = {
   },
   
   scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, Final],
-  // physics: {
-  //   default: 'arcade', 
-  //   arcade: {
-  //     gravity: { y : 500 }, 
-  //     debug: false,
-  //   }
-  // },
+  physics: {
+    default: 'arcade', 
+    arcade: {
+      gravity: { y : 500 }, 
+      debug: false,
+    }
+  },
   title: "Introito",
   version: "1.0.0"
 }

@@ -1,6 +1,6 @@
 export default class GameSelectorMenu extends Phaser.Scene {
     constructor() {
-        super({ key: 'Game4'});
+        super({ key: 'GameSelectorMenu'});
     }
     
     preload () {
