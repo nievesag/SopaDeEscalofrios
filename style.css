@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'babelgam';
+  src: url('../assets/fonts/babelgam.ttf') format('truetype');
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
