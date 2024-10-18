@@ -1,4 +1,13 @@
 import MainMenu from './scenes/MainMenu.js';
+import Boot from './scenes/Boot.js';
+import GameSelectorMenu from './scenes/GameSelectorMenu.js';
+import Game1 from './scenes/Game1.js';
+import Game2 from './scenes/Game2.js';
+import Game3 from './scenes/Game3.js';
+import Game4 from './scenes/Game4.js';
+import Game5 from './scenes/Game5.js';
+
+import Final from './scenes/Final.js';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -11,7 +20,8 @@ let config = {
   type: Phaser.AUTO,      
 
   scale: {
-      autoCenter: Phaser.Scale.CENTER_HORIZONTALLY, 
+      autoCenter: Phaser.Scale.CENTER_BOTH,
+     
       mode: Phaser.Scale.FIT,  
       max: {
         width: 1000,   
@@ -20,14 +30,14 @@ let config = {
      
   },
   
-  scene: [MainMenu],
-  // physics: {
-  //   default: 'arcade', 
-  //   arcade: {
-  //     gravity: { y : 500 }, 
-  //     debug: false,
-  //   }
-  // },
+  scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, Final],
+  physics: {
+    default: 'arcade', 
+    arcade: {
+      gravity: { y : 500 }, 
+      debug: false,
+    }
+  },
   title: "Introito",
   version: "1.0.0"
 }

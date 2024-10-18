@@ -9,8 +9,7 @@ export default class MainMenu extends Phaser.Scene {
 		this.load.audio("f3ale", "./assets/images/f3ale.mp3");
 	}
 
-	create (){
-		this.add.image(0, 0, "mainMenu").setOrigin(0);
-
+	create () {
+		this.crateButton();
 	}
   }

@@ -7,6 +7,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
+  
 }
 
 .titulo {
@@ -27,6 +28,9 @@ body {
   align-items: center;
   height: calc(100vh - 250px);
   position: relative;
+  margin-top: auto;
+  margin-left: auto;
+
 
 }
 
@@ -44,6 +48,8 @@ body {
   border-radius: 30px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+  font-size: 1vw;
+
 }
 
 
@@ -102,11 +108,13 @@ img {
 
 .tab-content {
   display: none;
-  padding: 20px;
+
 }
 
 .active {
   display: block;
+  align-items: center;
+
 }
 
 footer {
