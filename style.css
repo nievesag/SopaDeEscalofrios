@@ -27,6 +27,8 @@ body {
   align-items: center;
   height: calc(100vh - 250px);
   position: relative;
+  margin-top: auto;
+  margin-left: auto;
 
 }
 
@@ -102,7 +104,7 @@ img {
 
 .tab-content {
   display: none;
-  padding: 20px;
+
 }
 
 .active {

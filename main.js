@@ -7,14 +7,14 @@ function updateArrows() {
     const rightArrow = document.querySelector('.right');
 
     if (currentTab === 0) {
-        leftArrow.style.display = "none"; 
-        rightArrow.style.display = "block"; 
+        leftArrow.style.visibility = "hidden"; 
+        rightArrow.style.visibility = "visible"; 
     } else if (currentTab === tabs.length - 1) {
-        rightArrow.style.display = "none"; 
-        leftArrow.style.display = "block"; 
+        rightArrow.style.visibility = "hidden"; 
+        leftArrow.style.visibility = "visible"; 
     } else {
-        leftArrow.style.display = "block"; 
-        rightArrow.style.display = "block";
+        leftArrow.style.visibility = "visible"; 
+        rightArrow.style.visibility = "visible";
     }
 }
 
@@ -29,7 +29,7 @@ function showTab(tabName) {
     currentTab = tabs.indexOf(tabName);
 
     updateArrows();
-    hideTooltip(); 
+ 
 }
 
 
