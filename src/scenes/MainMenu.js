@@ -16,7 +16,7 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 150,
             'Introito Antiapotropaico\no cómo contactar con los dioses para propósitos malignos\npor mandato de la faraona suprema',
             {
-                fontFamily: 'Arabico',
+                fontFamily: 'arabic',
                 fontSize: 40,
                 color: 'Blue'
             }
@@ -39,7 +39,7 @@ export default class MainMenu extends Phaser.Scene {
             yOffset + this.cameras.main.centerY,
             text,
             {
-                fontFamily: 'babelgam',
+                fontFamily: 'arabic',
                 fontSize: 30,
                 color: textColor
             }
@@ -47,7 +47,7 @@ export default class MainMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => {
-            this.scene.start("GameSelectorMenu", {nPlayers : unidades});
+            this.scene.start("Game3", {nPlayers : unidades});
         });
     }
 
