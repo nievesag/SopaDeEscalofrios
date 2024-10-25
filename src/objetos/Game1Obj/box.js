@@ -1,0 +1,29 @@
+export default class Box extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y, boxes) {
+        super(scene, x, y, 'box');
+        this.setScale(0.5,.5);
+
+        this.scene.physics.add.existing(this);
+
+        this.body.setColliderWorldBounds();
+        this.body.setBounce(2,2);
+
+        boxes.add(this);
+    }
+
+    preUpdate(t, dt) {
+        super.preUpdate(t, dt);
+
+		// En el motor arcade no hay rozamiento, lo simulamos ->
+		if(this.body.velocity.x > 5) {
+			this.body.velocity.x -= 5;
+		} 
+        else if(this.body.velocity.x < -5) {
+			this.body.velocity.x += 5;
+		}
+
+		if(this.body.velocity.x <= 5 && this.body.velocity.x > 0 || this.body.velocity.x >= -5 && this.body.velocity.x < 0) {
+			this.body.velocity.x = 0;
+		}
+    }
+}
