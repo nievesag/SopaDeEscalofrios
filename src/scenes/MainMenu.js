@@ -6,10 +6,49 @@ export default class MainMenu extends Phaser.Scene {
 	preload () {
 		
 	}
+	create() {
+        // Paramos el audio
+        this.sound.stopAll();
 
-	create (){
-		this.add.image(500, 250, 'bgProvisional');
+        // Texto del Título con borde de color aleatorio
+        let title = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY - 150,
+            'Introito Antiapotropaico\no cómo contactar con los dioses para propósitos malignos\npor mandato de la faraona suprema',
+            {
+                fontFamily: 'babelgam',
+                fontSize: 60,
+                color: 'Blue'
+            }
+        ).setOrigin(0.5, 0.5);
 
-		this.crateButton();
-	}
+        // Alineacion del texto
+        title.setAlign('center');
+
+        //Color del reborde de la letra y grosor.
+        title.setStroke('white', 8)
+
+        // Botones
+        this.createButton('JUGAR', 0, 1, 'white');
+        //this.createButton('2P Game', 50, 2, 'white');
+    }
+
+	createButton(text, yOffset, unidades, textColor) {
+        let button = this.add.text(
+            this.cameras.main.centerX,
+            yOffset + this.cameras.main.centerY,
+            text,
+            {
+                fontFamily: 'babelgam',
+                fontSize: 30,
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => {
+            this.scene.start("GameSelectorMenu", {nPlayers : unidades});
+        });
+    }
+
   }

@@ -6,7 +6,6 @@ import Game2 from './scenes/Game2.js';
 import Game3 from './scenes/Game3.js';
 import Game4 from './scenes/Game4.js';
 import Game5 from './scenes/Game5.js';
-
 import Final from './scenes/Final.js';
 
 /**
