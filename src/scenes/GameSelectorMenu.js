@@ -23,7 +23,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'babelgam',
+                fontFamily: 'aabic',
                 fontSize: fontsize,
                 color: textColor
             }

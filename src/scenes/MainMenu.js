@@ -16,7 +16,7 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 150,
             'Introito Antiapotropaico',
             {
-                fontFamily: 'babelgam',
+                fontFamily: 'acabic',
                 fontSize: 80,
                 color: 'Blue'
             }
@@ -27,7 +27,7 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 75,
             '(o como contactar con los dioses para propositos malignos\npor mandato de la faraona suprema)',
             {
-                fontFamily: 'babelgam',
+                fontFamily: 'acabic',
                 fontSize: 25,
                 color: 'White'
             }
@@ -51,7 +51,7 @@ export default class MainMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'babelgam',
+                fontFamily: 'acabic',
                 fontSize: 80,
                 color: textColor
             }
