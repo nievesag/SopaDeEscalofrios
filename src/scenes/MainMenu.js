@@ -16,8 +16,8 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 150,
             'Introito Antiapotropaico\no cómo contactar con los dioses para propósitos malignos\npor mandato de la faraona suprema',
             {
-                fontFamily: 'babelgam',
-                fontSize: 60,
+                fontFamily: 'Arabico',
+                fontSize: 40,
                 color: 'Blue'
             }
         ).setOrigin(0.5, 0.5);
