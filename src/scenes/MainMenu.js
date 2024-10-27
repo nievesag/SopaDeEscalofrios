@@ -16,8 +16,9 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 150,
             'Introito Antiapotropaico',
             {
-                fontFamily: 'acabic',
-                fontSize: 80,
+                fontFamily: 'arabic',
+                fontSize: 40,
+
                 color: 'Blue'
             }
         ).setOrigin(0.5, 0.5);
@@ -51,15 +52,18 @@ export default class MainMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'acabic',
-                fontSize: 80,
+                fontFamily: 'arabic',
+                fontSize: 30,
+
                 color: textColor
             }
         ).setOrigin(0.5, 0.5);
 
         button.setInteractive();
         button.on("pointerdown", () => {
+
             this.scene.start("GameSelectorMenu");
+
         });
     }
 

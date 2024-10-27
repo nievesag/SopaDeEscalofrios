@@ -18,5 +18,7 @@ export default class Game4 extends Phaser.Scene {
                 color: 'Blue'
             }
         ).setOrigin(0.5, 0.5);
+
+        //carpetAS
     }
     }

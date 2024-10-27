@@ -4,10 +4,19 @@ export default class Game3 extends Phaser.Scene {
     }
     
     preload () {
-        //https://www.1001freefonts.com/search.php?q=arabic&search.x=0&search.y=0
+        //Player (place holder)
+        this.load.image('cuadrado', '../assets/images/icon500.jpg');
     }
     
     create (){
-    
+        this.make.sprite({
+            x: 500,
+            y: 750, 
+            key: 'cuadrado',
+            scale : {
+                x: 0.25,
+                y: 0.25
+            },
+        })
     }
     }
