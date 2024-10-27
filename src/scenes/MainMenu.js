@@ -14,40 +14,56 @@ export default class MainMenu extends Phaser.Scene {
         let title = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY - 150,
-            'Introito Antiapotropaico\no cómo contactar con los dioses para propósitos malignos\npor mandato de la faraona suprema',
+            'Introito Antiapotropaico',
             {
                 fontFamily: 'arabic',
                 fontSize: 40,
+
                 color: 'Blue'
+            }
+        ).setOrigin(0.5, 0.5);
+
+		let title2 = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY - 75,
+            '(o como contactar con los dioses para propositos malignos\npor mandato de la faraona suprema)',
+            {
+                fontFamily: 'acabic',
+                fontSize: 25,
+                color: 'White'
             }
         ).setOrigin(0.5, 0.5);
 
         // Alineacion del texto
         title.setAlign('center');
+		title2.setAlign('center');
 
         //Color del reborde de la letra y grosor.
         title.setStroke('white', 8)
 
         // Botones
-        this.createButton('JUGAR', 0, 1, 'white');
+        this.createButton('JUGAR',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
         //this.createButton('2P Game', 50, 2, 'white');
     }
 
-	createButton(text, yOffset, unidades, textColor) {
+	createButton(text, x, y, textColor) {
         let button = this.add.text(
-            this.cameras.main.centerX,
-            yOffset + this.cameras.main.centerY,
+           x,
+           y,
             text,
             {
                 fontFamily: 'arabic',
                 fontSize: 30,
+
                 color: textColor
             }
         ).setOrigin(0.5, 0.5);
 
         button.setInteractive();
         button.on("pointerdown", () => {
-            this.scene.start("Game3", {nPlayers : unidades});
+
+            this.scene.start("GameSelectorMenu");
+
         });
     }
 
