@@ -18,5 +18,7 @@ export default class Game3 extends Phaser.Scene {
                 y: 0.25
             },
         })
+
+        this.pointer = this.scene.input.activePointer;
     }
     }
