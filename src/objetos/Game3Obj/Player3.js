@@ -14,6 +14,8 @@ class Player3 extends Phaser.GameObjects.Sprite
 
         this.pointer = this.scene.input.activePointer; //input por ratón
         //https://github.com/f0reil/Gorgo-Division/blob/main/src/characters/Player.js
+        //https://www.shooter-bubble.com/es-es/bubble-pirates/
+        //Se empieza con todos los colores, según se vayan eliminando de pantalla todos los esc de un color, ese color ya no aparece más.
     }
 
 
