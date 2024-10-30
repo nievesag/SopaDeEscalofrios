@@ -7,5 +7,10 @@ class Cannon extends Phaser.GameObjects.Sprite {
       let dir;
       let force;
       let h, w;
+
+      this.setScale(1,1);
+
+      // Añadimos el cañón a la escena.
+      this.scene.add.existing(this);
     }
   }
