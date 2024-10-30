@@ -14,6 +14,7 @@ export default class Game1 extends Phaser.Scene {
         let boxes = this.physics.add.group(); // grupo de fisicas para las cajas
 
         // ---- Objectos de escena ----
+        // instancias
         let playerG1 = new PlayerG1(this, 50, 50);
         let box1 = new Box(this, 200, 0, boxes);
         let box2 = new Box(this, 400, 0, boxes);
@@ -23,6 +24,7 @@ export default class Game1 extends Phaser.Scene {
         let scene = this; // referencia a la escena
 
         this.physics.add.collider(playerG1, boxes); // colisionan cajas y jugador
+        // this.physics.add.collider(playerG1, boxes); // colisionan cajas y jugador
 
         scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
 			// colision del player con una caja
