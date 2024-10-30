@@ -2,7 +2,7 @@
 export default class Time extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
-  constructor (scene, x, y, text, time)
+  constructor (scene, x, y)
   {
     super(scene, x, y, { key: "Beetle" });
 

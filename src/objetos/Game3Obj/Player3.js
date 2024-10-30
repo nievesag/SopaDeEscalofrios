@@ -2,7 +2,7 @@
 export default class Player3 extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
-  constructor (scene, x, y, dir, force, Beetle )
+  constructor (scene, x, y)
   {
     super(scene, x, y, { key: "Player3" });
 

@@ -1,3 +1,9 @@
+//Importamos los objetos en escena
+import Player3 from '../objetos/Game3Obj/Player3.js';
+import Beetle from '../objetos/Game3Obj/Beetle.js';
+import Matrix from '../objetos/Game3Obj/Matrix.js';
+import Time from '../objetos/Game3Obj/Time.js';
+
 export default class Game3 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game3'});
