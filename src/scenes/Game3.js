@@ -1,6 +1,17 @@
 export default class Game3 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game3'});
+
+        const COLOR = {
+            RED: 'RED',
+            ORANGE: 'ORANGE',
+            YELLOW: 'YELLOW',
+            GREEN: 'GREEN',
+            CIAN: 'CIAN',
+            BLUE: 'BLUE',
+            PURPLE: 'PURPLE',
+            BLACK: 'BLACK',
+        } //Se accede como color.RED...
     }
     
     preload () {
@@ -18,5 +29,7 @@ export default class Game3 extends Phaser.Scene {
                 y: 0.25
             },
         })
+
+        this.pointer = this.scene.input.activePointer;
     }
     }
