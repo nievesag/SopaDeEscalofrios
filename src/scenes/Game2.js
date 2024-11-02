@@ -10,9 +10,6 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('cannonBody', '../assets/images/cannonBody.jpg');
         this.load.image('cannonHead', '../assets/images/cannonHead.png');
 
-        // Bg.
-        this.load.image('background', '../assets/images/rionilo.jpg');
-
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
         //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
 
@@ -24,17 +21,11 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
 
     create (){
+        // Establece los límites del mundo y de la cámara.
+        this.physics.world.setBounds(0, 0, 3200, 600);
+        this.cameras.main.setBounds(0, 0, 3200, 600);
+
         this.createLandscape();
-        // BACKGROUND.
-        /*this.make.sprite({
-            x: 510,
-            y: 375, 
-            key: 'background',
-            scale : {
-                x: 0.9,
-                y: 1.1
-            },
-        })*/
 
         // --- CANNON ---.
         const cannonBody = this.make.image({ // Cannon Body.
@@ -62,6 +53,12 @@ export default class Game2 extends Phaser.Scene {
         // --- VESSEL ---. EN UN FUTURO SERÁ SPRITESHEET
         const vessel = this.physics.add.image(cannonBody.x, cannonBody.y - 50, 'vessel').setScale(0.2); // Añade la vasija en la pos del cañón.
         vessel.disableBody(true, true); // Desactiva la vessel para que no colisione ni se vea todavía.
+        
+        // La cámara sigue al vessel.
+        this.cameras.main.startFollow(vessel, false, 0.2, 0.2); 
+
+        vessel.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
+        vessel.setDrag(100); // Fricción con el suelo.               
 
         // Dibuja la línea de la dir.
         const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
@@ -86,6 +83,7 @@ export default class Game2 extends Phaser.Scene {
                 vessel.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
                 //chick.play('fly'); // animación de vuelo del pollo.
                 this.physics.velocityFromRotation(angle, 600, vessel.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
+                
             });
 
 
@@ -96,11 +94,12 @@ export default class Game2 extends Phaser.Scene {
         //  Draw a random 'landscape'
         const landscape = this.add.graphics();
 
-        landscape.fillStyle(0x008800, 1);
-        landscape.lineStyle(2, 0x00ff00, 1);
+        landscape.fillStyle(0x008800, 1); // Color de relleno.
+        landscape.lineStyle(2, 0x00ff00, 1); // Color de línea.
 
         landscape.beginPath();
 
+        // Mínimo y máximo absolutos de cada pico.
         const maxY = 550;
         const minY = 400;
 
@@ -108,37 +107,43 @@ export default class Game2 extends Phaser.Scene {
         let y = maxY;
         let range = 0;
 
-        let up = true;
+        let up = true; // Para ver si sube o baja el pico. 
 
+        // Dibuja el inicio del terreno.
         landscape.moveTo(0, 600);
         landscape.lineTo(0, 550);
 
+        // Dibujar el paisaje.
         do
         {
-            //  How large is this 'side' of the mountain?
+            // Longitud de cada segmento.
             range = Phaser.Math.Between(20, 100);
 
-            if (up)
+            if (up) // Máximos.
             {
                 y = Phaser.Math.Between(y, minY);
                 up = false;
             }
-            else
+            else // Mínimos.
             {
                 y = Phaser.Math.Between(y, maxY);
                 up = true;
             }
 
+
+            // Traza el siguiente segmento.
             landscape.lineTo(x + range, y);
 
             x += range;
 
-        } while (x < 3100);
+        } while (x < 3100); // Repite hasta que llegue al borde derecho.
 
+        // Cierra el trazado a la derecha
         landscape.lineTo(3200, maxY);
         landscape.lineTo(3200, 600);
         landscape.closePath();
 
+        // Traza y rellena.
         landscape.strokePath();
         landscape.fillPath();
     }
