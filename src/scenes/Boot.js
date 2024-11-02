@@ -30,6 +30,9 @@ export default class Boot extends Phaser.Scene {
 
         //Game 5
 		this.load.audio("f3ale", "./assets/images/f3ale.mp3");
+
+        // La Vasija Entresija.
+        this.load.image('cannon', 'assets/images/cannon.png')
     }
     
     create()
