@@ -18,12 +18,19 @@ export default class Game2 extends Phaser.Scene {
         // Vessel.
         this.load.image('vessel', '../assets/images/vessel.png')
 
+        // River.
+        this.load.image('river', '../assets/images/rio.jpg')
+
         // Música.
         this.load.audio('theme', '../assets/audio/m2.mp3');
+
+        // Background.
+        this.load.image('background', 'assets/images/background.jpg');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
     // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
+    // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
 
     create (){
         // Música.
@@ -31,8 +38,14 @@ export default class Game2 extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
+        // Background y rio.
+        this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
+        this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
+
+    
         // Establece los límites del mundo y de la cámara.
-        this.physics.world.setBounds(0, 0, 3200, 600);
+        // x, y, width, height
+        this.physics.world.setBounds(0, 0, 3200, 700);
         this.cameras.main.setBounds(0, 0, 3200, 600);
 
         // Objetos.
@@ -57,6 +70,12 @@ export default class Game2 extends Phaser.Scene {
             });
 
 
+    }
+
+    update(){
+        // parallax scroller.
+        this.bg.tilePositionX += 2;
+        this.rio.tilePositionX -=6;
     }
 
     
