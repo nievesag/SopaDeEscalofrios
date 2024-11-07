@@ -17,13 +17,19 @@ export default class Game2 extends Phaser.Scene {
 
         // Vessel.
         this.load.image('vessel', '../assets/images/vessel.png')
+
+        // Música.
+        this.load.audio('theme', '../assets/audio/m2.mp3');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
     // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
 
     create (){
-        
+        // Música.
+        const music = this.sound.add('theme');
+        music.play();
+        this.sound.pauseOnBlur = true;
 
         // Establece los límites del mundo y de la cámara.
         this.physics.world.setBounds(0, 0, 3200, 600);
