@@ -30,11 +30,13 @@ export default class Game2 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 3200, 600);
 
         // Objetos.
+        this.background = new Background(this);
+        this.background.createLandscape();
         this.cannon = new Cannon(this);
         this.vessel = new Vessel(this, this.cannon);
-        this.background = new Background(this);
+        
 
-        this.background.createLandscape();
+        
 
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
