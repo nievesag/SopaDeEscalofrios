@@ -22,11 +22,18 @@ export default class Game3 extends Phaser.Scene {
     }
     
     preload () {
-        //Player (place holder)
+        //Player (place holder). Es el cañón de abajo
+        //Base del cañón 
         this.load.image('cuadrado', '../assets/images/icon500.jpg');
+        //Cañón per se
         this.load.image('cannonHead', '../assets/images/Burbujas.png');
-
-        // A lanzar
+        //Munición 
+        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
         this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
     }
     
@@ -50,7 +57,7 @@ export default class Game3 extends Phaser.Scene {
             y: 650, 
             angle: 90,
             key: 'cannonHead',
-            //flipY: true,
+            flipx: true,
             scale : {
                 x: 0.3,
                 y: 0.3,
@@ -58,14 +65,14 @@ export default class Game3 extends Phaser.Scene {
         }).setDepth(2);
 
         // --- VESSEL ---. EN UN FUTURO SERÁ SPRITESHEET
-        const shootingBeetle = this.physics.add.image(cannon.x, cannon.y - 50, 'shootingBeetle').setScale(1); // Añade la vasija en la pos del cañón.
-        shootingBeetle.disableBody(true, true); // Desactiva la vessel para que no colisione ni se vea todavía.
+        const shootingBeetle = this.physics.add.image(cannon.x, cannon.y - 50, 'shootingBeetle').setScale(1)
+        shootingBeetle.setImmovable(); 
+        //shootingBeetle.disableBody(true, true); // Desactiva la vessel para que no colisione ni se vea todavía.
         
-        shootingBeetle.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
-        //vessel.setDrag(100); // Fricción con el suelo.               
+        shootingBeetle.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.             
 
         // Dibuja la línea de la dir.
-        const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
+        const graphics = this.add.graphics({ lineStyle: { width: 5, color: 0x6714d8 , alpha: 0.5 } });
         const line = new Phaser.Geom.Line(); 
 
         let angle = 0; // Inicializa el ángulo a 0.
@@ -73,11 +80,16 @@ export default class Game3 extends Phaser.Scene {
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
             {
-                angle = Phaser.Math.Angle.BetweenPoints(cannon, pointer); // Ángulo cañón -> mouse.
-                cannonHead.rotation = angle + 30; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
+                angle = Phaser.Math.Angle.BetweenPoints(cannonHead, pointer); // Ángulo cañón -> mouse.
+                if (angle >= 170){ angle = 170;}
+                else if (angle <= 10) {angle = 10;}
+                else if (angle < 170 && angle > 10){
+                    angle = angle;
+                }
+                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse
 
                 // Línea gráfica de la dir.
-                Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle+0.15, 128); 
+                Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle, 128); 
                 graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
             });
 
@@ -86,10 +98,11 @@ export default class Game3 extends Phaser.Scene {
             {
                 shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
                 //chick.play('fly'); // animación de vuelo del pollo.
-                this.physics.velocityFromRotation(angle, 600, shootingBeetle.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
+                this.physics.velocityFromRotation(angle, 800, shootingBeetle.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
                 
             });
 
 
     }
 }
+            
