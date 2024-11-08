@@ -22,14 +22,13 @@ export default class Game3 extends Phaser.Scene {
     }
     
     preload () {
-        //Player (place holder). Es el cañón de abajo
-        //Base del cañón 
-        this.load.image('cuadrado', '../assets/images/icon500.jpg');
-        //Cañón per se
+
+        //Player (place holder)
+        this.load.image('cannonBase', '../assets/images/icon500.jpg');
         this.load.image('cannonHead', '../assets/images/Burbujas.png');
         //Munición 
         this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('Bicho', '../assets/images/BurbujaNaranja.png')
         this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
         this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
         this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
@@ -41,11 +40,29 @@ export default class Game3 extends Phaser.Scene {
 
     create (){
 
+        // --- BASE BG ---.
+        //const baseBG = this.add.rectangle(502, 385, 600, 760, 0xd0be49).setStrokeStyle(10, 0xffffff);
+
+        // --- BORDERS ---.
+        const borderLeft = this.add.rectangle(100, 385, 200, 775, 0xffffff);
+        const borderRight = this.add.rectangle(920, 385, 230, 775, 0xffffff);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff);
+        const borders = [borderLeft, borderRight, borderUp, borderDown];
+
+        for (let i = 0; i < borders.length; i++){
+            this.physics.world.enable(borders[i]);
+            borders[i].body.setImmovable(true); // El suelo no se moverá
+            borders[i].body.setAllowGravity(false); // No tendrá gravedad
+            console.log(borders[i]);
+        }
+
+
         // --- CANNON ---.
-        const cannon = this.make.image({ // Cannon Body.
+        const cannonBase = this.make.image({ // Cannon Base.
             x: 500,
-            y: 750, 
-            key: 'cuadrado',
+            y: 800, 
+            key: 'cannonBase',
             scale : {
                 x: 0.25,
                 y: 0.25
@@ -54,53 +71,84 @@ export default class Game3 extends Phaser.Scene {
 
         const cannonHead = this.make.image({ // Cannon Head.
             x: 500,
-            y: 650, 
+            y: 730, 
             angle: 90,
             key: 'cannonHead',
-            flipx: true,
+
             scale : {
                 x: 0.3,
                 y: 0.3,
             },
         }).setDepth(2);
 
-        // --- VESSEL ---. EN UN FUTURO SERÁ SPRITESHEET
-        const shootingBeetle = this.physics.add.image(cannon.x, cannon.y - 50, 'shootingBeetle').setScale(1)
-        shootingBeetle.setImmovable(); 
+        // --- SHOOTABLES ---. 
+        const shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, 'shootingBeetle').setScale(1); // Añade la vasija en la pos del cañón.
         //shootingBeetle.disableBody(true, true); // Desactiva la vessel para que no colisione ni se vea todavía.
-        
-        shootingBeetle.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.             
-
-        // Dibuja la línea de la dir.
-        const graphics = this.add.graphics({ lineStyle: { width: 5, color: 0x6714d8 , alpha: 0.5 } });
+        // Para que no se salga de los límites del mundo.
+        shootingBeetle.setBounce(1).setCollideWorldBounds(true);
+        // Dibuja la línea de la dir DE LANZAMIENTO
+        const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
         const line = new Phaser.Geom.Line(); 
 
         let angle = 0; // Inicializa el ángulo a 0.
 
+        // --- INPUT ---.
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
             {
-                angle = Phaser.Math.Angle.BetweenPoints(cannonHead, pointer); // Ángulo cañón -> mouse.
-                if (angle >= 170){ angle = 170;}
-                else if (angle <= 10) {angle = 10;}
-                else if (angle < 170 && angle > 10){
-                    angle = angle;
-                }
-                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse
+                angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
+                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
+
 
                 // Línea gráfica de la dir.
                 Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle, 128); 
                 graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
             });
 
-        // AL HACER CLIC.
+        // AL HACER CLIC. DISPARO
         this.input.on('pointerup', () =>
             {
                 shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
-                //chick.play('fly'); // animación de vuelo del pollo.
-                this.physics.velocityFromRotation(angle, 800, shootingBeetle.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
+
+                this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
+
                 
             });
+
+
+        // --- COLISIONES CON BORDERS ---.
+        this.physics.add.collider(borders, shootingBeetle);
+        
+        // --- GRID DE BICHOS ---.
+        const groupImpares = this.add.group({
+            key: 'Bicho',
+            frame: [ 0 ],
+            frameQuantity: 120,
+        });
+
+        Phaser.Actions.GridAlign(groupImpares.getChildren(), {
+            width: 12,
+            height: 5,
+            cellWidth: 50,
+            cellHeight: 100,
+            x: 205,
+            y: 20,
+        });
+
+        const groupPares = this.add.group({
+            key: 'shootingBeetle',
+            frame: [ 0 ],
+            frameQuantity: 110,
+        });
+
+        Phaser.Actions.GridAlign(groupPares.getChildren(), {
+            width: 11,
+            height: 5,
+            cellWidth: 50,
+            cellHeight: 100,
+            x: 230,
+            y: 70,
+        });
 
 
     }
