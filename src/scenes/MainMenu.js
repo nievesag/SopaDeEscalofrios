@@ -4,7 +4,8 @@ export default class MainMenu extends Phaser.Scene {
 	}
 
 	preload () {
-		
+		// Background.
+        this.load.image('backgroundMenu', '../assets/images/menuBackground.jpg');
 	}
 	create() {
         // Paramos el audio
@@ -17,29 +18,33 @@ export default class MainMenu extends Phaser.Scene {
             'Introito Antiapotropaico',
             {
                 fontFamily: 'arabic',
-                fontSize: 40,
+                fontSize: 100,
 
-                color: 'Blue'
+                color: '#dfa919',
+                stroke: '#453424',   
+                strokeThickness: 10
             }
         ).setOrigin(0.5, 0.5);
 
 		let title2 = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY - 75,
-            '(o como contactar con los dioses para propositos malignos\npor mandato de la faraona suprema)',
+            '(o Cómo contactar con los dioses para propositos malignos\npor mandato de la Faraona Suprema)',
             {
-                fontFamily: 'acabic',
+                fontFamily: 'arabic',
                 fontSize: 25,
-                color: 'White'
+                color: '#e3be5b'
             }
         ).setOrigin(0.5, 0.5);
 
-        // Alineacion del texto
-        title.setAlign('center');
-		title2.setAlign('center');
+        const bg = this.make.image({ // Background.
+            key: 'backgroundMenu',
+            
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
 
-        //Color del reborde de la letra y grosor.
-        title.setStroke('white', 8)
+        // Alineacion y profundidad del texto.
+        title.setAlign('center').setDepth(1);
+		title2.setAlign('center').setDepth(1);
 
         // Botones
         this.createButton('JUGAR',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
@@ -53,7 +58,7 @@ export default class MainMenu extends Phaser.Scene {
             text,
             {
                 fontFamily: 'arabic',
-                fontSize: 30,
+                fontSize: 50,
 
                 color: textColor
             }
