@@ -26,27 +26,26 @@ export default class Game1 extends Phaser.Scene {
 
         // ---- Objectos de escena ----
         // instancias
-        let playerG1 = new PlayerG1(this, 50, 50);
         // let box1 = new Box(this, 200, 0, boxes);
-       // let box2 = new Box(this, 400, 0, boxes);
+        // let box2 = new Box(this, 400, 0, boxes);
         
-        // this.playerG1 = this.physics.add.sprite(400, 300, 'player');
+        //this.playerG1 = this.physics.add.sprite(400, 300, 'player');
         // this.playerG1.setCollideWorldBounds(true);
         // this.playerG1.setPushable(false);
-
+        
         this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
-
+        
         this.cursors = this.input.keyboard.createCursorKeys();
-
-
+        
+        
         // -------- COSAS DEL TILESET --------
 		// Objeto tilemap
 		this.map = this.make.tilemap({
-			key: 'tilemap',
+            key: 'tilemap',
 			tileWidth: 32,
 			tileHeight: 32
 		});
-
+        
         //this.map.
         
 		// Objeto el tileset. 
@@ -58,18 +57,24 @@ export default class Game1 extends Phaser.Scene {
 		this.groundLayer = this.map.createLayer('Ground', tileset1);
         
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
-		this.wallLayer.setCollision(2); // Los tiles de esta capa tienen colisiones
+		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
 
+        let playerG1 = new PlayerG1(this, 50, 50, 'player');
+        
+        this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
+            
+        });
+        
 		// // Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
 		// let higado = this.map.createFromObjects('GameObjects', { name: "higado", key: 'higado' });
-
+        
 		// let organsGroup = this.add.group();
 		// coinsGroup.addMultiple(coins)
 		// coins.forEach(obj => {
 		// 	this.physics.add.existing(obj);
 		// });
 
-		playerG1 = this.map.createFromObjects('GameObjects', { name: 'spawn', classType: playerG1 });
+		playerG1 = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
 
 		/*
 		Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
