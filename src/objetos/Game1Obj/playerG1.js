@@ -1,6 +1,6 @@
 export default class PlayerG1 extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
-        super(secene, x, y, 'p');
+        super(scene, x, y, 'p');
         this.speed = 140;
         this.scene.add.existing(this);
 
@@ -69,10 +69,6 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 			this.body.setVelocityY(0);
 		}
 
-        // space -> agarra
-        if(his.spaceKey.isDown) {
-            this.grab();
-        }
 
         // deja space -> para de agarrar
         if(Phaser.Input.Keyboard.JustUp(this.spaceKey)) {
