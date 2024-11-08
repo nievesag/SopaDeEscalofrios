@@ -61,6 +61,11 @@ export default class Game1 extends Phaser.Scene {
             boxes.push(box);
         }
 
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.physics.add.collider(this.player, boxes, null, (player, box) => {
+            box.setPushable(true);
+        });
 
         // -------- COSAS DEL TILESET --------
 		// Objeto tilemap
@@ -122,7 +127,6 @@ export default class Game1 extends Phaser.Scene {
         let scene = this; // referencia a la escena
 
         this.physics.add.collider(playerG1, boxes); // colisionan cajas y jugador
-        // this.physics.add.collider(playerG1, boxes); // colisionan cajas y jugador
 
         scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
 			// colision del player con una caja
@@ -148,6 +152,28 @@ export default class Game1 extends Phaser.Scene {
         this.time += dt;
         if(this.time > this.maxTime.value*1000) {
             
+        }
+
+        // DEL PLAYER para la clase player y eso --------->
+
+        this.player.setVelocity(0, 0);
+
+        if (this.cursors.left.isDown)
+        {
+            this.player.setVelocityX(-200);
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.player.setVelocityX(200);
+        }
+
+        if (this.cursors.up.isDown)
+        {
+            this.player.setVelocityY(-200);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.player.setVelocityY(200);
         }
     }
 }
