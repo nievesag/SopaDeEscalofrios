@@ -60,26 +60,20 @@ export default class MainMenu extends Phaser.Scene {
         ).setOrigin(0.5, 0.5);
 
         button.setInteractive();
-        button.on("pointerdown", () => {
-
-            this.scene.start("Game4");
-
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
         });
 
-        button.on('pointerover', () =>
+        button.on('pointerover', () => // Al pasar el ratón por encima...
         {
-    
             button.setTint(0xdfa919);
-            button.fontSize = '70px';
-    
+            //button.fontSize = '70px';
         });
     
-        button.on('pointerout', () =>
+        button.on('pointerout', () => // Al quitar el ratón de encima...
         {
-    
             button.clearTint();
-            button.fontSize = '50px';
-    
+            //button.fontSize = '50px';
         });
     }
 
