@@ -39,7 +39,6 @@ export default class MainMenu extends Phaser.Scene {
 
         const bg = this.make.image({ // Background.
             key: 'backgroundMenu',
-            
         }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
 
         // Alineacion y profundidad del texto.
