@@ -4,13 +4,13 @@ export default class MainMenu extends Phaser.Scene {
 	}
 
 	preload () {
-		
+		// Background.
+        this.load.image('backgroundMenu', '../assets/images/menuBackground.jpg');
 	}
 	create() {
         // Paramos el audio
         this.sound.stopAll();
 
-        // color borde #453424
         // Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
@@ -37,9 +37,14 @@ export default class MainMenu extends Phaser.Scene {
             }
         ).setOrigin(0.5, 0.5);
 
-        // Alineacion del texto
-        title.setAlign('center');
-		title2.setAlign('center');
+        const bg = this.make.image({ // Background.
+            key: 'backgroundMenu',
+            
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+
+        // Alineacion y profundidad del texto.
+        title.setAlign('center').setDepth(1);
+		title2.setAlign('center').setDepth(1);
 
         // Botones
         this.createButton('JUGAR',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');

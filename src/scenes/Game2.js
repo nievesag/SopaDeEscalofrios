@@ -16,10 +16,10 @@ export default class Game2 extends Phaser.Scene {
         //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
 
         // Vessel.
-        this.load.image('vessel', '../assets/images/vessel.png')
+        this.load.image('vessel', '../assets/images/vessel.png');
 
         // River.
-        this.load.image('river', '../assets/images/rio.jpg')
+        this.load.image('river', '../assets/images/rio.jpg');
 
         // Música.
         this.load.audio('theme', '../assets/audio/m2.mp3');
