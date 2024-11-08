@@ -26,6 +26,9 @@ export default class Game2 extends Phaser.Scene {
 
         // Background.
         this.load.image('background', 'assets/images/background.jpg');
+
+        // Generador de obstáculos.
+        this.load.image('obstacleGenerator', 'assets/images/obstaclesGenerator.jpg')
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -42,6 +45,15 @@ export default class Game2 extends Phaser.Scene {
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
         this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
 
+
+        // Generador de obstáculos.
+        this.obstacleGen = this.make.image({
+            scale : {
+                x: 0.25,
+                y: 0.25
+            },
+            key: 'obstacleGenerator'
+        }).setDepth(2);
     
         // Establece los límites del mundo y de la cámara.
         // x, y, width, height
@@ -73,6 +85,10 @@ export default class Game2 extends Phaser.Scene {
         // parallax scroller.
         this.bg.tilePositionX += 2;
         this.rio.tilePositionX -=6;
+
+        // Mantiene al obstacle generator a la derecha de la pantalla.
+        this.obstacleGen.x = this.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
+        this.obstacleGen.y = this.cameras.main.centerY + 250
     }
 
     
