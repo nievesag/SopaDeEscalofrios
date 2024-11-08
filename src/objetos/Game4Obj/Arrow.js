@@ -6,6 +6,9 @@ export default class Arrow {
         this.arrow = this.scene.add.rectangle(x, y, 40, 10, 0xFFD700); // Flecha amarilla de 40x10
         this.arrow.setOrigin(0.5, 0.5);
 
+        this.velX;
+        this.velY;
+
         // Inicializar sin física activa
         this.scene.physics.world.enable(this.arrow);
         this.arrow.body.setAllowGravity(false);  // Desactivamos la gravedad temporalmente
@@ -13,10 +16,16 @@ export default class Arrow {
 
         // Detectar cuando la flecha toque el suelo
         this.arrow.body.onCollide = true;  // Habilitar la detección de colisiones
+
+
     }
 
     // Método para lanzar la flecha con una velocidad determinada
     launch(velocityX, velocityY) {
+
+        this.velX = velocityX;
+        this.velY = velocityY;
+
         // Activar la gravedad y permitir movimiento en el momento del lanzamiento
         this.arrow.body.setAllowGravity(true);
         this.arrow.body.setImmovable(false); 
@@ -26,7 +35,7 @@ export default class Arrow {
         this.arrow.body.setBounce(0.2);  
 
         // Ajustar la velocidad de la flecha
-        this.arrow.body.setVelocity(velocityX, velocityY);
+        this.arrow.body.setVelocity(this.velX, this.velY);
 
         // Rotar la flecha en la dirección del movimiento
         const angle = Phaser.Math.Angle.Between(0, 0, velocityX, velocityY);
@@ -35,6 +44,16 @@ export default class Arrow {
         // Desactivar la fricción al inicio del lanzamiento
         this.arrow.body.setDragX(0);
     }
+
+    getVelX(){
+        return this.velX;
+    }
+
+    getVelY() {
+        return this.velY;
+    }
+
+
 
     
 
