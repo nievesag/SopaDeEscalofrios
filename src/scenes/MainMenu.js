@@ -10,7 +10,6 @@ export default class MainMenu extends Phaser.Scene {
         // Paramos el audio
         this.sound.stopAll();
 
-        // color borde #453424
         // Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
@@ -18,28 +17,29 @@ export default class MainMenu extends Phaser.Scene {
             'Introito Antiapotropaico',
             {
                 fontFamily: 'arabic',
-                fontSize: 100,
+                fontSize: 40,
 
-                color: '#dfa919',
-                stroke: '#453424',   
-                strokeThickness: 10
+                color: 'Blue'
             }
         ).setOrigin(0.5, 0.5);
 
 		let title2 = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY - 75,
-            '(o Cómo contactar con los dioses para propositos malignos\npor mandato de la Faraona Suprema)',
+            '(o como contactar con los dioses para propositos malignos\npor mandato de la faraona suprema)',
             {
-                fontFamily: 'arabic',
+                fontFamily: 'acabic',
                 fontSize: 25,
-                color: '#e3be5b'
+                color: 'White'
             }
         ).setOrigin(0.5, 0.5);
 
         // Alineacion del texto
         title.setAlign('center');
 		title2.setAlign('center');
+
+        //Color del reborde de la letra y grosor.
+        title.setStroke('white', 8)
 
         // Botones
         this.createButton('JUGAR',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
@@ -53,7 +53,7 @@ export default class MainMenu extends Phaser.Scene {
             text,
             {
                 fontFamily: 'arabic',
-                fontSize: 50,
+                fontSize: 30,
 
                 color: textColor
             }
@@ -64,22 +64,6 @@ export default class MainMenu extends Phaser.Scene {
 
             this.scene.start("Game4");
 
-        });
-
-        button.on('pointerover', () =>
-        {
-    
-            button.setTint(0xdfa919);
-            button.fontSize = '70px';
-    
-        });
-    
-        button.on('pointerout', () =>
-        {
-    
-            button.clearTint();
-            button.fontSize = '50px';
-    
         });
     }
 
