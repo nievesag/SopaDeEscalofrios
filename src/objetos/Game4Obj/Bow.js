@@ -13,7 +13,7 @@ export default class Bow {
         this.band = this.scene.add.line(0, 0, 0, 0, 0, 0, 0x000000, 1).setOrigin(0);
 
         // Crear la flecha como el proyectil
-        this.projectile = new BallArrow(this.scene, x, y); // O BallArrow dependiendo del tipo de flecha
+        this.projectile = new SplitArrow(this.scene, x, y); // O BallArrow dependiendo del tipo de flecha
         
         // Posicionar la flecha sobre el arco
         this.projectile.arrow.setPosition(this.origin.x, this.origin.y); // Posición inicial sobre el arco

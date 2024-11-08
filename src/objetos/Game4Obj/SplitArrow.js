@@ -32,6 +32,6 @@ export default class SplitArrow extends Arrow {
         arrow3.launch(velocityX3, velocityY3);
 
         // Destruir la flecha original
-        this.arrow.setVisible(false);
+        this.arrow.destroy();
     }
 }
