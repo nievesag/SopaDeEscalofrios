@@ -27,13 +27,14 @@ export default class Game3 extends Phaser.Scene {
         this.load.image('cannonBase', '../assets/images/icon500.jpg');
         this.load.image('cannonHead', '../assets/images/Burbujas.png');
         //Munición 
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('Bicho', '../assets/images/BurbujaNaranja.png')
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('shootingBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('RedBeetle', '../assets/images/BurbujaRoja.png')
+        this.load.image('OrangeBeetle', '../assets/images/BurbujaNaranja.png')
+        this.load.image('YellowBeetle', '../assets/images/BurbujaAmarilla.png')
+        this.load.image('GreenBeetle', '../assets/images/BurbujaVerde.png')
+        this.load.image('CianBeetle', '../assets/images/BurbujaCian.png')
+        this.load.image('BlueBeetle', '../assets/images/BurbujaAzul.png')
+        this.load.image('PurpleBeetle', '../assets/images/BurbujaMorada.png')
+        this.load.spritesheet('beetles', '../assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -44,8 +45,8 @@ export default class Game3 extends Phaser.Scene {
         //const baseBG = this.add.rectangle(502, 385, 600, 760, 0xd0be49).setStrokeStyle(10, 0xffffff);
 
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(100, 385, 200, 775, 0xffffff);
-        const borderRight = this.add.rectangle(920, 385, 230, 775, 0xffffff);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff);
+        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff);
         const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff);
         const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
@@ -54,12 +55,12 @@ export default class Game3 extends Phaser.Scene {
             this.physics.world.enable(borders[i]);
             borders[i].body.setImmovable(true); // El suelo no se moverá
             borders[i].body.setAllowGravity(false); // No tendrá gravedad
-            console.log(borders[i]);
+            //console.log(borders[i]);
         }
 
 
         // --- CANNON ---.
-        const cannonBase = this.make.image({ // Cannon Base.
+        const cannonBase = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
             x: 500,
             y: 800, 
             key: 'cannonBase',
@@ -82,10 +83,8 @@ export default class Game3 extends Phaser.Scene {
         }).setDepth(2);
 
         // --- SHOOTABLES ---. 
-        const shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, 'shootingBeetle').setScale(1); // Añade la vasija en la pos del cañón.
-        //shootingBeetle.disableBody(true, true); // Desactiva la vessel para que no colisione ni se vea todavía.
-        // Para que no se salga de los límites del mundo.
-        shootingBeetle.setBounce(1).setCollideWorldBounds(true);
+        const beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
+
         // Dibuja la línea de la dir DE LANZAMIENTO
         const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
         const line = new Phaser.Geom.Line(); 
@@ -107,49 +106,80 @@ export default class Game3 extends Phaser.Scene {
 
         // AL HACER CLIC. DISPARO
         this.input.on('pointerup', () =>
-            {
+        {
+                //Randomizamos el color;
+                const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
+                //console.log(randomBeetle);
+
+                const shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo
+                //Le metemos físicas
+                this.physics.world.enable(shootingBeetle);
+                // Para que no se salga de los límites del mundo.
+                shootingBeetle.setBounce(1).setCollideWorldBounds(true);
+
                 shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
 
                 this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
-
                 
-            });
-
+                // --- COLISIONES CON BORDERS ---.
+                this.physics.add.collider(borders, shootingBeetle);
+                
+        });
 
         // --- COLISIONES CON BORDERS ---.
-        this.physics.add.collider(borders, shootingBeetle);
+        //this.physics.add.collider(borders, shootingBeetle);
+        
         
         // --- GRID DE BICHOS ---.
+        //Randomizamos el frame del color
         const groupImpares = this.add.group({
-            key: 'Bicho',
-            frame: [ 0 ],
-            frameQuantity: 120,
+            key: 'beetles',
+            frame: [ 0,1,2,3,4,5,6 ],
+            frameQuantity: 11 * 1,
+            randomKey: true
+            
         });
 
         Phaser.Actions.GridAlign(groupImpares.getChildren(), {
-            width: 12,
-            height: 5,
-            cellWidth: 50,
-            cellHeight: 100,
-            x: 205,
+            width: 11, //Columnas
+            height: 3, //Filas máximas
+            cellWidth: 55,
+            cellHeight: 105,
+            x: 185.5,
             y: 20,
         });
 
         const groupPares = this.add.group({
-            key: 'shootingBeetle',
-            frame: [ 0 ],
-            frameQuantity: 110,
+            key: 'beetles',
+            frame: [ 0,1,2,3,4,5,6 ],
+            frameQuantity: 11 * 1,
+            randomKey: true
         });
 
         Phaser.Actions.GridAlign(groupPares.getChildren(), {
-            width: 11,
-            height: 5,
-            cellWidth: 50,
-            cellHeight: 100,
-            x: 230,
+            width: 11, //Columnas
+            height: 3, //Filas máximas
+            cellWidth: 55,
+            cellHeight: 105,
+            x: 210,
             y: 70,
         });
 
+        //Lo agrupamos en un solo array
+        const groupMatrix = [groupImpares, groupPares];
+
+        //Metemos físicas
+        for (let i = 0; i < groupMatrix.length; i++){
+            groupMatrix[i].getChildren().forEach(element => {
+            this.physics.world.enable(element);
+            element.body.setImmovable(true); 
+            element.body.setAllowGravity(false);
+            //console.log(element);
+            })
+            //console.log(i);
+        }
+
+       
 
     }
 }
