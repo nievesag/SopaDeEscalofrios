@@ -1,4 +1,4 @@
-export default class Box extends Phaser.GameObjects.Sprite {
+export default class Goal extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
         this.setScale(0.5,.5);

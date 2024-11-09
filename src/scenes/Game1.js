@@ -1,4 +1,5 @@
 import PlayerG1 from '../objetos/Game1Obj/playerG1.js';
+import Organ from '../objetos/Game1Obj/organ.js';
 import Box from '../objetos/Game1Obj/box.js';
 
 export default class Game1 extends Phaser.Scene {
@@ -7,7 +8,7 @@ export default class Game1 extends Phaser.Scene {
     }
     
     preload () {
-        		// Cargamos el Tilemap (JSON)
+        		// Cargamos el Tilemap (JsSON)
 		this.load.tilemapTiledJSON('tilemap', 'assets/tilemap/map1.json');
 
 		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
@@ -16,8 +17,13 @@ export default class Game1 extends Phaser.Scene {
 		// Recurso para el personaje principal (imagen simple con un solo frame)
 		this.load.image('player', '../../assets/images/g1/playerG1.png');
 
-		// Recurso para las monedas (Spreetsheet con 6 frames);
-		// this.load.image('coin', 'assets/coin.png', { frameWidth: 32, frameHeight: 32 });
+        // Recurso para el personaje principal (imagen simple con un solo frame)
+		this.load.image('box', '../../assets/images/g1/box.png');
+
+        // Recurso para el personaje principal (imagen simple con un solo frame)
+		this.load.image('organ', '../../assets/images/g1/organ.png');
+
+		// this.load.image('coin', 'assets/coin.png', {s frameWidth: 32, frameHeight: 32 });
     }
     
     create () {
@@ -37,7 +43,6 @@ export default class Game1 extends Phaser.Scene {
         
         this.cursors = this.input.keyboard.createCursorKeys();
         
-        
         // -------- COSAS DEL TILESET --------
 		// Objeto tilemap
 		this.map = this.make.tilemap({
@@ -46,50 +51,56 @@ export default class Game1 extends Phaser.Scene {
 			tileHeight: 32
 		});
         
-        //this.map.
-        
 		// Objeto el tileset. 
-		// addTilesetImage recibe la propiedad "name" del tileset a usar (ver .json, propiedad "tilesets":[... "name":"castillo32x32" ... ] como primer parámetro
-		// y la imagen del tileset
+		// recibe "name" del .json y la imagen del tileset
 		const tileset1 = this.map.addTilesetImage('tileset_duat', 'patronesTilemap');
         
-		// creamos las diferentes capas a través del tileset. El nombre de la capa debe aparecer en el .json del tilemap cargado
+        // capas
+		// con el nombre del .json
 		this.groundLayer = this.map.createLayer('Ground', tileset1);
-        
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
 		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
 
-        let playerG1 = new PlayerG1(this, 50, 50, 'player');
-        
         this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
             
         });
         
-		// // Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
-		// let higado = this.map.createFromObjects('GameObjects', { name: "higado", key: 'higado' });
+		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
-		// let organsGroup = this.add.group();
-		// coinsGroup.addMultiple(coins)
-		// coins.forEach(obj => {
-		// 	this.physics.add.existing(obj);
-		// });
-
-		playerG1 = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
-
-		/*
-		Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
-		characters.forEach(obj => {
-			obj.setDepth(10);
+        // CAJAS
+        let boxes = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ });
+        
+		let boxesGroup = this.add.group();
+        boxesGroup.addMultiple(boxes)
+		boxes.forEach(obj => {
+            this.physics.add.existing(obj);
 		});
-		*/
+        
+        // ORGANOS
+		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ });
+        
+		let organsGroup = this.add.group();
+        organsGroup.addMultiple(organs)
+		organs.forEach(obj => {
+            this.physics.add.existing(obj);
+		});
+        
+		// Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
+		//characters.forEach(obj => {
+            //	obj.setDepth(10);
+            //});
+        
+        // PLAYER
+        //let playerG1 = new PlayerG1(this, 50, 50, 'player');
+        let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
+        let playerG1 = characters[0]; //se que solo hay uno y es mi player
 
+		//let playerG1 = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
 
-		// Ponemos la cámara principal de juego a seguir al jugador
-		// this.cameras.main.startFollow(player);
-
-
-		// // Creamos la última capa que representa objetos por los que el jugador pasa por detrás.
-		// this.topColumnLayer = this.map.createLayer('CapaAlto', tileset1);
+		// colisiones
+		this.physics.add.collider(playerG1, this.wallLayer);
+		this.physics.add.collider(player, organsGroup);
+		this.physics.add.collider(organsGroup, this.wallLayer);
 
         // -----------------------------------
     }
