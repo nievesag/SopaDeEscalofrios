@@ -7,8 +7,6 @@ export default class Organ extends Phaser.GameObjects.Sprite {
 
         //this.body.setColliderWorldBounds();
         this.body.setBounce(2,2);
-
-        boxes.add(this);
     }
 
     preUpdate(t, dt) {

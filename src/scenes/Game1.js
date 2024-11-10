@@ -8,7 +8,7 @@ export default class Game1 extends Phaser.Scene {
     }
     
     preload () {
-        		// Cargamos el Tilemap (JsSON)
+        // Cargamos el Tilemap (JsSON)
 		this.load.tilemapTiledJSON('tilemap', 'assets/tilemap/map1.json');
 
 		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
@@ -61,59 +61,55 @@ export default class Game1 extends Phaser.Scene {
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
 		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
 
-        this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
-            
-        });
-        
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
-        // CAJAS
-        let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: "box" });
+        // --- CAJAS
+        let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: 'box' });
         
 		let boxesGroup = this.add.group();
-        boxesGroup.addMultiple(boxes)
+        boxesGroup.addMultiple(boxes);
 		boxes.forEach(obj => {
             this.physics.add.existing(obj);
 		});
         
-        // ORGANOS
-        /*
-		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ, key: "organ" });
+        // --- ORGANOS
+		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ, key: 'organ' });
         
 		let organsGroup = this.add.group();
-        organsGroup.addMultiple(organs)
+        organsGroup.addMultiple(organs);
 		organs.forEach(obj => {
             this.physics.add.existing(obj);
-		});
-        */
+        });
         
-		// Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
-		//characters.forEach(obj => {
+        // Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
+        //characters.forEach(obj => {
         //	obj.setDepth(10);
         //});
-        
-        // PLAYER
+            
+        // --- PLAYER
         //let playerG1 = new PlayerG1(this, 50, 50, 'player');
-        //let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
-        //playerG1 = characters[0]; //se que solo hay uno y es mi player
-
-		//let playerG1 = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
-
-		// colisiones
-		this.physics.add.collider(playerG1, this.wallLayer);
-		this.physics.add.collider(player, organsGroup);
-		this.physics.add.collider(organsGroup, this.wallLayer);
-
+        let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
+        let playerG1 = characters[0]; //se que solo hay uno y es mi player
+        
+        // colisiones
+        this.physics.add.collider(playerG1, this.wallLayer);
+        this.physics.add.collider(playerG1, organsGroup);
+        this.physics.add.collider(organsGroup, this.wallLayer);
+        /*
+        this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
+            
+        });*/
+        
         // -----------------------------------
     }
-
-    init() {
-
-        // para llevar el control de limite de tiempo
-        // this.maxTime = document.getElementById('targetTime');
-
-        // this.time = 0; 
-    }
+        
+        init() {
+            
+            // para llevar el control de limite de tiempo
+            // this.maxTime = document.getElementById('targetTime');
+            
+            // this.time = 0; 
+        }
 
     update(time, dt) 
     {

@@ -1,6 +1,6 @@
 export default class PlayerG1 extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, key) {
-        super(scene, x, y, key);
+    constructor(scene, x, y) {
+        super(scene, x, y, 'player');
 
         this.speed = 140; // velocidad de movimiento
 
