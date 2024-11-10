@@ -15,20 +15,13 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 		// Agregamos al player a las físicas para que Phaser lo tenga en cuenta -> no se si hace falta
 		scene.physics.add.existing(this);
 
-		this.body.setSize(32, 32) // Para que entre mejor por los pasillos
+		this.body.setSize(28, 28) // Para que entre mejor por los pasillos
 
         // para agarrar
         this.isGrabbing = false; // flag para comprobar que se esta agarrando algo
 
         // player colisiona con los límites del mundo
 		this.body.setCollideWorldBounds();
-
-        // collider
-		this.bodyOffset = this.body.width/4;
-		this.bodyWidth = this.body.width/2;
-		
-		this.body.setOffset(this.bodyOffset, 0);
-		this.body.width = this.bodyWidth;
 
         this.body.setAllowGravity(false);
     }
