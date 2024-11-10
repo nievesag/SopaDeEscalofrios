@@ -22,6 +22,7 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 
         // player colisiona con los límites del mundo
 		this.body.setCollideWorldBounds();
+        this.body.setDrag(50); // rozamiento
 
         this.body.setAllowGravity(false);
     }
