@@ -1,8 +1,10 @@
 export default class PlayerG1 extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
-        super(secene, x, y, 'p');
-        this.speed = 140;
-        this.scene.add.existing(this);
+        super(scene, x, y, 'player');
+
+        this.speed = 140; // velocidad de movimiento
+
+        this.scene.add.existing(this); // mete al pj en la escena
 
         this.wKey = this.scene.input.keyboard.addKey('W'); // arriba
 		this.aKey = this.scene.input.keyboard.addKey('A'); // izq
@@ -10,21 +12,19 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 		this.dKey = this.scene.input.keyboard.addKey('D'); // der
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // agarrar
 
-        // para agarrar
-        this.isGrabbing = false; // flag para comprobar que se esta agarrando algo
-
 		// Agregamos al player a las físicas para que Phaser lo tenga en cuenta -> no se si hace falta
 		scene.physics.add.existing(this);
 
+		this.body.setSize(28, 28) // Para que entre mejor por los pasillos
+
+        // para agarrar
+        this.isGrabbing = false; // flag para comprobar que se esta agarrando algo
+
         // player colisiona con los límites del mundo
 		this.body.setCollideWorldBounds();
+        this.body.setDrag(50); // rozamiento
 
-        // collider
-		this.bodyOffset = this.body.width/4;
-		this.bodyWidth = this.body.width/2;
-		
-		this.body.setOffset(this.bodyOffset, 0);
-		this.body.width = this.bodyWidth;
+        this.body.setAllowGravity(false);
     }
 
     // t -> tiempo total
@@ -34,50 +34,57 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 
         // ---- input ----
         // A -> mueve en el eje -X
-		if(this.aKey.isDown) {
-			this.setFlip(true, false) // para que gire el sprite creo
-			
+        this.scene.input.keyboard.on('keydown-A', () => {
+            //this.setFlip(true, false) // para que gire el sprite creo
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-this.speed);
-		}
+        });
 
 		// D -> mueve en el eje X
-		if(this.dKey.isDown) {
-			this.setFlip(false, false)
+        this.scene.input.keyboard.on('keydown-D', () => {
+            //this.setFlip(false, false)
 			this.body.setVelocityX(this.speed);
-		}
+        });
 
 		// dejar A o D -> para
-		if(Phaser.Input.Keyboard.JustUp(this.aKey) || Phaser.Input.Keyboard.JustUp(this.dKey)) {
-			this.body.setVelocityX(0);
-		}
+        this.scene.input.keyboard.on('keyup-A', () => {
+            this.body.setVelocityX(0);
+        });
+
+        this.scene.input.keyboard.on('keyup-D', () => {
+            this.body.setVelocityX(0);
+        });
 
         // W -> mueve en el eje -Y
-		if(this.wKey.isDown) {
-			this.setFlip(false, false)
+        this.scene.input.keyboard.on('keydown-W', () => {
+            this.setFlip(false, false)
 			this.body.setVelocityY(-this.speed);
-		}
+        });
         
         // S -> mueve en el eje Y
-		if(this.sKey.isDown) {
-			this.setFlip(false, false)
-			this.body.setVelocityY(-this.speed);
-		}
-
+        this.scene.input.keyboard.on('keydown-S', () => {
+            this.setFlip(false, false)
+			this.body.setVelocityY(this.speed);
+        });
+        
         // dejar W o S -> para
-        if(Phaser.Input.Keyboard.JustUp(this.wKey) || Phaser.Input.Keyboard.JustUp(this.sKey)) {
-			this.body.setVelocityY(0);
-		}
+        this.scene.input.keyboard.on('keyup-W', () => {
+            this.body.setVelocityY(0);
+        });
 
-        // space -> agarra
-        if(his.spaceKey.isDown) {
+        this.scene.input.keyboard.on('keyup-S', () => {
+            this.body.setVelocityY(0);
+        });
+
+        // SPACE
+        this.scene.input.keyboard.on('keydown-SPACE', () => {
             this.grab();
-        }
+        });
 
         // deja space -> para de agarrar
-        if(Phaser.Input.Keyboard.JustUp(this.spaceKey)) {
+        this.scene.input.keyboard.on('keyup-SPACE', () => {
             this.stopGrab();
-        }
+        });
     }
 
     grab() {

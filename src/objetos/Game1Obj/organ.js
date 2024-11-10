@@ -1,4 +1,4 @@
-export default class Box extends Phaser.GameObjects.Sprite {
+export default class Organ extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
         this.setScale(0.5,.5);
@@ -7,6 +7,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
 
         //this.body.setColliderWorldBounds();
         this.body.setBounce(1,1);
+
         this.body.setAllowGravity(false);
     }
 

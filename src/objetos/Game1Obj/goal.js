@@ -1,4 +1,4 @@
-export default class Box extends Phaser.GameObjects.Sprite {
+export default class Goal extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
         this.setScale(0.5,.5);
@@ -6,7 +6,9 @@ export default class Box extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
 
         //this.body.setColliderWorldBounds();
-        this.body.setBounce(1,1);
+        this.body.setBounce(2,2);
+
+        boxes.add(this);
         this.body.setAllowGravity(false);
     }
 
