@@ -1,6 +1,6 @@
 export default class Organ extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, boxes) {
-        super(scene, x, y, 'box');
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key);
         this.setScale(0.5,.5);
 
         this.scene.physics.add.existing(this);

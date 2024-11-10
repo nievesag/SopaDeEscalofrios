@@ -68,7 +68,7 @@ export default class Game1 extends Phaser.Scene {
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
         // CAJAS
-        let boxes = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ });
+        let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: "box" });
         
 		let boxesGroup = this.add.group();
         boxesGroup.addMultiple(boxes)
@@ -77,23 +77,25 @@ export default class Game1 extends Phaser.Scene {
 		});
         
         // ORGANOS
-		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ });
+        /*
+		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ, key: "organ" });
         
 		let organsGroup = this.add.group();
         organsGroup.addMultiple(organs)
 		organs.forEach(obj => {
             this.physics.add.existing(obj);
 		});
+        */
         
 		// Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
 		//characters.forEach(obj => {
-            //	obj.setDepth(10);
-            //});
+        //	obj.setDepth(10);
+        //});
         
         // PLAYER
         //let playerG1 = new PlayerG1(this, 50, 50, 'player');
-        let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
-        let playerG1 = characters[0]; //se que solo hay uno y es mi player
+        //let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
+        //playerG1 = characters[0]; //se que solo hay uno y es mi player
 
 		//let playerG1 = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1 });
 
