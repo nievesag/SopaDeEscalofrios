@@ -7,6 +7,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
 
         //this.body.setColliderWorldBounds();
         this.body.setBounce(2,2);
+        this.body.setAllowGravity(false);
     }
 
     preUpdate(t, dt) {

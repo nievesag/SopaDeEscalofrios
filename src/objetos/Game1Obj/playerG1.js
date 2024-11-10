@@ -41,14 +41,14 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         // ---- input ----
         // A -> mueve en el eje -X
         this.scene.input.keyboard.on('keydown-A', () => {
-            this.setFlip(true, false) // para que gire el sprite creo
+            //this.setFlip(true, false) // para que gire el sprite creo
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-this.speed);
         });
 
 		// D -> mueve en el eje X
-        this.scene.input.keyboard.on('keydown-A', () => {
-            this.setFlip(false, false)
+        this.scene.input.keyboard.on('keydown-D', () => {
+            //this.setFlip(false, false)
 			this.body.setVelocityX(this.speed);
         });
 
@@ -56,6 +56,7 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         this.scene.input.keyboard.on('keyup-A', () => {
             this.body.setVelocityX(0);
         });
+
         this.scene.input.keyboard.on('keyup-D', () => {
             this.body.setVelocityX(0);
         });
@@ -69,13 +70,14 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         // S -> mueve en el eje Y
         this.scene.input.keyboard.on('keydown-S', () => {
             this.setFlip(false, false)
-			this.body.setVelocityY(-this.speed);
+			this.body.setVelocityY(this.speed);
         });
         
         // dejar W o S -> para
         this.scene.input.keyboard.on('keyup-W', () => {
             this.body.setVelocityY(0);
         });
+
         this.scene.input.keyboard.on('keyup-S', () => {
             this.body.setVelocityY(0);
         });

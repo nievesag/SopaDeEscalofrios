@@ -9,6 +9,7 @@ export default class Goal extends Phaser.GameObjects.Sprite {
         this.body.setBounce(2,2);
 
         boxes.add(this);
+        this.body.setAllowGravity(false);
     }
 
     preUpdate(t, dt) {

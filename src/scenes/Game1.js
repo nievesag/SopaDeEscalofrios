@@ -94,7 +94,17 @@ export default class Game1 extends Phaser.Scene {
         // colisiones
         this.physics.add.collider(playerG1, this.wallLayer);
         this.physics.add.collider(playerG1, organsGroup);
+        this.physics.add.collider(playerG1, boxesGroup);
+
+        this.physics.add.collider(boxesGroup, boxesGroup);
+        this.physics.add.collider(boxesGroup, this.wallLayer);
+        
+        this.physics.add.collider(organsGroup, organsGroup);
         this.physics.add.collider(organsGroup, this.wallLayer);
+
+        this.physics.add.collider(boxesGroup, organsGroup);
+
+
         /*
         this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
             
