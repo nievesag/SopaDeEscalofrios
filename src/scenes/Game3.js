@@ -5,6 +5,7 @@ import Matrix from '../objetos/Game3Obj/Matrix.js';
 import Time from '../objetos/Game3Obj/Time.js';
 
 export default class Game3 extends Phaser.Scene {
+   
     constructor() {
         super({ key: 'Game3'});
 
@@ -40,15 +41,18 @@ export default class Game3 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
 
     create (){
+     
+        // --- TIMER ---
+        //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
 
         // --- BASE BG ---.
         //const baseBG = this.add.rectangle(502, 385, 600, 760, 0xd0be49).setStrokeStyle(10, 0xffffff);
 
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff);
-        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff);
-        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff);
-        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff, 0);
+        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff, 0);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff, 0);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff, 0);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
 
         for (let i = 0; i < borders.length; i++){
@@ -84,6 +88,7 @@ export default class Game3 extends Phaser.Scene {
 
         // --- SHOOTABLES ---. 
         const beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
+        let shootingBeetle;
 
         // Dibuja la línea de la dir DE LANZAMIENTO
         const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
@@ -91,46 +96,7 @@ export default class Game3 extends Phaser.Scene {
 
         let angle = 0; // Inicializa el ángulo a 0.
 
-        // --- INPUT ---.
-        // SIGUE AL MOUSE.
-        this.input.on('pointermove', (pointer) =>
-            {
-                angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
-                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
-
-
-                // Línea gráfica de la dir.
-                Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle, 128); 
-                graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
-            });
-
-        // AL HACER CLIC. DISPARO
-        this.input.on('pointerup', () =>
-        {
-                //Randomizamos el color;
-                const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
-                //console.log(randomBeetle);
-
-                const shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo
-                //Le metemos físicas
-                this.physics.world.enable(shootingBeetle);
-                // Para que no se salga de los límites del mundo.
-                shootingBeetle.setBounce(1).setCollideWorldBounds(true);
-
-                shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
-
-                this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
-                
-                // --- COLISIONES CON BORDERS ---.
-                this.physics.add.collider(borders, shootingBeetle);
-                
-        });
-
-        // --- COLISIONES CON BORDERS ---.
-        //this.physics.add.collider(borders, shootingBeetle);
-        
-        
-        // --- GRID DE BICHOS ---.
+                // --- GRID DE BICHOS ---.
         //Randomizamos el frame del color
         const groupImpares = this.add.group({
             key: 'beetles',
@@ -172,15 +138,86 @@ export default class Game3 extends Phaser.Scene {
         for (let i = 0; i < groupMatrix.length; i++){
             groupMatrix[i].getChildren().forEach(element => {
             this.physics.world.enable(element);
+            //elememnt.setCircle(10);
             element.body.setImmovable(true); 
             element.body.setAllowGravity(false);
             //console.log(element);
+            
             })
             //console.log(i);
         }
 
-       
+        // --- INPUT ---.
+        // SIGUE AL MOUSE.
+        this.input.on('pointermove', (pointer) =>
+            {
+                angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
+                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
+
+                // Línea gráfica de la dir.
+                Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle, 128); 
+                graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
+
+            });
+
+        // AL HACER CLIC. DISPARO
+        this.input.on('pointerup', () =>
+        {
+            //Randomizamos el color;
+            const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
+            //console.log(randomBeetle);
+
+            shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo
+            //Le metemos físicas
+            this.physics.world.enable(shootingBeetle);
+            //shootingBeetle.setCircle(10);
+            // Para que no se salga de los límites del mundo.
+            shootingBeetle.setBounce(1).setCollideWorldBounds(true);
+
+            shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
+
+            this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
+            
+            // --- COLISIONES CON BORDERS ---.
+            this.physics.add.collider(borders, shootingBeetle);
+
+            // --- COLISIONES MATRIX - DISPARO ---.
+            for (let i = 0; i < groupMatrix.length; i++){
+                groupMatrix[i].getChildren().forEach(element => {
+                this.physics.add.collider(element, shootingBeetle);
+                if (collider) {
+                    
+                    //CALLBACK 
+                }
+                //console.log(shootingBeetle);
+                //console.log(element);
+            })
+
+            
+            //console.log(i);
+        }
+                
+        });
+    
+
+
+        
+
 
     }
+
+    update (){
+        //console.log(timer);
+        //this.timer.setText(`time: ${time.ToString()}`);
+    }
 }
+
+
+/*
+Fuentes: 
+https://labs.phaser.io/edit.html?src=src\physics\arcade\closest%20furthest.js
+
+
+
+*/
             
