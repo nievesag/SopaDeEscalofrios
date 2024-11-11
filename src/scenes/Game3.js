@@ -87,7 +87,8 @@ export default class Game3 extends Phaser.Scene {
         }).setDepth(2);
 
         // --- SHOOTABLES ---. 
-        const beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
+        let beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
+        //El que vamos a disparar
         let shootingBeetle;
 
         // Dibuja la línea de la dir DE LANZAMIENTO
@@ -96,7 +97,7 @@ export default class Game3 extends Phaser.Scene {
 
         let angle = 0; // Inicializa el ángulo a 0.
 
-                // --- GRID DE BICHOS ---.
+        // --- GRID DE BICHOS ---.
         //Randomizamos el frame del color
         const groupImpares = this.add.group({
             key: 'beetles',
@@ -110,9 +111,9 @@ export default class Game3 extends Phaser.Scene {
             width: 11, //Columnas
             height: 3, //Filas máximas
             cellWidth: 55,
-            cellHeight: 105,
+            cellHeight: 110,
             x: 185.5,
-            y: 20,
+            y: 10,
         });
 
         const groupPares = this.add.group({
@@ -126,9 +127,9 @@ export default class Game3 extends Phaser.Scene {
             width: 11, //Columnas
             height: 3, //Filas máximas
             cellWidth: 55,
-            cellHeight: 105,
+            cellHeight: 110,
             x: 210,
-            y: 70,
+            y: 65,
         });
 
         //Lo agrupamos en un solo array
@@ -165,9 +166,11 @@ export default class Game3 extends Phaser.Scene {
         {
             //Randomizamos el color;
             const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
+            //console.log(beetles[randomBeetle]);
             //console.log(randomBeetle);
 
             shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo
+            //console.log(shootingBeetle.texture.key);
             //Le metemos físicas
             this.physics.world.enable(shootingBeetle);
             //shootingBeetle.setCircle(10);
@@ -184,23 +187,55 @@ export default class Game3 extends Phaser.Scene {
             // --- COLISIONES MATRIX - DISPARO ---.
             for (let i = 0; i < groupMatrix.length; i++){
                 groupMatrix[i].getChildren().forEach(element => {
-                this.physics.add.collider(element, shootingBeetle);
-                if (collider) {
-                    
-                    //CALLBACK 
-                }
+                //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
+                this.physics.add.collider(shootingBeetle, element, addToMatrix(shootingBeetle, element));
                 //console.log(shootingBeetle);
                 //console.log(element);
-            })
 
-            
-            //console.log(i);
+            })
         }
                 
         });
     
 
+        //Se añade pero no se une
+        function addToMatrix(shootingBeetle, element){
 
+            let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
+                x: shootingBeetle.x,
+                y: shootingBeetle.y, 
+                key: shootingBeetle.texture.key,
+                scale : {
+                    x: 1,
+                    y: 1,
+                },
+            }).setDepth(1);
+
+            //Creamos el bicho que se va a añadir a la matriz
+            
+            //newBeetle.texture = shootingBeetle.texture;
+            //newBeetle.y = shootingBeetle.y;
+            console.log(newBeetle.texture.key);
+            //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
+            //Miramos la posición de la colisión
+            //Impar
+            if (newBeetle.y % 10 == 0){
+                groupMatrix[0].add(newBeetle);
+                groupMatrix[0].frameQuantity++;
+                //groupImpares.frameQuantity++;
+            }
+            //Par
+            else if(newBeetle.y % 65 == 0){
+                groupMatrix[1].add(newBeetle);
+                groupMatrix[1].frameQuantity++;
+                //groupPares.frameQuantity++;
+            }
+            //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
+            //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
+
+            //newBeetle.body.setImmovable(true); 
+            newBeetle.body.setAllowGravity(false);
+        }
         
 
 
@@ -210,6 +245,8 @@ export default class Game3 extends Phaser.Scene {
         //console.log(timer);
         //this.timer.setText(`time: ${time.ToString()}`);
     }
+
+    
 }
 
 
