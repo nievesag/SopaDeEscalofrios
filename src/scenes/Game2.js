@@ -36,6 +36,11 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
 
     create (){
+
+        // --- BOTON VOLVER A MAIN MENU ---
+        //this.createButton('MainMenu',  400,  400, 'white').setDepth(3);
+
+
         // Música.
         const music = this.sound.add('theme');
         music.play();
@@ -91,5 +96,35 @@ export default class Game2 extends Phaser.Scene {
         this.obstacleGen.y = this.cameras.main.centerY + 250
     }
 
+    createButton(text, x, y, textColor) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: 50,
+
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
+        });
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+            //button.fontSize = '70px';
+        });
+    
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+            //button.fontSize = '50px';
+        });
+    }
     
 }
