@@ -43,14 +43,14 @@ export default class Game4 extends Phaser.Scene {
             classType: Obstaculo,
             maxSize: 100
         })
-         // Crear algunos obstáculos
-        this.obstaculos = this.add.group(); // Grupo para manejar múltiples obstáculos
-        const obstaculo1 = new Obstaculo(this, 445, 500, 60, 20, 0x8B4513, 'horizontal');
-        const obstaculo2 = new Obstaculo(this, 460, 500, 60, 20, 0x8B4513, 'vertical');
-        const obstaculo3 = new Obstaculo(this, 430, 460, 60, 20, 0x8B4513, 'vertical');
-        this.grupoObs.add(obstaculo1);
-        this.grupoObs.add(obstaculo2);
-        this.grupoObs.add(obstaculo3);
+        //  // Crear algunos obstáculos
+        // this.obstaculos = this.add.group(); // Grupo para manejar múltiples obstáculos
+        // const obstaculo1 = new Obstaculo(this, 445, 500, 60, 20, 0x8B4513, 'horizontal');
+        // const obstaculo2 = new Obstaculo(this, 460, 500, 60, 20, 0x8B4513, 'vertical');
+        // const obstaculo3 = new Obstaculo(this, 430, 460, 60, 20, 0x8B4513, 'vertical');
+        // this.grupoObs.add(obstaculo1);
+        // this.grupoObs.add(obstaculo2);
+        // this.grupoObs.add(obstaculo3);
 
          // Configurar colisión entre flecha y obstáculos
          this.physics.add.collider(this.bow.projectile, this.grupoObs, (arrow, obstaculo) => {
