@@ -8,11 +8,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
     
     create (){
-            this.createButton("MINIGAME I", 200, 200, 'white', 60, 'Game1');
-            this.createButton("MINIGAME II", 800, 200, 'white', 60, 'Game2');
-            this.createButton("MINIGAME III", 200, 600, 'white', 60, 'Game3');
-            this.createButton("MINIGAME IV", 800, 600, 'white', 60, 'Game4');
-            this.createButton("MINIGAME V", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 60, 'Game5');
+            this.createButton("Camino a la Duat", 200, 200, 'white', 50, 'Game1');
+            this.createButton("La Vasija Entresija", 800, 200, 'white', 50, 'Game2');
+            this.createButton("Al Rescate de los Escarabajos", 200, 600, 'white', 35, 'Game3');
+            this.createButton("Tiro al Arco Mágico", 800, 600, 'white', 50, 'Game4');
+            this.createButton("El Sendero al Sol", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 50, 'Game5');
 
 
     }
