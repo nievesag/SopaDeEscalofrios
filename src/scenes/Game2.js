@@ -45,6 +45,9 @@ export default class Game2 extends Phaser.Scene {
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
         this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
 
+        this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+     
+
 
         // Generador de obstáculos.
         this.obstacleGen = this.make.image({
@@ -90,6 +93,37 @@ export default class Game2 extends Phaser.Scene {
         this.obstacleGen.x = this.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
         this.obstacleGen.y = this.cameras.main.centerY + 250
     }
+
+    createButton(text, x, y, textColor, fontsize, sceneName) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: fontsize,
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+        });
+
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+        });
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start(sceneName);
+            this.sound.stopAll();
+
+        });
+    }
+
 
     
 }
