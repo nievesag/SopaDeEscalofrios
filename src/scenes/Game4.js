@@ -14,8 +14,7 @@ export default class Game4 extends Phaser.Scene {
     
     create (){
 
-        // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MainMenu',  125,  700, 'white');
+       
 
         // Música.
         const music = this.sound.add('theme4');
@@ -26,6 +25,10 @@ export default class Game4 extends Phaser.Scene {
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
           .setOrigin(0.5, 0.5)
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
+
+         // --- BOTON VOLVER A MAIN MENU ---
+         this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+
 
         // Crear el suelo invisible en la parte inferior de la pantalla
         const groundHeight = 50; // Altura del suelo invisible
@@ -73,34 +76,33 @@ export default class Game4 extends Phaser.Scene {
 
     }
 
-    createButton(text, x, y, textColor) {
+    createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
            x,
            y,
             text,
             {
                 fontFamily: 'arabic',
-                fontSize: 50,
-
+                fontSize: fontsize,
                 color: textColor
             }
         ).setOrigin(0.5, 0.5);
 
-        button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
-        });
-
         button.on('pointerover', () => // Al pasar el ratón por encima...
         {
             button.setTint(0xdfa919);
-            //button.fontSize = '70px';
         });
-    
+
         button.on('pointerout', () => // Al quitar el ratón de encima...
         {
             button.clearTint();
-            //button.fontSize = '50px';
+        });
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start(sceneName);
+            this.sound.stopAll();
+
         });
     }
 
