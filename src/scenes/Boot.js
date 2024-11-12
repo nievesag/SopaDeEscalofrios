@@ -34,7 +34,6 @@ export default class Boot extends Phaser.Scene {
 
 
         //Game 5
-		//this.load.audio("f3ale", "./assets/audio/f3ale.mp3");
         
         this.load.image('MuroTablero', 'assets/images/Game5/MuroTablero.png');
         this.load.image('VacioTablero', 'assets/images/Game5/VacioTablero.png');

@@ -19,11 +19,11 @@ Podrá jugar a diferentes minijuegos para poder ser más afín a según qué dio
 nievesag.github.io/SopaDeEscalofrios/
 
 ### Imágenes del juego
-![Camino a la Duat](/assets/images/ssGame1.png)
-![La Vasija Entresija](/assets/images/ssGame2.png)
-![Al Rescate de los Escarabajos](/assets/images/ssGame3.png)
-![El Tiro del Arco Mágico](/assets/images/ssGame4.png)
-![Al Sendero del Sol](/assets/images/ssGame5.png)
+![Camino a la Duat](./assets/images/ssGame1.JPG)
+![La Vasija Entresija](./assets/images/ssGame2.JPG)
+![Al Rescate de los Escarabajos](./assets/images/ssGame3.JPG)
+![El Tiro del Arco Mágico](./assets/images/ssGame4.JPG)
+![Al Sendero del Sol](./assets/images/ssGame5.JPG)
 
 # Introito Antiapotropaico GDD 
 
