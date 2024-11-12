@@ -24,12 +24,22 @@ export default class Game1 extends Phaser.Scene {
 		this.load.image('organ', '../../assets/images/g1/organ.png');
 
 		// this.load.image('coin', 'assets/coin.png', {s frameWidth: 32, frameHeight: 32 });
+
+        // Música.
+        this.load.audio('theme1', '../assets/audio/m1c.mp3');
     }
     
     create () {
 
+
         // --- BOTON VOLVER A MAIN MENU ---
         this.createButton('MainMenu',  400,  400, 'white');
+
+
+        // Música.
+        const music = this.sound.add('theme1');
+        music.play();
+        this.sound.pauseOnBlur = true;
 
 
         //let boxes = [];
