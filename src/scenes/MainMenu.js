@@ -8,14 +8,14 @@ export default class MainMenu extends Phaser.Scene {
         this.load.image('backgroundMenu', '../assets/images/menuBackground.jpg');
 
         // Música.
-        this.load.audio('theme0', '../assets/audio/f3ale.mp3');
+        this.load.audio('f3ale', '../assets/audio/f3ale.mp3');
 	}
 	create() {
         // Paramos el audio
         this.sound.stopAll();
         
         // Música.
-        const music = this.sound.add('theme0');
+        const music = this.sound.add('f3ale');
         music.play();
         this.sound.pauseOnBlur = true;
 
