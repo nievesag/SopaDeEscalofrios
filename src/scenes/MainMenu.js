@@ -65,7 +65,7 @@ export default class MainMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
+            this.scene.start("Game4");
         });
 
         button.on('pointerover', () => // Al pasar el ratón por encima...
