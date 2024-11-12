@@ -7,17 +7,21 @@ export default class Game4 extends Phaser.Scene {
     }
     
     preload () {
-    // Música.
-    this.load.audio('theme4', '../assets/audio/m4c.mp3');
+        // Música.
+        this.load.audio('theme4', '../assets/audio/m4c.mp3');
+    
     }
     
     create (){
+
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MainMenu',  125,  700, 'white');
 
         // Música.
         const music = this.sound.add('theme4');
         music.play();
         this.sound.pauseOnBlur = true;
-
+        
           // Background
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
           .setOrigin(0.5, 0.5)
@@ -68,8 +72,38 @@ export default class Game4 extends Phaser.Scene {
         this.physics.add.collider(this.grupoObs, this.grupoObs);
 
     }
+
+    createButton(text, x, y, textColor) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: 50,
+
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
+        });
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+            //button.fontSize = '70px';
+        });
     
-
-
-
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+            //button.fontSize = '50px';
+        });
     }
+
+
+
+}

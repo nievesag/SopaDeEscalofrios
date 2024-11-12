@@ -12,6 +12,11 @@ export default class Game5 extends Phaser.Scene {
     }
     
     create() {
+
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MainMenu',  125,  700, 'white');
+        
+
         // Música.
         const music = this.sound.add('theme5');
         music.play();
@@ -53,5 +58,36 @@ export default class Game5 extends Phaser.Scene {
                 }
             }
         }
+    }
+
+    createButton(text, x, y, textColor) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: 50,
+
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
+        });
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+            //button.fontSize = '70px';
+        });
+    
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+            //button.fontSize = '50px';
+        });
     }
 }

@@ -36,6 +36,11 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
 
     create (){
+
+        // --- BOTON VOLVER A MAIN MENU ---
+        //this.createButton('MainMenu',  400,  400, 'white').setDepth(3);
+
+
         // Música.
         const music = this.sound.add('theme2');
         music.play();
