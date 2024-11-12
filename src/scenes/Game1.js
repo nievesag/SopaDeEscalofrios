@@ -32,9 +32,7 @@ export default class Game1 extends Phaser.Scene {
     create () {
 
 
-        // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MainMenu',  400,  400, 'white');
-
+       
 
         // Música.
         const music = this.sound.add('theme1');
@@ -75,6 +73,7 @@ export default class Game1 extends Phaser.Scene {
 		this.groundLayer = this.map.createLayer('Ground', tileset1);
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
 		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
+
 
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
@@ -168,34 +167,33 @@ export default class Game1 extends Phaser.Scene {
         // }
     }
 
-    createButton(text, x, y, textColor) {
+    createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
            x,
            y,
             text,
             {
                 fontFamily: 'arabic',
-                fontSize: 50,
-
+                fontSize: fontsize,
                 color: textColor
             }
         ).setOrigin(0.5, 0.5);
 
-        button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
-        });
-
         button.on('pointerover', () => // Al pasar el ratón por encima...
         {
             button.setTint(0xdfa919);
-            //button.fontSize = '70px';
         });
-    
+
         button.on('pointerout', () => // Al quitar el ratón de encima...
         {
             button.clearTint();
-            //button.fontSize = '50px';
+        });
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start(sceneName);
+            this.sound.stopAll();
+
         });
     }
 }

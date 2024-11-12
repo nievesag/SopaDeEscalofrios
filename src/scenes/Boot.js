@@ -8,7 +8,7 @@ export default class Boot extends Phaser.Scene {
         //Cargar imagenes del juego
 
         //Main Menu
-        this.load.image('bgProvisional', 'assets/images/bgProvisional.jpg');
+        this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
         this.load.image("mainMenu", "./assets/images/mainMenu.jpg");
 		this.load.image("startButton", "./assets/images/startButton.jpg");
 
@@ -34,7 +34,7 @@ export default class Boot extends Phaser.Scene {
 
 
         //Game 5
-		this.load.audio("f3ale", "./assets/audio/f3ale.mp3");
+		//this.load.audio("f3ale", "./assets/audio/f3ale.mp3");
         
         this.load.image('MuroTablero', 'assets/images/Game5/MuroTablero.png');
         this.load.image('VacioTablero', 'assets/images/Game5/VacioTablero.png');
