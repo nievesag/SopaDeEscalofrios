@@ -7,10 +7,16 @@ export default class Game4 extends Phaser.Scene {
     }
     
     preload () {
-    
+    // Música.
+    this.load.audio('theme4', '../assets/audio/m4c.mp3');
     }
     
     create (){
+
+        // Música.
+        const music = this.sound.add('theme4');
+        music.play();
+        this.sound.pauseOnBlur = true;
 
           // Background
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')

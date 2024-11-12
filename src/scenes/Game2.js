@@ -22,7 +22,7 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('river', '../assets/images/rio.jpg');
 
         // Música.
-        this.load.audio('theme', '../assets/audio/m2.mp3');
+        this.load.audio('theme2', '../assets/audio/m2c.mp3');
 
         // Background.
         this.load.image('background', 'assets/images/background.jpg');
@@ -37,7 +37,7 @@ export default class Game2 extends Phaser.Scene {
 
     create (){
         // Música.
-        const music = this.sound.add('theme');
+        const music = this.sound.add('theme2');
         music.play();
         this.sound.pauseOnBlur = true;
 

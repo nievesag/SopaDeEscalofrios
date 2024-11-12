@@ -7,9 +7,16 @@ export default class Game5 extends Phaser.Scene {
     }
     
     preload () {
+        // Música.
+        this.load.audio('theme5', '../assets/audio/m5c.mp3');
     }
     
     create() {
+        // Música.
+        const music = this.sound.add('theme5');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
         // 1 para los muros 0 par vacios
         const tablero = [
             [1, 1, 0, 0, 0, 2],

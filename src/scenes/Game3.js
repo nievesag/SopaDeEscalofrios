@@ -36,11 +36,19 @@ export default class Game3 extends Phaser.Scene {
         this.load.image('BlueBeetle', '../assets/images/BurbujaAzul.png')
         this.load.image('PurpleBeetle', '../assets/images/BurbujaMorada.png')
         this.load.spritesheet('beetles', '../assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
+
+        // Música.
+        this.load.audio('theme3', '../assets/audio/m3c.mp3');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
 
     create (){
+
+        // Música.
+        const music = this.sound.add('theme3');
+        music.play();
+        this.sound.pauseOnBlur = true;
      
         // --- TIMER ---
         //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
