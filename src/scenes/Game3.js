@@ -48,11 +48,14 @@ export default class Game3 extends Phaser.Scene {
         // --- BASE BG ---.
         //const baseBG = this.add.rectangle(502, 385, 600, 760, 0xd0be49).setStrokeStyle(10, 0xffffff);
 
+        // --- INTERFACE ---.
+        //let nextShootingBeetle = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
+
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff, 0);
-        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff, 0);
-        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff, 0);
-        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff, 0);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff, 100);
+        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff, 100);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff, 100);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff, 100);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
 
         for (let i = 0; i < borders.length; i++){
@@ -61,7 +64,6 @@ export default class Game3 extends Phaser.Scene {
             borders[i].body.setAllowGravity(false); // No tendrá gravedad
             //console.log(borders[i]);
         }
-
 
         // --- CANNON ---.
         const cannonBase = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
@@ -111,7 +113,7 @@ export default class Game3 extends Phaser.Scene {
             width: 11, //Columnas
             height: 3, //Filas máximas
             cellWidth: 55,
-            cellHeight: 110,
+            cellHeight: 75,
             x: 185.5,
             y: 10,
         });
@@ -127,21 +129,23 @@ export default class Game3 extends Phaser.Scene {
             width: 11, //Columnas
             height: 3, //Filas máximas
             cellWidth: 55,
-            cellHeight: 110,
-            x: 210,
-            y: 65,
+            cellHeight: 75,
+            x: 212,
+            y: 47.5,
         });
-
+;
         //Lo agrupamos en un solo array
         const groupMatrix = [groupImpares, groupPares];
 
         //Metemos físicas
         for (let i = 0; i < groupMatrix.length; i++){
             groupMatrix[i].getChildren().forEach(element => {
+             
             this.physics.world.enable(element);
             //elememnt.setCircle(10);
             element.body.setImmovable(true); 
             element.body.setAllowGravity(false);
+            
             //console.log(element);
             
             })
@@ -166,21 +170,21 @@ export default class Game3 extends Phaser.Scene {
         {
             //Randomizamos el color;
             const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
-            //console.log(beetles[randomBeetle]);
             //console.log(randomBeetle);
-
-            shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo
-            //console.log(shootingBeetle.texture.key);
+            shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
+            //console.log(beetles[randomBeetle].texture);
+            console.log(shootingBeetle.texture.key);
             //Le metemos físicas
-            this.physics.world.enable(shootingBeetle);
-            //shootingBeetle.setCircle(10);
+            //this.physics.world.enable(shootingBeetle);
+            shootingBeetle.setCircle(22.5); //Collider circular
             // Para que no se salga de los límites del mundo.
             shootingBeetle.setBounce(1).setCollideWorldBounds(true);
 
             shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
 
             this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
-            
+        
+
             // --- COLISIONES CON BORDERS ---.
             this.physics.add.collider(borders, shootingBeetle);
 
@@ -188,7 +192,8 @@ export default class Game3 extends Phaser.Scene {
             for (let i = 0; i < groupMatrix.length; i++){
                 groupMatrix[i].getChildren().forEach(element => {
                 //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
-                this.physics.add.collider(shootingBeetle, element, addToMatrix(shootingBeetle, element));
+                this.physics.add.collider(shootingBeetle, element);
+                //this.physics.add.collider(shootingBeetle, element, this.addToMatrix(shootingBeetle, element));
                 //console.log(shootingBeetle);
                 //console.log(element);
 
@@ -253,7 +258,7 @@ export default class Game3 extends Phaser.Scene {
 /*
 Fuentes: 
 https://labs.phaser.io/edit.html?src=src\physics\arcade\closest%20furthest.js
-
+https://labs.phaser.io/edit.html?src=src\utils\array\translate%20matrix.js
 
 
 */
