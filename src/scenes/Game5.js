@@ -37,6 +37,11 @@ export default class Game5 extends Phaser.Scene {
         const centroX = this.cameras.main.centerX - tablero[0].length * tileSize / 2;
         const centroY = this.cameras.main.centerY - tablero.length * tileSize / 2;
 
+        this.boardMinX = centroX;
+        this.boardMaxX = centroX + tablero[0].length * tileSize;
+        this.boardMinY = centroY;
+        this.boardMaxY = centroY + tablero.length * tileSize;
+
         this.voids = [];
         this.walls = [];
         this.mirrors = [];
@@ -64,7 +69,7 @@ export default class Game5 extends Phaser.Scene {
         if (gun) {
             gun.setInteractive();
             gun.on('pointerdown', () => {
-                if (this.laser ==  null) {
+                if (this.laser == null) {
                     this.laser = gun.shootLaser(this);
                     this.walls.forEach(wall => {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
@@ -74,7 +79,19 @@ export default class Game5 extends Phaser.Scene {
         }
     }
 
-    DestroyLaser(laser, wall) {
+    update() {
+        if (this.laser) {
+            if (this.laser.x < this.boardMinX ||
+                this.laser.x > this.boardMaxX ||
+                this.laser.y < this.boardMinY ||
+                this.laser.y > this.boardMaxY
+            ) {
+                DestroyLaser(this.laser);
+            }
+        }
+    }
+
+    DestroyLaser(laser) {
         laser.destroy();
         this.laser = null;
     }
