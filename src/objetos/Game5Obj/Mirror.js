@@ -11,6 +11,37 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
 
         this.setImmovable(true);
         this.body.allowGravity = false;
+
+        this.setInteractive();
+
+        this.on('pointerdown', (pointer) => {
+            if (pointer.leftButtonDown()) {
+                this.rotateMirror();
+            }
+        });
+    }
+
+    rotateMirror(){
+        this.angle += 90;
+        this.entryDirection1 = this.rotateDir(this.entryDirection1);
+        this.entryDirection2 = this.rotateDir(this.entryDirection2);
+        this.exitDirection1 = this.getContraryDirection(this.entryDirection1);
+        this.exitDirection2 = this.getContraryDirection(this.entryDirection2);
+    }
+
+    rotateDir(dir){
+        switch (dir) {
+            case 'up':
+                return 'right';
+            case 'down':
+                return 'left';
+            case 'left':
+                return 'up';
+            case 'right':
+                return 'down';
+            default:
+                return null;
+        }
     }
 
     changeLaserDirection(laser) {
@@ -38,38 +69,18 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    canChange(laser){
+    canChange(laser){ // es para saber si ha pasado el centro del espejo
         if (laser.direction == 'up'){
-            if(laser.y <= this.y){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return laser.y <= this.y;
         }
         else if (laser.direction == 'down'){
-            if(laser.y >= this.y){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return laser.y >= this.y;
         }
         else if (laser.direction == 'right'){
-            if(laser.x >= this.x){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return laser.x >= this.x;
         }
         else if (laser.direction == 'left'){
-            if(laser.x <= this.x){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return laser.x <= this.x;
         }
         else{
             return false;
