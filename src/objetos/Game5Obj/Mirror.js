@@ -14,10 +14,12 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
     }
 
     changeLaserDirection(laser) {
-        if (laser.direction == this.entryDirection1) {
+        if (laser.direction == this.entryDirection1 && this.canChange(laser)) {
             laser.setDirection(this.exitDirection2);
-        } else if (laser.direction == this.entryDirection2) {
+            laser.setPosition(this.x, this.y);
+        } else if (laser.direction == this.entryDirection2 && this.canChange(laser)) {
             laser.setDirection(this.exitDirection1);
+            laser.setPosition(this.x, this.y);
         }
     }
 
@@ -33,6 +35,44 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
                 return 'left';
             default:
                 return null;
+        }
+    }
+
+    canChange(laser){
+        if (laser.direction == 'up'){
+            if(laser.y <= this.y){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (laser.direction == 'down'){
+            if(laser.y >= this.y){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (laser.direction == 'right'){
+            if(laser.x >= this.x){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (laser.direction == 'left'){
+            if(laser.x <= this.x){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else{
+            return false;
         }
     }
 }

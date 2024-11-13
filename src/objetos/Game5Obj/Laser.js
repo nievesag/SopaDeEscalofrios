@@ -1,7 +1,7 @@
 export default class Laser extends Phaser.GameObjects.Rectangle {
     constructor(scene, x, y, direction) {
-        super(scene, x, y, 20, 10, 0xff0000); // crea un rectangulo rojo que representa el laser
-        this.speed = 500;
+        super(scene, x, y, 20, 20, 0xff0000); // crea un rectangulo rojo que representa el laser
+        this.speed = 800;
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -12,7 +12,8 @@ export default class Laser extends Phaser.GameObjects.Rectangle {
 
     setDirection(direction){
         this.direction = direction;
-
+        this.body.setVelocityX(0);
+        this.body.setVelocityY(0);
         if (direction === 'right') {
             this.body.setVelocityX(this.speed);
         } else if (direction === 'left') {

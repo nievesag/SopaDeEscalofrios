@@ -72,6 +72,9 @@ export default class Game5 extends Phaser.Scene {
             gun.on('pointerdown', () => {
                 if (this.laser == null) {
                     this.laser = gun.shootLaser(this);
+                    this.mirrors.forEach(mirror => {
+                        this.physics.add.overlap(this.laser, mirror, this.TrayChangeDirection, null, this);
+                    });
                     this.walls.forEach(wall => {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
                     });
@@ -90,6 +93,10 @@ export default class Game5 extends Phaser.Scene {
                 DestroyLaser(this.laser);
             }
         }
+    }
+
+    TrayChangeDirection(laser, mirror) {
+        mirror.changeLaserDirection(laser);
     }
 
     DestroyLaser(laser) {
