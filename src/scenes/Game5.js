@@ -23,15 +23,15 @@ export default class Game5 extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        // 1 para los muros 0 par vacios
+        // 1 para los muro, 0 para los vacios, 2 para la gun
         const tablero = [
             [1, 1, 0, 0, 0, 2],
-            [1, 1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1],
             [1, 1, 0, 0, 0, 0],
-            [1, 0, 1, 0, 0, 0],
-            [1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 0, 1]
+            [1, 0, 0, 1, 0, 0],
+            [1, 0, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1]
         ];
 
         const tileSize = 100;
