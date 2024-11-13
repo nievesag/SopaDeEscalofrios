@@ -24,6 +24,8 @@ export default class Game5 extends Phaser.Scene {
         let walls = this.physics.add.group({immovable: true, allowGravity: false });
 
         const tileSize = 100;
+        let gun = null;
+        this.laser = null;
         const centroX = this.cameras.main.centerX - tablero[0].length * tileSize / 2;
         const centroY = this.cameras.main.centerY - tablero.length * tileSize / 2;
         for (let row = 0; row < tablero.length; row++) {
@@ -42,9 +44,21 @@ export default class Game5 extends Phaser.Scene {
                     walls.add(wall);
                 }
                 else {
-                    let gun = new Gun(this, x, y, tileSize);
+                    gun = new Gun(this, x, y, 'left', tileSize);
                 }
             }
+        }
+        if (gun) {
+            gun.setInteractive();
+            gun.on('pointerdown', () => {
+                this.laser = gun.shootLaser(this);
+            });
+        }
+    }
+
+    update() {
+        if (this.laser) {
+            this.laser.update();
         }
     }
 }
