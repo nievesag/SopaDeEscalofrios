@@ -167,11 +167,11 @@ export default class Game3 extends Phaser.Scene {
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
             {
-                angle = Phaser.Math.Angle.BetweenPoints(cannonDisparo, pointer); // Ángulo cañón -> mouse.
-                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
+                angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
+                cannonDisparo.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
 
                 // Línea gráfica de la dir.
-                Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle, 128); 
+                Phaser.Geom.Line.SetToAngle(line, cannonDisparo.x, cannonDisparo.y, angle, 128); 
                 graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
 
             });
@@ -191,7 +191,7 @@ export default class Game3 extends Phaser.Scene {
             // Para que no se salga de los límites del mundo.
             shootingBeetle.setBounce(1).setCollideWorldBounds(true);
 
-            shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
+            shootingBeetle.enableBody(true, cannonDisparo.x, cannonDisparo.y, true, true); // Activa la vessel y la pone donde cannonHead.
 
             this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
         
