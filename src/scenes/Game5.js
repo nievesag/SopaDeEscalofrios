@@ -8,9 +8,21 @@ export default class Game5 extends Phaser.Scene {
     }
     
     preload () {
+        // Música.
+        this.load.audio('theme5', '../assets/audio/m5c.mp3');
     }
     
     create() {
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MainMenu',  125,  700, 'white');
+        
+
+        // Música.
+        const music = this.sound.add('theme5');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
+        // 1 para los muros 0 par vacios
         const tablero = [
             [1, 1, 0, 0, 0, 2],
             [1, 1, 0, 0, 0, 1],
@@ -65,5 +77,36 @@ export default class Game5 extends Phaser.Scene {
     DestroyLaser(laser, wall) {
         laser.destroy();
         this.laser = null;
+    }
+}
+    createButton(text, x, y, textColor) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: 50,
+
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
+        });
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+            //button.fontSize = '70px';
+        });
+    
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+            //button.fontSize = '50px';
+        });
     }
 }

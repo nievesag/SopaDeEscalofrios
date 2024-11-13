@@ -24,9 +24,22 @@ export default class Game1 extends Phaser.Scene {
 		this.load.image('organ', '../../assets/images/g1/organ.png');
 
 		// this.load.image('coin', 'assets/coin.png', {s frameWidth: 32, frameHeight: 32 });
+
+        // Música.
+        this.load.audio('theme1', '../assets/audio/m1c.mp3');
     }
     
     create () {
+
+
+       
+
+        // Música.
+        const music = this.sound.add('theme1');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
+
         //let boxes = [];
         //boxes = this.physics.add.group(); // grupo de fisicas para las cajas
 
@@ -60,6 +73,7 @@ export default class Game1 extends Phaser.Scene {
 		this.groundLayer = this.map.createLayer('Ground', tileset1);
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
 		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
+
 
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
@@ -151,5 +165,35 @@ export default class Game1 extends Phaser.Scene {
         // {
         //     this.player.setVelocityY(200);
         // }
+    }
+
+    createButton(text, x, y, textColor, fontsize, sceneName) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: fontsize,
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+        });
+
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+        });
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start(sceneName);
+            this.sound.stopAll();
+
+        });
     }
 }

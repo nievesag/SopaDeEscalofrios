@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'arabic';
-  src: url('../assets/fonts/arabic.otf') format('truetype');
+  src: url('./assets/fonts/arabic.otf') format('truetype');
 }
 
 body {

@@ -36,12 +36,23 @@ export default class Game3 extends Phaser.Scene {
         this.load.image('BlueBeetle', '../assets/images/BurbujaAzul.png')
         this.load.image('PurpleBeetle', '../assets/images/BurbujaMorada.png')
         this.load.spritesheet('beetles', '../assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
+
+        // Música.
+        this.load.audio('theme3', '../assets/audio/m3c.mp3');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
 
     create (){
+
+        // Música.
+        const music = this.sound.add('theme3');
+        music.play();
+        this.sound.pauseOnBlur = true;
      
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MainMenu',  925,  700, 'white');
+
         // --- TIMER ---
         //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
 
@@ -203,47 +214,49 @@ export default class Game3 extends Phaser.Scene {
         });
     
 
-        //Se añade pero no se une
-        function addToMatrix(shootingBeetle, element){
 
-            let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-                x: shootingBeetle.x,
-                y: shootingBeetle.y, 
-                key: shootingBeetle.texture.key,
-                scale : {
-                    x: 1,
-                    y: 1,
-                },
-            }).setDepth(1);
-
-            //Creamos el bicho que se va a añadir a la matriz
-            
-            //newBeetle.texture = shootingBeetle.texture;
-            //newBeetle.y = shootingBeetle.y;
-            console.log(newBeetle.texture.key);
-            //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-            //Miramos la posición de la colisión
-            //Impar
-            if (newBeetle.y % 10 == 0){
-                groupMatrix[0].add(newBeetle);
-                groupMatrix[0].frameQuantity++;
-                //groupImpares.frameQuantity++;
-            }
-            //Par
-            else if(newBeetle.y % 65 == 0){
-                groupMatrix[1].add(newBeetle);
-                groupMatrix[1].frameQuantity++;
-                //groupPares.frameQuantity++;
-            }
-            //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-            //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
-
-            //newBeetle.body.setImmovable(true); 
-            newBeetle.body.setAllowGravity(false);
-        }
         
 
 
+    }
+
+    //Se añade pero no se une
+    addToMatrix(shootingBeetle, element){
+
+        let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
+            x: shootingBeetle.x,
+            y: shootingBeetle.y, 
+            key: shootingBeetle.texture.key,
+            scale : {
+                x: 1,
+                y: 1,
+            },
+        }).setDepth(1);
+
+        //Creamos el bicho que se va a añadir a la matriz
+        
+        //newBeetle.texture = shootingBeetle.texture;
+        //newBeetle.y = shootingBeetle.y;
+        console.log(newBeetle.texture.key);
+        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
+        //Miramos la posición de la colisión
+        //Impar
+        if (newBeetle.y % 10 == 0){
+            groupMatrix[0].add(newBeetle);
+            groupMatrix[0].frameQuantity++;
+            //groupImpares.frameQuantity++;
+        }
+        //Par
+        else if(newBeetle.y % 65 == 0){
+            groupMatrix[1].add(newBeetle);
+            groupMatrix[1].frameQuantity++;
+            //groupPares.frameQuantity++;
+        }
+        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
+        //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
+
+        //newBeetle.body.setImmovable(true); 
+        newBeetle.body.setAllowGravity(false);
     }
 
     update (){
@@ -251,7 +264,36 @@ export default class Game3 extends Phaser.Scene {
         //this.timer.setText(`time: ${time.ToString()}`);
     }
 
+    createButton(text, x, y, textColor) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: 50,
+
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
+        });
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+            //button.fontSize = '70px';
+        });
     
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+            //button.fontSize = '50px';
+        });
+    }
 }
 
 
