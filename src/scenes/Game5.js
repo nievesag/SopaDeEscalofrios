@@ -78,7 +78,7 @@ export default class Game5 extends Phaser.Scene {
         laser.destroy();
         this.laser = null;
     }
-}
+    
     createButton(text, x, y, textColor) {
         let button = this.add.text(
            x,
