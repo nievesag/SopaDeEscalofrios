@@ -26,7 +26,7 @@ export default class Game3 extends Phaser.Scene {
 
         //Player (place holder)
         this.load.image('cannonBase', './assets/images/icon500.jpg');
-        this.load.image('cannonHead', './assets/images/Burbujas.png');
+        this.load.image('cannonDisparo', './assets/images/Burbujas.png');
         //Munición 
         this.load.image('RedBeetle', './assets/images/BurbujaRoja.png')
         this.load.image('OrangeBeetle', './assets/images/BurbujaNaranja.png')
@@ -91,7 +91,7 @@ export default class Game3 extends Phaser.Scene {
             x: 500,
             y: 730, 
             angle: 90,
-            key: 'cannonHead',
+            key: 'cannonDisparo',
 
             scale : {
                 x: 0.3,
@@ -167,7 +167,7 @@ export default class Game3 extends Phaser.Scene {
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
             {
-                angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
+                angle = Phaser.Math.Angle.BetweenPoints(cannonDisparo, pointer); // Ángulo cañón -> mouse.
                 cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
 
                 // Línea gráfica de la dir.
@@ -182,7 +182,7 @@ export default class Game3 extends Phaser.Scene {
             //Randomizamos el color;
             const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
             //console.log(randomBeetle);
-            shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
+            shootingBeetle = this.physics.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
             //console.log(beetles[randomBeetle].texture);
             console.log(shootingBeetle.texture.key);
             //Le metemos físicas
