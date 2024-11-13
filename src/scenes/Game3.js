@@ -25,20 +25,20 @@ export default class Game3 extends Phaser.Scene {
     preload () {
 
         //Player (place holder)
-        this.load.image('cannonBase', '../assets/images/icon500.jpg');
-        this.load.image('cannonHead', '../assets/images/Burbujas.png');
+        this.load.image('cannonBase', './assets/images/icon500.jpg');
+        this.load.image('cannonHead', './assets/images/Burbujas.png');
         //Munición 
-        this.load.image('RedBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('OrangeBeetle', '../assets/images/BurbujaNaranja.png')
-        this.load.image('YellowBeetle', '../assets/images/BurbujaAmarilla.png')
-        this.load.image('GreenBeetle', '../assets/images/BurbujaVerde.png')
-        this.load.image('CianBeetle', '../assets/images/BurbujaCian.png')
-        this.load.image('BlueBeetle', '../assets/images/BurbujaAzul.png')
-        this.load.image('PurpleBeetle', '../assets/images/BurbujaMorada.png')
-        this.load.spritesheet('beetles', '../assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
+        this.load.image('RedBeetle', './assets/images/BurbujaRoja.png')
+        this.load.image('OrangeBeetle', './assets/images/BurbujaNaranja.png')
+        this.load.image('YellowBeetle', './assets/images/BurbujaAmarilla.png')
+        this.load.image('GreenBeetle', './assets/images/BurbujaVerde.png')
+        this.load.image('CianBeetle', './assets/images/BurbujaCian.png')
+        this.load.image('BlueBeetle', './assets/images/BurbujaAzul.png')
+        this.load.image('PurpleBeetle', './assets/images/BurbujaMorada.png')
+        this.load.spritesheet('beetles', './assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
 
         // Música.
-        this.load.audio('theme3', '../assets/audio/m3c.mp3');
+        this.load.audio('theme3', './assets/audio/m3c.mp3');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle

@@ -9,26 +9,26 @@ export default class Game2 extends Phaser.Scene {
     
     preload () { // Carga los recursos.
         // Cannon.
-        this.load.image('cannonBody', '../assets/images/cannonBody.jpg');
-        this.load.image('cannonHead', '../assets/images/cannonHead.png');
+        this.load.image('cannonBody', './assets/images/cannonBody.jpg');
+        this.load.image('cannonHead', './assets/images/cannonHead.png');
 
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
         //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
 
         // Vessel.
-        this.load.image('vessel', '../assets/images/vessel.png');
+        this.load.image('vessel', './assets/images/vessel.png');
 
         // River.
-        this.load.image('river', '../assets/images/rio.jpg');
+        this.load.image('river', './assets/images/rio.jpg');
 
         // Música.
-        this.load.audio('theme2', '../assets/audio/m2c.mp3');
+        this.load.audio('theme2', './assets/audio/m2c.mp3');
 
         // Background.
-        this.load.image('background', 'assets/images/background.jpg');
+        this.load.image('background', './assets/images/background.jpg');
 
         // Generador de obstáculos.
-        this.load.image('obstacleGenerator', 'assets/images/obstaclesGenerator.jpg')
+        this.load.image('obstacleGenerator', './assets/images/obstaclesGenerator.jpg')
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle

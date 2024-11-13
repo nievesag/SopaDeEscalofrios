@@ -9,12 +9,12 @@ export default class Game5 extends Phaser.Scene {
     
     preload () {
         // Música.
-        this.load.audio('theme5', '../assets/audio/m5c.mp3');
+        this.load.audio('theme5', './assets/audio/m5c.mp3');
     }
     
     create() {
         // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MainMenu',  125,  700, 'white');
+        this.createButton('MainMenu',  100,  700, 'white');
         
 
         // Música.

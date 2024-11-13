@@ -9,24 +9,24 @@ export default class Game1 extends Phaser.Scene {
     
     preload () {
         // Cargamos el Tilemap (JsSON)
-		this.load.tilemapTiledJSON('tilemap', 'assets/tilemap/map1.json');
+		this.load.tilemapTiledJSON('tilemap', './assets/tilemap/map1.json');
 
 		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
-		this.load.image('patronesTilemap', 'assets/tilemap/tileset_duat.png');
+		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
 
 		// Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('player', '../../assets/images/g1/playerG1.png');
+		this.load.image('player', './assets/images/g1/playerG1.png');
 
         // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('box', '../../assets/images/g1/box.png');
+		this.load.image('box', './assets/images/g1/box.png');
 
         // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('organ', '../../assets/images/g1/organ.png');
+		this.load.image('organ', './assets/images/g1/organ.png');
 
 		// this.load.image('coin', 'assets/coin.png', {s frameWidth: 32, frameHeight: 32 });
 
         // Música.
-        this.load.audio('theme1', '../assets/audio/m1c.mp3');
+        this.load.audio('theme1', './assets/audio/m1c.mp3');
     }
     
     create () {
@@ -118,7 +118,7 @@ export default class Game1 extends Phaser.Scene {
 
         this.physics.add.collider(boxesGroup, organsGroup);
 
-
+        this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
         /*
         this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
             
