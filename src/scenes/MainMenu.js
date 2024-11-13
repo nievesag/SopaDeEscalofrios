@@ -17,7 +17,7 @@ export default class MainMenu extends Phaser.Scene {
         // Música.
         const music = this.sound.add('f3ale');
         music.play();
-        this.sound.pauseOnBlur = true;
+      //  this.sound.pauseOnBlur = true;
 
         
 

@@ -11,6 +11,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         this.sound.stopAll();
 
+        // Música.
+        const music = this.sound.add('f3ale');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
         this.createButton("Camino a la Duat", 200, 200, 'white', 50, 'Game1');
         this.createButton("La Vasija Entresija", 800, 200, 'white', 50, 'Game2');
         this.createButton("Al Rescate de los Escarabajos", 200, 600, 'white', 35, 'Game3');
