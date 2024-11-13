@@ -38,7 +38,8 @@ export default class Boot extends Phaser.Scene {
         this.load.image('MuroTablero', 'assets/images/Game5/MuroTablero.png');
         this.load.image('VacioTablero', 'assets/images/Game5/VacioTablero.png');
         this.load.image('FondoTablero', 'assets/images/Game5/FondoTablero.png');
-        this.load.image('Gun', 'assets/images/Game5/DisparadorTablero.png');
+        this.load.image('DisparadorTablero', 'assets/images/Game5/DisparadorTablero.png');
+        this.load.image('EspejoTablero', 'assets/images/Game5/EspejoTablero.png');
 
         // La Vasija Entresija.
         this.load.image('cannon', 'assets/images/cannon.png')

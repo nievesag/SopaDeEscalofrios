@@ -2,7 +2,7 @@ import Laser from './Laser.js';
 
 export default class Gun extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, direction, tileSize) {
-        super(scene, x, y, 'Gun');
+        super(scene, x, y, 'DisparadorTablero');
         
         this.displayWidth = tileSize;
         this.displayHeight = tileSize;

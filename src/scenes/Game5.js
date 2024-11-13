@@ -1,6 +1,7 @@
 
 import Wall from '../objetos/Game5Obj/Wall.js';
 import Gun from '../objetos/Game5Obj/Gun.js';
+import Void from '../objetos/Game5Obj/Void.js';
 
 export default class Game5 extends Phaser.Scene {
     constructor() {
@@ -55,8 +56,8 @@ export default class Game5 extends Phaser.Scene {
                 let y = row * tileSize + tileSize / 2 + centroY;
 
                 if (tileValue === 0) {
-                    this.add.image(x, y, 'VacioTablero');
-                    this.voids.push();
+                    const v = new Void(this, x, y, tileSize);
+                    this.voids.push(v);
                 } else if (tileValue === 1) {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
