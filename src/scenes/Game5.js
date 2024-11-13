@@ -1,6 +1,7 @@
 
 import Wall from '../objetos/Game5Obj/Wall.js';
 import Gun from '../objetos/Game5Obj/Gun.js';
+import Void from '../objetos/Game5Obj/Void.js';
 
 export default class Game5 extends Phaser.Scene {
     constructor() {
@@ -22,20 +23,25 @@ export default class Game5 extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        // 1 para los muros 0 par vacios
+        // 1 para los muro, 0 para los vacios, 2 para la gun
         const tablero = [
             [1, 1, 0, 0, 0, 2],
-            [1, 1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1],
             [1, 1, 0, 0, 0, 0],
-            [1, 0, 1, 0, 0, 0],
-            [1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 0, 1]
+            [1, 0, 0, 1, 0, 0],
+            [1, 0, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1]
         ];
 
         const tileSize = 100;
         const centroX = this.cameras.main.centerX - tablero[0].length * tileSize / 2;
         const centroY = this.cameras.main.centerY - tablero.length * tileSize / 2;
+
+        this.boardMinX = centroX;
+        this.boardMaxX = centroX + tablero[0].length * tileSize;
+        this.boardMinY = centroY;
+        this.boardMaxY = centroY + tablero.length * tileSize;
 
         this.voids = [];
         this.walls = [];
@@ -50,8 +56,8 @@ export default class Game5 extends Phaser.Scene {
                 let y = row * tileSize + tileSize / 2 + centroY;
 
                 if (tileValue === 0) {
-                    this.add.image(x, y, 'VacioTablero');
-                    this.voids.push();
+                    const v = new Void(this, x, y, tileSize);
+                    this.voids.push(v);
                 } else if (tileValue === 1) {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
@@ -64,8 +70,11 @@ export default class Game5 extends Phaser.Scene {
         if (gun) {
             gun.setInteractive();
             gun.on('pointerdown', () => {
-                if (this.laser ==  null) {
+                if (this.laser == null) {
                     this.laser = gun.shootLaser(this);
+                    this.mirrors.forEach(mirror => {
+                        this.physics.add.overlap(this.laser, mirror, this.TrayChangeDirection, null, this);
+                    });
                     this.walls.forEach(wall => {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
                     });
@@ -74,7 +83,23 @@ export default class Game5 extends Phaser.Scene {
         }
     }
 
-    DestroyLaser(laser, wall) {
+    update() {
+        if (this.laser) {
+            if (this.laser.x < this.boardMinX ||
+                this.laser.x > this.boardMaxX ||
+                this.laser.y < this.boardMinY ||
+                this.laser.y > this.boardMaxY
+            ) {
+                DestroyLaser(this.laser);
+            }
+        }
+    }
+
+    TrayChangeDirection(laser, mirror) {
+        mirror.changeLaserDirection(laser);
+    }
+
+    DestroyLaser(laser) {
         laser.destroy();
         this.laser = null;
     }
