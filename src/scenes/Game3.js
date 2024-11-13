@@ -87,7 +87,7 @@ export default class Game3 extends Phaser.Scene {
             },
         }).setDepth(1);
 
-        const cannonHead = this.make.image({ // Cannon Head.
+        const cannonDisparo = this.make.image({ // Cannon Head.
             x: 500,
             y: 730, 
             angle: 90,
