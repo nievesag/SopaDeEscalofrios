@@ -8,5 +8,6 @@ export default class Wall extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.body.setImmovable(true);
+        this.body.allowGravity = false;
     }
 }
