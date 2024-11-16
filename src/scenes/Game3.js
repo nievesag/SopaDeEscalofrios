@@ -41,6 +41,13 @@ export default class Game3 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
 
     create (){
+
+
+        // Música.
+        //const music = this.sound.add('theme3');
+        //music.play();
+        //this.sound.pauseOnBlur = true;
+
      
         // --- TIMER ---
         //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
@@ -98,34 +105,46 @@ export default class Game3 extends Phaser.Scene {
         let angle = 0; // Inicializa el ángulo a 0.
 
         // --- GRID DE BICHOS ---.
-        //Randomizamos el frame del color
-        const groupImpares = this.add.group({
-            key: 'beetles',
-            frame: [ 0,1,2,3,4,5,6 ],
-            frameQuantity: 11 * 1,
-            randomKey: true
-            
+        this.groupImpares = this.physics.add.group({
+            runChildUpdate: true
         });
 
-        Phaser.Actions.GridAlign(groupImpares.getChildren(), {
-            width: 11, //Columnas
-            height: 3, //Filas máximas
+        // Create multiple beetles and add them to the group
+        this.beetlesImpares = this.groupImpares.createMultiple({
+            key: 'beetles',
+            frame: [0, 1, 2, 3, 4, 5, 6],
+            quantity: 11,
+            setXY: { x: 185.5, y: 10 },
+            randomKey: true
+        });
+
+        // Align the beetles in a grid
+        Phaser.Actions.GridAlign(this.beetlesImpares, {
+            width: 11, // Columns
+            height: 3, // Rows
             cellWidth: 55,
             cellHeight: 110,
             x: 185.5,
             y: 10,
         });
 
-        const groupPares = this.add.group({
+        // Repeat for groupPares
+        this.groupPares = this.physics.add.group({
+            runChildUpdate: true
+            
+        });
+
+        this.beetlesPares = this.groupPares.createMultiple({
             key: 'beetles',
-            frame: [ 0,1,2,3,4,5,6 ],
-            frameQuantity: 11 * 1,
+            frame: [0, 1, 2, 3, 4, 5, 6],
+            quantity: 11,
+            setXY: { x: 212, y: 47.5 },
             randomKey: true
         });
 
-        Phaser.Actions.GridAlign(groupPares.getChildren(), {
-            width: 11, //Columnas
-            height: 3, //Filas máximas
+        Phaser.Actions.GridAlign(this.beetlesPares, {
+            width: 11, // Columns
+            height: 3, // Rows
             cellWidth: 55,
             cellHeight: 110,
             x: 210,
@@ -133,20 +152,28 @@ export default class Game3 extends Phaser.Scene {
         });
 
         //Lo agrupamos en un solo array
-        const groupMatrix = [groupImpares, groupPares];
+        let groupMatrix = [];
+        groupMatrix.push(this.physics.add.groupImpares); // Group for odd rows
+        groupMatrix.push(this.physics.add.groupPares); // Group for even rows
 
-        //Metemos físicas
-        for (let i = 0; i < groupMatrix.length; i++){
-            groupMatrix[i].getChildren().forEach(element => {
-            this.physics.world.enable(element);
-            //elememnt.setCircle(10);
-            element.body.setImmovable(true); 
-            element.body.setAllowGravity(false);
-            //console.log(element);
-            
-            })
-            //console.log(i);
-        }
+        console.log("Antes de rellenar" + groupMatrix[0] + groupMatrix[1]);
+
+
+        groupMatrix.forEach((group, index) => {
+            console.log('Grupo', index, 'tiene', group.getChildren().length, 'bichos');
+        
+            // Acceder a cada bicho dentro de este grupo
+            group.getChildren().forEach((beetle, i) => {
+                console.log(`Bicho ${i} del grupo ${index}:`, beetle);
+        
+                // Puedes modificar las propiedades de cada bicho, como su posición o animaciones
+                beetle.body.setImmovable(true); // El suelo no se moverá
+                beetle.body.setAllowGravity(false); // No tendrá gravedad
+                //beetle.setVelocity(100, 0); // Por ejemplo, ponerle una velocidad
+            });
+        });
+        
+        console.log("Después de rellenar" + groupMatrix[0] + groupMatrix[1]);
 
         // --- INPUT ---.
         // SIGUE AL MOUSE.
@@ -188,7 +215,9 @@ export default class Game3 extends Phaser.Scene {
             for (let i = 0; i < groupMatrix.length; i++){
                 groupMatrix[i].getChildren().forEach(element => {
                 //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
+
                 this.physics.add.collider(shootingBeetle, element, addToMatrix(shootingBeetle, element));
+
                 //console.log(shootingBeetle);
                 //console.log(element);
 
@@ -197,6 +226,7 @@ export default class Game3 extends Phaser.Scene {
                 
         });
     
+
 
         //Se añade pero no se une
         function addToMatrix(shootingBeetle, element){
@@ -240,6 +270,7 @@ export default class Game3 extends Phaser.Scene {
 
 
     }
+
 
     update (){
         //console.log(timer);
