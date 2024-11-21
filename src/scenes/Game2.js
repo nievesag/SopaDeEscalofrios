@@ -2,6 +2,13 @@ import Cannon from '../objetos/Game2Obj/Cannon.js';
 import Vessel from '../objetos/Game2Obj/Vessel.js';
 import Background from '../objetos/Game2Obj/Background.js';
 
+// TO DO.
+        // Vorágine.
+        // Agua que rebota.
+        // Hipopótamo.
+        // Cocodrilo.
+
+
 export default class Game2 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game2'});
@@ -9,26 +16,29 @@ export default class Game2 extends Phaser.Scene {
     
     preload () { // Carga los recursos.
         // Cannon.
-        this.load.image('cannonBody', './assets/images/cannonBody.jpg');
-        this.load.image('cannonHead', './assets/images/cannonHead.png');
+        this.load.image('cannonBody', './assets/images/Game2/cannonBody.jpg');
+        this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
 
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
         //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
 
         // Vessel.
-        this.load.image('vessel', './assets/images/vessel.png');
+        this.load.image('vessel', './assets/images/Game2/vessel.png');
 
         // River.
-        this.load.image('river', './assets/images/rio.jpg');
+        this.load.image('river', './assets/images/Game2/rio.jpg');
 
         // Música.
         this.load.audio('theme2', './assets/audio/m2c.mp3');
 
         // Background.
-        this.load.image('background', './assets/images/background.jpg');
+        this.load.image('background', './assets/images/Game2/background.jpg');
 
         // Generador de obstáculos.
-        this.load.image('obstacleGenerator', './assets/images/obstaclesGenerator.jpg')
+        //this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg')
+
+        // Vorágine.
+        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg')
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -68,7 +78,7 @@ export default class Game2 extends Phaser.Scene {
         this.background.createLandscape();
         this.cannon = new Cannon(this);
         this.vessel = new Vessel(this, this.cannon);
-    
+
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
         {
@@ -97,6 +107,7 @@ export default class Game2 extends Phaser.Scene {
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
     }
 
+    // Botón de la UI.
     createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
            x,
