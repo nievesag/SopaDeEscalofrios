@@ -7,6 +7,7 @@ import Background from '../objetos/Game2Obj/Background.js';
         // Agua que rebota.
         // Hipopótamo.
         // Cocodrilo.
+        //...
 
 
 export default class Game2 extends Phaser.Scene {
