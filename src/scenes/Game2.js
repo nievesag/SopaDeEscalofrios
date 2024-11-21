@@ -36,11 +36,6 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
 
     create (){
-
-        // --- BOTON VOLVER A MAIN MENU ---
-        //this.createButton('MainMenu',  400,  400, 'white').setDepth(3);
-
-
         // Música.
         const music = this.sound.add('theme2');
         music.play();
@@ -50,11 +45,10 @@ export default class Game2 extends Phaser.Scene {
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
         this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
 
-        this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+        // Botón de regreso.
+        this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
      
-
-
-        // Generador de obstáculos.
+        /*// Generador de obstáculos.
         this.obstacleGen = this.make.image({
             scale : {
                 x: 0.25,
@@ -62,6 +56,7 @@ export default class Game2 extends Phaser.Scene {
             },
             key: 'obstacleGenerator'
         }).setDepth(2);
+        */
     
         // Establece los límites del mundo y de la cámara.
         // x, y, width, height
@@ -76,17 +71,15 @@ export default class Game2 extends Phaser.Scene {
     
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
-            {
-                this.cannon.cannonAngle(pointer);
-            });
+        {
+            this.cannon.cannonAngle(pointer);
+        });
 
         // AL HACER CLIC.
         this.input.on('pointerup', () =>
-            {
-                this.vessel.launchVessel(this.cannon.angle);
-            });
-
-
+        {
+            this.vessel.launchVessel(this.cannon.angle);
+        });
     }
 
     update(){
@@ -94,9 +87,14 @@ export default class Game2 extends Phaser.Scene {
         this.bg.tilePositionX += 2;
         this.rio.tilePositionX -=6;
 
+        /* --- CREAR AL GENERADOR DE OBSTÁCULOS LUEGO ---
         // Mantiene al obstacle generator a la derecha de la pantalla.
         this.obstacleGen.x = this.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
         this.obstacleGen.y = this.cameras.main.centerY + 250
+        */
+
+        this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
+        this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -127,8 +125,7 @@ export default class Game2 extends Phaser.Scene {
             this.sound.stopAll();
 
         });
+
+        return button;
     }
-
-
-    
 }
