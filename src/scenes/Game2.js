@@ -1,6 +1,7 @@
 import Cannon from '../objetos/Game2Obj/Cannon.js';
 import Vessel from '../objetos/Game2Obj/Vessel.js';
 import Background from '../objetos/Game2Obj/Background.js';
+import Maelstrom from '../objetos/Game2Obj/Maelstrom.js';
 
 // TO DO.
         // Vorágine.
@@ -78,7 +79,13 @@ export default class Game2 extends Phaser.Scene {
         this.background = new Background(this);
         this.background.createLandscape();
         this.cannon = new Cannon(this);
-        this.vessel = new Vessel(this, this.cannon);
+        this.maelstrom = new Maelstrom(this);
+        this.vessel = new Vessel(this, this.cannon, this.maelstrom);
+        
+        this.physics.add.collider(this.vessel, this.maelstrom.maelstrom, ()=>{
+            console.log("HOALASLALAL")
+            this.vessel.vessel.destroy();
+        })
 
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
@@ -106,6 +113,9 @@ export default class Game2 extends Phaser.Scene {
 
         this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
+        
+        // Colisiones de la Vessel.
+        //this.vessel.collisionWithVessel(this.maelstrom); // LUEGO QUITAR ahora colisiona con la voragine.
     }
 
     // Botón de la UI.
