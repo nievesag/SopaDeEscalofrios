@@ -1,5 +1,6 @@
 import Bow from '../objetos/Game4Obj/Bow.js';
 import Obstaculo from '../objetos/Game4Obj/Obstaculo.js';
+import Enemy from '../objetos/Game4Obj/Enemy.js';
 
 export default class Game4 extends Phaser.Scene {
     constructor() {
@@ -52,6 +53,9 @@ export default class Game4 extends Phaser.Scene {
             { type: 'ball', count: 2 }
         ]); // Ajusta las coordenadas
 
+
+
+
         this.grupoObs = this.add.group({
             classType: Obstaculo,
             maxSize: 100
@@ -71,9 +75,26 @@ export default class Game4 extends Phaser.Scene {
             if (obstaculoObj) obstaculoObj.takeDamage();
         });
 
+
+        this.enemiesPool = [];
+
+        const myEnemy = new Enemy(this, 800, 500);
+        this.enemiesPool.push(myEnemy);
+
+
         // Configurar colisiones internas para que los obstáculos interactúen y se apilen correctamente
         this.physics.add.collider(this.grupoObs, this.grupoObs);
 
+    }
+
+
+    update()
+    {
+        this.enemiesPool.forEach(enemy => {
+            // Verifica la colisión con cada jugador
+                enemy.checkCollisionWithArrow(this, this.bow.projectile);
+
+        });
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
