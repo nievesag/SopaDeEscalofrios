@@ -1,10 +1,12 @@
 import PlayerG1 from '../objetos/Game1Obj/playerG1.js';
 import Organ from '../objetos/Game1Obj/organ.js';
 import Box from '../objetos/Game1Obj/box.js';
+import Goal from '../objetos/Game1Obj/goal.js';
 
 export default class Game1 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game1'});
+        this.gameTime = 10; // segundos para el juego
     }
     
     preload () {
@@ -23,22 +25,11 @@ export default class Game1 extends Phaser.Scene {
         // Recurso para el personaje principal (imagen simple con un solo frame)
 		this.load.image('organ', '../../assets/images/g1/organ.png');
 
-		// this.load.image('coin', 'assets/coin.png', {s frameWidth: 32, frameHeight: 32 });
+        // Recurso para el personaje principal (imagen simple con un solo frame)
+		this.load.image('goal', '../../assets/images/g1/goal.png');
     }
     
     create () {
-        //let boxes = [];
-        //boxes = this.physics.add.group(); // grupo de fisicas para las cajas
-
-        // ---- Objectos de escena ----
-        // instancias
-        // let box1 = new Box(this, 200, 0, boxes);
-        // let box2 = new Box(this, 400, 0, boxes);
-        
-        //this.playerG1 = this.physics.add.sprite(400, 300, 'player');
-        // this.playerG1.setCollideWorldBounds(true);
-        // this.playerG1.setPushable(false);
-        
         this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -60,9 +51,13 @@ export default class Game1 extends Phaser.Scene {
 		this.groundLayer = this.map.createLayer('Ground', tileset1);
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
 		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
-
+        
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
+        // --- GOAL
+        let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Organ, key: "goal" });
+        this.goal = react[0]; //solo hay 1 y es el goal
+
         // --- CAJAS
         let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: 'box' });
         
@@ -76,21 +71,25 @@ export default class Game1 extends Phaser.Scene {
 		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ, key: 'organ' });
         
 		let organsGroup = this.add.group();
+        this.organsPool = [];
+        
         organsGroup.addMultiple(organs);
 		organs.forEach(obj => {
             this.physics.add.existing(obj);
+            this.organsPool.push(obj);
         });
+        
+        this.organCount = this.organsPool.length;
+
+        // --- PLAYER
+        let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
+        let playerG1 = characters[0]; //se que solo hay uno y es mi player
         
         // Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
         //characters.forEach(obj => {
         //	obj.setDepth(10);
         //});
-            
-        // --- PLAYER
-        //let playerG1 = new PlayerG1(this, 50, 50, 'player');
-        let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
-        let playerG1 = characters[0]; //se que solo hay uno y es mi player
-        
+
         // colisiones
         this.physics.add.collider(playerG1, this.wallLayer);
         this.physics.add.collider(playerG1, organsGroup);
@@ -104,52 +103,69 @@ export default class Game1 extends Phaser.Scene {
 
         this.physics.add.collider(boxesGroup, organsGroup);
 
+        // tiempo
+        this.timerText = this.add.text(20, 20, this.gameTime,
+            { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+        this.timerHUD();
 
-        /*
-        this.physics.add.collider(this.playerG1, this.wallLayer, null, (playerG1, wallLayer) => {
-            
-        });*/
-        
         // -----------------------------------
     }
+
+    // Lo llamas en el create
+    timerHUD(){
+        const updateTimer = () => {
+            // Vamos restando de uno en uno
+            this.gameTime -= 1; // Cambia esto según tus necesidades
+
+            // Eliminar el texto anterior
+            this.timerText.destroy();
+
+            if(this.gameTime > 0) {
+                // Crear el nuevo texto actualizado en el mismo sitio
+                this.timerText = this.add.text(20, 20, this.gameTime,
+                    { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+            }
+        };
+        // Evento que actualice el temporizador
+        this.time.addEvent({
+            delay: 1000,
+            loop: true,
+            callback: updateTimer,
+            callbackScope: this
+        });
+    }
+
+
+    init() {
         
-        init() {
-            
-            // para llevar el control de limite de tiempo
-            // this.maxTime = document.getElementById('targetTime');
-            
-            // this.time = 0; 
+        // para llevar el control de limite de tiempo
+        // this.maxTime = document.getElementById('targetTime');
+        
+        // this.time = 0; 
+    }
+
+    handleOrganGoal() {
+
+    }
+
+    update(time, dt)
+    {
+        // ---- limite de tiempo ----
+        if(this.gameTime <= 0 && !this.gameEnd){
+            console.log("final");
+        }
+    
+        this.organsPool.forEach(organ => {
+            organ.checkCollisionWithGoal(this, this.goal);
+        });
+
+        if(this.organCount == 0) {
+            console.log("hola");
         }
 
-    update(time, dt) 
-    {
+    }
 
-        // // ---- limite de tiempo ----
-        // this.time += dt;
-        // if(this.time > this.maxTime.value*1000) {
-            
-        // }
-
-        // // DEL PLAYER para la clase player y eso --------->
-
-        // this.player.setVelocity(0, 0);
-
-        // if (this.cursors.left.isDown)
-        // {
-        //     this.player.setVelocityX(-200);
-        // }
-        // else if (this.cursors.right.isDown)
-        // {
-        //     this.player.setVelocityX(200);
-        // }
-
-        // if (this.cursors.up.isDown)
-        // {
-        //     this.player.setVelocityY(-200);
-        // }
-        // else if (this.cursors.down.isDown)
-        // {
-        //     this.player.setVelocityY(200);
-        // }
+    decreaseOrganCount() {
+        this.organCount--;
     }
 }

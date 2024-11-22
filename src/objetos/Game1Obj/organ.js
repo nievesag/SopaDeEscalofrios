@@ -9,6 +9,8 @@ export default class Organ extends Phaser.GameObjects.Sprite {
         this.body.setBounce(1,1);
 
         this.body.setAllowGravity(false);
+
+        this.isDead = false;
     }
 
     preUpdate(t, dt) {
@@ -25,5 +27,28 @@ export default class Organ extends Phaser.GameObjects.Sprite {
 		if(this.body.velocity.x <= 5 && this.body.velocity.x > 0 || this.body.velocity.x >= -5 && this.body.velocity.x < 0) {
 			this.body.velocity.x = 0;
 		}
+    }
+
+    checkCollisionWithGoal(scene, goal)
+    {
+        // si ya esta muerto no hay colision
+        if(this.isDead) {
+            return false;
+        }
+
+        // comprueba colision
+        const collision = this.scene.physics.world.overlap(this, goal);
+
+        if(collision) {
+            this.scene.time.delayedCall(400,() => 
+                {
+                    this.destroy();
+                    this.isDead = true;
+                    scene.handleOrganGoal();
+                    scene.decreaseOrganCount();
+                }, [], this);
+        }
+
+        return collision;
     }
 }
