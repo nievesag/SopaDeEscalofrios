@@ -11,25 +11,45 @@ export default class Game1 extends Phaser.Scene {
     
     preload () {
         // Cargamos el Tilemap (JsSON)
-		this.load.tilemapTiledJSON('tilemap', 'assets/tilemap/map1.json');
+		this.load.tilemapTiledJSON('tilemap', './assets/tilemap/map1.json');
 
 		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
-		this.load.image('patronesTilemap', 'assets/tilemap/tileset_duat.png');
+		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
 
 		// Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('player', '../../assets/images/g1/playerG1.png');
+		this.load.image('player', './assets/images/g1/playerG1.png');
 
         // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('box', '../../assets/images/g1/box.png');
+		this.load.image('box', './assets/images/g1/box.png');
 
         // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('organ', '../../assets/images/g1/organ.png');
+		this.load.image('organ', './assets/images/g1/organ.png');
 
         // Recurso para el personaje principal (imagen simple con un solo frame)
 		this.load.image('goal', '../../assets/images/g1/goal.png');
+
+        // Música.
+        this.load.audio('theme1', './assets/audio/m1c.mp3');
     }
     
     create () {
+        // Música.
+        const music = this.sound.add('theme1');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
+        //let boxes = [];
+        //boxes = this.physics.add.group(); // grupo de fisicas para las cajas
+
+        // ---- Objectos de escena ----
+        // instancias
+        // let box1 = new Box(this, 200, 0, boxes);
+        // let box2 = new Box(this, 400, 0, boxes);
+        
+        //this.playerG1 = this.physics.add.sprite(400, 300, 'player');
+        // this.playerG1.setCollideWorldBounds(true);
+        // this.playerG1.setPushable(false);
+        
         this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -51,7 +71,7 @@ export default class Game1 extends Phaser.Scene {
 		this.groundLayer = this.map.createLayer('Ground', tileset1);
 		this.wallLayer = this.map.createLayer('Wall', tileset1);
 		this.wallLayer.setCollision(2, true); // Los tiles de esta capa tienen colisiones
-        
+
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
         // --- GOAL
@@ -107,6 +127,8 @@ export default class Game1 extends Phaser.Scene {
         this.timerText = this.add.text(20, 20, this.gameTime,
             { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
         this.timerHUD();
+
+        this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
 
         // -----------------------------------
     }
@@ -167,5 +189,35 @@ export default class Game1 extends Phaser.Scene {
 
     decreaseOrganCount() {
         this.organCount--;
+    }
+
+    createButton(text, x, y, textColor, fontsize, sceneName) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: fontsize,
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+        });
+
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+        });
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start(sceneName);
+            this.sound.stopAll();
+
+        });
     }
 }
