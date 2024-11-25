@@ -2,8 +2,9 @@ import Arrow from '../Game4Obj/Arrow.js';
 
 export default class SplitArrow extends Arrow {
     constructor(scene, x, y) {
-        super(scene, x, y);
+        super(scene, x, y, 'arrow2');
         this.type = 'split';
+        this.arrow = this; // Referenci8a de la flecha original
     }
 
     split() {
@@ -31,7 +32,22 @@ export default class SplitArrow extends Arrow {
         const arrow3 = new Arrow(this.scene, this.arrow.x, this.arrow.y);
         arrow3.launch(velocityX3, velocityY3);
 
+
+        this.scene.time.delayedCall(4000, () => {
+            if (arrow1) {
+                arrow1.destroy();
+            }
+            if (arrow2) {
+                arrow2.destroy();
+            }
+            if (arrow3) {
+                arrow3.destroy();
+            }
+        });
+
         // Destruir la flecha original
         this.arrow.destroy();
+
+     
     }
 }

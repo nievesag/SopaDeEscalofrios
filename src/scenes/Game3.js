@@ -25,17 +25,20 @@ export default class Game3 extends Phaser.Scene {
     preload () {
 
         //Player (place holder)
-        this.load.image('cannonBase', '../assets/images/icon500.jpg');
-        this.load.image('cannonHead', '../assets/images/Burbujas.png');
+        this.load.image('cannonBase', './assets/images/icon500.jpg');
+        this.load.image('cannonDisparo', './assets/images/Burbujas.png');
         //Munición 
-        this.load.image('RedBeetle', '../assets/images/BurbujaRoja.png')
-        this.load.image('OrangeBeetle', '../assets/images/BurbujaNaranja.png')
-        this.load.image('YellowBeetle', '../assets/images/BurbujaAmarilla.png')
-        this.load.image('GreenBeetle', '../assets/images/BurbujaVerde.png')
-        this.load.image('CianBeetle', '../assets/images/BurbujaCian.png')
-        this.load.image('BlueBeetle', '../assets/images/BurbujaAzul.png')
-        this.load.image('PurpleBeetle', '../assets/images/BurbujaMorada.png')
-        this.load.spritesheet('beetles', '../assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
+        this.load.image('RedBeetle', './assets/images/BurbujaRoja.png')
+        this.load.image('OrangeBeetle', './assets/images/BurbujaNaranja.png')
+        this.load.image('YellowBeetle', './assets/images/BurbujaAmarilla.png')
+        this.load.image('GreenBeetle', './assets/images/BurbujaVerde.png')
+        this.load.image('CianBeetle', './assets/images/BurbujaCian.png')
+        this.load.image('BlueBeetle', './assets/images/BurbujaAzul.png')
+        this.load.image('PurpleBeetle', './assets/images/BurbujaMorada.png')
+        this.load.spritesheet('beetles', './assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
+
+        // Música.
+        this.load.audio('theme3', './assets/audio/m3c.mp3');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -48,18 +51,25 @@ export default class Game3 extends Phaser.Scene {
         //music.play();
         //this.sound.pauseOnBlur = true;
 
+
      
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MainMenu',  925,  700, 'white');
+
         // --- TIMER ---
         //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
 
         // --- BASE BG ---.
         //const baseBG = this.add.rectangle(502, 385, 600, 760, 0xd0be49).setStrokeStyle(10, 0xffffff);
 
+        // --- INTERFACE ---.
+        //let nextShootingBeetle = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
+
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff, 0);
-        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff, 0);
-        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff, 0);
-        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff, 0);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff, 100);
+        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff, 100);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff, 100);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff, 100);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
 
         for (let i = 0; i < borders.length; i++){
@@ -68,7 +78,6 @@ export default class Game3 extends Phaser.Scene {
             borders[i].body.setAllowGravity(false); // No tendrá gravedad
             //console.log(borders[i]);
         }
-
 
         // --- CANNON ---.
         const cannonBase = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
@@ -81,11 +90,11 @@ export default class Game3 extends Phaser.Scene {
             },
         }).setDepth(1);
 
-        const cannonHead = this.make.image({ // Cannon Head.
+        const cannonDisparo = this.make.image({ // Cannon Head.
             x: 500,
             y: 730, 
             angle: 90,
-            key: 'cannonHead',
+            key: 'cannonDisparo',
 
             scale : {
                 x: 0.3,
@@ -123,7 +132,7 @@ export default class Game3 extends Phaser.Scene {
             width: 11, // Columns
             height: 3, // Rows
             cellWidth: 55,
-            cellHeight: 110,
+            cellHeight: 75,
             x: 185.5,
             y: 10,
         });
@@ -146,15 +155,16 @@ export default class Game3 extends Phaser.Scene {
             width: 11, // Columns
             height: 3, // Rows
             cellWidth: 55,
-            cellHeight: 110,
-            x: 210,
-            y: 65,
+            cellHeight: 75,
+            x: 212,
+            y: 47.5,
         });
-
+;
         //Lo agrupamos en un solo array
         let groupMatrix = [];
         groupMatrix.push(this.physics.add.groupImpares); // Group for odd rows
         groupMatrix.push(this.physics.add.groupPares); // Group for even rows
+
 
         console.log("Antes de rellenar" + groupMatrix[0] + groupMatrix[1]);
 
@@ -175,15 +185,31 @@ export default class Game3 extends Phaser.Scene {
         
         console.log("Después de rellenar" + groupMatrix[0] + groupMatrix[1]);
 
+        //Metemos físicas
+        for (let i = 0; i < groupMatrix.length; i++){
+            groupMatrix[i].getChildren().forEach(element => {
+             
+            this.physics.world.enable(element);
+            //elememnt.setCircle(10);
+            element.body.setImmovable(true); 
+            element.body.setAllowGravity(false);
+            
+            //console.log(element);
+            
+            })
+            //console.log(i);
+        }
+
+
         // --- INPUT ---.
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
             {
                 angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
-                cannonHead.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
+                cannonDisparo.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
 
                 // Línea gráfica de la dir.
-                Phaser.Geom.Line.SetToAngle(line, cannonHead.x, cannonHead.y, angle, 128); 
+                Phaser.Geom.Line.SetToAngle(line, cannonDisparo.x, cannonDisparo.y, angle, 128); 
                 graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
 
             });
@@ -193,21 +219,21 @@ export default class Game3 extends Phaser.Scene {
         {
             //Randomizamos el color;
             const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
-            //console.log(beetles[randomBeetle]);
             //console.log(randomBeetle);
-
-            shootingBeetle = this.physics.add.image(cannonBase.x, cannonBase.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo
-            //console.log(shootingBeetle.texture.key);
+            shootingBeetle = this.physics.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
+            //console.log(beetles[randomBeetle].texture);
+            console.log(shootingBeetle.texture.key);
             //Le metemos físicas
-            this.physics.world.enable(shootingBeetle);
-            //shootingBeetle.setCircle(10);
+            //this.physics.world.enable(shootingBeetle);
+            shootingBeetle.setCircle(22.5); //Collider circular
             // Para que no se salga de los límites del mundo.
             shootingBeetle.setBounce(1).setCollideWorldBounds(true);
 
-            shootingBeetle.enableBody(true, cannonHead.x, cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
+            shootingBeetle.enableBody(true, cannonDisparo.x, cannonDisparo.y, true, true); // Activa la vessel y la pone donde cannonHead.
 
             this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
-            
+        
+
             // --- COLISIONES CON BORDERS ---.
             this.physics.add.collider(borders, shootingBeetle);
 
@@ -216,7 +242,9 @@ export default class Game3 extends Phaser.Scene {
                 groupMatrix[i].getChildren().forEach(element => {
                 //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
 
-                this.physics.add.collider(shootingBeetle, element, addToMatrix(shootingBeetle, element));
+
+                this.physics.add.collider(shootingBeetle, element);
+                //this.physics.add.collider(shootingBeetle, element, this.addToMatrix(shootingBeetle, element));
 
                 //console.log(shootingBeetle);
                 //console.log(element);
@@ -226,49 +254,45 @@ export default class Game3 extends Phaser.Scene {
                 
         });
     
+    }
 
+    //Se añade pero no se une
+    addToMatrix(shootingBeetle, element){
 
-        //Se añade pero no se une
-        function addToMatrix(shootingBeetle, element){
+        let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
+            x: shootingBeetle.x,
+            y: shootingBeetle.y, 
+            key: shootingBeetle.texture.key,
+            scale : {
+                x: 1,
+                y: 1,
+            },
+        }).setDepth(1);
 
-            let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-                x: shootingBeetle.x,
-                y: shootingBeetle.y, 
-                key: shootingBeetle.texture.key,
-                scale : {
-                    x: 1,
-                    y: 1,
-                },
-            }).setDepth(1);
-
-            //Creamos el bicho que se va a añadir a la matriz
-            
-            //newBeetle.texture = shootingBeetle.texture;
-            //newBeetle.y = shootingBeetle.y;
-            console.log(newBeetle.texture.key);
-            //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-            //Miramos la posición de la colisión
-            //Impar
-            if (newBeetle.y % 10 == 0){
-                groupMatrix[0].add(newBeetle);
-                groupMatrix[0].frameQuantity++;
-                //groupImpares.frameQuantity++;
-            }
-            //Par
-            else if(newBeetle.y % 65 == 0){
-                groupMatrix[1].add(newBeetle);
-                groupMatrix[1].frameQuantity++;
-                //groupPares.frameQuantity++;
-            }
-            //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-            //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
-
-            //newBeetle.body.setImmovable(true); 
-            newBeetle.body.setAllowGravity(false);
-        }
+        //Creamos el bicho que se va a añadir a la matriz
         
+        //newBeetle.texture = shootingBeetle.texture;
+        //newBeetle.y = shootingBeetle.y;
+        console.log(newBeetle.texture.key);
+        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
+        //Miramos la posición de la colisión
+        //Impar
+        if (newBeetle.y % 10 == 0){
+            groupMatrix[0].add(newBeetle);
+            groupMatrix[0].frameQuantity++;
+            //groupImpares.frameQuantity++;
+        }
+        //Par
+        else if(newBeetle.y % 65 == 0){
+            groupMatrix[1].add(newBeetle);
+            groupMatrix[1].frameQuantity++;
+            //groupPares.frameQuantity++;
+        }
+        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
+        //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
 
-
+        //newBeetle.body.setImmovable(true); 
+        newBeetle.body.setAllowGravity(false);
     }
 
 
@@ -277,14 +301,43 @@ export default class Game3 extends Phaser.Scene {
         //this.timer.setText(`time: ${time.ToString()}`);
     }
 
+    createButton(text, x, y, textColor) {
+        let button = this.add.text(
+           x,
+           y,
+            text,
+            {
+                fontFamily: 'arabic',
+                fontSize: 50,
+
+                color: textColor
+            }
+        ).setOrigin(0.5, 0.5);
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start("GameSelectorMenu");
+        });
+
+        button.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            button.setTint(0xdfa919);
+            //button.fontSize = '70px';
+        });
     
+        button.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            button.clearTint();
+            //button.fontSize = '50px';
+        });
+    }
 }
 
 
 /*
 Fuentes: 
 https://labs.phaser.io/edit.html?src=src\physics\arcade\closest%20furthest.js
-
+https://labs.phaser.io/edit.html?src=src\utils\array\translate%20matrix.js
 
 
 */

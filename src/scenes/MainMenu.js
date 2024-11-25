@@ -5,11 +5,21 @@ export default class MainMenu extends Phaser.Scene {
 
 	preload () {
 		// Background.
-        this.load.image('backgroundMenu', '../assets/images/menuBackground.jpg');
+        this.load.image('backgroundMenu', './assets/images/menuBackground.jpg');
+
+        // Música.
+        this.load.audio('f3ale', './assets/audio/f3ale.mp3');
 	}
 	create() {
         // Paramos el audio
         this.sound.stopAll();
+        
+        // Música.
+        const music = this.sound.add('f3ale');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
+        
 
         // Texto del Título con borde de color aleatorio
         let title = this.add.text(
