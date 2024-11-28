@@ -1,17 +1,14 @@
- export default class Cannon{
+ export default class Cannon extends Phaser.GameObjects.Image{
     constructor(scene) {
+      super(scene, 150, 625, 'cannonBody');
       this.scene = scene;
 
-      // Imágenes.
-      this.cannonBody = this.scene.make.image({ // Cannon Body.
-        x: 150,
-        y: 625, 
-        key: 'cannonBody',
-        scale : {
-            x: 0.5,
-            y: 0.5
-        },
-      }).setDepth(1);
+      // Añade CANNON BODY.
+      scene.add.existing(this);
+
+      // Configuración.
+      this.setScale(0.5);
+      this.setDepth(1);
 
       this.cannonHead = this.scene.make.image({ // Cannon Head.
         x: 300,
@@ -26,12 +23,14 @@
       }).setDepth(2);
 
       // Dibuja la línea de la dir.
-      this.graphics = this.scene.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
+      this.graphics = this.scene.add.graphics({ 
+        lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } 
+      });
       this.line = new Phaser.Geom.Line(); 
     }
 
     cannonAngle(pointer){
-      this.angle = Phaser.Math.Angle.BetweenPoints(this.cannonBody, pointer); // Ángulo cañón -> mouse.
+      this.angle = Phaser.Math.Angle.BetweenPoints(this, pointer); // Ángulo cañón -> mouse.
       this.cannonHead.rotation = this.angle + 30; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
   
       // Línea gráfica de la dir.

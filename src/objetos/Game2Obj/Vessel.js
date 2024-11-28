@@ -1,26 +1,23 @@
 export default class Vessel extends Phaser.GameObjects.Image{
     constructor(scene, cannon, maelstromObs){
-        super(scene, cannon.cannonBody.x, cannon.cannonBody.y - 50, 'vessel')
-
+        super(scene, cannon.x, cannon.y - 50, 'vessel')
         this.scene = scene;
         this.cannon = cannon;
         this.maelstromObs = maelstromObs;
 
-        // Añadir a esta escena.
+        // Añadir el objeto a la escena con físicas.
         scene.add.existing(this); 
-
-        // Le pone físicas a la vasija.
         scene.physics.add.existing(this);
 
-        // Le pone el tamaño.
-        this.setScale(0.2);
-
         // Configuración de las físicas.
+        this.setScale(0.2); // Le pone el tamaño.
         this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
         this.body.setDrag(100); // Fricción con el suelo.
 
         // Al comienzo se desactiva.
-        this.disableBody(true , true); 
+        this.body.enable = false;
+        this.setActive(false);
+        this.setVisible(false);
         
         // La cámara sigue al vessel.
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
@@ -34,8 +31,13 @@ export default class Vessel extends Phaser.GameObjects.Image{
     }
 
     launchVessel(angle){
-        // Activa la vessel y la pone donde cannonHead.
-        this.enableBody(true, this.cannon.cannonHead.x, this.cannon.cannonHead.y, true, true); 
+        // Se activa.
+        this.body.enable = true;
+        this.setActive(true);
+        this.setVisible(true);
+
+        // Pone a la vasija donde el cañón.
+        this.body.reset(this.cannon.cannonHead.x, this.cannon.cannonHead.y);
 
         // Lanza a la vasija con un ángulo y velocidad.
         this.scene.physics.velocityFromRotation(angle, 600, this.body.velocity); 
@@ -64,10 +66,5 @@ export default class Vessel extends Phaser.GameObjects.Image{
             }
             //¿AGUA?
         }
-
-
-        
     }
-
-
 }

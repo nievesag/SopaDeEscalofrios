@@ -1,7 +1,8 @@
 import Cannon from '../objetos/Game2Obj/Cannon.js';
 import Vessel from '../objetos/Game2Obj/Vessel.js';
-import Background from '../objetos/Game2Obj/Background.js';
 import Maelstrom from '../objetos/Game2Obj/Maelstrom.js';
+import Background from '../objetos/Game2Obj/Background.js';
+
 
 // TO DO.
         // Vorágine.
@@ -24,23 +25,14 @@ export default class Game2 extends Phaser.Scene {
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
         //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
 
-        // Vessel.
         this.load.image('vessel', './assets/images/Game2/vessel.png');
-
-        // River.
         this.load.image('river', './assets/images/Game2/rio.jpg');
-
-        // Música.
-        this.load.audio('theme2', './assets/audio/m2c.mp3');
-
-        // Background.
         this.load.image('background', './assets/images/Game2/background.jpg');
+        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg')
+        this.load.audio('theme2', './assets/audio/m2c.mp3');
 
         // Generador de obstáculos.
         //this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg')
-
-        // Vorágine.
-        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg')
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -56,6 +48,19 @@ export default class Game2 extends Phaser.Scene {
         // Background y rio.
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
         this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
+
+        // Objetos.
+        this.background = new Background(this);
+        this.background.createLandscape();
+
+        // Objetos principales.
+        this.cannon = new Cannon(this);
+        this.maelstrom = new Maelstrom(this);
+        this.vessel = new Vessel(this, this.cannon, this.maelstrom);
+
+        this.physics.add.collider(this.vessel, this.maelstrom, ()=>{
+            this.vessel.destroy();
+        });
 
         // Botón de regreso.
         this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
@@ -75,18 +80,8 @@ export default class Game2 extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 3200, 700);
         this.cameras.main.setBounds(0, 0, 3200, 600);
 
-        // Objetos.
-        this.background = new Background(this);
-        this.background.createLandscape();
-        this.cannon = new Cannon(this);
-        this.maelstrom = new Maelstrom(this);
-        this.vessel = new Vessel(this, this.cannon, this.maelstrom);
         
-        this.physics.add.collider(this.vessel, this.maelstrom.maelstrom, ()=>{
-            console.log("HOALASLALAL")
-            this.vessel.vessel.destroy();
-        })
-
+        
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
         {
