@@ -1,33 +1,74 @@
-export default class Obstaculo extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, width, height, color = 0x8B4513, orientation = 'horizontal') {
-        super(scene, x, y, 'obstacle'); 
-
-        this.scene = scene;
+export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, fragments) {
+        super(scene, x, y, 'obstaculo1');
+      
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
+        this.offsetRight = {x: 0, y: 0};
+        this.offsetLeft = {x: 0, y: 0};
+        this.setImmovable(true);
+        this.isDead = false;
 
-        if (orientation === 'vertical') [width, height] = [height, width];
 
-        this.setDisplaySize(width, height);
-        this.body.setCollideWorldBounds(true);
-        this.body.setBounce(0);
-        this.body.setAllowGravity(true);
-        this.body.setImmovable(false);
-        this.body.setMass(10);
+        this.body.setSize(400, 50);
+        this.body.setOffset(this.offsetRight.x, this.offsetLeft.y);
 
-        this.health = 1;
+        this.body.setAllowGravity(false);
+        this.fragments = fragments; // Número de fragmentos al romperse
     }
 
-    // Método para reducir la salud cuando es golpeado
-    takeDamage() {
-        this.health -= 1;
-        if (this.health <= 0) {
-            this.destroy();
+
+    preUpdate(t, dt) {
+        super.preUpdate(t, dt);   
+    }
+
+    breakApart() {
+        this.setVisible(false); // Ocultar el obstáculo original
+        this.body.destroy(); // Desactivar el cuerpo original
+
+        // Crear fragmentos
+        for (let i = 0; i < this.fragments; i++) {
+            const fragment = this.scene.add.sprite(
+                this.x + Phaser.Math.Between(-10, 10),
+                this.y + Phaser.Math.Between(-10, 10),
+                'obstaculo2' // Asegúrate de tener una textura para los fragmentos
+            );
+
+            fragment.setDisplaySize(30, 30); // Tamaño de los fragmentos
+            this.scene.physics.world.enable(fragment);
+
+            fragment.body.setAllowGravity(true);
+            fragment.body.setVelocity(
+                Phaser.Math.Between(-100, 100),
+                Phaser.Math.Between(-200, 0)
+            );
+            fragment.body.setCollideWorldBounds(true);
+            fragment.body.setBounce(0.3); // Rebote de los fragmentos
         }
+
+        this.destroy(); // Elimina el obstáculo original
     }
 
-    // Método para destruir el bloque cuando su salud llega a cero
-    destroy() {
-        this.destroy();
+    checkCollisionWithArrowObs(scene, arrow) 
+    {
+       
+        if (this.isDead) {
+            // Si el enemigo ya está muerto, no hay colisión
+            return false;
+        }
+
+        // Verifica la colisión con el jugador
+       // const collision = this.scene.physics.world.collide(this, arrow);
+        //console.log(collision);
+
+       // if (collision) {
+            console.log("si");
+            arrow.destroy();
+            this.isDead = true;
+            this.breakApart();
+        //}
+
+      //  return collision;
+
     }
 }

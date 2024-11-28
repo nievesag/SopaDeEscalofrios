@@ -12,7 +12,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         this.origin = new Phaser.Math.Vector2(x, y);
         this.band = this.scene.add.line(0, 0, 0, 0, 0, 0, 0x000000, 1).setOrigin(0);
 
-        // Configuración dinámica de las flechas según el nivel
+        // Configuración de las flechas según el nivel
         this.arrowOrder = arrowConfig;  // Ejemplo: [{ type: 'normal', count: 3 }, { type: 'split', count: 2 }, { type: 'ball', count: 2 }]
         this.currentArrowIndex = 0;
         this.remainingArrows = this.arrowOrder[0].count;
@@ -22,7 +22,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         this.minPower = 150;
         this.maxPower = 800;
 
-        this.setProjectile(); // Inicializa el primer proyectil
+        this.setProjectile(); 
 
         this.scene.input.setDraggable(this.projectile);
         this.setupInputEvents();
@@ -60,6 +60,8 @@ export default class Bow extends Phaser.GameObjects.Sprite {
                 }
 
                 this.projectile.setPosition(dragX, dragY);
+                const angle = Phaser.Math.Angle.Between(this.origin.x, this.origin.y, dragX, dragY);
+                this.projectile.setRotation(angle + Math.PI);
                 this.band.setTo(this.origin.x, this.origin.y, this.projectile.x, this.projectile.y);
             }
         });

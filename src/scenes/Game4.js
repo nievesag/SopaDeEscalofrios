@@ -35,45 +35,23 @@ export default class Game4 extends Phaser.Scene {
         const groundHeight = 50; // Altura del suelo invisible
         const ground = this.add.rectangle(
             this.cameras.main.centerX, 
-            this.cameras.main.height - groundHeight / 2, // Colocarlo en la parte inferior
+            this.cameras.main.height - groundHeight / 2, 
             this.cameras.main.width, 
             groundHeight
         );
         ground.setOrigin(0.5, 0.5);
-        ground.setVisible(false); // Lo dejamos invisible
+        ground.setVisible(false); 
 
-        // Habilitar la física para el suelo
+       
         this.physics.world.enable(ground);
-        ground.body.setImmovable(true); // El suelo no se moverá
-        ground.body.setAllowGravity(false); // No tendrá gravedad
+        ground.body.setImmovable(true); 
+        ground.body.setAllowGravity(false); 
 
         this.bow = new Bow(this, 150, 600, [
             { type: 'normal', count: 3 },
             { type: 'split', count: 2 },
             { type: 'ball', count: 2 }
-        ]); // Ajusta las coordenadas
-
-
-
-
-        this.grupoObs = this.add.group({
-            classType: Obstaculo,
-            maxSize: 100
-        })
-        //  // Crear algunos obstáculos
-        // this.obstaculos = this.add.group(); // Grupo para manejar múltiples obstáculos
-        // const obstaculo1 = new Obstaculo(this, 445, 500, 60, 20, 0x8B4513, 'horizontal');
-        // const obstaculo2 = new Obstaculo(this, 460, 500, 60, 20, 0x8B4513, 'vertical');
-        // const obstaculo3 = new Obstaculo(this, 430, 460, 60, 20, 0x8B4513, 'vertical');
-        // this.grupoObs.add(obstaculo1);
-        // this.grupoObs.add(obstaculo2);
-        // this.grupoObs.add(obstaculo3);
-
-         // Configurar colisión entre flecha y obstáculos
-         this.physics.add.collider(this.bow.projectile, this.grupoObs, (arrow, obstaculo) => {
-            const obstaculoObj = this.grupoObs.getChildren().find(obj => obj === obstaculo);
-            if (obstaculoObj) obstaculoObj.takeDamage();
-        });
+        ]);
 
 
         this.enemiesPool = [];
@@ -81,20 +59,37 @@ export default class Game4 extends Phaser.Scene {
         const myEnemy = new Enemy(this, 800, 500);
         this.enemiesPool.push(myEnemy);
 
+        this.obstaclePool = [];
+        const obstaculo1 = new Obstaculo(this, 600, 300, 4);
+        const obstaculo2 = new Obstaculo(this, 700, 400, 3);
+        this.obstaclePool.push(obstaculo1);
+        this.obstaclePool.push(obstaculo2);
 
-        // Configurar colisiones internas para que los obstáculos interactúen y se apilen correctamente
-        this.physics.add.collider(this.grupoObs, this.grupoObs);
-
+      
     }
 
 
     update()
     {
+        //Colision flecha con enemigos
         this.enemiesPool.forEach(enemy => {
-            // Verifica la colisión con cada jugador
                 enemy.checkCollisionWithArrow(this, this.bow.projectile);
 
         });
+
+        this.physics.add.collider(this.bow.projectile, this.obstaclePool, (arrow, obstaculo) => {
+            obstaculo.checkCollisionWithArrowObs(this, arrow);
+        });
+        //Colision flecha con obstaculos
+        // this.obstaclePool.forEach(obstaculo => {
+        //     obstaculo.checkCollisionWithArrowObs(this, this.bow.proyectile);
+        // });
+
+        if (this.bow && this.bow.projectile) {
+            this.bow.projectile.updateRotation();
+        }
+
+       
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
