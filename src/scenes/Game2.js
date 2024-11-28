@@ -33,8 +33,13 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('background', './assets/images/Game2/background.jpg');
         this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
         this.load.image('crocodile', './assets/images/Game2/crocodile.jpg');
-        this.load.image('hippo', './assets/images/Game2/hippo.jpg')
+        this.load.image('hippo', './assets/images/Game2/hippo.jpg');
         this.load.audio('theme2', './assets/audio/m2c.mp3');
+
+        // UI.
+        this.load.image('musicButton', './assets/images/Game2/music.png');
+        this.load.image('muteButton', './assets/images/Game2/mute.png');
+
 
         // Generador de obstáculos.
         //this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg')
@@ -45,6 +50,9 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
 
     create (){
+
+        this.isClickingOnUI = false; // Inicialmente no se clica sobre UI.
+
         // Música.
         const music = this.sound.add('theme2');
         music.play();
@@ -63,25 +71,10 @@ export default class Game2 extends Phaser.Scene {
         //this.maelstrom = new Maelstrom(this);
         //this.crocodile = new Crocodile(this);
         this.hippo = new Hippo(this);
-        this.vessel = new Vessel(this, this.cannon, this.maelstrom, this.hippo);
+        this.vessel = new Vessel(this, this.cannon, this.maelstrom, this.crocodile, this.hippo);
 
-        this.physics.add.collider(this.vessel, this.maelstrom, ()=>{
-            this.vessel.destroy();
-        });
+        this.vessel.vesselCollisions();
 
-        this.physics.add.collider(this.vessel, this.crocodile, ()=>{
-            this.physics.velocityFromRotation(-45, 600, this.vessel.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
-        });
-
-        this.physics.add.collider(this.vessel, this.hippo, ()=>{
-            this.physics.velocityFromRotation(-45, 300, this.vessel.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
-        });
-
-
-
-        // Botón de regreso.
-        this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
-     
         /*// Generador de obstáculos.
         this.obstacleGen = this.make.image({
             scale : {
@@ -97,18 +90,40 @@ export default class Game2 extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 3200, 700);
         this.cameras.main.setBounds(0, 0, 3200, 600);
 
+        // Botón de la música.
+        this.musicButton = this.add.image(40, 40, 'musicButton').setScale(0.3).setInteractive();
+
+        // PARAR Y REANUDAR MUSICA.
+        this.musicButton.on("pointerdown", () => {
+            this.isClickingOnUI = true; // clic sobre UI.
+            if (music.isPlaying) {
+                music.pause();
+                this.musicButton.setTexture('muteButton');
+            } 
+            else {
+                music.resume();
+                this.musicButton.setTexture('musicButton');
+            }
+        });
+
+        // Botón de regreso.
+        this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+        this.buttonMainMenu.on('pointerdown', () => { this.isClickingOnUI = true; }); // clic sobre UI.
+
+        // ---- VASIJA ----.
         
-        
+        // AL HACER CLIC.
+        this.input.on('pointerup', () =>
+        {
+            if (!this.isClickingOnUI) { // si no se clica en la UI...
+            this.vessel.launchVessel(this.cannon.angle); // lanza vasija.
+            }
+            this.isClickingOnUI = false; // restea flag.
+        });
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
         {
             this.cannon.cannonAngle(pointer);
-        });
-
-        // AL HACER CLIC.
-        this.input.on('pointerup', () =>
-        {
-            this.vessel.launchVessel(this.cannon.angle);
         });
     }
 
@@ -125,11 +140,15 @@ export default class Game2 extends Phaser.Scene {
 
         this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
+
+        this.musicButton.x = this.cameras.main.scrollX + 45; // Ajusta según sea necesario
+        this.musicButton.y = this.cameras.main.scrollY + 40;
         
         // Colisiones de la Vessel.
         //this.vessel.collisionWithVessel(this.maelstrom); // LUEGO QUITAR ahora colisiona con la voragine.
     }
 
+    
     // Botón de la UI.
     createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
