@@ -1,10 +1,11 @@
 export default class Vessel extends Phaser.GameObjects.Image{
-    constructor(scene, cannon, maelstromObs, crocodileObs){
+    constructor(scene, cannon, maelstromObs, crocodileObs, hippoObs){
         super(scene, cannon.x, cannon.y - 50, 'vessel')
         this.scene = scene;
         this.cannon = cannon;
         this.maelstromObs = maelstromObs;
         this.crocodileObs = crocodileObs;
+        this.hippoObs = hippoObs;
 
         // Añadir el objeto a la escena con físicas.
         scene.add.existing(this); 
@@ -23,8 +24,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
         // La cámara sigue al vessel.
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
 
-        /*, hippoObs){
-        //this.hippoObs = hippoObs;
+   
         // --- VESSEL ---. EN UN FUTURO SERÁ SPRITESHEET
         //this.vessel = this.scene.physics.add.image(this.cannon.cannonBody.x, this.cannon.cannonBody.y - 50, 'vessel').setScale(0.2); // Añade la vasija en la pos del cañón.
         // disableBody([disableGameObject], [hideGameObject]).*/
@@ -44,27 +44,4 @@ export default class Vessel extends Phaser.GameObjects.Image{
 
         //chick.play('fly'); // animación de vuelo del pollo.
     }
-
-    /*collisionWithVessel(obstacle){
-
-        // NOTA:
-        // OVERLAP SI SUPERPONEN
-        // COLlIDE SI COL.
-
-        // Si colisiona la vasija con el obstáculo...
-        if(this.scene.physics.world.collide(this, obstacle)){
-
-            // OBSTÁCULO:
-            if(obstacle === this.maelstromObs){ // MAELSTROM.
-                this.destroy();
-            }
-            else if(obstacle === this.crocodileObs){ // CROCODILE.
-                this.scene.physics.velocityFromRotation(45, 600, this.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
-            }
-            else if(obstacle === this.hippoObs){
-                // Lo que pasa cuando colisiona con HIPPO.  
-            }
-            //¿AGUA?
-        }
-    }*/
 }

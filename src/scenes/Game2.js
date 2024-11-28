@@ -3,6 +3,7 @@ import Vessel from '../objetos/Game2Obj/Vessel.js';
 import Maelstrom from '../objetos/Game2Obj/Maelstrom.js';
 import Background from '../objetos/Game2Obj/Background.js';
 import Crocodile from '../objetos/Game2Obj/Crocodile.js';
+import Hippo from '../objetos/Game2Obj/Hippo.js';
 
 
 
@@ -30,8 +31,9 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('vessel', './assets/images/Game2/vessel.png');
         this.load.image('river', './assets/images/Game2/rio.jpg');
         this.load.image('background', './assets/images/Game2/background.jpg');
-        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg')
-        this.load.image('crocodile', './assets/images/Game2/crocodile.jpg')
+        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
+        this.load.image('crocodile', './assets/images/Game2/crocodile.jpg');
+        this.load.image('hippo', './assets/images/Game2/hippo.jpg')
         this.load.audio('theme2', './assets/audio/m2c.mp3');
 
         // Generador de obstáculos.
@@ -59,8 +61,9 @@ export default class Game2 extends Phaser.Scene {
         // Objetos principales.
         this.cannon = new Cannon(this);
         //this.maelstrom = new Maelstrom(this);
-        this.crocodile = new Crocodile(this)
-        this.vessel = new Vessel(this, this.cannon, this.maelstrom);
+        //this.crocodile = new Crocodile(this);
+        this.hippo = new Hippo(this);
+        this.vessel = new Vessel(this, this.cannon, this.maelstrom, this.hippo);
 
         this.physics.add.collider(this.vessel, this.maelstrom, ()=>{
             this.vessel.destroy();
@@ -69,6 +72,12 @@ export default class Game2 extends Phaser.Scene {
         this.physics.add.collider(this.vessel, this.crocodile, ()=>{
             this.physics.velocityFromRotation(-45, 600, this.vessel.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
         });
+
+        this.physics.add.collider(this.vessel, this.hippo, ()=>{
+            this.physics.velocityFromRotation(-45, 300, this.vessel.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
+        });
+
+
 
         // Botón de regreso.
         this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
