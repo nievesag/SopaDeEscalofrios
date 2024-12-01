@@ -5,17 +5,17 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         // Asignar un identificador único al enemigo
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
-        this.offsetRight = {x: 0, y: 0};
-        this.offsetLeft = {x: 0, y: 0};
-        this.setImmovable(true);
+        this.offsetRight = {x: 50, y: 0};
+        this.offsetLeft = {x: 0, y: 20};
+        this.setImmovable(false);
         this.isDead = false;
-
-        // Ajustar el tamaño del cuerpo de físicas para que coincida con el sprite visual
-        //this.body.setSize(16, 16);
+        this.setScale(0.4, 0.4);
+       
+        this.body.setSize(150, 150);
         this.body.setOffset(this.offsetRight.x, this.offsetLeft.y);
 
         // Desactivar la gravedad
-        this.body.setAllowGravity(false);
+        this.body.setAllowGravity(true);
 
         // // Añadir tween para movimiento armónico simple con duración más larga
         // this.tween = this.scene.tweens.add({
@@ -26,6 +26,13 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         //     repeat: -1,
         //     duration: 3000 // Ajusta la duración del tween (en milisegundos)
         // });
+        this.scene.physics.add.collider(this, this.scene.ground, () => {
+            this.body.setVelocityX(0); 
+            this.body.setVelocityY(0);
+            this.body.setBounce(0);  
+        });
+
+    
     }
 
     preUpdate(t, dt) {

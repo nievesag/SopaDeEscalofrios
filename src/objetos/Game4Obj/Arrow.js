@@ -35,7 +35,11 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.setRotation(angle);
 
         //this.body.setDragX(0);
-        
+        this.scene.physics.add.collider(this, this.scene.ground, () => {
+            this.body.setVelocityX(0); 
+            this.body.setVelocityY(0);
+            this.body.setBounce(0);  
+        });
     }
 
     getVelX(){

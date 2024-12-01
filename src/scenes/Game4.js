@@ -33,19 +33,19 @@ export default class Game4 extends Phaser.Scene {
 
         // Crear el suelo invisible en la parte inferior de la pantalla
         const groundHeight = 50; // Altura del suelo invisible
-        const ground = this.add.rectangle(
+        this.ground = this.add.rectangle(
             this.cameras.main.centerX, 
             this.cameras.main.height - groundHeight / 2, 
             this.cameras.main.width, 
             groundHeight
         );
-        ground.setOrigin(0.5, 0.5);
-        ground.setVisible(false); 
+        this.ground.setOrigin(0.5, 0.5);
+        this.ground.setVisible(false); 
 
        
-        this.physics.world.enable(ground);
-        ground.body.setImmovable(true); 
-        ground.body.setAllowGravity(false); 
+        this.physics.world.enable(this.ground);
+        this.ground.body.setImmovable(true); 
+        this.ground.body.setAllowGravity(false); 
 
         this.bow = new Bow(this, 150, 600, [
             { type: 'normal', count: 3 },
@@ -56,15 +56,36 @@ export default class Game4 extends Phaser.Scene {
 
         this.enemiesPool = [];
 
-        const myEnemy = new Enemy(this, 800, 500);
-        this.enemiesPool.push(myEnemy);
+        const enemy1 = new Enemy(this, 650, 668);
+        const enemy2 = new Enemy(this, 800, 668);
+        const enemy3 = new Enemy(this, 725, 530);
+        this.enemiesPool.push(enemy1, enemy2, enemy3);
 
         this.obstaclePool = [];
-        const obstaculo1 = new Obstaculo(this, 600, 300, 4);
-        const obstaculo2 = new Obstaculo(this, 700, 400, 3);
-        this.obstaclePool.push(obstaculo1);
-        this.obstaclePool.push(obstaculo2);
 
+        const leftObstacle = new Obstaculo(this, 600, 668, 3, 'vertical');
+        const rightObstacle = new Obstaculo(this, 700, 668, 3, 'vertical');
+        const topObstacle = new Obstaculo(this, 650, 600, 3, 'horizontal');
+
+        const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
+        const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
+        const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
+
+        const topObstacle3 = new Obstaculo(this, 725, 570, 3, 'horizontal');
+        const leftObstacle3 = new Obstaculo(this, 670, 505, 3, 'vertical');
+        const rightObstacle3 = new Obstaculo(this, 780, 505, 3, 'vertical');
+
+        const topObstacle4 = new Obstaculo(this, 725, 440, 3, 'horizontal');
+       
+        this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
+            leftObstacle2, rightObstacle2, topObstacle2,
+            topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
+
+        this.physics.add.collider(this.enemiesPool, this.obstaclePool);
+        this.physics.add.collider(this.obstaclePool, this.ground);
+      
+        this.physics.add.collider(this.obstaclePool, this.obstaclePool);
+      
       
     }
 
@@ -77,13 +98,12 @@ export default class Game4 extends Phaser.Scene {
 
         });
 
+        //Colision flecha con obstaculos
         this.physics.add.collider(this.bow.projectile, this.obstaclePool, (arrow, obstaculo) => {
             obstaculo.checkCollisionWithArrowObs(this, arrow);
         });
-        //Colision flecha con obstaculos
-        // this.obstaclePool.forEach(obstaculo => {
-        //     obstaculo.checkCollisionWithArrowObs(this, this.bow.proyectile);
-        // });
+        
+        console.log(this.obstaclePool);
 
         if (this.bow && this.bow.projectile) {
             this.bow.projectile.updateRotation();
