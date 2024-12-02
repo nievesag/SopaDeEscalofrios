@@ -40,6 +40,8 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
             this.body.setBounce(0);  
         });
+
+        this.scene.activeArrowsPool.push(this);
     }
 
     getVelX(){

@@ -15,8 +15,6 @@ export default class Game4 extends Phaser.Scene {
     
     create (){
 
-       
-
         // Música.
         const music = this.sound.add('theme4');
         music.play();
@@ -48,9 +46,9 @@ export default class Game4 extends Phaser.Scene {
         this.ground.body.setAllowGravity(false); 
 
         this.bow = new Bow(this, 150, 600, [
-            { type: 'normal', count: 3 },
-            { type: 'split', count: 2 },
-            { type: 'ball', count: 2 }
+            { type: 'normal', count: 1 },
+            { type: 'split', count: 1 },
+            { type: 'ball', count: 5 }
         ]);
 
 
@@ -86,7 +84,12 @@ export default class Game4 extends Phaser.Scene {
       
         this.physics.add.collider(this.obstaclePool, this.obstaclePool);
       
-      
+        this.activeArrowsPool = [];
+        this.enemiesCounter = 0;
+
+        this.createInfoTexts();
+
+
     }
 
 
@@ -94,22 +97,24 @@ export default class Game4 extends Phaser.Scene {
     {
         //Colision flecha con enemigos
         this.enemiesPool.forEach(enemy => {
-                enemy.checkCollisionWithArrow(this, this.bow.projectile);
+                enemy.checkCollisionWithArrow(this, this.activeArrowsPool);
 
         });
 
         //Colision flecha con obstaculos
-        this.physics.add.collider(this.bow.projectile, this.obstaclePool, (arrow, obstaculo) => {
+        this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstaculo) => {
             obstaculo.checkCollisionWithArrowObs(this, arrow);
         });
         
-        console.log(this.obstaclePool);
 
         if (this.bow && this.bow.projectile) {
             this.bow.projectile.updateRotation();
         }
 
-       
+        this.enemiesText.setText(`Enemies left: ${this.enemiesPool.length - this.enemiesCounter}`);
+        this.arrowsText.setText(`Arrows left: ${this.bow.totalArrows}`);
+
+       this.endLevel();
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -139,6 +144,35 @@ export default class Game4 extends Phaser.Scene {
             this.scene.start(sceneName);
             this.sound.stopAll();
 
+        });
+    }
+
+
+    endLevel()
+    {
+        if(this.enemiesCounter == this.enemiesPool.length)
+        {
+            console.log("victoria");
+        }
+        else if(this.bow.totalArrows <= 0)
+        {
+            console.log("derrota");
+        }
+    }
+
+
+    createInfoTexts()
+    {
+          this.enemiesText = this.add.text(10, 10, `Enemigos restantes: ${this.enemiesPool.length}`, {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff'
+        });
+
+        this.arrowsText = this.add.text(10, 40, `Flechas restantes: ${this.bow.remainingArrows}`, {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff'
         });
     }
 

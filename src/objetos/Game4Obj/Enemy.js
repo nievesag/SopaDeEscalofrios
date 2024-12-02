@@ -49,8 +49,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         const collision = this.scene.physics.world.collide(this, arrow);
 
         if (collision) {
-            console.log("hola");
-            arrow.destroy();
+            this.scene.enemiesCounter++;
+            //arrow.destroy();
             this.isDead = true;
             this.selfDestroy();
         }

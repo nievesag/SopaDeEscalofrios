@@ -16,12 +16,14 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         this.arrowOrder = arrowConfig;  // Ejemplo: [{ type: 'normal', count: 3 }, { type: 'split', count: 2 }, { type: 'ball', count: 2 }]
         this.currentArrowIndex = 0;
         this.remainingArrows = this.arrowOrder[0].count;
+        this.totalArrows = arrowConfig.reduce((total, arrow) => total + arrow.count, 0);
 
         this.isDragging = false;
         this.maxStretch = 100;
         this.minPower = 150;
         this.maxPower = 800;
 
+        this.hasBeenLaunched = false;
         this.setProjectile(); 
 
         this.scene.input.setDraggable(this.projectile);
@@ -74,7 +76,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         });
 
         this.scene.input.keyboard.on('keydown-SPACE', () => {
-            if (this.projectile) {
+            if (this.projectile && this.hasBeenLaunched) {
                 // Si la flecha es de tipo SplitArrow
                 if (this.projectile instanceof SplitArrow) {
                     this.projectile.split();
@@ -97,9 +99,12 @@ export default class Bow extends Phaser.GameObjects.Sprite {
 
         this.projectile.launch(velocityX, velocityY);
         this.band.setTo(0, 0, 0, 0);
+        this.hasBeenLaunched = true;
 
         // Destruye la flecha después de un tiempo y configura la siguiente
         this.scene.time.delayedCall(2000, () => {
+
+            this.hasBeenLaunched = false;
             this.projectile.destroy();
             this.remainingArrows--;
 

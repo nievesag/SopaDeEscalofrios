@@ -39,13 +39,6 @@ export default class SplitArrow extends Arrow {
                 arrow.body.setBounce(0);  
             });
     
-            this.scene.physics.add.collider(arrow, this.scene.obstaclePool, (arrow, obstaculo) => {
-                obstaculo.checkCollisionWithArrowObs(this.scene, arrow);
-            });
-    
-            this.scene.physics.add.collider(arrow, this.scene.enemiesPool, (arrow, enemy) => {
-                enemy.checkCollisionWithArrow(this.scene, arrow);
-            });
         });
     
         // Destruir flechas después de 4 segundos

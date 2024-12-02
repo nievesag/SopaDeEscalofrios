@@ -43,18 +43,13 @@ export default class BallArrow extends Arrow {
         this.arrowBall.setRotation(auxAngle);
 
         this.scene.physics.add.collider(this.arrowBall, this.scene.ground, () => {
-            this.arrowBall.body.setVelocityX(0); 
+           // this.arrowBall.body.setVelocityX(0); 
             this.arrowBall.body.setVelocityY(0); 
         });
     
-        this.scene.physics.add.collider(this.arrowBall, this.scene.obstaclePool, (ball, obstaculo) => {
-            obstaculo.checkCollisionWithArrowObs(this.scene, this.arrowBall);
-        });
     
-        this.scene.physics.add.collider(this.arrowBall, this.scene.enemiesPool, (ball, enemy) => {
-            enemy.checkCollisionWithArrow(this.scene, this.arrowBall);
-        });
     
+        this.scene.activeArrowsPool.push(this.arrowBall);
 
         this.scene.time.delayedCall(4000, () => {
             if (this.arrowBall) {
