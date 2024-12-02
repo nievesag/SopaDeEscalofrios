@@ -1,6 +1,7 @@
 export default class Vessel extends Phaser.GameObjects.Image{
     constructor(scene, cannon, maelstromObs, crocodileObs, hippoObs){
-        super(scene, cannon.x, cannon.y - 50, 'vessel')
+        super(scene, cannon.x, cannon.y - 50, 'vessel');
+        
         this.scene = scene;
         this.cannon = cannon;
         this.maelstromObs = maelstromObs;

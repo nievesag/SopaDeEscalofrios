@@ -21,34 +21,14 @@ export default class Game2 extends Phaser.Scene {
     }
     
     preload () { // Carga los recursos.
-        // Cannon.
-        this.load.image('cannonBody', './assets/images/Game2/cannonBody.jpg');
-        this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
-
-        // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
-        //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
-
-        this.load.image('vessel', './assets/images/Game2/vessel.png');
-        this.load.image('river', './assets/images/Game2/rio.jpg');
-        this.load.image('background', './assets/images/Game2/background.jpg');
-        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
-        this.load.image('crocodile', './assets/images/Game2/crocodile.jpg');
-        this.load.image('hippo', './assets/images/Game2/hippo.jpg');
-        this.load.audio('theme2', './assets/audio/m2c.mp3');
-
-        // UI.
-        this.load.image('musicButton', './assets/images/Game2/music.png');
-        this.load.image('muteButton', './assets/images/Game2/mute.png');
-
-
-        // Generador de obstáculos.
-        //this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg')
+        this.loadImages();
+        this.loadAudios();
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
     // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
     // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
-
+    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle-2
     create (){
 
         this.isClickingOnUI = false; // Inicialmente no se clica sobre UI.
@@ -181,4 +161,34 @@ export default class Game2 extends Phaser.Scene {
 
         return button;
     }
+
+    loadImages(){
+        // Cannon.
+        this.load.image('cannonBody', './assets/images/Game2/cannonBody.jpg');
+        this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
+
+        // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
+        //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
+
+        this.load.image('vessel', './assets/images/Game2/vessel.png');
+        this.load.image('river', './assets/images/Game2/rio.jpg');
+        this.load.image('background', './assets/images/Game2/background.jpg');
+        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
+        this.load.image('crocodile', './assets/images/Game2/crocodile.jpg');
+        this.load.image('hippo', './assets/images/Game2/hippo.jpg');
+
+        // UI.
+        this.load.image('musicButton', './assets/images/Game2/music.png');
+        this.load.image('muteButton', './assets/images/Game2/mute.png');
+
+
+        // Generador de obstáculos.
+        //this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg')
+    }
+
+    loadAudios(){
+        this.load.audio('theme2', './assets/audio/m2c.mp3');
+    }
+
+    
 }
