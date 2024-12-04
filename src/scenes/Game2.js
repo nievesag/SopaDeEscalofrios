@@ -52,8 +52,17 @@ export default class Game2 extends Phaser.Scene {
         //this.maelstrom = new Maelstrom(this);
         //this.crocodile = new Crocodile(this);
         //this.hippo = new Hippo(this);
+        
+        // Grupo de obstacles con cada clase.
+        this.obsClass = [
+            {type: 'crocodile', class: Crocodile},
+            {type: 'hippo', class: Hippo},
+            {type: 'maelstrom', class: Maelstrom},
+        ];
+
+        this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
+
         this.vessel = new Vessel(this, this.cannon, this.maelstrom, this.crocodile, this.hippo);
-        this.obstacleGen = new ObstaclesGenerator(this);
 
         this.vessel.vesselCollisions();
 
@@ -107,6 +116,8 @@ export default class Game2 extends Phaser.Scene {
         // Mantiene al obstacle generator a la derecha de la pantalla.
         this.obstacleGen.x = this.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
         this.obstacleGen.y = this.cameras.main.centerY + 250
+
+        this.obstacleGen.update();
         
         this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
