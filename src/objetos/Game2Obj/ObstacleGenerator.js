@@ -1,3 +1,7 @@
+import Crocodile from "./Crocodile";
+import Hippo from "./Hippo";
+import Maelstrom from "./Maelstrom";
+
 export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     constructor(scene){ // Ponerle tambien obsGen aqui.
         super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'obstacleGenerator');
@@ -13,6 +17,9 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         this.setDepth(2);
         this.body.setAllowGravity(false); // fisicas
         this.body.setImmovable(true);
+
+        // Grupo de obstáculos.
+        this.obstacl
 
         // Se activa.
         this.body.enable = true;

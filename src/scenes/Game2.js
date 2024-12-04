@@ -35,7 +35,9 @@ export default class Game2 extends Phaser.Scene {
         this.isClickingOnUI = false; // Inicialmente no se clica sobre UI.
 
         // Música.
-        this.createMusic();
+        const music = this.sound.add('theme2');
+        music.play();
+        this.sound.pauseOnBlur = true;
 
         // Background y rio.
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
@@ -178,12 +180,6 @@ export default class Game2 extends Phaser.Scene {
 
     loadAudios(){
         this.load.audio('theme2', './assets/audio/m2c.mp3');
-    }
-
-    createMusic(){
-        const music = this.sound.add('theme2');
-        music.play();
-        this.sound.pauseOnBlur = true;
     }
     
 }
