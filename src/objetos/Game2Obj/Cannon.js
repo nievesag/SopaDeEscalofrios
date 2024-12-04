@@ -3,7 +3,7 @@
       super(scene, 150, 625, 'cannonBody');
       this.scene = scene;
 
-      // Añade CANNON BODY.
+      // Añade CANNON BODY
       scene.add.existing(this);
 
       // Configuración.

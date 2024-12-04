@@ -1,8 +1,9 @@
 export default class Obstacle extends Phaser.Physics.Arcade.Image {
-    constructor(scene, x, y, type){
-        super(scene, x, y, type);
+    constructor(scene, type){
+        super(scene, 0, 0, type);
 
         this.scene = scene;
+        this.type = type;
 
         // Mete el objeto en la escena con físicas.
         scene.add.existing(this);
@@ -12,5 +13,8 @@ export default class Obstacle extends Phaser.Physics.Arcade.Image {
         this.setScale(0.2); // tamaño
         this.body.setAllowGravity(false); // fisicas
         this.body.setImmovable(true);
+        this.body.moves = false; // CONGELA EL OBJETO, pero permite colisión.
+        // Lo de arriba lo he apañao cfon grupos estáticos.
     }
+
 }

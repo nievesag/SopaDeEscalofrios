@@ -62,7 +62,7 @@ export default class Game2 extends Phaser.Scene {
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
 
-        this.vessel = new Vessel(this, this.cannon, this.maelstrom, this.crocodile, this.hippo);
+        this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
 
         this.vessel.vesselCollisions();
 
@@ -114,16 +114,13 @@ export default class Game2 extends Phaser.Scene {
         this.rio.tilePositionX -=6;
 
         
-        this.obstacleGen.update(this.vessel.x);
+        this.obstacleGen.update();
         
         this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
 
         this.musicButton.x = this.cameras.main.scrollX + 45; // Ajusta según sea necesario
         this.musicButton.y = this.cameras.main.scrollY + 40;
-        
-        // Colisiones de la Vessel.
-        //this.vessel.collisionWithVessel(this.maelstrom); // LUEGO QUITAR ahora colisiona con la voragine.
     }
 
     

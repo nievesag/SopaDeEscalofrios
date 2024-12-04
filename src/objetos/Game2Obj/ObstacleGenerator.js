@@ -13,8 +13,10 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         this.setDepth(2);
 
         // Grupo de obstacles.
-        this.obsGroup = this.scene.physics.add.group({
-            runChildUpdate: true // cada objeto tiene su movida single.
+        //this.obsGroup = this.scene.physics.add.staticGroup({ -> grupo dinamico.
+        // HAY GRUPOS ESTÁTICOS (NO SE MUEVEN PERO TIENEN COLISIONES).
+        this.obsGroup = this.scene.physics.add.group({ // grupo estático.
+            runChildUpdate: true // cada objeto tiene su movida single (cada UPDATE).
         });
 
         // Contador y eliminación de obstáculos.
@@ -28,7 +30,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         });
     }
 
-    update(vesselPosX){
+    update(){
         // Mantiene al obstacle generator a la derecha de la pantalla.
         this.x = this.scene.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
 
