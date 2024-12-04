@@ -4,6 +4,7 @@ import Maelstrom from '../objetos/Game2Obj/Maelstrom.js';
 import Background from '../objetos/Game2Obj/Background.js';
 import Crocodile from '../objetos/Game2Obj/Crocodile.js';
 import Hippo from '../objetos/Game2Obj/Hippo.js';
+import ObstaclesGenerator from '../objetos/Game2Obj/ObstacleGenerator.js';
 
 
 
@@ -34,9 +35,7 @@ export default class Game2 extends Phaser.Scene {
         this.isClickingOnUI = false; // Inicialmente no se clica sobre UI.
 
         // Música.
-        const music = this.sound.add('theme2');
-        music.play();
-        this.sound.pauseOnBlur = true;
+        this.createMusic();
 
         // Background y rio.
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
@@ -50,21 +49,12 @@ export default class Game2 extends Phaser.Scene {
         this.cannon = new Cannon(this);
         //this.maelstrom = new Maelstrom(this);
         //this.crocodile = new Crocodile(this);
-        this.hippo = new Hippo(this);
+        //this.hippo = new Hippo(this);
         this.vessel = new Vessel(this, this.cannon, this.maelstrom, this.crocodile, this.hippo);
+        this.obstacleGen = new ObstaclesGenerator(this);
 
         this.vessel.vesselCollisions();
 
-        /*// Generador de obstáculos.
-        this.obstacleGen = this.make.image({
-            scale : {
-                x: 0.25,
-                y: 0.25
-            },
-            key: 'obstacleGenerator'
-        }).setDepth(2);
-        */
-    
         // Establece los límites del mundo y de la cámara.
         // x, y, width, height
         this.physics.world.setBounds(0, 0, 3200, 700);
@@ -112,12 +102,10 @@ export default class Game2 extends Phaser.Scene {
         this.bg.tilePositionX += 2;
         this.rio.tilePositionX -=6;
 
-        /* --- CREAR AL GENERADOR DE OBSTÁCULOS LUEGO ---
         // Mantiene al obstacle generator a la derecha de la pantalla.
         this.obstacleGen.x = this.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
         this.obstacleGen.y = this.cameras.main.centerY + 250
-        */
-
+        
         this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.
 
@@ -181,14 +169,21 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('musicButton', './assets/images/Game2/music.png');
         this.load.image('muteButton', './assets/images/Game2/mute.png');
 
+        // Obstáculo (DEBUG).
+        this.load.image('obstacle', './assets/images/Game2/obstacle.png')
 
         // Generador de obstáculos.
-        //this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg')
+        this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg');
     }
 
     loadAudios(){
         this.load.audio('theme2', './assets/audio/m2c.mp3');
     }
 
+    createMusic(){
+        const music = this.sound.add('theme2');
+        music.play();
+        this.sound.pauseOnBlur = true;
+    }
     
 }
