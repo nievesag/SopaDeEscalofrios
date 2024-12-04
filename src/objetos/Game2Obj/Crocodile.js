@@ -1,21 +1,6 @@
-export default class Crocodile extends Phaser.GameObjects.Image{
-    constructor(scene){ 
-        super(scene, scene.cameras.main.centerX + 200, scene.cameras.main.centerY + 250, 'crocodile');
-        
-        this.scene = scene;
-        
-        // Mete el objeto en la escena con físicas.
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
-
-        // Configuración de las fisicas.
-        this.setScale(0.2); // tamaño
-        this.body.setAllowGravity(false); // fisicas
-        this.body.setImmovable(true);
-
-        // Se activa (si no renta, quitar).
-        this.body.enable = true;
-        this.setActive(true);
-        this.setVisible(true); 
+import Obstacle from '../Game2Obj/Obstacle.js';
+export default class Crocodile extends Obstacle{
+    constructor(scene, x, y){ 
+        super(scene, x, y, 'crocodile');
     }
 }
