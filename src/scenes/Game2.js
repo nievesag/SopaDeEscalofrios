@@ -113,11 +113,8 @@ export default class Game2 extends Phaser.Scene {
         this.bg.tilePositionX += 2;
         this.rio.tilePositionX -=6;
 
-        // Mantiene al obstacle generator a la derecha de la pantalla.
-        this.obstacleGen.x = this.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
-        this.obstacleGen.y = this.cameras.main.centerY + 250
-
-        this.obstacleGen.update();
+        
+        this.obstacleGen.update(this.vessel.x);
         
         this.buttonMainMenu.x = this.cameras.main.scrollX + 955; // scrollX te da la posición de la cámara.
         this.buttonMainMenu.y = this.cameras.main.scrollY + 25; // scrollY te da la posición de la cámara.

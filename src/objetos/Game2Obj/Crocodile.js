@@ -1,7 +1,7 @@
 export default class Crocodile extends Phaser.GameObjects.Image{
-    constructor(scene){ // Ponerle tambien obsGen aqui.
+    constructor(scene){ 
         super(scene, scene.cameras.main.centerX + 200, scene.cameras.main.centerY + 250, 'crocodile');
-
+        
         this.scene = scene;
         
         // Mete el objeto en la escena con físicas.
@@ -13,7 +13,7 @@ export default class Crocodile extends Phaser.GameObjects.Image{
         this.body.setAllowGravity(false); // fisicas
         this.body.setImmovable(true);
 
-        // Se activa.
+        // Se activa (si no renta, quitar).
         this.body.enable = true;
         this.setActive(true);
         this.setVisible(true); 
