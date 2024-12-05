@@ -14,6 +14,7 @@ export default class Game2 extends Phaser.Scene {
     preload () { 
         this.loadImages();
         this.loadAudios();
+        this.load.css('EagleLake', 'style.css')
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -22,7 +23,62 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle-2
     
     create (){
+        this.createTanqiaPopUp();
+    }
 
+    createTanqiaPopUp(){
+        // Background del dialogo (LUEGO IMAGEN).
+        let dialogueBackground = this.add.rectangle( 
+            400, // x
+            300, // y
+            500, // anchura
+            300, // altura
+            0x000000 // color
+        ).setAlpha(0.8);
+
+        let tanqia = this.add.image(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 110, 
+            'tanqia'
+        ).setScale(0.5, 0.32); // x, y, tag.
+
+        let tanqiaText = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY - 150, 
+            'Nun, Las Aguas de la Vida, está encolerizado: una fuerte \ntempestad llena el paisaje. Una fuerte lluvia que se siente como pedradas, fortísimos relámpagos que son capaces de acobardar al más valeroso, vorágines que tragan todo a su paso, incluso las formas de vida de esta zona caudalosa parecieran haber enloquecido. Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sacrificada metidos en un vaso canopo para que ayude en la causa de apaciguar las aguas y traer de vuelta a la normalidad al río Nilo.',
+            {
+                fontSize: '20px',
+                color: '#ffffff',
+                align: 'center',
+                fontFamily: 'EagleLake',
+                wordWrap: {width: 530}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5); // danzhu lo tenia y funciona.
+
+        // Botón de aceptar.
+        let acceptButton = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 250, 
+            'Jugar',
+            {
+            fontSize: '30px',
+            color: 'white',
+            align: 'center'
+        }).setOrigin(0.5).setInteractive();
+
+        acceptButton.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            dialogueBackground.destroy();
+            tanqia.destroy();
+            tanqiaText.destroy();
+            acceptButton.destroy();
+
+            this.startGame();
+        })
+    }
+
+    startGame(){
         this.isClickingOnUI = false; // Inicialmente no se clica sobre UI.
 
         // Música.
@@ -91,21 +147,24 @@ export default class Game2 extends Phaser.Scene {
     }
 
     update(){
-        // parallax scroller.
-        this.bg.tilePositionX += 2;
-        this.rio.tilePositionX -=6;
 
-        this.vessel.update();
-        this.obstacleGen.update();
+        // HAY QUE PONERLE A TODO IF POR LA CARA PQ SI NO FALLA
+        // HAY Q INVESTIGAR COMO HACER ESO MAS LIMPIO :/
+
+        // parallax scroller.
+        if(this.bg)this.bg.tilePositionX += 2;
+        if(this.rio)this.rio.tilePositionX -=6;
+
+        if(this.vessel)this.vessel.update();
+        if(this.obstacleGen)this.obstacleGen.update();
 
         let scrollX = this.cameras.main.scrollX; // posx camara
         let scrollY = this.cameras.main.scrollY; // posy camara
 
-        this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
-        this.musicButton.setPosition(scrollX + 45, scrollY + 40);
+        if(this.buttonMainMenu)this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
+        if(this.musicButton)this.musicButton.setPosition(scrollX + 45, scrollY + 40);
     }
 
-    
     // Botón de la UI.
     createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
@@ -152,6 +211,7 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('musicButton', './assets/images/Game2/music.png');
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg');
+        this.load.image('tanqia', './assets/images/Game2/tanqia.PNG');
     }
 
     loadAudios(){
