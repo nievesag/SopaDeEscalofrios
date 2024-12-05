@@ -17,24 +17,16 @@ export default class Vessel extends Phaser.GameObjects.Image{
 
         // Al comienzo se desactiva.
         this.body.enable = false;
-        this.setActive(false);
-        this.setVisible(false);
+        this.setActive(false).setVisible(false);
         
         // La cámara sigue al vessel.
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
-
-       
-        
-        // --- VESSEL ---. EN UN FUTURO SERÁ SPRITESHEET
-        //this.vessel = this.scene.physics.add.image(this.cannon.cannonBody.x, this.cannon.cannonBody.y - 50, 'vessel').setScale(0.2); // Añade la vasija en la pos del cañón.
-        // disableBody([disableGameObject], [hideGameObject]).*/
     }
 
     launchVessel(angle){
         // Se activa.
         this.body.enable = true;
-        this.setActive(true);
-        this.setVisible(true);
+        this.setActive(true).setVisible(true);
 
         // Pone a la vasija donde el cañón.
         this.body.reset(this.cannon.cannonHead.x, this.cannon.cannonHead.y);
@@ -54,8 +46,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
         this.scene.physics.add.collider(this, this.obstacleGen.obsGroup, (vessel, obstacle) =>{
             if(obstacle.type === 'maelstrom'){
                 this.body.enable = false;
-                this.setActive(false);
-                this.setVisible(false);
+                this.setActive(false).setVisible(false);
             }
             else if(obstacle.type === 'crocodile'){
                 this.scene.physics.velocityFromRotation(-45, 800, this.body.velocity); // Ángulo y velocidad.
