@@ -95,25 +95,34 @@
     }
 
     updatePowerBarColors(){
+
+      // Math.floor convierte los números de this power (1.9, 2.7) a enteros (1, 2) para que funcionen los ifs.
+      let power = Math.floor(this.power); 
       let color;
 
       if(power === 0){ // 0 -> poca fuerza.
-        // Azul again.
+        // Verde.
+        color = 0x34c73f;
       }
       else if(power === 1){ // 1 -> jijijuju.
-        // Azul
+        // Verde again
+        color = 0x34c73f;
       }
       else if(power === 2){ // 2 -> ni mas ni menos.
-        // Verde
+        // Amarillo.
+        color = 0xc7c534;
       }
       else if(power === 3){ // 3 -> va folledo.
-        // Amarillo
+        // Naranja
+        color = 0xc77534;
       }
       else if(power === 4){ // 4 -> joder lo folledo que va.
-        // Naranja.
+        // Rojo.
+        color = 0xc73434;
       }
       else if(power === 5){ // 5 -> NITRO.
         // Rojo
+        color = 0xc73434;
       }
 
       this.powerBar.fillColor = color;
