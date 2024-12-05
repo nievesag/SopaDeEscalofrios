@@ -1,6 +1,7 @@
 import Arrow from '../Game4Obj/Arrow.js';
 import SplitArrow from '../Game4Obj/SplitArrow.js';
 import BallArrow from '../Game4Obj/BallArrow.js';
+import ExplosiveArrow from '../Game4Obj/ExplosiveArrow.js';
 
 export default class Bow extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, arrowConfig) {
@@ -37,6 +38,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         if (arrowType === 'normal') ArrowClass = Arrow;
         else if (arrowType === 'split') ArrowClass = SplitArrow;
         else if (arrowType === 'ball') ArrowClass = BallArrow;
+        else if (arrowType === 'explosive') ArrowClass = ExplosiveArrow;
 
         this.projectile = new ArrowClass(this.scene, this.origin.x, this.origin.y);
         this.projectile.body.setAllowGravity(false);

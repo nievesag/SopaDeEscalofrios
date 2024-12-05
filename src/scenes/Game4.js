@@ -46,9 +46,10 @@ export default class Game4 extends Phaser.Scene {
         this.ground.body.setAllowGravity(false); 
 
         this.bow = new Bow(this, 150, 600, [
-            { type: 'normal', count: 1 },
-            { type: 'split', count: 1 },
-            { type: 'ball', count: 5 }
+            // { type: 'normal', count: 1 },
+            // { type: 'split', count: 1 },
+            // { type: 'ball', count: 1 },
+            { type: 'explosive', count: 5 } 
         ]);
 
 
@@ -102,8 +103,12 @@ export default class Game4 extends Phaser.Scene {
         });
 
         //Colision flecha con obstaculos
-        this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstaculo) => {
-            obstaculo.checkCollisionWithArrowObs(this, arrow);
+        this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstacle) => {
+            if (arrow.type === 'explosive') {
+                arrow.handleCollision(obstacle);
+            } else {
+                obstacle.checkCollisionWithArrowObs(this, arrow);
+            }
         });
         
 
