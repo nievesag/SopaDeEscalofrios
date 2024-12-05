@@ -1,3 +1,15 @@
+
+// Variable global para gestionar el dia y las acciones
+let gameState = {
+    currentDay: 1,
+    actionsLeft: 3,
+    maxDays: 5,
+    minigamesResults: {
+        Game4: [null, null, null, null, null] 
+    }
+};
+
+
 export default class GameSelectorMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'GameSelectorMenu'});
@@ -21,6 +33,22 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.createButton("Al Rescate de los Escarabajos", 200, 600, 'white', 35, 'Game3');
         this.createButton("Tiro al Arco Mágico", 800, 600, 'white', 50, 'Game4');
         this.createButton("El Sendero al Sol", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 50, 'Game5');
+
+         this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
+            fontFamily: 'Arial',
+            fontSize: '24px',
+            color: '#ffffff',
+        });
+
+          // Boton para pasar al siguiente día
+          this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Next Day', {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff',
+        }).setOrigin(0.5, 0.5);
+
+        this.nextDayButton.setInteractive();
+        this.nextDayButton.on('pointerdown', () => this.nextDay());
 
 
     }
@@ -49,12 +77,27 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start(sceneName);
-            this.sound.stopAll();
+            if (gameState.actionsLeft > 0) {
+                gameState.actionsLeft--;
+                this.scene.start(sceneName, { gameState: gameState });
+                this.sound.stopAll();
+            } else {
+                alert('No te quedan acciones hoy. Pasa al siguiente dia.');
+            }
 
         });
     }
 
+
+    nextDay() {
+        if (gameState.currentDay < gameState.maxDays) {
+            gameState.currentDay++;
+            gameState.actionsLeft = 3;
+            this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
+        } else {
+            alert('¡Has alcanzado el ultimo dia!');
+        }
+    }
 
 
     }

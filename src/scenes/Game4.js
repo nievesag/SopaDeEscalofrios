@@ -7,6 +7,11 @@ export default class Game4 extends Phaser.Scene {
         super({ key: 'Game4'});
     }
     
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
+
     preload () {
         // Música.
         this.load.audio('theme4', './assets/audio/m4c.mp3');
@@ -15,6 +20,7 @@ export default class Game4 extends Phaser.Scene {
     
     create (){
 
+        console.log(this.gameState.currentDay);
         // Música.
         const music = this.sound.add('theme4');
         music.play();
@@ -45,40 +51,12 @@ export default class Game4 extends Phaser.Scene {
         this.ground.body.setImmovable(true); 
         this.ground.body.setAllowGravity(false); 
 
-        this.bow = new Bow(this, 150, 600, [
-            // { type: 'normal', count: 1 },
-            // { type: 'split', count: 1 },
-            // { type: 'ball', count: 1 },
-            { type: 'explosive', count: 5 } 
-        ]);
+    
 
 
-        this.enemiesPool = [];
-
-        const enemy1 = new Enemy(this, 650, 668);
-        const enemy2 = new Enemy(this, 800, 668);
-        const enemy3 = new Enemy(this, 725, 530);
-        this.enemiesPool.push(enemy1, enemy2, enemy3);
-
-        this.obstaclePool = [];
-
-        const leftObstacle = new Obstaculo(this, 600, 668, 3, 'vertical');
-        const rightObstacle = new Obstaculo(this, 700, 668, 3, 'vertical');
-        const topObstacle = new Obstaculo(this, 650, 600, 3, 'horizontal');
-
-        const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
-        const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
-        const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
-
-        const topObstacle3 = new Obstaculo(this, 725, 570, 3, 'horizontal');
-        const leftObstacle3 = new Obstaculo(this, 670, 505, 3, 'vertical');
-        const rightObstacle3 = new Obstaculo(this, 780, 505, 3, 'vertical');
-
-        const topObstacle4 = new Obstaculo(this, 725, 440, 3, 'horizontal');
-       
-        this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
-            leftObstacle2, rightObstacle2, topObstacle2,
-            topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
+      
+        this.createEnemies();
+        this.createObstacles();
 
         this.physics.add.collider(this.enemiesPool, this.obstaclePool);
         this.physics.add.collider(this.obstaclePool, this.ground);
@@ -116,10 +94,42 @@ export default class Game4 extends Phaser.Scene {
             this.bow.projectile.updateRotation();
         }
 
-        this.enemiesText.setText(`Enemies left: ${this.enemiesPool.length - this.enemiesCounter}`);
-        this.arrowsText.setText(`Arrows left: ${this.bow.totalArrows}`);
+      this.updateInfoTexts();
 
        this.endLevel();
+    }
+
+
+    createObstacles() {
+
+        this.obstaclePool = [];
+
+        const leftObstacle = new Obstaculo(this, 600, 668, 3, 'vertical');
+        const rightObstacle = new Obstaculo(this, 700, 668, 3, 'vertical');
+        const topObstacle = new Obstaculo(this, 650, 600, 3, 'horizontal');
+
+        const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
+        const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
+        const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
+
+        const topObstacle3 = new Obstaculo(this, 725, 570, 3, 'horizontal');
+        const leftObstacle3 = new Obstaculo(this, 670, 505, 3, 'vertical');
+        const rightObstacle3 = new Obstaculo(this, 780, 505, 3, 'vertical');
+
+        const topObstacle4 = new Obstaculo(this, 725, 440, 3, 'horizontal');
+       
+        this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
+            leftObstacle2, rightObstacle2, topObstacle2,
+            topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
+    }
+
+    createEnemies() {
+
+        this.enemiesPool = [];
+        const enemy1 = new Enemy(this, 650, 668);
+        const enemy2 = new Enemy(this, 800, 668);
+        const enemy3 = new Enemy(this, 725, 530);
+        this.enemiesPool.push(enemy1, enemy2, enemy3);
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -155,14 +165,23 @@ export default class Game4 extends Phaser.Scene {
 
     endLevel()
     {
-        if(this.enemiesCounter == this.enemiesPool.length)
-        {
+        let result;
+        if (this.enemiesCounter == this.enemiesPool.length) {
             console.log("victoria");
-        }
-        else if(this.bow.totalArrows <= 0)
-        {
+            result = 'victoria';
+        } 
+        else if (this.bow.totalArrows == 0 && this.enemiesCounter < this.enemiesPool.length) {
             console.log("derrota");
+            result = 'derrota';
         }
+ 
+
+    if (result) {
+        const currentDayIndex = this.gameState.currentDay - 1; 
+        this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+
+        console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
+    }
     }
 
 
@@ -174,11 +193,59 @@ export default class Game4 extends Phaser.Scene {
             color: '#ffffff'
         });
 
+        console.log(this.bow.remainingArrows);
         this.arrowsText = this.add.text(10, 40, `Flechas restantes: ${this.bow.remainingArrows}`, {
             fontFamily: 'Arial',
             fontSize: '30px',
             color: '#ffffff'
         });
+
+        this.arrowTypeText = this.add.text(10, 70, `Arrow Type: ${this.bow.getCurrentArrowType()}`, {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff',
+        });
+    }
+
+
+    updateInfoTexts() {
+
+        this.enemiesText.setText(`Enemies left: ${this.enemiesPool.length - this.enemiesCounter}`);
+        this.arrowsText.setText(`Arrows left: ${this.bow.totalArrows}`);
+        if(this.bow.totalArrows >= 1)
+            this.arrowTypeText.setText(`Arrow type: ${this.bow.getCurrentArrowType()}`);
+    }
+
+
+    setDifficulty() {
+        if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 3 },
+                { type: 'Ball Arrow', count: 3 },
+                { type: 'Split Arrow', count: 3 }
+
+            ]);
+        }
+        else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 2 },
+                { type: 'Split Arrow', count: 2 }
+            ]);
+        }
+        else if(this.gameState.currentDay == 5)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 5 },
+                //{ type: 'Explosive Arrow', count: 1 },
+                { type: 'Ball Arrow', count: 1 },
+                { type: 'Split Arrow', count: 1 }
+            ]);
+        }
     }
 
 

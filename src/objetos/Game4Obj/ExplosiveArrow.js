@@ -21,7 +21,7 @@ export default class ExplosiveArrow extends Arrow {
 
  
     explode() {
-        const explosionRadius = 200; 
+        const explosionRadius = 120; 
         
         const obstaclesToDestroy = this.scene.obstaclePool.filter(obstacle => {
             const distance = Phaser.Math.Distance.Between(this.x, this.y, obstacle.x, obstacle.y);
