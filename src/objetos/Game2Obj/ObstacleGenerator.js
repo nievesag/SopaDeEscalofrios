@@ -1,6 +1,6 @@
 export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     constructor(scene, obsClass){ 
-        super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY + 250, 'obstacleGenerator');
+        super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY + 300, 'obstacleGenerator');
         
         this.scene = scene;
         this.obsClass = obsClass;
@@ -30,7 +30,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
 
         // Para evitar que se solapen los obsjetos.
         this.lastObstaclePosX = 0; // inicialmench es 0.
-        this.minDistanceBetweenObstacles = Phaser.Math.Between(100, 300); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
+        this.minDistanceBetweenObstacles = Phaser.Math.Between(300, 500); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
     }
 
     update(){

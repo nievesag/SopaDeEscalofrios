@@ -140,15 +140,15 @@ export default class Game2 extends Phaser.Scene {
     loadImages(){
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
         //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
-        
-        this.load.image('cannonBody', './assets/images/Game2/cannonBody.jpg');
+
+        this.load.image('cannonBody', './assets/images/Game2/cannonBody.png');
         this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
         this.load.image('vessel', './assets/images/Game2/vessel.png');
         this.load.image('river', './assets/images/Game2/rio.jpg');
         this.load.image('background', './assets/images/Game2/background.jpg');
         this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
-        this.load.image('crocodile', './assets/images/Game2/crocodile.jpg');
-        this.load.image('hippo', './assets/images/Game2/hippo.jpg');
+        this.load.image('crocodile', './assets/images/Game2/crocodile.png');
+        this.load.image('hippo', './assets/images/Game2/hippo.png');
         this.load.image('musicButton', './assets/images/Game2/music.png');
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg');

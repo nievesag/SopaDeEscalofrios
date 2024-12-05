@@ -8,8 +8,8 @@ export default class Background{
         //  Draw a random 'landscape'
         const landscape = this.scene.add.graphics();
 
-        landscape.fillStyle(0x008800, 1); // Color de relleno.
-        landscape.lineStyle(2, 0x00ff00, 1); // Color de línea.
+        landscape.fillStyle(0xbb993d, 1); // Color de relleno.
+        landscape.lineStyle(7, 0x635228, 1); // Color de línea.
 
         landscape.beginPath();
 
