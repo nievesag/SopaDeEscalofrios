@@ -95,7 +95,7 @@ export default class Game2 extends Phaser.Scene {
         this.bg.tilePositionX += 2;
         this.rio.tilePositionX -=6;
 
-        
+        this.vessel.update();
         this.obstacleGen.update();
 
         let scrollX = this.cameras.main.scrollX; // posx camara
