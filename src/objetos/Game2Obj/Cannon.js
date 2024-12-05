@@ -25,23 +25,23 @@
       // POWERBAR.
       
       this.powerBarRectangle = this.scene.add.rectangle(
-        600,     // x.
-        550,     // y.
+        350,     // x.
+        650,     // y.
         40,      // anchura.
         200,     // altura.
         0x444444 // color.
       ).setDepth(1);
 
       this.powerBar = this.scene.add.rectangle(
-        600,     // x.    
-        450,     // y.
-        40,      // anchura.
-        0,       // altura (inicialmench es 0 porque sube y baja).
-        0xff0000 // color.
-      ).setDepth(2);
+        350,     // x.    
+        750,     // y.
+        25,      // anchura.
+        -27,       // altura (inicialmench es -27 porque sube y baja y kiero margen).
+        0xed8022 // color.
+      ).setDepth(2).setAngle(180); // se rota 180 por la movida esta q sube y baja.
 
       this.power = 0; // potensya. (0 apagao 1 encendio).
-      this.powerDir = -1; // 1 baja -1 sube (inicialmench sube).
+      this.powerDir = 1; // 1 baja -1 sube (inicialmench sube).
 
       // Dibuja la línea de la dir.
       this.graphics = this.scene.add.graphics({ 
@@ -51,7 +51,7 @@
 
       // Evento para animar la barra arriba y abajo.
       this.scene.time.addEvent({
-        delay: 16, // 60fps maomeno.
+        delay: 1, // para que vaya depriseja
         loop: true,
         callback: () => 
         {
@@ -72,8 +72,15 @@
     updatePowerBar(){
       this.power += 0.01 *this.powerDir; // Power = Power - (vel * dir); hay q hacelo asi porq 1 sbaja -1 sube
 
-      if (this.power >= 1) { // si supera 1.
-        this.power = 1; 
+      // 0 -> poca fuerza
+      // 1 -> jijijuju
+      // 2 -> ni mas ni menos
+      // 3 -> va folledo
+      // 4 -> joder lo folledo que va
+      // 5 -> NITRO
+
+      if (this.power >= 5) { // si supera el max.
+        this.power = 5; 
         this.powerDir = -1; // cabia dir.
       } 
       else if (this.power <= 0) { // si llega a 0.
@@ -81,7 +88,35 @@
         this.powerDir = 1; // cambia dir.
       }
 
-      // Actualiza visualmente
-      this.powerBar.height = 200 * this.power;
+      // Actualiza visualmente movidas visuales /6 para ajustar margenes y pollas de fraqcciones.
+      this.powerBar.height = 200/6 * this.power;
+
+      this.updatePowerBarColors();
+    }
+
+    updatePowerBarColors(){
+      let color;
+
+      if(power === 0){ // 0 -> poca fuerza.
+        // Azul again.
+      }
+      else if(power === 1){ // 1 -> jijijuju.
+        // Azul
+      }
+      else if(power === 2){ // 2 -> ni mas ni menos.
+        // Verde
+      }
+      else if(power === 3){ // 3 -> va folledo.
+        // Amarillo
+      }
+      else if(power === 4){ // 4 -> joder lo folledo que va.
+        // Naranja.
+      }
+      else if(power === 5){ // 5 -> NITRO.
+        // Rojo
+      }
+
+      this.powerBar.fillColor = color;
+
     }
   }
