@@ -14,7 +14,7 @@ export default class Game2 extends Phaser.Scene {
     preload () { 
         this.loadImages();
         this.loadAudios();
-        this.load.css('EagleLake', 'style.css')
+        this.load.css('EagleLake', 'style.css');
     }
     
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
@@ -34,7 +34,7 @@ export default class Game2 extends Phaser.Scene {
             500, // anchura
             300, // altura
             0x000000 // color
-        ).setAlpha(0.8);
+        );
 
         let tanqia = this.add.image(
             this.cameras.main.centerX, 
@@ -79,24 +79,23 @@ export default class Game2 extends Phaser.Scene {
     }
 
     startGame(){
-        this.isClickingOnUI = false; // Inicialmente no se clica sobre UI.
+        this.isClickingOnUI = false; // inicialmente no se clica sobre UI.
 
-        // Música.
+        // música.
         const music = this.sound.add('theme2');
         music.play();
         this.sound.pauseOnBlur = true;
 
-        // Background y rio.
+        // background y rio.
         this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
         this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
 
-        // Objetos.
+        // creación de los objetos del juego.
         this.background = new Background(this);
         this.background.initialLandscape();
-
         this.cannon = new Cannon(this);
         
-        // Grupo de obstacles con cada clase.
+        
         this.obsClass = [
             {type: 'crocodile', class: Crocodile},
             {type: 'hippo', class: Hippo},
@@ -104,11 +103,10 @@ export default class Game2 extends Phaser.Scene {
         ];
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
-
         this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
         this.vessel.vesselCollisions();
 
-        // Establece los límites del mundo y de la cámara.
+        // establece los límites del mundo y de la cámara.
         // x, y, width, height
         this.physics.world.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 700);
         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
@@ -127,9 +125,13 @@ export default class Game2 extends Phaser.Scene {
             }
         });
 
-        // Botón de regreso.
+        // botón de regreso.
         this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
-        this.buttonMainMenu.on('pointerdown', () => { this.isClickingOnUI = true; }); 
+        this.buttonMainMenu.on('pointerdown', () => { 
+            this.isClickingOnUI = true; 
+            this.destroyAll();
+            this.scene.stop(); // detiene la escena.
+        }); 
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
@@ -169,7 +171,45 @@ export default class Game2 extends Phaser.Scene {
         if(this.musicButton)this.musicButton.setPosition(scrollX + 45, scrollY + 40);
     }
 
-    // Botón de la UI.
+    destroyAll(){ // elimina todos los objetos del juego.
+        if(this.background)
+        {
+            this.background.destroy();
+            this.background = null; // limpia referencia.
+        } 
+
+        if(this.cannon)
+        {
+            this.cannon.destroy();
+            this.cannon = null;
+        } 
+
+        if(this.vessel)
+        {
+            this.vessel.destroy();
+            this.vessel = null;
+        } 
+
+        if(this.obstacleGen)
+        {
+            this.obstacleGen.destroy();
+            this.obstacleGen = null;
+        } 
+
+        if(this.buttonMainMenu)
+        {
+            this.buttonMainMenu.destroy();
+            this.buttonMainMenu = null;
+        } 
+
+        if(this.musicButton)
+        {
+            this.musicButton.destroy();
+            this.buttonMainMenu = null;
+        } 
+    }
+
+    // botón de la UI.
     createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
             x, 
