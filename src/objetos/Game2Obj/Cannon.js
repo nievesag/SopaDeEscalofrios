@@ -97,7 +97,7 @@
     updatePowerBarColors(){
 
       // Math.floor convierte los números de this power (1.9, 2.7) a enteros (1, 2) para que funcionen los ifs.
-      let power = Math.floor(this.power); 
+      let power = Math.trunc(this.power); // trunc trunca xde
       let color;
 
       if(power === 0){ // 0 -> poca fuerza.

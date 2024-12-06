@@ -124,7 +124,7 @@ export default class Game2 extends Phaser.Scene {
 
         // establece los límites del mundo y de la cámara.
         // x, y, width, height
-        this.physics.world.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 700);
+        this.physics.world.setBounds(0, -350, Number.MAX_SAFE_INTEGER, 1050);
         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
 
         // Botón de la música.

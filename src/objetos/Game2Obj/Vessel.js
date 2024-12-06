@@ -29,15 +29,25 @@ export default class Vessel extends Phaser.GameObjects.Image{
     }
 
     launchVessel(angle){
-        // Se activa.
+        // se activa.
         this.body.enable = true;
         this.setActive(true).setVisible(true);
 
-        // Pone a la vasija donde el cañón.
+        // pone a la vasija donde el cañón.
         this.body.reset(this.cannon.cannonHead.x, this.cannon.cannonHead.y);
 
-        // Lanza a la vasija con un ángulo y velocidad.
-        this.scene.physics.velocityFromRotation(angle, 600, this.body.velocity); 
+        let launchForce; // fuerza con la q se lanza inicialmente la vasija.
+        let cannonForce = Math.floor(this.cannon.power); // fuerza del cañón truncada.
+
+        if(cannonForce === 0) launchForce = 100; // poca fuerza.
+        else if(cannonForce === 1) launchForce = 300; // jijijuju.
+        else if (cannonForce === 2) launchForce = 500; // ni mas ni menos.
+        else if (cannonForce === 3) launchForce = 700; // va folledo.
+        else if (cannonForce === 4) launchForce = 900; // joder lo folledo que va.
+        else if (cannonForce === 5) launchForce = 1200; // NITRO.
+
+        // lanza a la vasija con un ángulo y velocidad.
+        this.scene.physics.velocityFromRotation(angle, launchForce, this.body.velocity); 
 
         this.body.setAngularVelocity(200); // vel de giro inicial.
 
