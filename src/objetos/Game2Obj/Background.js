@@ -4,7 +4,7 @@ export default class Background{
 
         // En este contexto los segmentos estos son las piramides y picos formaos.
         this.segments = []; // segmentos actuales.
-        this.segmentSize = 800; // tamaño de cada cacho.
+        this.segmentSize = 5000; // tamaño de cada cacho.
 
         this.maxY = 550; // máximo absoluto.
         this.minY = 400; // mínimo absoluto.

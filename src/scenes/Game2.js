@@ -99,8 +99,8 @@ export default class Game2 extends Phaser.Scene {
         // Grupo de obstacles con cada clase.
         this.obsClass = [
             {type: 'crocodile', class: Crocodile},
-            {type: 'hippo', class: Hippo},
-            {type: 'maelstrom', class: Maelstrom},
+            //{type: 'hippo', class: Hippo},
+            //{type: 'maelstrom', class: Maelstrom},
         ];
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
@@ -110,8 +110,8 @@ export default class Game2 extends Phaser.Scene {
 
         // Establece los límites del mundo y de la cámara.
         // x, y, width, height
-        this.physics.world.setBounds(0, 0, 3200, 700);
-        this.cameras.main.setBounds(0, 0, 3200, 600);
+        this.physics.world.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 700);
+        this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
 
         // Botón de la música.
         this.musicButton = this.add.image(40, 40, 'musicButton').setScale(0.3).setInteractive();
@@ -161,6 +161,9 @@ export default class Game2 extends Phaser.Scene {
 
         let scrollX = this.cameras.main.scrollX; // posx camara
         let scrollY = this.cameras.main.scrollY; // posy camara
+
+        if(this.bg) this.bg.setPosition(scrollX,scrollY);
+        if(this.rio) this.rio.setPosition(scrollX, 600);
 
         if(this.buttonMainMenu)this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
         if(this.musicButton)this.musicButton.setPosition(scrollX + 45, scrollY + 40);
