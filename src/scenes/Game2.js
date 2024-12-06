@@ -92,7 +92,7 @@ export default class Game2 extends Phaser.Scene {
 
         // Objetos.
         this.background = new Background(this);
-        this.background.createLandscape();
+        this.background.initialLandscape();
 
         this.cannon = new Cannon(this);
         
@@ -110,8 +110,8 @@ export default class Game2 extends Phaser.Scene {
 
         // Establece los límites del mundo y de la cámara.
         // x, y, width, height
-        this.physics.world.setBounds(0, 0, 3200, 700);
-        this.cameras.main.setBounds(0, 0, 3200, 600);
+        this.physics.world.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 700);
+        this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
 
         // Botón de la música.
         this.musicButton = this.add.image(40, 40, 'musicButton').setScale(0.3).setInteractive();
@@ -155,11 +155,15 @@ export default class Game2 extends Phaser.Scene {
         if(this.bg)this.bg.tilePositionX += 2;
         if(this.rio)this.rio.tilePositionX -=6;
 
+        if(this.background)this.background.update();
         if(this.vessel)this.vessel.update();
         if(this.obstacleGen)this.obstacleGen.update();
 
         let scrollX = this.cameras.main.scrollX; // posx camara
         let scrollY = this.cameras.main.scrollY; // posy camara
+
+        if(this.bg) this.bg.setPosition(scrollX,scrollY);
+        if(this.rio) this.rio.setPosition(scrollX, 600);
 
         if(this.buttonMainMenu)this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
         if(this.musicButton)this.musicButton.setPosition(scrollX + 45, scrollY + 40);

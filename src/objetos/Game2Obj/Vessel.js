@@ -16,6 +16,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
         this.body.setDrag(50); // Fricción con el suelo (NON OSTUCALOS).
         this.body.setAngularDrag(50); // rotación angular con el airew y tal.
         this.body.setBounce(1); // rebote con colisiones.
+        this.setDepth(5); // siempre delante de todo.
 
         // Al comienzo se desactiva.
         this.body.enable = false;
@@ -25,13 +26,6 @@ export default class Vessel extends Phaser.GameObjects.Image{
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
 
         this.isRotating = false;
-    }
-
-    update(){
-        if(this.isRotating){
-            this.rotation += 0.045; // rota.
-        }
-
     }
 
     launchVessel(angle){

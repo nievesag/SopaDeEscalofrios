@@ -25,7 +25,7 @@ export default class MainMenu extends Phaser.Scene {
         let title = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY - 150,
-            'Introito Antiapotropaico',
+            'Introito Antiapotropaigro',
             {
                 fontFamily: 'arabic',
                 fontSize: 100,
