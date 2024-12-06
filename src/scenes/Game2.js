@@ -99,8 +99,8 @@ export default class Game2 extends Phaser.Scene {
         // Grupo de obstacles con cada clase.
         this.obsClass = [
             {type: 'crocodile', class: Crocodile},
-            //{type: 'hippo', class: Hippo},
-            //{type: 'maelstrom', class: Maelstrom},
+            {type: 'hippo', class: Hippo},
+            {type: 'maelstrom', class: Maelstrom},
         ];
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
