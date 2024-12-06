@@ -144,4 +144,11 @@ export default class Background{
 
        
     }
+
+    destroy(){
+        for(let i = 0; i < this.segments.length; i++){
+            this.segments[i].graphic.destroy(); // destruye las pirámides.
+        }
+        this.segments = []; // limpia el array.
+    }
 }
