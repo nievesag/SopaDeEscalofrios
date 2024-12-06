@@ -27,6 +27,7 @@ export default class Game2 extends Phaser.Scene {
     }
 
     createTanqiaPopUp(){
+        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
         // Background del dialogo (LUEGO IMAGEN).
         let dialogueBackground = this.add.rectangle( 
             400, // x
@@ -38,7 +39,7 @@ export default class Game2 extends Phaser.Scene {
 
         let tanqia = this.add.image(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY + 110, 
+            this.cameras.main.centerY + 175, 
             'tanqia'
         ).setScale(0.5, 0.32); // x, y, tag.
 
@@ -51,7 +52,7 @@ export default class Game2 extends Phaser.Scene {
                 color: '#ffffff',
                 align: 'center',
                 fontFamily: 'EagleLake',
-                wordWrap: {width: 530}, // la puta polla: es lo de \n pero pro.
+                wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
         ).setOrigin(0.5); // danzhu lo tenia y funciona.
@@ -59,13 +60,24 @@ export default class Game2 extends Phaser.Scene {
         // Botón de aceptar.
         let acceptButton = this.add.text(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY + 250, 
+            this.cameras.main.centerY + 340, 
             'Jugar',
             {
-            fontSize: '30px',
+            fontSize: '50px',
+            fontFamily: 'arabic',
             color: 'white',
             align: 'center'
         }).setOrigin(0.5).setInteractive();
+
+        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            acceptButton.setTint(0xdfa919);
+        });
+
+        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            acceptButton.clearTint();
+        });
 
         acceptButton.on('pointerdown', ()=>{
             // Destruye todo y pone el juego a funcionarch.
@@ -73,13 +85,17 @@ export default class Game2 extends Phaser.Scene {
             tanqia.destroy();
             tanqiaText.destroy();
             acceptButton.destroy();
-
             this.startGame();
         })
     }
 
     startGame(){
-        this.isClickingOnUI = false; // inicialmente no se clica sobre UI.
+
+        this.isClickingOnUI = true; // al inicio desactiva el input.
+        // durante 100 milisegs bloquea el input.
+        this.time.delayedCall(100, ()=>{
+            this.isClickingOnUI = false; // permite interaccion tras 2 segs
+        })
 
         // música.
         const music = this.sound.add('theme2');
@@ -139,12 +155,14 @@ export default class Game2 extends Phaser.Scene {
             if (!this.isClickingOnUI) { // si no se clica en la UI...
             this.vessel.launchVessel(this.cannon.angle); // lanza vasija.
             }
-            this.isClickingOnUI = false; // restea flag.
         });
         
         this.input.on('pointermove', (pointer) => // SIGUE AL MOUSE.
         {
+            
             this.cannon.cannonAngle(pointer);
+            
+            
         });
     }
 

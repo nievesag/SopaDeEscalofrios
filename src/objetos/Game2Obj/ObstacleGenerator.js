@@ -35,7 +35,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
 
     update(){
         // Mantiene al obstacle generator a la derecha de la pantalla.
-        this.x = this.scene.cameras.main.scrollX + 1000 // scrollX te da la posición de la cámara.
+        this.x = this.scene.cameras.main.scrollX + 1115 // scrollX te da la posición de la cámara.
         this.dissappearObstacle();
     }
 
@@ -71,7 +71,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     dissappearObstacle(){
         // Si se salen los obstáculos del juego...
         this.obsGroup.getChildren().forEach((obs) =>{
-            if(obs.x < this.scene.cameras.main.scrollX){ // borde (determinar)
+            if(obs.x < this.scene.cameras.main.scrollX - 100){ // borde izquierdo (un poco mas a la izquierda para q no despopee de pronto)
                 this.obsGroup.killAndHide(obs); // desactiva, oculta
                 obs.destroy(); // elimina.
             }
