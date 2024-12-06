@@ -92,7 +92,7 @@ export default class Game2 extends Phaser.Scene {
 
         // Objetos.
         this.background = new Background(this);
-        this.background.createLandscape();
+        this.background.initialLandscape();
 
         this.cannon = new Cannon(this);
         
@@ -155,6 +155,7 @@ export default class Game2 extends Phaser.Scene {
         if(this.bg)this.bg.tilePositionX += 2;
         if(this.rio)this.rio.tilePositionX -=6;
 
+        if(this.background)this.background.update();
         if(this.vessel)this.vessel.update();
         if(this.obstacleGen)this.obstacleGen.update();
 

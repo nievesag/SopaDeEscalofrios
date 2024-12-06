@@ -1,64 +1,147 @@
 export default class Background{
     constructor(scene){
         this.scene = scene;
+
+        // En este contexto los segmentos estos son las piramides y picos formaos.
+        this.segments = []; // segmentos actuales.
+        this.segmentSize = 800; // tamaño de cada cacho.
+
+        this.maxY = 550; // máximo absoluto.
+        this.minY = 400; // mínimo absoluto.
+    }
+    // dibujar un paisaje "procedural(?)"
+
+    initialLandscape(){
+        // El ancho de la cámara.
+        let cameraWidth = this.scene.cameras.main.width;
+
+        // Divides la anchura de cámara entre cada cacho para ver cuantos cachos pones luego.
+        let visibleSegments = Math.ceil(cameraWidth/this.segmentSize); 
+
+        /* MÉTODOS DE MATH (algunos q pueden valernos)
+        Math.ceil(numero): redondea hacia arriba. (3.2 = 4)
+        Math.floor(numero): redondea hacia abajo. (3.7 = 3)
+        Math.round(numero): redondea a secas (3.2 = 3, 3.7 = 4)
+        Math.trunc(numero): elimina los decimales (3.2 = 3, 3.7 = 3)
+        Math.abs(numero): valor absoluto.
+        Math.sign(numero): devuelve el signo (3 = 1 positivo, -3 = -1 negativo, 0 si cero)
+        Math.min(n1, n2, ... nn): devuelve el minimo de tos los que le metas.
+        Math.max(n1, n2, ... nn): devuelve el masimo de tos los que le metas.
+        Math.pow(a, b): potencia (a^b).
+        Math.sqrt(numero): raíz cuadrada.
+        Math.random(): numero aleatorio entre 0 y 0.9999.....
+        */
+
+        let totalSegments = visibleSegments + 2 // le sumamos 2 para que no se le vean las tripas al juego y tenga márgen cari.
+
+        for(let i = 0; i < totalSegments; i++){
+            let newSegment = i * this.segmentSize; // calcula la pos inicial del segmento actual en x.
+            this.addSegment(newSegment); // lo dibuja
+        }
+
+        // al terminar el bucle se rellena el área visible con segmentos, y así cada vez que se carga terreno (camerawidth)
+
+
     }
 
-    createLandscape () // Dibujar un paisaje "procedural(?)"
-    {
+    addSegment(newSegment){
         //  Draw a random 'landscape'
-        const landscape = this.scene.add.graphics();
+        let landscape = this.scene.add.graphics();
 
-        landscape.fillStyle(0xbb993d, 1); // Color de relleno.
-        landscape.lineStyle(7, 0x635228, 1); // Color de línea.
+        landscape.fillStyle(0xbb993d, 1); // color de relleno.
+        landscape.lineStyle(7, 0x635228, 1); // color de línea.
 
         landscape.beginPath();
 
-        // Mínimo y máximo absolutos de cada pico.
-        const maxY = 550;
-        const minY = 400;
-
-        let x = 0;
-        let y = maxY;
-        let range = 0;
-
-        let up = true; // Para ver si sube o baja el pico. 
+        let x = newSegment;
+        let y = this.maxY;
+        let up = true; // para ver si sube o baja el pico. 
 
         // Dibuja el inicio del terreno.
-        landscape.moveTo(0, 600);
-        landscape.lineTo(0, 550);
+        landscape.moveTo(newSegment, 600);
+        landscape.lineTo(newSegment, this.maxY);
 
-        // Dibujar el paisaje.
-        do
-        {
-            // Longitud de cada segmento.
+        let range = 0;
+
+        // newSegment + segmentSize es desde donde partes + lo que abarca: punto de inicio + tamaño.
+        let realSize = newSegment + this.segmentSize
+        
+        while(x < realSize){
+            // Longitud de cada segmento
             range = Phaser.Math.Between(20, 100);
 
-            if (up) // Máximos.
+            if (up) // máximos.
             {
-                y = Phaser.Math.Between(y, minY);
+                y = Phaser.Math.Between(y, this.minY);
                 up = false;
             }
-            else // Mínimos.
+            else // mínimos.
             {
-                y = Phaser.Math.Between(y, maxY);
+                y = Phaser.Math.Between(y, this.maxY);
                 up = true;
             }
 
-
-            // Traza el siguiente segmento.
+            // Traza el siguiente cacho.
             landscape.lineTo(x + range, y);
 
             x += range;
 
-        } while (x < 3100); // Repite hasta que llegue al borde derecho.
+        }
 
-        // Cierra el trazado a la derecha
-        landscape.lineTo(3200, maxY);
-        landscape.lineTo(3200, 600);
+        // cierra el trazado a la derecha
+        landscape.lineTo(realSize, this.maxY);
+        landscape.lineTo(realSize, 600);
         landscape.closePath();
 
-        // Traza y rellena.
+        // traza y rellena.
         landscape.strokePath();
         landscape.fillPath();
+
+        let segment = { // crea un segment single.
+            graphic: landscape, // graphic object (phaser)
+            start: newSegment // pos ini
+        };
+
+        this.segments.push(segment); // mete el segment en el array.
+
+    }
+
+    deleteSegment(segment){ 
+        segment.graphic.destroy(); // elimina elemento gráfico segment.
+        this.segments.shift(); // elimina el primer elemento del array empezando por la izquierda.
+    }
+
+    update(){
+        let cameraX = this.scene.cameras.main.scrollX; // lado izq de la cámara.
+        let cameraWidth = this.scene.cameras.main.width; // ancho de cámara
+
+        for(let i = 0; i < this.segments.length; i++){
+            let segment = this.segments[i];
+
+            // saca el punto final de ese segmento[i].
+            let lastSegmentPosX = segment.start + this.segmentSize;
+
+            if(lastSegmentPosX < cameraX){
+                this.deleteSegment(segment);
+            }
+            else{
+                i++ // solo avanza si el segment es deleted.
+            }
+        }
+
+        // último segmento del array (último en pantalla).
+        let lastSegment = this.segments[this.segments.length - 1];
+        let nextSegment = lastSegment.start + this.segmentSize;
+
+        // si el próximo segmento es menor que el lado derecho de la pantalla...
+        while(nextSegment < cameraX + cameraWidth){
+            this.addSegment(nextSegment); // ... lo añade y pinta.
+            nextSegment = nextSegment + this.segmentSize; // CALCULA EL PRÓXIMO SEGMENTO9.
+
+        }
+
+        
+
+       
     }
 }
