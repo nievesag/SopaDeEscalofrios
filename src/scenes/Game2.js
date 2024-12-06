@@ -29,13 +29,15 @@ export default class Game2 extends Phaser.Scene {
     createTanqiaPopUp(){
         this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
         // Background del dialogo (LUEGO IMAGEN).
-        let dialogueBackground = this.add.rectangle( 
-            400, // x
-            300, // y
-            500, // anchura
-            300, // altura
-            0x000000 // color
-        );
+        let dialogueBackground = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1.9, // anchura
+                y: 2.22, // altura
+            },
+            key: 'tanqiaBg'
+        });
 
         let tanqia = this.add.image(
             this.cameras.main.centerX, 
@@ -274,6 +276,7 @@ export default class Game2 extends Phaser.Scene {
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg');
         this.load.image('tanqia', './assets/images/Game2/tanqia.PNG');
+        this.load.image('tanqiaBg', './assets/images/Game2/tanqiaBackground.jpg');
     }
 
     loadAudios(){
