@@ -141,7 +141,19 @@ export default class Game2 extends Phaser.Scene {
                 music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        });
+        }).setDepth(10); // pq es UI
+
+        // contador de distancia.
+        this.distanceCounter = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY,
+            'Distancia: 0m', // inicialmench 0m..
+            {
+                fontSize: '24px',
+                color: 'white',
+                fontFamily: 'EagleLake'
+            }
+        ).setDepth(10); // pq es UI.
 
         // botón de regreso.
         this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
@@ -149,7 +161,7 @@ export default class Game2 extends Phaser.Scene {
             this.isClickingOnUI = true; 
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
-        }); 
+        }).setDepth(10); // pq es UI 
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
@@ -161,10 +173,7 @@ export default class Game2 extends Phaser.Scene {
         
         this.input.on('pointermove', (pointer) => // SIGUE AL MOUSE.
         {
-            
-            this.cannon.cannonAngle(pointer);
-            
-            
+            this.cannon.cannonAngle(pointer); 
         });
     }
 
@@ -189,6 +198,12 @@ export default class Game2 extends Phaser.Scene {
 
         if(this.buttonMainMenu)this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
         if(this.musicButton)this.musicButton.setPosition(scrollX + 45, scrollY + 40);
+    
+        if(this.vessel){
+            let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
+            this.distanceCounter.setText('Distancia: ' + distance.toFixed(2) + 'm'); // el tofixed es para que tenga solo 2 decimales.
+            this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
+        }
     }
 
     destroyAll(){ // elimina todos los objetos del juego.

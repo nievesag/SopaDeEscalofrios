@@ -30,6 +30,7 @@ export default class Background{
         Math.pow(a, b): potencia (a^b).
         Math.sqrt(numero): raíz cuadrada.
         Math.random(): numero aleatorio entre 0 y 0.9999.....
+        let xd = algo.toFixed(n): devuelve en xd algo con n decimales.
         */
 
         let totalSegments = visibleSegments + 2 // le sumamos 2 para que no se le vean las tripas al juego y tenga márgen cari.

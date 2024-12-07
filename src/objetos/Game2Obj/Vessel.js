@@ -29,6 +29,9 @@ export default class Vessel extends Phaser.GameObjects.Image{
     }
 
     launchVessel(angle){
+        // guarda la pos inicial de x.
+        this.initialPosX = this.x; 
+
         // se activa.
         this.body.enable = true;
         this.setActive(true).setVisible(true);
