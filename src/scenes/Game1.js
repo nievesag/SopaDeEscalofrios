@@ -136,23 +136,19 @@ export default class Game1 extends Phaser.Scene {
         // -----------------------------------
     }
 
-    // Lo llamas en el create
     timerHUD() {
         const updateTimer = () => {
-            // Vamos restando de uno en uno
-            this.gameTime -= 1; // Cambia esto según tus necesidades
-
-            // Eliminar el texto anterior
-            this.timerText.destroy();
+            this.gameTime -= 1; // disminuye contador
+            this.timerText.destroy(); // borra texto anterior
 
             if(this.gameTime > 0) {
-                // Crear el nuevo texto actualizado en el mismo sitio
+                // crea texto nuevo
                 this.timerText = this.add.text(20, 20, this.gameTime,
                     { fontFamily: 'EagleLake', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
 
-        // Evento que actualice el temporizador
+        // temporizador
         this.time.addEvent({
             delay: 1000,
             loop: true,
@@ -179,7 +175,6 @@ export default class Game1 extends Phaser.Scene {
         if(this.organCount == 0) {
             console.log("hola");
         }
-
     }
 
     decreaseOrganCount() {
