@@ -6,7 +6,6 @@ import Goal from '../objetos/Game1Obj/goal.js';
 export default class Game1 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game1'});
-        this.gameTime = 10; // segundos para el juego
     }
     
     init(data) {
@@ -15,7 +14,12 @@ export default class Game1 extends Phaser.Scene {
 
     preload () {
         // Cargamos el Tilemap (JsSON)
-		this.load.tilemapTiledJSON('tilemap', './assets/tilemap/map2.json');
+        // -- mapa 1
+		this.load.tilemapTiledJSON('tilemap1', './assets/tilemap/map1.json');
+        // -- mapa 2
+        this.load.tilemapTiledJSON('tilemap2', './assets/tilemap/map2.json');
+        // -- mapa 3
+        this.load.tilemapTiledJSON('tilemap3', './assets/tilemap/map3.json');
 
 		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
 		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
@@ -41,24 +45,29 @@ export default class Game1 extends Phaser.Scene {
         const music = this.sound.add('theme1');
         music.play();
         this.sound.pauseOnBlur = true;
-        
+
         this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
         
-        //this.setDifficulty();
+        // segundos para el juego
+        this.gameTime; 
 
         // -------- COSAS DEL TILESET --------
-		// Objeto tilemap
-		this.map = this.make.tilemap({
-            key: 'tilemap',
-			tileWidth: 32,
-			tileHeight: 32
-		});
+        this.tileKey;
+        this.mapKey;
+        this.setDifficulty();
         
-		// Objeto el tileset. 
-		// recibe "name" del .json y la imagen del tileset
-		const tileset1 = this.map.addTilesetImage('map2', 'patronesTilemap');
+        // Objeto tilemap
+        this.map = this.make.tilemap({
+            key: this.tileKey,
+            tileWidth: 32,
+            tileHeight: 32
+        });
+        
+        // Objeto el tileset. 
+        // recibe "name" del .json y la imagen del tileset
+        let tileset1 = this.map.addTilesetImage(this.mapKey, 'patronesTilemap');
         
         // capas
 		// con el nombre del .json
@@ -71,6 +80,8 @@ export default class Game1 extends Phaser.Scene {
         // --- GOAL
         let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Organ, key: "goal" });
         this.goal = react[0]; //solo hay 1 y es el goal
+        this.goal.body.immovable = true;
+		//this.react.setCollision(0, true); // Los tiles de esta capa tienen colisiones
 
         // --- CAJAS
         let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: 'box' });
@@ -103,6 +114,7 @@ export default class Game1 extends Phaser.Scene {
         this.physics.add.collider(playerG1, this.wallLayer);
         this.physics.add.collider(playerG1, organsGroup);
         this.physics.add.collider(playerG1, boxesGroup);
+        this.physics.add.collider(playerG1, react);
 
         this.physics.add.collider(boxesGroup, boxesGroup);
         this.physics.add.collider(boxesGroup, this.wallLayer);
@@ -136,7 +148,7 @@ export default class Game1 extends Phaser.Scene {
             if(this.gameTime > 0) {
                 // Crear el nuevo texto actualizado en el mismo sitio
                 this.timerText = this.add.text(20, 20, this.gameTime,
-                    { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+                    { fontFamily: 'EagleLake', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
 
@@ -148,8 +160,6 @@ export default class Game1 extends Phaser.Scene {
             callbackScope: this
         });
     }
-
-
 
     handleOrganGoal() {
 
@@ -231,33 +241,21 @@ export default class Game1 extends Phaser.Scene {
 
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
-
-
-            this.bow = new Bow(this, 150, 600, [
-                // { type: 'Normal', count: 3 },
-                // { type: 'Explosive Arrow', count: 3 },
-                 { type: 'Ball Arrow', count: 5 },
-                { type: 'Split Arrow', count: 3 }
-
-            ]);
+            this.gameTime = 10;
+            this.tileKey = 'tilemap1';
+            this.mapKey = 'map1';
         }
         else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
         {
-            this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 3 },
-                { type: 'Explosive Arrow', count: 2 },
-                { type: 'Ball Arrow', count: 2 },
-                { type: 'Split Arrow', count: 2 }
-            ]);
+            this.gameTime = 10;
+            this.tileKey = 'tilemap2';
+            this.mapKey = 'map2';
         }
         else if(this.gameState.currentDay == 5)
         {
-            this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 5 },
-                //{ type: 'Explosive Arrow', count: 1 },
-                { type: 'Ball Arrow', count: 1 },
-                { type: 'Split Arrow', count: 1 }
-            ]);
+            this.gameTime = 10;
+            this.tileKey = 'tilemap3';
+            this.mapKey = 'map3';
         }
     }
 
