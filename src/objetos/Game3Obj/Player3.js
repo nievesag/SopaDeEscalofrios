@@ -14,7 +14,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     this.origin = new Phaser.Math.Vector2(x, y);
 
     //Randomizamos el color;
-    this.randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
+    this.randomBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
     //El que vamos a disparar
     this.shootingBeetle;
     //El siguiente
@@ -26,12 +26,9 @@ export default class Player3 extends Phaser.GameObjects.Sprite
   }
 
   setProjectile() {
-    // Array de posibles a disparar. 
-    let beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
-    //console.log(randomBeetle);
-    this.shootingBeetle = this.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
+    this.shootingBeetle = this.add.image(this.x, this.y, Beetle.beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
     // y preparamos el siguiente
-    this.nextBeetle = this.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); 
+    this.nextBeetle = this.add.image(this.x, this.y, Beetle.beetles[randomBeetle]).setScale(1); 
     //console.log(beetles[randomBeetle].texture);
     console.log(shootingBeetle.texture.key);
 
@@ -43,7 +40,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     //Ahora el que se dispara es el siguiente
     this.shootingBeetle = nextBeetle;
     //Y creamos un nuevo siguiente
-    nextBeetle = this.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); 
+    nextBeetle = this.add.image(this.x, this.y, beetles[randomBeetle]).setScale(1); 
   }
 
   inputEvents() {
@@ -79,11 +76,11 @@ export default class Player3 extends Phaser.GameObjects.Sprite
   //Método auxiliar del shoot()
   findDirection()
   {
-    angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
+    angle = Phaser.Math.Angle.BetweenPoints(this, pointer); // Ángulo cañón -> mouse.
     cannonDisparo.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
 
     // Línea gráfica de la dir.
-    Phaser.Geom.Line.SetToAngle(line, cannonDisparo.x, cannonDisparo.y, angle, 128); 
+    Phaser.Geom.Line.SetToAngle(line, this.x, this.y, angle, 128); 
     graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
   }
 
