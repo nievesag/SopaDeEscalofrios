@@ -34,9 +34,12 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     }
 
     update(){
-        // Mantiene al obstacle generator a la derecha de la pantalla.
-        this.x = this.scene.cameras.main.scrollX + 1115 // scrollX te da la posición de la cámara.
-        this.dissappearObstacle();
+        if(this.scene){
+            // Mantiene al obstacle generator a la derecha de la pantalla.
+            this.x = this.scene.cameras.main.scrollX + 1115 // scrollX te da la posición de la cámara.
+            this.dissappearObstacle();
+        }
+        
     }
 
     spawnObstacle(){

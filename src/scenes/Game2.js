@@ -141,7 +141,19 @@ export default class Game2 extends Phaser.Scene {
                 music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        });
+        }).setDepth(10); // pq es UI
+
+        // contador de distancia.
+        this.distanceCounter = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY,
+            'Distancia: 0m', // inicialmench 0m..
+            {
+                fontSize: '24px',
+                color: 'white',
+                fontFamily: 'EagleLake'
+            }
+        ).setDepth(10); // pq es UI.
 
         // botón de regreso.
         this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
@@ -149,7 +161,7 @@ export default class Game2 extends Phaser.Scene {
             this.isClickingOnUI = true; 
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
-        }); 
+        }).setDepth(10); // pq es UI 
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
@@ -161,10 +173,7 @@ export default class Game2 extends Phaser.Scene {
         
         this.input.on('pointermove', (pointer) => // SIGUE AL MOUSE.
         {
-            
-            this.cannon.cannonAngle(pointer);
-            
-            
+            this.cannon.cannonAngle(pointer); 
         });
     }
 
@@ -173,22 +182,83 @@ export default class Game2 extends Phaser.Scene {
         // HAY QUE PONERLE A TODO IF POR LA CARA PQ SI NO FALLA
         // HAY Q INVESTIGAR COMO HACER ESO MAS LIMPIO :/
 
-        // parallax scroller.
-        if(this.bg)this.bg.tilePositionX += 2;
-        if(this.rio)this.rio.tilePositionX -=6;
+        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.musicButton && this.vessel && this.vessel.body){
+            // parallax scroller.
+            this.bg.tilePositionX += 2;
+            this.rio.tilePositionX -=6;
 
-        if(this.background)this.background.update();
-        if(this.vessel)this.vessel.update();
-        if(this.obstacleGen)this.obstacleGen.update();
+            this.background.update();
+            this.vessel.update();
+            this.obstacleGen.update();
 
-        let scrollX = this.cameras.main.scrollX; // posx camara
-        let scrollY = this.cameras.main.scrollY; // posy camara
+            let scrollX = this.cameras.main.scrollX; // posx camara
+            let scrollY = this.cameras.main.scrollY; // posy camara
 
-        if(this.bg) this.bg.setPosition(scrollX,scrollY);
-        if(this.rio) this.rio.setPosition(scrollX, 600);
+            this.bg.setPosition(scrollX,scrollY);
+            this.rio.setPosition(scrollX, 600);
 
-        if(this.buttonMainMenu)this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
-        if(this.musicButton)this.musicButton.setPosition(scrollX + 45, scrollY + 40);
+            this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
+            this.musicButton.setPosition(scrollX + 45, scrollY + 40);
+        
+            
+            let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
+            this.distanceCounter.setText('Distancia: ' + distance.toFixed(2) + 'm'); // el tofixed es para que tenga solo 2 decimales.
+            this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
+            
+            // si se detiene el movimiento.
+            if(Math.abs(this.vessel.body.velocity.x) < 1){ 
+                if(!this.stopTimer){ // si no exite timer lo crea.
+                    this.stopTimer = this.time.addEvent({
+                        delay: 2000, // espera 2 segs.
+                        callback: () => 
+                        {
+                            this.gameOver(); // se nos ha jodio la flesbos.
+                        }
+                    });
+                } 
+            }
+            else{
+                if(this.stopTimer){
+                    this.stopTimer.remove(); // para el crono.
+                    this.stopTimer = null; // quita refe.
+                }  
+            }
+        }
+    }
+    
+
+    gameOver(){
+        // quita las físicas.
+        this.physics.pause(); 
+
+        let gameOverText = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            '¡Se acabó!',
+            {
+                fontSize: '70px',
+                fontFamily: 'EagleLake',
+                color: 'white',
+                align: 'center'
+            }
+        ).setOrigin(0.5).setDepth(100);
+
+        let restartButton = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY + 100,
+            'Reiniciar',
+            {
+                fontSize: '40px',
+                fontFamily: 'EagleLake',
+                color: 'white',
+                align: 'center'
+            }
+        ).setOrigin(0.5).setInteractive().setDepth(100);
+
+        restartButton.on('pointerdown', () => {
+            this.scene.restart(); // reinicia escena.
+        });
+
     }
 
     destroyAll(){ // elimina todos los objetos del juego.
@@ -212,8 +282,13 @@ export default class Game2 extends Phaser.Scene {
 
         if(this.obstacleGen)
         {
+            let items = this.obstacleGen.obsGroup.getChildren(); // saca los items de dentro.
+
+            for(let i = 0; i < items.length; i++){
+            items[i].destroy();
+            }
+            this.obstacleGen.obsGroup.clear(true, true); // limpia el grupo (objetos, referencias).
             this.obstacleGen.destroy();
-            this.obstacleGen = null;
         } 
 
         if(this.buttonMainMenu)

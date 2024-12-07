@@ -1,33 +1,83 @@
-export default class Obstaculo extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, width, height, color = 0x8B4513, orientation = 'horizontal') {
-        super(scene, x, y, 'obstacle'); 
-
-        this.scene = scene;
+export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, fragments, orientation) {
+        super(scene, x, y, 'obstaculo1');
+      
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
+        this.offsetRight = {x: 0, y: 0};
+        this.offsetLeft = {x: 0, y: 0};
+        this.setImmovable(false);
+        this.isDead = false;
 
-        if (orientation === 'vertical') [width, height] = [height, width];
+        this.body.setOffset(this.offsetRight.x, this.offsetLeft.y);
+        this.orientation = orientation;
 
-        this.setDisplaySize(width, height);
-        this.body.setCollideWorldBounds(true);
-        this.body.setBounce(0);
-        this.body.setAllowGravity(true);
-        this.body.setImmovable(false);
-        this.body.setMass(10);
-
-        this.health = 1;
-    }
-
-    // Método para reducir la salud cuando es golpeado
-    takeDamage() {
-        this.health -= 1;
-        if (this.health <= 0) {
-            this.destroy();
+        if (this.orientation === 'vertical') {
+            this.setDisplaySize(30, 100); 
+        } else {
+            this.setDisplaySize(100, 30); 
         }
+
+        this.body.setAllowGravity(false);
+        this.fragments = fragments; 
     }
 
-    // Método para destruir el bloque cuando su salud llega a cero
-    destroy() {
+
+    preUpdate(t, dt) {
+        super.preUpdate(t, dt);   
+    }
+
+    breakApart() {
+        this.setVisible(false); 
+        this.body.destroy(); 
+
+        // Crear fragmentos
+        for (let i = 0; i < this.fragments; i++) {
+            const fragment = this.scene.add.sprite(
+                this.x + Phaser.Math.Between(-10, 10),
+                this.y + Phaser.Math.Between(-10, 10),
+                'obstaculo2' 
+            );
+
+            fragment.setDisplaySize(30, 30); 
+            this.scene.physics.world.enable(fragment);
+
+            fragment.body.setAllowGravity(true);
+ 
+            fragment.body.setVelocity(
+                Phaser.Math.Between(-100, 100),
+                Phaser.Math.Between(-200, 0)
+            );
+            fragment.body.setCollideWorldBounds(true);
+           
+            fragment.body.setBounce(0.3); 
+
+            this.scene.physics.add.collider(fragment, this.scene.ground, () => {
+                fragment.body.setVelocityX(0); 
+                fragment.body.setBounce(0);  
+            });
+
+            this.scene.time.delayedCall(5000, () => {
+                fragment.destroy();
+            });
+        }
+
+        this.isDead = true;
         this.destroy();
+    }
+
+    checkCollisionWithArrowObs(scene, arrow) 
+    {
+       
+        if (this.isDead) 
+        {
+            return false;
+        }
+            console.log("si");
+            arrow.destroy();
+            this.isDead = true;
+            this.breakApart();
+
+
     }
 }

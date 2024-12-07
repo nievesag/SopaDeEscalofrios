@@ -1,11 +1,17 @@
 import Bow from '../objetos/Game4Obj/Bow.js';
 import Obstaculo from '../objetos/Game4Obj/Obstaculo.js';
+import Enemy from '../objetos/Game4Obj/Enemy.js';
 
 export default class Game4 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game4'});
     }
     
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
+
     preload () {
         // Música.
         this.load.audio('theme4', './assets/audio/m4c.mp3');
@@ -14,8 +20,7 @@ export default class Game4 extends Phaser.Scene {
     
     create (){
 
-       
-
+        console.log(this.gameState.currentDay);
         // Música.
         const music = this.sound.add('theme4');
         music.play();
@@ -32,48 +37,99 @@ export default class Game4 extends Phaser.Scene {
 
         // Crear el suelo invisible en la parte inferior de la pantalla
         const groundHeight = 50; // Altura del suelo invisible
-        const ground = this.add.rectangle(
+        this.ground = this.add.rectangle(
             this.cameras.main.centerX, 
-            this.cameras.main.height - groundHeight / 2, // Colocarlo en la parte inferior
+            this.cameras.main.height - groundHeight / 2, 
             this.cameras.main.width, 
             groundHeight
         );
-        ground.setOrigin(0.5, 0.5);
-        ground.setVisible(false); // Lo dejamos invisible
+        this.ground.setOrigin(0.5, 0.5);
+        this.ground.setVisible(false); 
 
-        // Habilitar la física para el suelo
-        this.physics.world.enable(ground);
-        ground.body.setImmovable(true); // El suelo no se moverá
-        ground.body.setAllowGravity(false); // No tendrá gravedad
+       
+        this.physics.world.enable(this.ground);
+        this.ground.body.setImmovable(true); 
+        this.ground.body.setAllowGravity(false); 
 
-        this.bow = new Bow(this, 150, 600, [
-            { type: 'normal', count: 3 },
-            { type: 'split', count: 2 },
-            { type: 'ball', count: 2 }
-        ]); // Ajusta las coordenadas
+    
+        this.setDifficulty();
 
-        this.grupoObs = this.add.group({
-            classType: Obstaculo,
-            maxSize: 100
-        })
-        //  // Crear algunos obstáculos
-        // this.obstaculos = this.add.group(); // Grupo para manejar múltiples obstáculos
-        // const obstaculo1 = new Obstaculo(this, 445, 500, 60, 20, 0x8B4513, 'horizontal');
-        // const obstaculo2 = new Obstaculo(this, 460, 500, 60, 20, 0x8B4513, 'vertical');
-        // const obstaculo3 = new Obstaculo(this, 430, 460, 60, 20, 0x8B4513, 'vertical');
-        // this.grupoObs.add(obstaculo1);
-        // this.grupoObs.add(obstaculo2);
-        // this.grupoObs.add(obstaculo3);
+      
+        this.createEnemies();
+        this.createObstacles();
 
-         // Configurar colisión entre flecha y obstáculos
-         this.physics.add.collider(this.bow.projectile, this.grupoObs, (arrow, obstaculo) => {
-            const obstaculoObj = this.grupoObs.getChildren().find(obj => obj === obstaculo);
-            if (obstaculoObj) obstaculoObj.takeDamage();
+        this.physics.add.collider(this.enemiesPool, this.obstaclePool);
+        this.physics.add.collider(this.obstaclePool, this.ground);
+      
+        this.physics.add.collider(this.obstaclePool, this.obstaclePool);
+      
+        this.activeArrowsPool = [];
+        this.enemiesCounter = 0;
+
+        this.createInfoTexts();
+
+
+    }
+
+
+    update()
+    {
+        //Colision flecha con enemigos
+        this.enemiesPool.forEach(enemy => {
+                enemy.checkCollisionWithArrow(this, this.activeArrowsPool);
+
         });
 
-        // Configurar colisiones internas para que los obstáculos interactúen y se apilen correctamente
-        this.physics.add.collider(this.grupoObs, this.grupoObs);
+        //Colision flecha con obstaculos
+        this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstacle) => {
+            if (arrow.type === 'explosive') {
+                arrow.handleCollision(obstacle);
+            } else {
+                obstacle.checkCollisionWithArrowObs(this, arrow);
+            }
+        });
+        
 
+        if (this.bow && this.bow.projectile) {
+            this.bow.projectile.updateRotation();
+        }
+
+      this.updateInfoTexts();
+
+       this.endLevel();
+    }
+
+
+    createObstacles() {
+
+        this.obstaclePool = [];
+
+        const leftObstacle = new Obstaculo(this, 600, 668, 3, 'vertical');
+        const rightObstacle = new Obstaculo(this, 700, 668, 3, 'vertical');
+        const topObstacle = new Obstaculo(this, 650, 600, 3, 'horizontal');
+
+        const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
+        const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
+        const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
+
+        const topObstacle3 = new Obstaculo(this, 725, 570, 3, 'horizontal');
+        const leftObstacle3 = new Obstaculo(this, 670, 505, 3, 'vertical');
+        const rightObstacle3 = new Obstaculo(this, 780, 505, 3, 'vertical');
+
+        const topObstacle4 = new Obstaculo(this, 725, 440, 3, 'horizontal');
+       
+        this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
+            leftObstacle2, rightObstacle2, topObstacle2,
+            topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
+    }
+
+    createEnemies() {
+
+        this.enemiesPool = [];
+        const enemy1 = new Enemy(this, 650, 668);
+        const enemy2 = new Enemy(this, 800, 668);
+        const enemy3 = new Enemy(this, 725, 530);
+        this.enemiesPool.push(enemy1, enemy2, enemy3);
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -104,6 +160,92 @@ export default class Game4 extends Phaser.Scene {
             this.sound.stopAll();
 
         });
+    }
+
+
+    endLevel()
+    {
+        let result;
+        if (this.enemiesCounter == this.enemiesPool.length) {
+            console.log("victoria");
+            result = 'victoria';
+        } 
+        else if (this.bow.totalArrows == 0 && this.enemiesCounter < this.enemiesPool.length) {
+            console.log("derrota");
+            result = 'derrota';
+        }
+ 
+
+    if (result) {
+        const currentDayIndex = this.gameState.currentDay - 1; 
+        this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+
+       // console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
+    }
+    }
+
+
+    createInfoTexts()
+    {
+          this.enemiesText = this.add.text(10, 10, `Enemigos restantes: ${this.enemiesPool.length}`, {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff'
+        });
+
+        console.log(this.bow.remainingArrows);
+        this.arrowsText = this.add.text(10, 40, `Flechas restantes: ${this.bow.remainingArrows}`, {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff'
+        });
+
+        this.arrowTypeText = this.add.text(10, 70, `Arrow Type: ${this.bow.getCurrentArrowType()}`, {
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            color: '#ffffff',
+        });
+    }
+
+
+    updateInfoTexts() {
+
+        this.enemiesText.setText(`Enemies left: ${this.enemiesPool.length - this.enemiesCounter}`);
+        this.arrowsText.setText(`Arrows left: ${this.bow.totalArrows}`);
+        if(this.bow.totalArrows >= 1)
+            this.arrowTypeText.setText(`Arrow type: ${this.bow.getCurrentArrowType()}`);
+    }
+
+
+    setDifficulty() {
+        if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                // { type: 'Normal', count: 3 },
+                // { type: 'Explosive Arrow', count: 3 },
+                 { type: 'Ball Arrow', count: 5 },
+                { type: 'Split Arrow', count: 3 }
+
+            ]);
+        }
+        else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 2 },
+                { type: 'Split Arrow', count: 2 }
+            ]);
+        }
+        else if(this.gameState.currentDay == 5)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 5 },
+                //{ type: 'Explosive Arrow', count: 1 },
+                { type: 'Ball Arrow', count: 1 },
+                { type: 'Split Arrow', count: 1 }
+            ]);
+        }
     }
 
 

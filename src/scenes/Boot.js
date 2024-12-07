@@ -37,12 +37,15 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('beetles', './assets/images/Game3/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
 
         //Game 4
-        this.load.image("bg1", "./assets/images/bg1_game4.jpg");
-        this.load.image("bow", "./assets/images/bow.png");
-        this.load.image("arrow1", "./assets/images/arrow1.png");
-        this.load.image("arrow2", "./assets/images/arrow2.png");
-        this.load.image("arrow3", "./assets/images/arrow3.png");
-        this.load.image("arrow4", "./assets/images/arrow4.png");
+        this.load.image("bg1", "./assets/images/game4/bg1_game4.jpg");
+        this.load.image("bow", "./assets/images/game4/bow.png");
+        this.load.image("arrow1", "./assets/images/game4/arrow1.png");
+        this.load.image("arrow2", "./assets/images/game4/arrow2.png");
+        this.load.image("arrow3", "./assets/images/game4/arrow3.png");
+        this.load.image("arrow4", "./assets/images/game4/arrow4.png");
+        this.load.image("obstaculo1", "./assets/images/game4/obs1.png");
+        this.load.image("obstaculo2", "./assets/images/game4/obs2.png");
+        this.load.image("lion", "./assets/images/game4/lion.png");
 
 
         //Game 5
@@ -62,6 +65,7 @@ export default class Boot extends Phaser.Scene {
         console.log("Boot");
         //this.loadAnimations();
         this.scene.start("MainMenu");
+
 
     }
 
