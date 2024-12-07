@@ -211,24 +211,22 @@ export default class Game1 extends Phaser.Scene {
 
         if(this.organsGroup) {
             this.organsGroup.getChildren().forEach(obj => {
-                if(obj.getGrabbed()) {
-                    // le metes por la der -> mov izq
-                    if(this.playerG1.getisA() && obj.getGrabDer()) {
-                        obj.setPosition(this.playerG1.x-obj.x, this.playerG1.y-obj.y);
-                        console.log("cojones");
-                    }
-                    // le metes por la izq -> mov der
-                    if(this.playerG1.getisD() && obj.getGrabIzq()) {
-                        obj.setPosition();
-                    }
-                    // le metes por arr -> mov arr
-                    if(this.playerG1.getisW() && obj.getGrabArr()) {
-                        obj.setPosition();
-                    }
-                    // le metes por abj -> mov abj
-                    if(this.playerG1.getisS() && obj.getGrabAbj()) {
-                        obj.setPosition();
-                    }
+                // le metes por la der -> mov izq
+                if(this.playerG1.getisA() && obj.getGrabDer()) {
+                    obj.setPosition(this.playerG1.x-obj.x, this.playerG1.y-obj.y);
+                    console.log("cojones");
+                }
+                // le metes por la izq -> mov der
+                if(this.playerG1.getisD() && obj.getGrabIzq()) {
+                    obj.setPosition();
+                }
+                // le metes por arr -> mov arr
+                if(this.playerG1.getisW() && obj.getGrabArr()) {
+                    obj.setPosition();
+                }
+                // le metes por abj -> mov abj
+                if(this.playerG1.getisS() && obj.getGrabAbj()) {
+                    obj.setPosition();
                 }
             });
         }
