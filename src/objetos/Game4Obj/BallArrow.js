@@ -47,7 +47,10 @@ export default class BallArrow extends Arrow {
             this.arrowBall.body.setVelocityY(0); 
         });
     
-    
+        this.scene.enemiesPool.forEach(enemy => {
+            enemy.checkCollisionWithArrow(this, this.arrowBall);
+
+        });
     
         this.scene.activeArrowsPool.push(this.arrowBall);
 

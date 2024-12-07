@@ -52,7 +52,7 @@ export default class Game4 extends Phaser.Scene {
         this.ground.body.setAllowGravity(false); 
 
     
-
+        this.setDifficulty();
 
       
         this.createEnemies();
@@ -180,7 +180,7 @@ export default class Game4 extends Phaser.Scene {
         const currentDayIndex = this.gameState.currentDay - 1; 
         this.gameState.minigamesResults.Game4[currentDayIndex] = result;
 
-        console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
+       // console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
     }
     }
 
@@ -221,9 +221,9 @@ export default class Game4 extends Phaser.Scene {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 3 },
-                { type: 'Explosive Arrow', count: 3 },
-                { type: 'Ball Arrow', count: 3 },
+                // { type: 'Normal', count: 3 },
+                // { type: 'Explosive Arrow', count: 3 },
+                 { type: 'Ball Arrow', count: 5 },
                 { type: 'Split Arrow', count: 3 }
 
             ]);
