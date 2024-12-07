@@ -113,25 +113,27 @@ export default class Game1 extends Phaser.Scene {
         // colisiones
         this.physics.add.collider(this.playerG1, this.wallLayer);
         
-        this.physics.add.collider(this.playerG1, this.organsGroup, () => {
-            organsGroup.getChildren().forEach(obj => {
+        this.physics.add.collider(this.playerG1, this.organsGroup);
+
+        this.physics.add.collider(this.playerG1.getGrabArea(), this.organsGroup, () => {
+            this.organsGroup.getChildren().forEach(obj => {
                 if(this.playerG1.getGrabbing()) {
-                    if(this.playerG1.body.touching.right && obj.body.touching.left) {
+                    if(this.playerG1.getGrabArea().body.touching.right && obj.body.touching.left) {
                         console.log("der");
                         obj.setGrabDer(true); // caja agarrada por la der
                     }
 
-                    if(this.playerG1.body.touching.left && obj.body.touching.right) {
+                    if(this.playerG1.getGrabArea().body.touching.left && obj.body.touching.right) {
                         console.log("izq");
                         obj.setGrabIzq(true); // caja agarrada por la izq
                     }
 
-                    if(this.playerG1.body.touching.up && obj.body.touching.down) {
+                    if(this.playerG1.getGrabArea().body.touching.up && obj.body.touching.down) {
                         console.log("abj");
                         obj.setGrabAbj(true); // caja agarrada por abj
                     }
 
-                    if(this.playerG1.body.touching.down && obj.body.touching.up) {
+                    if(this.playerG1.getGrabArea().body.touching.down && obj.body.touching.up) {
                         console.log("arr");
                         obj.setGrabArr(true); // caja agarrada por arr
                     }
@@ -190,7 +192,7 @@ export default class Game1 extends Phaser.Scene {
 
     update(time, dt)
     {
-        console.log(this.playerG1);
+        //console.log(this.playerG1);
 
         if(this.playerG1 != null) {
             this.playerG1.setGrabAreaPos(this.playerG1.x, this.playerG1.y);

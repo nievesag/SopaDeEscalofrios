@@ -19,7 +19,7 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 
         this.grabArea = this.scene.physics.add.sprite(this.getCenter().x, this.getCenter().y, null);
         this.grabArea.body.setAllowGravity(false);
-        this.grabArea.setSize(35,35);
+        this.grabArea.setSize(50,50);
         this.grabArea.setDepth(10);
 		this.body.setSize(28, 28); // Para que entre mejor por los pasillos
 
