@@ -1,7 +1,9 @@
 export default class PlayerG1 extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'player');
-
+        this.scene = scene;
+        this.x = x;
+        this.y = y;
         this.speed = 140; // velocidad de movimiento
 
         this.scene.add.existing(this); // mete al pj en la escena
@@ -13,9 +15,13 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // agarrar
 
 		// Agregamos al player a las físicas para que Phaser lo tenga en cuenta -> no se si hace falta
-		scene.physics.add.existing(this);
+		this.scene.physics.add.existing(this);
 
-		this.body.setSize(28, 28) // Para que entre mejor por los pasillos
+        this.grabArea = this.scene.physics.add.sprite(this.getCenter().x, this.getCenter().y, null);
+        this.grabArea.body.setAllowGravity(false);
+        this.grabArea.setSize(35,35);
+        this.grabArea.setDepth(10);
+		this.body.setSize(28, 28); // Para que entre mejor por los pasillos
 
         // flags de teclas
         this.isW = false;
@@ -93,6 +99,12 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
             this.isGrabbing = false;
         });
     }
+
+    setGrabAreaPos(x, y) {
+        this.grabArea.x = x;
+        this.grabArea.y = y;
+    }
+    getGrabArea() { return this.grabArea; }
 
     // getters de flags
     getisW(){ return this.isW; }

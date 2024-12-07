@@ -85,9 +85,9 @@ export default class Game1 extends Phaser.Scene {
 
         // --- CAJAS
         let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: 'box' });
-        
-		let boxesGroup = this.add.group();
-        boxesGroup.addMultiple(boxes);
+		this.boxesGroup = this.add.group();
+
+        this.boxesGroup.addMultiple(boxes);
 		boxes.forEach(obj => {
             this.physics.add.existing(obj);
 		});
@@ -95,10 +95,10 @@ export default class Game1 extends Phaser.Scene {
         // --- ORGANOS
 		let organs = this.map.createFromObjects('GameObjects', { name: "organ", classType: Organ, key: 'organ' });
         
-		let organsGroup = this.add.group();
+		this.organsGroup = this.add.group();
         this.organsPool = [];
         
-        organsGroup.addMultiple(organs);
+        this.organsGroup.addMultiple(organs);
 		organs.forEach(obj => {
             this.physics.add.existing(obj);
             this.organsPool.push(obj);
@@ -108,63 +108,63 @@ export default class Game1 extends Phaser.Scene {
 
         // --- PLAYER
         let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
-        let playerG1 = characters[0]; //se que solo hay uno y es mi player
-
+        this.playerG1 = characters[0]; //se que solo hay uno y es mi player
+    
         // colisiones
-        this.physics.add.collider(playerG1, this.wallLayer);
+        this.physics.add.collider(this.playerG1, this.wallLayer);
         
-        this.physics.add.collider(playerG1, organsGroup, () => {
+        this.physics.add.collider(this.playerG1, this.organsGroup, () => {
             organsGroup.getChildren().forEach(obj => {
-                if(playerG1.getGrabbing()) {
-                    if(playerG1.body.touching.right && obj.body.touching.left) {
+                if(this.playerG1.getGrabbing()) {
+                    if(this.playerG1.body.touching.right && obj.body.touching.left) {
                         console.log("der");
-                        obj.setGrabDer(true);
+                        obj.setGrabDer(true); // caja agarrada por la der
                     }
 
-                    if(playerG1.body.touching.left && obj.body.touching.right) {
+                    if(this.playerG1.body.touching.left && obj.body.touching.right) {
                         console.log("izq");
-                        obj.setGrabIzq(true);
+                        obj.setGrabIzq(true); // caja agarrada por la izq
                     }
 
-                    if(playerG1.body.touching.up && obj.body.touching.down) {
+                    if(this.playerG1.body.touching.up && obj.body.touching.down) {
                         console.log("abj");
-                        obj.setGrabAbj(true);
+                        obj.setGrabAbj(true); // caja agarrada por abj
                     }
 
-                    if(playerG1.body.touching.down && obj.body.touching.up) {
+                    if(this.playerG1.body.touching.down && obj.body.touching.up) {
                         console.log("arr");
-                        obj.setGrabArr(true);
+                        obj.setGrabArr(true); // caja agarrada por arr
                     }
                 }
             });
         });
 
-        this.physics.add.collider(playerG1, boxesGroup);
+        this.physics.add.collider(this.playerG1, this.boxesGroup);
         
-        this.physics.add.collider(playerG1, react);
+        this.physics.add.collider(this.playerG1, react);
 
-        this.physics.add.collider(boxesGroup, boxesGroup);
-        this.physics.add.collider(boxesGroup, this.wallLayer);
+        this.physics.add.collider(this.boxesGroup, this.boxesGroup);
+        this.physics.add.collider(this.boxesGroup, this.wallLayer);
         
-        this.physics.add.collider(organsGroup, organsGroup);
-        this.physics.add.collider(organsGroup, this.wallLayer);
-
-        this.physics.add.collider(boxesGroup, organsGroup);
-
+        this.physics.add.collider(this.organsGroup, this.organsGroup);
+        this.physics.add.collider(this.organsGroup, this.wallLayer);
+        
+        this.physics.add.collider(this.boxesGroup, this.organsGroup);
+        
         // tiempo
         this.timerText = this.add.text(20, 20, this.gameTime,
-                        { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
-
-        this.timerHUD();
-
-        // boton
-        this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
-
-        // -----------------------------------
-    }
-
-    timerHUD() {
-        const updateTimer = () => {
+            { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+            
+            this.timerHUD();
+            
+            // boton
+            this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
+            
+            // -----------------------------------
+        }
+        
+        timerHUD() {
+            const updateTimer = () => {
             this.gameTime -= 1; // disminuye contador
             this.timerText.destroy(); // borra texto anterior
 
@@ -190,6 +190,12 @@ export default class Game1 extends Phaser.Scene {
 
     update(time, dt)
     {
+        console.log(this.playerG1);
+
+        if(this.playerG1 != null) {
+            this.playerG1.setGrabAreaPos(this.playerG1.x, this.playerG1.y);
+        }
+
         // ---- limite de tiempo ----
         if(this.gameTime <= 0 && !this.gameEnd) {
             console.log("final");
@@ -204,23 +210,23 @@ export default class Game1 extends Phaser.Scene {
         }
 
         if(this.organsGroup) {
-            organsGroup.getChildren().forEach(obj => {
+            this.organsGroup.getChildren().forEach(obj => {
                 if(obj.getGrabbed()) {
                     // le metes por la der -> mov izq
-                    if(playerG1.getisA() && obj.getGrabDer()) {
-                        obj.setPosition(playerG1.x-obj.x, playerG1.y-obj.y);
+                    if(this.playerG1.getisA() && obj.getGrabDer()) {
+                        obj.setPosition(this.playerG1.x-obj.x, this.playerG1.y-obj.y);
                         console.log("cojones");
                     }
                     // le metes por la izq -> mov der
-                    if(playerG1.getisD() && obj.getGrabIzq()) {
+                    if(this.playerG1.getisD() && obj.getGrabIzq()) {
                         obj.setPosition();
                     }
                     // le metes por arr -> mov arr
-                    if(playerG1.getisW() && obj.getGrabArr()) {
+                    if(this.playerG1.getisW() && obj.getGrabArr()) {
                         obj.setPosition();
                     }
                     // le metes por abj -> mov abj
-                    if(playerG1.getisS() && obj.getGrabAbj()) {
+                    if(this.playerG1.getisS() && obj.getGrabAbj()) {
                         obj.setPosition();
                     }
                 }
