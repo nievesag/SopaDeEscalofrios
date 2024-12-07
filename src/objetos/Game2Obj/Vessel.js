@@ -79,6 +79,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
             }
         })
 
+        // SI SE QUISIERA COLISIONAR CON UNA MOVIDA SINGLE (NON LO DE ARRIBA).
         /*if(this.maelstromObs){
             this.scene.physics.add.collider(this, this.maelstromObs, ()=>{
                 this.body.enable = false;

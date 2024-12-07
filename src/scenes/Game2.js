@@ -22,6 +22,8 @@ export default class Game2 extends Phaser.Scene {
     // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle-2
     
+
+    // CAMBIAR TODO PERO TODO E POR SPRITES
     create (){
         this.createTanqiaPopUp();
     }
