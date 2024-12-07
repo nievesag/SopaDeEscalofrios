@@ -8,76 +8,75 @@ export default class Game3 extends Phaser.Scene {
    
     constructor() {
         super({ key: 'Game3'});
-
-        //Colores de los bichos
-        const COLOR = {
-            RED: 'RED',
-            ORANGE: 'ORANGE',
-            YELLOW: 'YELLOW',
-            GREEN: 'GREEN',
-            CIAN: 'CIAN',
-            BLUE: 'BLUE',
-            PURPLE: 'PURPLE',
-            BLACK: 'BLACK',
-        } //Se accede como color.RED...
     }
     
     preload () {
-
-        //Player (place holder)
-        this.load.image('cannonBase', './assets/images/icon500.jpg');
-        this.load.image('cannonDisparo', './assets/images/Burbujas.png');
-        //Munición 
-        this.load.image('RedBeetle', './assets/images/BurbujaRoja.png')
-        this.load.image('OrangeBeetle', './assets/images/BurbujaNaranja.png')
-        this.load.image('YellowBeetle', './assets/images/BurbujaAmarilla.png')
-        this.load.image('GreenBeetle', './assets/images/BurbujaVerde.png')
-        this.load.image('CianBeetle', './assets/images/BurbujaCian.png')
-        this.load.image('BlueBeetle', './assets/images/BurbujaAzul.png')
-        this.load.image('PurpleBeetle', './assets/images/BurbujaMorada.png')
-        this.load.spritesheet('beetles', './assets/images/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
-
-        // Música.
+        // Musica.
         this.load.audio('theme3', './assets/audio/m3c.mp3');
     }
     
-    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
-
     create (){
 
-
-        // Música.
+        //// --- MUSIC ---.
         //const music = this.sound.add('theme3');
         //music.play();
         //this.sound.pauseOnBlur = true;
      
-        // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MainMenu',  925,  700, 'white');
-
-        // --- TIMER ---
-        //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
-
-        // --- BASE BG ---.
-        //const baseBG = this.add.rectangle(502, 385, 600, 760, 0xd0be49).setStrokeStyle(10, 0xffffff);
-
-        // --- INTERFACE ---.
-        //let nextShootingBeetle = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
+        // --- BACKGROUND ---.
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
+          .setOrigin(0.5, 0.5)
+          .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
 
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xffffff, 100);
-        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xffffff, 100);
-        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xffffff, 100);
-        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xffffff, 100);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xbb953e, 10);
+        const borderRight = this.add.rectangle(930, 385, 230, 775, 0xbb953e, 10);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xbb953e, 10);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xbb953e, 10);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
-
+        // Fisicas para bordes
         for (let i = 0; i < borders.length; i++){
             this.physics.world.enable(borders[i]);
             borders[i].body.setImmovable(true); // El suelo no se moverá
             borders[i].body.setAllowGravity(false); // No tendrá gravedad
-            //console.log(borders[i]);
         }
 
-        // --- CANNON ---.
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('Exit',  925,  700, 'white', 50, 'GameSelectorMenu');
+
+        // --- TIMER ---
+        //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
+
+        // --- INTERFACE ---.
+        //let nextShootingBeetle = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
+
+
+        // --- CREACION OBJETOS ESCENA ---.
+        // Cannon
+        this.player3 = new Player3(this, 500, 750); // Ajusta las coordenadas
+        //// Matrix
+        //this.matrix = new Matrix(this, 200, 30);
+
+
+        // --- COLISIONES ---.
+        // --- COLISIONES BORDERS - DISPARO ---.
+        this.physics.add.collider(borders, shootingBeetle);
+
+        // --- COLISIONES MATRIX - DISPARO ---.
+        /*for (let i = 0; i < groupMatrix.length; i++){
+        groupMatrix[i].getChildren().forEach(element => {
+        //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
+
+
+        this.physics.add.collider(shootingBeetle, element);
+        //this.physics.add.collider(shootingBeetle, element, this.addToMatrix(shootingBeetle, element));
+
+        //console.log(shootingBeetle);
+        //console.log(element);*/
+
+    
+
+
+        /*// --- CANNON ---.
         const cannonBase = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
             x: 500,
             y: 800, 
@@ -187,7 +186,7 @@ export default class Game3 extends Phaser.Scene {
         for (let i = 0; i < groupMatrix.length; i++){
             groupMatrix[i].getChildren().forEach(element => {
              
-            this.physics.world.enable(element);
+            //this.physics.world.enable(element);
             //elememnt.setCircle(10);
             element.body.setImmovable(true); 
             element.body.setAllowGravity(false);
@@ -199,58 +198,8 @@ export default class Game3 extends Phaser.Scene {
         }
 
 
-        // --- INPUT ---.
-        // SIGUE AL MOUSE.
-        this.input.on('pointermove', (pointer) =>
-            {
-                angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
-                cannonDisparo.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
 
-                // Línea gráfica de la dir.
-                Phaser.Geom.Line.SetToAngle(line, cannonDisparo.x, cannonDisparo.y, angle, 128); 
-                graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
-
-            });
-
-        // AL HACER CLIC. DISPARO
-        this.input.on('pointerup', () =>
-        {
-            //Randomizamos el color;
-            const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
-            //console.log(randomBeetle);
-            shootingBeetle = this.physics.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
-            //console.log(beetles[randomBeetle].texture);
-            console.log(shootingBeetle.texture.key);
-            //Le metemos físicas
-            //this.physics.world.enable(shootingBeetle);
-            shootingBeetle.setCircle(22.5); //Collider circular
-            // Para que no se salga de los límites del mundo.
-            shootingBeetle.setBounce(1).setCollideWorldBounds(true);
-
-            shootingBeetle.enableBody(true, cannonDisparo.x, cannonDisparo.y, true, true); // Activa la vessel y la pone donde cannonHead.
-
-            this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
-        
-
-            // --- COLISIONES CON BORDERS ---.
-            this.physics.add.collider(borders, shootingBeetle);
-
-            // --- COLISIONES MATRIX - DISPARO ---.
-            for (let i = 0; i < groupMatrix.length; i++){
-                groupMatrix[i].getChildren().forEach(element => {
-                //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
-
-
-                this.physics.add.collider(shootingBeetle, element);
-                //this.physics.add.collider(shootingBeetle, element, this.addToMatrix(shootingBeetle, element));
-
-                //console.log(shootingBeetle);
-                //console.log(element);
-
-            })
-        }
-                
-        });
+        });*/
     
     }
 
@@ -299,34 +248,34 @@ export default class Game3 extends Phaser.Scene {
         //this.timer.setText(`time: ${time.ToString()}`);
     }
 
-    createButton(text, x, y, textColor) {
+    // --- BOTONES ---.
+    createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
            x,
            y,
             text,
             {
                 fontFamily: 'arabic',
-                fontSize: 50,
-
+                fontSize: fontsize,
                 color: textColor
             }
         ).setOrigin(0.5, 0.5);
 
-        button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
-        });
-
         button.on('pointerover', () => // Al pasar el ratón por encima...
         {
             button.setTint(0xdfa919);
-            //button.fontSize = '70px';
         });
-    
+
         button.on('pointerout', () => // Al quitar el ratón de encima...
         {
             button.clearTint();
-            //button.fontSize = '50px';
+        });
+
+        button.setInteractive();
+        button.on("pointerdown", () => { // Al hacer clic...
+            this.scene.start(sceneName);
+            this.sound.stopAll();
+
         });
     }
 }
@@ -336,6 +285,7 @@ export default class Game3 extends Phaser.Scene {
 Fuentes: 
 https://labs.phaser.io/edit.html?src=src\physics\arcade\closest%20furthest.js
 https://labs.phaser.io/edit.html?src=src\utils\array\translate%20matrix.js
+https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
 
 
 */

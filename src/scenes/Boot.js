@@ -21,8 +21,20 @@ export default class Boot extends Phaser.Scene {
 
 
         //Game 3
-
-
+        //Background
+        this.load.image('bg3', "./assets/images/Game3/bg.jpg")
+        //Player (place holder)
+        //this.load.image('cannonBase', './assets/images/icon500.jpg');
+        this.load.image('cannon', './assets/images/Game3/Cannon.png');
+        //Escarabajos
+        this.load.image('RedBeetle', './assets/images/Game3/BurbujaRoja.png')
+        this.load.image('OrangeBeetle', './assets/images/Game3/BurbujaNaranja.png')
+        this.load.image('YellowBeetle', './assets/images/Game3/BurbujaAmarilla.png')
+        this.load.image('GreenBeetle', './assets/images/Game3/BurbujaVerde.png')
+        this.load.image('CianBeetle', './assets/images/Game3/BurbujaCian.png')
+        this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
+        this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
+        this.load.spritesheet('beetles', './assets/images/Game3/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
 
         //Game 4
         this.load.image("bg1", "./assets/images/bg1_game4.jpg");

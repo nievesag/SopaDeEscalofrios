@@ -1,113 +1,104 @@
 // Clase del Player del Minijuego 3. 
-//import Beetle from '../objetos/Game3Obj/Beetle.js';
+import Beetle from '../objetos/Game3Obj/Beetle.js';
 
-export default class Player3 extends Phaser.GameObjects.Container
+export default class Player3 extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto
-  constructor (scene, x, y, key = 'Player3')
+  constructor (scene, x, y)
   {
-    super(scene, x, y, key);
+    super(scene, x, y, 'Player3');
 
     this.scene.add.existing(this);
     this.scene = scene;
+    this.setDisplaySize(100, 200);
     this.origin = new Phaser.Math.Vector2(x, y);
 
-    //Input de ratón
-    this.pointer = this.scene.input.activePointer;
-    //https://github.com/f0reil/Gorgo-Division/blob/main/src/characters/Player.js
+    //Randomizamos el color;
+    this.randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
+    //El que vamos a disparar
+    this.shootingBeetle;
+    //El siguiente
+    this.nextBeetle;
+
+    this.setProjectile(); // Inicializa el primer proyectil y el siguiente
+    this.inputEvents();
     //Se empieza con todos los colores, según se vayan eliminando de pantalla todos los esc de un color, ese color ya no aparece más.
   }
 
-  //Destructora del objeto
-  destructor ()
-  {
-    this.destroy();
+  setProjectile() {
+    // Array de posibles a disparar. 
+    let beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
+    //console.log(randomBeetle);
+    this.shootingBeetle = this.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
+    // y preparamos el siguiente
+    this.nextBeetle = this.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); 
+    //console.log(beetles[randomBeetle].texture);
+    console.log(shootingBeetle.texture.key);
+
+    this.shootingBeetle.body.setAllowGravity(false);
+    this.shootingBeetle.body.setImmovable(true);
   }
 
-  InputEvents() {
+  setNextProjectile(nextBeetle){
+    //Ahora el que se dispara es el siguiente
+    this.shootingBeetle = nextBeetle;
+    //Y creamos un nuevo siguiente
+    nextBeetle = this.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); 
+  }
+
+  inputEvents() {
+    this.pointer = this.scene.input.activePointer;
+    // AL MOVER EL RATON. REDIRECCIONO
     this.input.on('pointermove', (pointer) =>
     {
-      angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
-      cannonDisparo.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
-
-      // Línea gráfica de la dir.
-      Phaser.Geom.Line.SetToAngle(line, cannonDisparo.x, cannonDisparo.y, angle, 128); 
-      graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
-
+      this.findDirection();
     });
 
     // AL HACER CLIC. DISPARO
     this.input.on('pointerup', () =>
     {
-        //Randomizamos el color;
-      const randomBeetle = Phaser.Math.RND.between(0, beetles.length - 1);
-      //console.log(randomBeetle);
-      shootingBeetle = this.physics.add.image(cannonDisparo.x, cannonDisparo.y, beetles[randomBeetle]).setScale(1); //Instancia el escarabajo             
-      //console.log(beetles[randomBeetle].texture);
-      console.log(shootingBeetle.texture.key);
-      //Le metemos físicas
-      //this.physics.world.enable(shootingBeetle);
-      shootingBeetle.setCircle(22.5); //Collider circular
-      // Para que no se salga de los límites del mundo.
-      shootingBeetle.setBounce(1).setCollideWorldBounds(true);
+      this.shoot();
+      this.setNextProjectile(this.nextBeetle);
+    });
 
-      shootingBeetle.enableBody(true, cannonDisparo.x, cannonDisparo.y, true, true); // Activa la vessel y la pone donde cannonHead.
-
-      this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
-  
-
-      // --- COLISIONES CON BORDERS ---.
-      this.physics.add.collider(borders, shootingBeetle);
-
-      // --- COLISIONES MATRIX - DISPARO ---.
-      for (let i = 0; i < groupMatrix.length; i++){
-          groupMatrix[i].getChildren().forEach(element => {
-          //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
-          this.physics.add.collider(shootingBeetle, element);
-          //this.physics.add.collider(shootingBeetle, element, this.addToMatrix(shootingBeetle, element));
-          //console.log(shootingBeetle);
-          //console.log(element);
-
-      })
-  }
-          
+    // AL PULSAR ESPACIO. CAMBIA ESCARABAJO POR EL SIGUIENTE
+    this.scene.input.keyboard.on('keydown-SPACE', () => {
+      this.changeBeetle()
   });
-
-
   }
 
-
-
-  //Colisiones círculo
-  colisions() 
+  //Intercambia los escarabajos dentro del cannon
+  changeBeetle(shootingBeetle, nextBeetle)
   {
-    container.setInteractive(new Phaser.Geom.Circle(0, 0, 25), Phaser.Geom.Circle.Contains);
-    // container.setInteractive(false); // disable
-  }
-
-  //Intercambia los escarabajos
-  changeBeetle()
-  {
-    this.swap(child1, child2);
-  }
-
-  //Determina de forma random el siguiente escarabajo. 
-  nextBeetle()
-  {
-
+    shootingBeetle = this.shootingBeetle;
+    nextBeetle = this.nextBeetle;
+    this.swap(shootingBeetle, nextBeetle);
   }
 
   //Según la posición del ratón en pantalla, la convierte en coordenadas del ordenador
   //Método auxiliar del shoot()
   findDirection()
   {
+    angle = Phaser.Math.Angle.BetweenPoints(cannonBase, pointer); // Ángulo cañón -> mouse.
+    cannonDisparo.rotation = angle; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
 
+    // Línea gráfica de la dir.
+    Phaser.Geom.Line.SetToAngle(line, cannonDisparo.x, cannonDisparo.y, angle, 128); 
+    graphics.clear().strokeLineShape(line); // Limpia y redibuja la línea.
   }
 
   //Dispara en la dirección del input
   shoot()
   {
+    //Le metemos físicas
+    //this.physics.world.enable(shootingBeetle);
+    shootingBeetle.setCircle(22.5); //Collider circular
+    // Para que no se salga de los límites del mundo.
+    shootingBeetle.setBounce(1).setCollideWorldBounds(true);
 
+    shootingBeetle.enableBody(true, this.x, this.y, true, true); 
+
+    this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
   }
 
 }
