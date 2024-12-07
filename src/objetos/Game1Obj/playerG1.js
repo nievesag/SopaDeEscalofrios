@@ -17,12 +17,16 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 
 		this.body.setSize(28, 28) // Para que entre mejor por los pasillos
 
-        // para agarrar
-        this.isGrabbing = false; // flag para comprobar que se esta agarrando algo
+        // flags de teclas
+        this.isW = false;
+        this.isA = false;
+        this.isS = false;
+        this.isD = false;
+        this.isGrabbing = false; 
 
         // player colisiona con los límites del mundo
 		this.body.setCollideWorldBounds();
-        this.body.setDrag(50); // rozamiento
+        this.body.setDrag(0); // rozamiento
 
         this.body.setAllowGravity(false);
     }
@@ -35,68 +39,65 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         // ---- input ----
         // A -> mueve en el eje -X
         this.scene.input.keyboard.on('keydown-A', () => {
-            //this.setFlip(true, false) // para que gire el sprite creo
-			//this.x -= this.speed*dt / 1000;
+            this.isA = true;
 			this.body.setVelocityX(-this.speed);
         });
 
 		// D -> mueve en el eje X
         this.scene.input.keyboard.on('keydown-D', () => {
-            //this.setFlip(false, false)
+            this.isD = true;
 			this.body.setVelocityX(this.speed);
         });
 
 		// dejar A o D -> para
         this.scene.input.keyboard.on('keyup-A', () => {
+            this.isA = false;
             this.body.setVelocityX(0);
         });
 
         this.scene.input.keyboard.on('keyup-D', () => {
+            this.isD = false;
             this.body.setVelocityX(0);
         });
 
         // W -> mueve en el eje -Y
         this.scene.input.keyboard.on('keydown-W', () => {
-            this.setFlip(false, false)
+            this.isW = true;
 			this.body.setVelocityY(-this.speed);
         });
         
         // S -> mueve en el eje Y
         this.scene.input.keyboard.on('keydown-S', () => {
-            this.setFlip(false, false)
+            this.isS = true;
 			this.body.setVelocityY(this.speed);
         });
         
         // dejar W o S -> para
         this.scene.input.keyboard.on('keyup-W', () => {
+            this.isW = false;
             this.body.setVelocityY(0);
         });
 
         this.scene.input.keyboard.on('keyup-S', () => {
+            this.isS = false;
             this.body.setVelocityY(0);
         });
 
-        // SPACE
+        // SPACE -> esta agarrando
         this.scene.input.keyboard.on('keydown-SPACE', () => {
-            this.grab();
+            this.isGrabbing = true;
         });
 
-        // deja space -> para de agarrar
+        // deja SPACE -> deja de agarrar
         this.scene.input.keyboard.on('keyup-SPACE', () => {
-            this.stopGrab();
+            this.isGrabbing = false;
         });
     }
 
-    grab() {
-        this.isGrabbing = true;
-    }
-
-    stopGrab() {
-        this.isGrabbing = false;
-    }
-
-    // getter de propiedad is grabbing
-    getGrabbing() {
-        return this.isGrabbing;
-    }
+    // getters de flags
+    getisW(){ return this.isW; }
+    getisA(){ return this.isA; }
+    getisS(){ return this.isS; }
+    getisD(){ return this.isD; }
+    getGrabbing() { return this.isGrabbing; }
 }

@@ -8,6 +8,9 @@ export default class Box extends Phaser.GameObjects.Sprite {
         //this.body.setColliderWorldBounds();
         //this.body.setBounce(1,1);
         this.body.setAllowGravity(false);
+        this.body.setDrag(800); // rozamiento
+
+        this.isGrabbed = false;
     }
 
     preUpdate(t, dt) {
@@ -25,4 +28,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
 			this.body.velocity.x = 0;
 		}
     }
+
+    setGrabbed(g) { this.isGrabbed = g; }
+    getGrabbed() {return this.isGrabbed; }
 }

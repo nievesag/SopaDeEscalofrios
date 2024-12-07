@@ -9,8 +9,14 @@ export default class Organ extends Phaser.GameObjects.Sprite {
         //this.body.setBounce(1,1);
 
         this.body.setAllowGravity(false);
-
+        this.body.setDrag(1000); // rozamiento
+        this.body.setBounce(0); // rebote con colisiones.
         this.isDead = false;
+
+        this.grabDer = false;
+        this.grabIzq = false;
+        this.grabAbj = false;
+        this.grabArr = false;
     }
 
     preUpdate(t, dt) {
@@ -44,11 +50,20 @@ export default class Organ extends Phaser.GameObjects.Sprite {
                 {
                     this.destroy();
                     this.isDead = true;
-                    scene.handleOrganGoal();
                     scene.decreaseOrganCount();
                 }, [], this);
         }
 
         return collision;
     }
+
+    setGrabDer(g) { this.grabDer = g; }
+    setGrabIzq(g) { this.grabIzq = g; }
+    setGrabAbj(g) { this.graAbj = g;  }
+    setGrabArr(g) { this.grabArr = g; }
+
+    getGrabDer() { return this.grabDer; }
+    getGrabIzq() { return this.grabIzq; }
+    getGrabAbj() { return this.graAbj;  }
+    getGrabArr() { return this.grabArr; }
 }

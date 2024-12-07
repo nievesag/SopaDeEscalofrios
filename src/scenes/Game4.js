@@ -247,7 +247,4 @@ export default class Game4 extends Phaser.Scene {
             ]);
         }
     }
-
-
-
 }

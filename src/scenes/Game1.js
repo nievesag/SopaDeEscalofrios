@@ -112,8 +112,35 @@ export default class Game1 extends Phaser.Scene {
 
         // colisiones
         this.physics.add.collider(playerG1, this.wallLayer);
-        this.physics.add.collider(playerG1, organsGroup);
+        
+        this.physics.add.collider(playerG1, organsGroup, () => {
+            organsGroup.getChildren().forEach(obj => {
+                if(playerG1.getGrabbing()) {
+                    if(playerG1.body.touching.right && obj.body.touching.left) {
+                        console.log("der");
+                        obj.setGrabDer(true);
+                    }
+
+                    if(playerG1.body.touching.left && obj.body.touching.right) {
+                        console.log("izq");
+                        obj.setGrabIzq(true);
+                    }
+
+                    if(playerG1.body.touching.up && obj.body.touching.down) {
+                        console.log("abj");
+                        obj.setGrabAbj(true);
+                    }
+
+                    if(playerG1.body.touching.down && obj.body.touching.up) {
+                        console.log("arr");
+                        obj.setGrabArr(true);
+                    }
+                }
+            });
+        });
+
         this.physics.add.collider(playerG1, boxesGroup);
+        
         this.physics.add.collider(playerG1, react);
 
         this.physics.add.collider(boxesGroup, boxesGroup);
@@ -157,7 +184,7 @@ export default class Game1 extends Phaser.Scene {
         });
     }
 
-    handleOrganGoal() {
+    checkGrab() {
 
     }
 
@@ -174,6 +201,30 @@ export default class Game1 extends Phaser.Scene {
 
         if(this.organCount == 0) {
             console.log("hola");
+        }
+
+        if(this.organsGroup) {
+            organsGroup.getChildren().forEach(obj => {
+                if(obj.getGrabbed()) {
+                    // le metes por la der -> mov izq
+                    if(playerG1.getisA() && obj.getGrabDer()) {
+                        obj.setPosition(playerG1.x-obj.x, playerG1.y-obj.y);
+                        console.log("cojones");
+                    }
+                    // le metes por la izq -> mov der
+                    if(playerG1.getisD() && obj.getGrabIzq()) {
+                        obj.setPosition();
+                    }
+                    // le metes por arr -> mov arr
+                    if(playerG1.getisW() && obj.getGrabArr()) {
+                        obj.setPosition();
+                    }
+                    // le metes por abj -> mov abj
+                    if(playerG1.getisS() && obj.getGrabAbj()) {
+                        obj.setPosition();
+                    }
+                }
+            });
         }
     }
 
@@ -253,5 +304,4 @@ export default class Game1 extends Phaser.Scene {
             this.mapKey = 'map3';
         }
     }
-
 }
