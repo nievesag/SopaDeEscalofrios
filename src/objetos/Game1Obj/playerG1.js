@@ -17,10 +17,28 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 		// Agregamos al player a las físicas para que Phaser lo tenga en cuenta -> no se si hace falta
 		this.scene.physics.add.existing(this);
 
-        this.grabArea = this.scene.physics.add.sprite(this.getCenter().x, this.getCenter().y, null);
-        this.grabArea.body.setAllowGravity(false);
-        this.grabArea.setSize(50,50);
-        this.grabArea.setDepth(10);
+        // areas de agarre
+        // izq
+        this.grabAreaIzq = this.scene.physics.add.sprite(this.x-10, this.y, null);
+        this.grabAreaIzq.body.setAllowGravity(false);
+        this.grabAreaIzq.body.setSize(2, 20); // Width / Height
+        this.grabAreaIzq.setDepth(10);
+        // der
+        this.grabAreaDer = this.scene.physics.add.sprite(this.x+32, this.y, null);
+        this.grabAreaDer.body.setAllowGravity(false);
+        this.grabAreaDer.body.setSize(2, 20); // Width / Height
+        this.grabAreaDer.setDepth(10);
+        // arr
+        this.grabAreaArr = this.scene.physics.add.sprite(this.x, this.y-10, null);
+        this.grabAreaArr.body.setAllowGravity(false);
+        this.grabAreaArr.body.setSize(20, 2); // Width / Height
+        this.grabAreaArr.setDepth(10);
+        // abj
+        this.grabAreaAbj = this.scene.physics.add.sprite(this.x, this.y+32, null);
+        this.grabAreaAbj.body.setAllowGravity(false);
+        this.grabAreaAbj.body.setSize(20, 2); // Width / Height
+        this.grabAreaAbj.setDepth(10);
+
 		this.body.setSize(28, 28); // Para que entre mejor por los pasillos
 
         // flags de teclas
@@ -100,13 +118,33 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         });
     }
 
-    setGrabAreaPos(x, y) {
-        this.grabArea.x = x;
-        this.grabArea.y = y;
+    // -- grab areas --
+    // der
+    setGrabDer(x, y) {
+        this.grabAreaDer.x = x;
+        this.grabAreaDer.y = y;
     }
-    getGrabArea() { return this.grabArea; }
+    getGrabDer() { return this.grabAreaDer; }
+    // izq
+    setGrabIzq(x, y) {
+        this.grabAreaIzq.x = x;
+        this.grabAreaIzq.y = y;
+    }
+    getGrabIzq() { return this.grabAreaDer; }
+    // arr
+    setGrabArr(x, y) {
+        this.grabAreaArr.x = x;
+        this.grabAreaArr.y = y;
+    }
+    getGrabArr() { return this.grabAreaArr; }
+    // abj
+    setGrabAbj(x, y) {
+        this.grabAreaAbj.x = x;
+        this.grabAreaAbj.y = y;
+    }
+    getGrabAbj() { return this.grabAreaAbj; }
 
-    // getters de flags
+    // -- getters de flags --
     getisW(){ return this.isW; }
     getisA(){ return this.isA; }
     getisS(){ return this.isS; }

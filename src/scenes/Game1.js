@@ -115,28 +115,40 @@ export default class Game1 extends Phaser.Scene {
         
         this.physics.add.collider(this.playerG1, this.organsGroup);
 
-        this.physics.add.collider(this.playerG1.getGrabArea(), this.organsGroup, () => {
+        // ---- GRAB ----
+        // der
+        this.physics.add.collider(this.playerG1.getGrabDer(), this.organsGroup, () => {
             this.organsGroup.getChildren().forEach(obj => {
                 if(this.playerG1.getGrabbing()) {
-                    if(this.playerG1.getGrabArea().body.touching.right && obj.body.touching.left) {
-                        console.log("der");
-                        obj.setGrabDer(true); // caja agarrada por la der
-                    }
-
-                    if(this.playerG1.getGrabArea().body.touching.left && obj.body.touching.right) {
-                        console.log("izq");
-                        obj.setGrabIzq(true); // caja agarrada por la izq
-                    }
-
-                    if(this.playerG1.getGrabArea().body.touching.up && obj.body.touching.down) {
-                        console.log("abj");
-                        obj.setGrabAbj(true); // caja agarrada por abj
-                    }
-
-                    if(this.playerG1.getGrabArea().body.touching.down && obj.body.touching.up) {
-                        console.log("arr");
-                        obj.setGrabArr(true); // caja agarrada por arr
-                    }
+                    console.log("der");
+                    obj.setisDer(true); // caja agarrada por la der
+                }
+            });
+        });
+        // izq
+        this.physics.add.collider(this.playerG1.getGrabIzq(), this.organsGroup, () => {
+            this.organsGroup.getChildren().forEach(obj => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("izq");
+                    obj.setisIzq(true); // caja agarrada por la izq
+                }
+            });
+        });
+        // arr
+        this.physics.add.collider(this.playerG1.getGrabArr(), this.organsGroup, () => {
+            this.organsGroup.getChildren().forEach(obj => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("arr");
+                    obj.setisArr(true); // caja agarrada por arr
+                }
+            });
+        });
+        // abj
+        this.physics.add.collider(this.playerG1.getGrabAbj(), this.organsGroup, () => {
+            this.organsGroup.getChildren().forEach(obj => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("abj");
+                    obj.setisAbj(true); // caja agarrada por abj
                 }
             });
         });
@@ -186,16 +198,13 @@ export default class Game1 extends Phaser.Scene {
         });
     }
 
-    checkGrab() {
-
-    }
-
     update(time, dt)
     {
-        //console.log(this.playerG1);
-
         if(this.playerG1 != null) {
-            this.playerG1.setGrabAreaPos(this.playerG1.x, this.playerG1.y);
+            this.playerG1.setGrabIzq(this.playerG1.x-15, this.playerG1.y);
+            this.playerG1.setGrabDer(this.playerG1.x+15, this.playerG1.y);
+            this.playerG1.setGrabArr(this.playerG1.x, this.playerG1.y-15);
+            this.playerG1.setGrabAbj(this.playerG1.x, this.playerG1.y+15);
         }
 
         // ---- limite de tiempo ----
@@ -214,20 +223,19 @@ export default class Game1 extends Phaser.Scene {
         if(this.organsGroup) {
             this.organsGroup.getChildren().forEach(obj => {
                 // le metes por la der -> mov izq
-                if(this.playerG1.getisA() && obj.getGrabDer()) {
-                    obj.setPosition(this.playerG1.x-obj.x, this.playerG1.y-obj.y);
-                    console.log("cojones");
+                if(this.playerG1.getisA() && this.playerG1.getGrabbing() && obj.getisDer()) {
+                    obj.setPosition(this.playerG1.x+obj.x, this.playerG1.y-obj.y);
                 }
                 // le metes por la izq -> mov der
-                if(this.playerG1.getisD() && obj.getGrabIzq()) {
+                if(this.playerG1.getisD() && this.playerG1.getGrabbing()&& obj.getisIzq()) {
                     obj.setPosition();
                 }
                 // le metes por arr -> mov arr
-                if(this.playerG1.getisW() && obj.getGrabArr()) {
+                if(this.playerG1.getisW() && this.playerG1.getGrabbing()&& obj.getisArr()) {
                     obj.setPosition();
                 }
                 // le metes por abj -> mov abj
-                if(this.playerG1.getisS() && obj.getGrabAbj()) {
+                if(this.playerG1.getisS() && this.playerG1.getGrabbing()&& obj.getisAbj()) {
                     obj.setPosition();
                 }
             });

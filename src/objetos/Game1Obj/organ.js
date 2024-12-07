@@ -61,13 +61,13 @@ export default class Organ extends Phaser.GameObjects.Sprite {
         return collision;
     }
 
-    setGrabDer(g) { this.grabDer = g; }
-    setGrabIzq(g) { this.grabIzq = g; }
-    setGrabAbj(g) { this.graAbj = g;  }
-    setGrabArr(g) { this.grabArr = g; }
+    setisDer(g) { this.grabDer = g; }
+    setisIzq(g) { this.grabIzq = g; }
+    setisAbj(g) { this.graAbj = g;  }
+    setisArr(g) { this.grabArr = g; }
 
-    getGrabDer() { return this.grabDer; }
-    getGrabIzq() { return this.grabIzq; }
-    getGrabAbj() { return this.graAbj;  }
-    getGrabArr() { return this.grabArr; }
+    getisDer() { return this.grabDer; }
+    getisIzq() { return this.grabIzq; }
+    getisAbj() { return this.graAbj;  }
+    getisArr() { return this.grabArr; }
 }
