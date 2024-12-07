@@ -5,6 +5,7 @@ let gameState = {
     actionsLeft: 3,
     maxDays: 5,
     minigamesResults: {
+        Game2: [null, null, null, null, null],
         Game4: [null, null, null, null, null] 
     }
 };
