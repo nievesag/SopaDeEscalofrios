@@ -50,8 +50,6 @@ export default class Game3 extends Phaser.Scene {
         //const music = this.sound.add('theme3');
         //music.play();
         //this.sound.pauseOnBlur = true;
-
-
      
         // --- BOTON VOLVER A MAIN MENU ---
         this.createButton('MainMenu',  925,  700, 'white');
@@ -257,7 +255,7 @@ export default class Game3 extends Phaser.Scene {
     }
 
     //Se añade pero no se une
-    addToMatrix(shootingBeetle, element){
+    /*addToMatrix(shootingBeetle, element){
 
         let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
             x: shootingBeetle.x,
@@ -293,7 +291,7 @@ export default class Game3 extends Phaser.Scene {
 
         //newBeetle.body.setImmovable(true); 
         newBeetle.body.setAllowGravity(false);
-    }
+    }*/
 
 
     update (){
