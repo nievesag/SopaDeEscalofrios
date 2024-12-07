@@ -5,7 +5,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         this.scene = scene;
         this.obsClass = obsClass;
 
-        // Mete el objeto en la escena con físicas.
+        // mete el objeto en la escena con físicas.
         scene.add.existing(this);
 
         // Configuración de las fisicas.

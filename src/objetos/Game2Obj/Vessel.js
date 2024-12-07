@@ -6,11 +6,11 @@ export default class Vessel extends Phaser.GameObjects.Image{
         this.cannon = cannon;
         this.obstacleGen = obstacleGenerator;
 
-        // Añadir el objeto a la escena con físicas.
+        // añadir el objeto a la escena con físicas.
         scene.add.existing(this); 
         scene.physics.add.existing(this);
 
-        // Configuración de las físicas.
+        // config de las físicas.
         this.setScale(0.35); // Le pone el tamaño.
         this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
         this.body.setDrag(50); // Fricción con el suelo (NON OSTUCALOS).

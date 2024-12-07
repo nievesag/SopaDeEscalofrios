@@ -100,7 +100,7 @@ export default class Game2 extends Phaser.Scene {
         })
 
         // música.
-        const music = this.sound.add('theme2');
+        let music = this.sound.add('theme2');
         music.play();
         this.sound.pauseOnBlur = true;
 
