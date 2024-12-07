@@ -9,9 +9,13 @@ export default class Game1 extends Phaser.Scene {
         this.gameTime = 10; // segundos para el juego
     }
     
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
+
     preload () {
         // Cargamos el Tilemap (JsSON)
-		this.load.tilemapTiledJSON('tilemap', './assets/tilemap/map1.json');
+		this.load.tilemapTiledJSON('tilemap', './assets/tilemap/map2.json');
 
 		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
 		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
@@ -37,23 +41,13 @@ export default class Game1 extends Phaser.Scene {
         const music = this.sound.add('theme1');
         music.play();
         this.sound.pauseOnBlur = true;
-
-        //let boxes = [];
-        //boxes = this.physics.add.group(); // grupo de fisicas para las cajas
-
-        // ---- Objectos de escena ----
-        // instancias
-        // let box1 = new Box(this, 200, 0, boxes);
-        // let box2 = new Box(this, 400, 0, boxes);
-        
-        //this.playerG1 = this.physics.add.sprite(400, 300, 'player');
-        // this.playerG1.setCollideWorldBounds(true);
-        // this.playerG1.setPushable(false);
         
         this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
         
+        //this.setDifficulty();
+
         // -------- COSAS DEL TILESET --------
 		// Objeto tilemap
 		this.map = this.make.tilemap({
@@ -64,7 +58,7 @@ export default class Game1 extends Phaser.Scene {
         
 		// Objeto el tileset. 
 		// recibe "name" del .json y la imagen del tileset
-		const tileset1 = this.map.addTilesetImage('tileset_duat', 'patronesTilemap');
+		const tileset1 = this.map.addTilesetImage('map2', 'patronesTilemap');
         
         // capas
 		// con el nombre del .json
@@ -104,11 +98,6 @@ export default class Game1 extends Phaser.Scene {
         // --- PLAYER
         let characters = this.map.createFromObjects('GameObjects', { name: "spawn", classType: PlayerG1, key: "player" });
         let playerG1 = characters[0]; //se que solo hay uno y es mi player
-        
-        // Prodía recorrer el array y según cierta propiedad hacer inicializar con ciertos atributos.
-        //characters.forEach(obj => {
-        //	obj.setDepth(10);
-        //});
 
         // colisiones
         this.physics.add.collider(playerG1, this.wallLayer);
@@ -125,16 +114,18 @@ export default class Game1 extends Phaser.Scene {
 
         // tiempo
         this.timerText = this.add.text(20, 20, this.gameTime,
-            { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+                        { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+
         this.timerHUD();
 
+        // boton
         this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
 
         // -----------------------------------
     }
 
     // Lo llamas en el create
-    timerHUD(){
+    timerHUD() {
         const updateTimer = () => {
             // Vamos restando de uno en uno
             this.gameTime -= 1; // Cambia esto según tus necesidades
@@ -148,6 +139,7 @@ export default class Game1 extends Phaser.Scene {
                     { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
+
         // Evento que actualice el temporizador
         this.time.addEvent({
             delay: 1000,
@@ -158,13 +150,6 @@ export default class Game1 extends Phaser.Scene {
     }
 
 
-    init() {
-        
-        // para llevar el control de limite de tiempo
-        // this.maxTime = document.getElementById('targetTime');
-        
-        // this.time = 0; 
-    }
 
     handleOrganGoal() {
 
@@ -173,7 +158,7 @@ export default class Game1 extends Phaser.Scene {
     update(time, dt)
     {
         // ---- limite de tiempo ----
-        if(this.gameTime <= 0 && !this.gameEnd){
+        if(this.gameTime <= 0 && !this.gameEnd) {
             console.log("final");
         }
     
@@ -220,4 +205,60 @@ export default class Game1 extends Phaser.Scene {
 
         });
     }
+
+    endLevel()
+    {
+        let result;
+        if (this.gameTime > 0 && this.gameEnd) {
+            console.log("victoria");
+            result = 'victoria';
+        }
+
+        else if (this.gameTime <= 0 && !this.gameEnd) {
+            console.log("derrota");
+            result = 'derrota';
+        }
+ 
+        if (result) {
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+
+            // console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
+        }
+    }
+
+    setDifficulty() {
+
+        if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
+        {
+
+
+            this.bow = new Bow(this, 150, 600, [
+                // { type: 'Normal', count: 3 },
+                // { type: 'Explosive Arrow', count: 3 },
+                 { type: 'Ball Arrow', count: 5 },
+                { type: 'Split Arrow', count: 3 }
+
+            ]);
+        }
+        else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 2 },
+                { type: 'Split Arrow', count: 2 }
+            ]);
+        }
+        else if(this.gameState.currentDay == 5)
+        {
+            this.bow = new Bow(this, 150, 600, [
+                { type: 'Normal', count: 5 },
+                //{ type: 'Explosive Arrow', count: 1 },
+                { type: 'Ball Arrow', count: 1 },
+                { type: 'Split Arrow', count: 1 }
+            ]);
+        }
+    }
+
 }
