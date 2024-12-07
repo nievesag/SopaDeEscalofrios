@@ -112,48 +112,91 @@ export default class Game1 extends Phaser.Scene {
     
         // colisiones
         this.physics.add.collider(this.playerG1, this.wallLayer);
-        
         this.physics.add.collider(this.playerG1, this.organsGroup);
+        this.physics.add.collider(this.playerG1, this.boxesGroup);
 
         // ---- GRAB ----
+        // -- organs
         // der
-        this.physics.add.collider(this.playerG1.getGrabDer(), this.organsGroup, () => {
-            this.organsGroup.getChildren().forEach(obj => {
+        this.organsGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabDer(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
                     console.log("der");
                     obj.setisDer(true); // caja agarrada por la der
                 }
             });
         });
+        
         // izq
-        this.physics.add.collider(this.playerG1.getGrabIzq(), this.organsGroup, () => {
-            this.organsGroup.getChildren().forEach(obj => {
+        this.organsGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabIzq(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
                     console.log("izq");
                     obj.setisIzq(true); // caja agarrada por la izq
                 }
             });
         });
+
         // arr
-        this.physics.add.collider(this.playerG1.getGrabArr(), this.organsGroup, () => {
-            this.organsGroup.getChildren().forEach(obj => {
+        this.organsGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabArr(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
                     console.log("arr");
                     obj.setisArr(true); // caja agarrada por arr
                 }
             });
         });
+
         // abj
-        this.physics.add.collider(this.playerG1.getGrabAbj(), this.organsGroup, () => {
-            this.organsGroup.getChildren().forEach(obj => {
+        this.organsGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabAbj(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
                     console.log("abj");
-                    obj.setisAbj(true); // caja agarrada por abj
+                    obj.setisAbj(true); // caja agarrada por la abj
                 }
             });
         });
 
-        this.physics.add.collider(this.playerG1, this.boxesGroup);
+        // -- boxes
+        // der
+        this.boxesGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabDer(), obj, () => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("der");
+                    obj.setisDer(true); // caja agarrada por la der
+                }
+            });
+        });
+        
+        // izq
+        this.boxesGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabIzq(), obj, () => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("izq");
+                    obj.setisIzq(true); // caja agarrada por la izq
+                }
+            });
+        });
+
+        // arr
+        this.boxesGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabArr(), obj, () => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("arr");
+                    obj.setisArr(true); // caja agarrada por arr
+                }
+            });
+        });
+
+        // abj
+        this.boxesGroup.getChildren().forEach(obj => {
+            this.physics.add.collider(this.playerG1.getGrabAbj(), obj, () => {
+                if(this.playerG1.getGrabbing()) {
+                    console.log("abj");
+                    obj.setisAbj(true); // caja agarrada por la abj
+                }
+            });
+        });
         
         this.physics.add.collider(this.playerG1, react);
 
@@ -205,6 +248,22 @@ export default class Game1 extends Phaser.Scene {
             this.playerG1.setGrabDer(this.playerG1.x+15, this.playerG1.y);
             this.playerG1.setGrabArr(this.playerG1.x, this.playerG1.y-15);
             this.playerG1.setGrabAbj(this.playerG1.x, this.playerG1.y+15);
+
+            if(!this.playerG1.getGrabbing()) {
+                this.organsGroup.getChildren().forEach(obj => {
+                    obj.setisDer(false);
+                    obj.setisIzq(false);
+                    obj.setisArr(false);
+                    obj.setisAbj(false);
+                });
+
+                this.boxesGroup.getChildren().forEach(obj => {
+                    obj.setisDer(false);
+                    obj.setisIzq(false);
+                    obj.setisArr(false);
+                    obj.setisAbj(false);
+                });
+            }
         }
 
         // ---- limite de tiempo ----
@@ -217,26 +276,57 @@ export default class Game1 extends Phaser.Scene {
         });
 
         if(this.organCount == 0) {
-            console.log("hola");
+            console.log("0 organos");
         }
 
+        // organs
         if(this.organsGroup) {
             this.organsGroup.getChildren().forEach(obj => {
                 // le metes por la der -> mov izq
-                if(this.playerG1.getisA() && this.playerG1.getGrabbing() && obj.getisDer()) {
-                    obj.setPosition(this.playerG1.x+obj.x, this.playerG1.y-obj.y);
+                if(this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisS() && !this.playerG1.getisD()
+                 && this.playerG1.getGrabbing() && obj.getisDer()) {
+                    obj.setPosition(this.playerG1.x+32, this.playerG1.y);
                 }
                 // le metes por la izq -> mov der
-                if(this.playerG1.getisD() && this.playerG1.getGrabbing()&& obj.getisIzq()) {
-                    obj.setPosition();
+                if(this.playerG1.getisD() && !this.playerG1.getisW() && !this.playerG1.getisA() && !this.playerG1.getisS()
+                    && this.playerG1.getGrabbing() && obj.getisIzq()) {
+                    obj.setPosition(this.playerG1.x-32, this.playerG1.y);
                 }
                 // le metes por arr -> mov arr
-                if(this.playerG1.getisW() && this.playerG1.getGrabbing()&& obj.getisArr()) {
-                    obj.setPosition();
+                if(this.playerG1.getisW() && !this.playerG1.getisA() && !this.playerG1.getisS() && !this.playerG1.getisD()
+                    && this.playerG1.getGrabbing()&& obj.getisAbj()) {
+                    obj.setPosition(this.playerG1.x, this.playerG1.y+32);
                 }
                 // le metes por abj -> mov abj
-                if(this.playerG1.getisS() && this.playerG1.getGrabbing()&& obj.getisAbj()) {
-                    obj.setPosition();
+                if(this.playerG1.getisS() && !this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisD()
+                    && this.playerG1.getGrabbing()&& obj.getisArr()) {
+                    obj.setPosition(this.playerG1.x, this.playerG1.y-32);
+                }
+            });
+        }
+
+        // cajas
+        if(this.boxesGroup) {
+            this.boxesGroup.getChildren().forEach(obj => {
+                // le metes por la der -> mov izq
+                if(this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisS() && !this.playerG1.getisD()
+                 && this.playerG1.getGrabbing() && obj.getisDer()) {
+                    obj.setPosition(this.playerG1.x+32, this.playerG1.y);
+                }
+                // le metes por la izq -> mov der
+                if(this.playerG1.getisD() && !this.playerG1.getisW() && !this.playerG1.getisA() && !this.playerG1.getisS()
+                    && this.playerG1.getGrabbing() && obj.getisIzq()) {
+                    obj.setPosition(this.playerG1.x-32, this.playerG1.y);
+                }
+                // le metes por arr -> mov arr
+                if(this.playerG1.getisW() && !this.playerG1.getisA() && !this.playerG1.getisS() && !this.playerG1.getisD()
+                    && this.playerG1.getGrabbing()&& obj.getisAbj()) {
+                    obj.setPosition(this.playerG1.x, this.playerG1.y+32);
+                }
+                // le metes por abj -> mov abj
+                if(this.playerG1.getisS() && !this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisD()
+                    && this.playerG1.getGrabbing()&& obj.getisArr()) {
+                    obj.setPosition(this.playerG1.x, this.playerG1.y-32);
                 }
             });
         }
@@ -292,13 +382,10 @@ export default class Game1 extends Phaser.Scene {
         if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
             this.gameState.minigamesResults.Game4[currentDayIndex] = result;
-
-            // console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
         }
     }
 
     setDifficulty() {
-
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.gameTime = 10;

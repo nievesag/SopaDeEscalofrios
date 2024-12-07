@@ -20,26 +20,26 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         // areas de agarre
         // izq
         this.grabAreaIzq = this.scene.physics.add.sprite(this.x-10, this.y, null);
-        this.grabAreaIzq.body.setAllowGravity(false);
-        this.grabAreaIzq.body.setSize(2, 20); // Width / Height
+        this.grabAreaIzq.body.setAllowGravity(false).setSize(2, 10); // Width / Height
         this.grabAreaIzq.setDepth(10);
+        this.grabAreaIzq.visible = false;
         // der
         this.grabAreaDer = this.scene.physics.add.sprite(this.x+32, this.y, null);
-        this.grabAreaDer.body.setAllowGravity(false);
-        this.grabAreaDer.body.setSize(2, 20); // Width / Height
+        this.grabAreaDer.body.setAllowGravity(false).setSize(2, 10); // Width / Height
         this.grabAreaDer.setDepth(10);
+        this.grabAreaDer.visible = false;
         // arr
         this.grabAreaArr = this.scene.physics.add.sprite(this.x, this.y-10, null);
-        this.grabAreaArr.body.setAllowGravity(false);
-        this.grabAreaArr.body.setSize(20, 2); // Width / Height
+        this.grabAreaArr.body.setAllowGravity(false).setSize(10, 2); // Width / Height
         this.grabAreaArr.setDepth(10);
+        this.grabAreaArr.visible = false;
         // abj
         this.grabAreaAbj = this.scene.physics.add.sprite(this.x, this.y+32, null);
-        this.grabAreaAbj.body.setAllowGravity(false);
-        this.grabAreaAbj.body.setSize(20, 2); // Width / Height
+        this.grabAreaAbj.body.setAllowGravity(false).setSize(10, 2); // Width / Height
         this.grabAreaAbj.setDepth(10);
+        this.grabAreaAbj.visible = false;
 
-		this.body.setSize(28, 28); // Para que entre mejor por los pasillos
+		this.body.setSize(20, 20); // Para que entre mejor por los pasillos
 
         // flags de teclas
         this.isW = false;
@@ -130,7 +130,7 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         this.grabAreaIzq.x = x;
         this.grabAreaIzq.y = y;
     }
-    getGrabIzq() { return this.grabAreaDer; }
+    getGrabIzq() { return this.grabAreaIzq; }
     // arr
     setGrabArr(x, y) {
         this.grabAreaArr.x = x;

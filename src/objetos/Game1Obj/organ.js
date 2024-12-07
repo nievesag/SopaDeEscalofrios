@@ -6,21 +6,19 @@ export default class Organ extends Phaser.GameObjects.Sprite {
         this.y = y;
         this.key = key;
         this.setScale(0.5,.5);
-
         this.scene.physics.add.existing(this);
-
-        //this.body.setColliderWorldBounds();
-        //this.body.setBounce(1,1);
-
         this.body.setAllowGravity(false);
-        this.body.setDrag(1000); // rozamiento
-        this.body.setBounce(0); // rebote con colisiones.
+        this.body.setDrag(800); // rozamiento
+        this.body.setBounce(0); // rebote con colisiones
+        
         this.isDead = false;
 
         this.grabDer = false;
         this.grabIzq = false;
         this.grabAbj = false;
         this.grabArr = false;
+
+		this.body.setSize(28, 28); // Para que entre mejor por los pasillos
     }
 
     preUpdate(t, dt) {
