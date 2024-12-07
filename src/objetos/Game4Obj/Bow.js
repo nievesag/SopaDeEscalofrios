@@ -1,6 +1,7 @@
 import Arrow from '../Game4Obj/Arrow.js';
 import SplitArrow from '../Game4Obj/SplitArrow.js';
 import BallArrow from '../Game4Obj/BallArrow.js';
+import ExplosiveArrow from '../Game4Obj/ExplosiveArrow.js';
 
 export default class Bow extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, arrowConfig) {
@@ -12,17 +13,18 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         this.origin = new Phaser.Math.Vector2(x, y);
         this.band = this.scene.add.line(0, 0, 0, 0, 0, 0, 0x000000, 1).setOrigin(0);
 
-        // Configuración dinámica de las flechas según el nivel
-        this.arrowOrder = arrowConfig;  // Ejemplo: [{ type: 'normal', count: 3 }, { type: 'split', count: 2 }, { type: 'ball', count: 2 }]
+        this.arrowOrder = arrowConfig;  
         this.currentArrowIndex = 0;
         this.remainingArrows = this.arrowOrder[0].count;
+        this.totalArrows = arrowConfig.reduce((total, arrow) => total + arrow.count, 0);
 
         this.isDragging = false;
         this.maxStretch = 100;
         this.minPower = 150;
         this.maxPower = 800;
 
-        this.setProjectile(); // Inicializa el primer proyectil
+        this.hasBeenLaunched = false;
+        this.setProjectile(); 
 
         this.scene.input.setDraggable(this.projectile);
         this.setupInputEvents();
@@ -32,9 +34,10 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         const arrowType = this.arrowOrder[this.currentArrowIndex].type;
         let ArrowClass;
 
-        if (arrowType === 'normal') ArrowClass = Arrow;
-        else if (arrowType === 'split') ArrowClass = SplitArrow;
-        else if (arrowType === 'ball') ArrowClass = BallArrow;
+        if (arrowType === 'Normal') ArrowClass = Arrow;
+        else if (arrowType === 'Split Arrow') ArrowClass = SplitArrow;
+        else if (arrowType === 'Ball Arrow') ArrowClass = BallArrow;
+        else if (arrowType === 'Explosive Arrow') ArrowClass = ExplosiveArrow;
 
         this.projectile = new ArrowClass(this.scene, this.origin.x, this.origin.y);
         this.projectile.body.setAllowGravity(false);
@@ -60,6 +63,8 @@ export default class Bow extends Phaser.GameObjects.Sprite {
                 }
 
                 this.projectile.setPosition(dragX, dragY);
+                const angle = Phaser.Math.Angle.Between(this.origin.x, this.origin.y, dragX, dragY);
+                this.projectile.setRotation(angle + Math.PI);
                 this.band.setTo(this.origin.x, this.origin.y, this.projectile.x, this.projectile.y);
             }
         });
@@ -72,7 +77,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         });
 
         this.scene.input.keyboard.on('keydown-SPACE', () => {
-            if (this.projectile) {
+            if (this.projectile && this.hasBeenLaunched) {
                 // Si la flecha es de tipo SplitArrow
                 if (this.projectile instanceof SplitArrow) {
                     this.projectile.split();
@@ -95,11 +100,16 @@ export default class Bow extends Phaser.GameObjects.Sprite {
 
         this.projectile.launch(velocityX, velocityY);
         this.band.setTo(0, 0, 0, 0);
+        this.hasBeenLaunched = true;
+
 
         // Destruye la flecha después de un tiempo y configura la siguiente
         this.scene.time.delayedCall(2000, () => {
+
+            this.hasBeenLaunched = false;
             this.projectile.destroy();
             this.remainingArrows--;
+            this.totalArrows--;
 
             if (this.remainingArrows <= 0) {
                 this.currentArrowIndex++;
@@ -113,5 +123,9 @@ export default class Bow extends Phaser.GameObjects.Sprite {
                 this.scene.input.setDraggable(this.projectile);
             }
         });
+    }
+
+    getCurrentArrowType() {
+        return this.arrowOrder[this.currentArrowIndex].type;
     }
 }

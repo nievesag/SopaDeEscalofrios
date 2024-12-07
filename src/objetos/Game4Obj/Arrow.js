@@ -1,12 +1,11 @@
 export default class Arrow extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, spriteKey = 'arrow1') {
-        super(scene, x, y, spriteKey);  // Usamos un sprite personalizado para cada flecha
+        super(scene, x, y, spriteKey);  
 
         this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
 
-        // Configuraciones iniciales de la física
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
         
@@ -15,6 +14,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.setDisplaySize(100, 20);
         this.body.onCollide = true;
 
+        this.scene.events.on('update', this.updateRotation, this);
     }
 
     // Método para lanzar la flecha con una velocidad determinada
@@ -30,11 +30,18 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
 
         this.body.setVelocity(this.velX, this.velY);
 
-        // Rotar en la dirección del movimiento
+        // Rota en la direccion del movimiento
         const angle = Phaser.Math.Angle.Between(0, 0, velocityX, velocityY);
         this.setRotation(angle);
 
-        this.body.setDragX(0);
+        //this.body.setDragX(0);
+        this.scene.physics.add.collider(this, this.scene.ground, () => {
+            this.body.setVelocityX(0); 
+            this.body.setVelocityY(0);
+            this.body.setBounce(0);  
+        });
+
+        this.scene.activeArrowsPool.push(this);
     }
 
     getVelX(){
@@ -44,6 +51,16 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     getVelY() {
         return this.velY;
     }
+
+    updateRotation() {
+        
+        if (this.body && (this.body.velocity.x !== 0 || this.body.velocity.y !== 0)) {
+            const angle = Phaser.Math.Angle.Between(0, 0, this.body.velocity.x, this.body.velocity.y);
+            this.setRotation(angle);
+        }
+    }
+
+   
 
 
 
