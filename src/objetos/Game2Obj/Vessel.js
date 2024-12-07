@@ -1,54 +1,101 @@
 export default class Vessel extends Phaser.GameObjects.Image{
-    constructor(scene, cannon, maelstromObs){
-        super(scene, cannon.cannonBody.x, cannon.cannonBody.y-50, 'vessel')
-        this.setScale(0.2);
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
-        //crocodileObs, hippoObs){
+    constructor(scene, cannon, obstacleGenerator){
+        super(scene, cannon.x, cannon.y - 50, 'vessel');
+        
         this.scene = scene;
         this.cannon = cannon;
-        this.maelstromObs = maelstromObs;
-        //this.crocodileObs = crocodileObs;
-        //this.hippoObs = hippoObs;
+        this.obstacleGen = obstacleGenerator;
 
-        // --- VESSEL ---. EN UN FUTURO SERÁ SPRITESHEET
-        //this.vessel = this.scene.physics.add.image(this.cannon.cannonBody.x, this.cannon.cannonBody.y - 50, 'vessel').setScale(0.2); // Añade la vasija en la pos del cañón.
+        // Añadir el objeto a la escena con físicas.
+        scene.add.existing(this); 
+        scene.physics.add.existing(this);
 
-        // disableBody([disableGameObject], [hideGameObject]).
-        this.disableBody(  true , true); // Desactiva la vessel para que no colisione ni se vea todavía.
-        this.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
-        this.setDrag(100); // Fricción con el suelo.
+        // Configuración de las físicas.
+        this.setScale(0.35); // Le pone el tamaño.
+        this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
+        this.body.setDrag(50); // Fricción con el suelo (NON OSTUCALOS).
+        this.body.setAngularDrag(50); // rotación angular con el airew y tal.
+        this.body.setBounce(1); // rebote con colisiones.
+        this.setDepth(5); // siempre delante de todo.
 
+        // Al comienzo se desactiva.
+        this.body.enable = false;
+        this.setActive(false).setVisible(false);
+        
         // La cámara sigue al vessel.
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
+
+        this.isRotating = false;
     }
 
     launchVessel(angle){
-        //this.enableBody(true, this.cannon.cannonHead.x, this.cannon.cannonHead.y, true, true); // Activa la vessel y la pone donde cannonHead.
+        // se activa.
+        this.body.enable = true;
+        this.setActive(true).setVisible(true);
+
+        // pone a la vasija donde el cañón.
+        this.body.reset(this.cannon.cannonHead.x, this.cannon.cannonHead.y);
+
+        let launchForce; // fuerza con la q se lanza inicialmente la vasija.
+        let cannonForce = Math.floor(this.cannon.power); // fuerza del cañón truncada.
+
+        if(cannonForce === 0) launchForce = 100; // poca fuerza.
+        else if(cannonForce === 1) launchForce = 300; // jijijuju.
+        else if (cannonForce === 2) launchForce = 500; // ni mas ni menos.
+        else if (cannonForce === 3) launchForce = 700; // va folledo.
+        else if (cannonForce === 4) launchForce = 900; // joder lo folledo que va.
+        else if (cannonForce === 5) launchForce = 1200; // NITRO.
+
+        // lanza a la vasija con un ángulo y velocidad.
+        this.scene.physics.velocityFromRotation(angle, launchForce, this.body.velocity); 
+
+        this.body.setAngularVelocity(200); // vel de giro inicial.
+
         //chick.play('fly'); // animación de vuelo del pollo.
-        this.scene.physics.velocityFromRotation(angle, 600, this.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
     }
 
-    collisionWithVessel(obstacle){
+    vesselCollisions(){
 
+        // NOTA:
         // OVERLAP SI SUPERPONEN
         // COLlIDE SI COL.
-        if(this.scene.physics.world.collide(this, obstacle)){
-            if(obstacle === this.maelstromObs){
-                this.destroy;
+
+        this.scene.physics.add.collider(this, this.obstacleGen.obsGroup, (vessel, obstacle) =>{
+            if(obstacle.type === 'maelstrom'){
+                this.body.enable = false;
+                this.setActive(false).setVisible(false);
+                this.isRotating = false;
             }
-            else if(obstacle === this.crocodileObs){
-                // Lo que pasa cuando colisiona con CROCODILE.
+            else if(obstacle.type === 'crocodile'){
+                this.scene.physics.velocityFromRotation(-45, 800, this.body.velocity); // Ángulo y velocidad.
+                this.body.setAngularVelocity(500);
             }
-            else if(obstacle === this.hippoObs){
-                // Lo que pasa cuando colisiona con HIPPO.  
+            else if(obstacle.type === 'hippo'){
+                this.scene.physics.velocityFromRotation(-45, 300, this.body.velocity); 
+                this.body.setAngularVelocity(300);
             }
-            //¿AGUA?
+        })
+
+        /*if(this.maelstromObs){
+            this.scene.physics.add.collider(this, this.maelstromObs, ()=>{
+                this.body.enable = false;
+                this.setActive(false);
+                this.setVisible(false);
+            });
         }
 
+        if(this.crocodileObs){
+            this.scene.physics.add.collider(this, this.crocodileObs, ()=>{
+                this.scene.physics.velocityFromRotation(-45, 800, this.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
+            });
+        }
 
+        if(this.hippoObs){
+            this.scene.physics.add.collider(this, this.hippoObs, ()=>{
+                this.scene.physics.velocityFromRotation(-45, 300, this.body.velocity); // Lanza a la vasija con un ángulo y velocidad.
+            });
+        }*/
+        
         
     }
-
-
 }

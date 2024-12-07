@@ -1,0 +1,3 @@
+- Plantilla con Phaser metío.
+- pj que se mueve con saltos y movidas.
+- etc.

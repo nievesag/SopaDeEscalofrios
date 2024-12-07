@@ -3,6 +3,11 @@
   src: url('./assets/fonts/arabic.otf') format('truetype');
 }
 
+@font-face{
+  font-family: 'EagleLake';
+  src: url('./assets/fonts/EagleLake.ttf') format('truetype');
+}
+
 body {
   font-family: 'arabic';
   margin: 0;
