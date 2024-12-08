@@ -25,10 +25,14 @@ export default class Vessel extends Phaser.GameObjects.Image{
         // La cámara sigue al vessel.
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
 
-        this.isRotating = false;
+        this.isLaunched = false; // inicialmench la vasija no es lanzada
+  
     }
 
     launchVessel(angle){
+
+        this.isLaunched = true; // se ha lanzado la vesel.
+
         // guarda la pos inicial de x.
         this.initialPosX = this.x; 
 
@@ -67,7 +71,6 @@ export default class Vessel extends Phaser.GameObjects.Image{
             if(obstacle.type === 'maelstrom'){
                 this.body.enable = false;
                 this.setActive(false).setVisible(false);
-                this.isRotating = false;
             }
             else if(obstacle.type === 'crocodile'){
                 this.scene.physics.velocityFromRotation(-45, 800, this.body.velocity); // Ángulo y velocidad.
