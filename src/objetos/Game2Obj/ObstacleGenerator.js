@@ -1,6 +1,6 @@
 export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     constructor(scene, obsClass){ 
-        super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY + 300, 'obstacleGenerator');
+        super(scene, scene.cameras.main.centerX + 1115, scene.cameras.main.centerY + 300, 'obstacleGenerator');
         
         this.scene = scene;
         this.obsClass = obsClass;
@@ -10,6 +10,9 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
 
         // Configuración de las fisicas.
         this.setScale(0.25, 0.25).setDepth(2);
+
+        // Conifg de la UIII.
+        this.setScrollFactor(0);
 
         // Grupo de obstacles.
         //this.obsGroup = this.scene.physics.add.staticGroup({ -> grupo dinamico.
@@ -33,14 +36,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         this.minDistanceBetweenObstacles = Phaser.Math.Between(300, 500); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
     }
 
-    update(){
-        if(this.scene){
-            // Mantiene al obstacle generator a la derecha de la pantalla.
-            this.x = this.scene.cameras.main.scrollX + 1115 // scrollX te da la posición de la cámara.
-            this.dissappearObstacle();
-        }
-        
-    }
+    update(){if(this.scene){this.dissappearObstacle();}}
 
     spawnObstacle(){
 
