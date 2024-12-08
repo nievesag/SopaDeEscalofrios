@@ -199,7 +199,7 @@ export default class Game1 extends Phaser.Scene {
         });
         
         this.physics.add.collider(this.playerG1, react);
-
+        
         this.physics.add.collider(this.boxesGroup, this.boxesGroup);
         this.physics.add.collider(this.boxesGroup, this.wallLayer);
         
@@ -207,6 +207,14 @@ export default class Game1 extends Phaser.Scene {
         this.physics.add.collider(this.organsGroup, this.wallLayer);
         
         this.physics.add.collider(this.boxesGroup, this.organsGroup);
+
+        // meter los organos en casa
+        this.organsPool.forEach(organ => {
+            this.physics.add.collider(organ, this.goal, () => {
+                organ.destroy();
+                this.decreaseOrganCount();
+            });
+        });
         
         // tiempo
         this.timerText = this.add.text(20, 20, this.gameTime,
@@ -239,6 +247,10 @@ export default class Game1 extends Phaser.Scene {
             callback: updateTimer,
             callbackScope: this
         });
+
+        // fin de juego
+        this.ganar = false;
+        this.perder = false;
     }
 
     update(time, dt)
@@ -266,17 +278,17 @@ export default class Game1 extends Phaser.Scene {
             }
         }
 
-        // ---- limite de tiempo ----
-        if(this.gameTime <= 0 && !this.gameEnd) {
-            console.log("final");
+        console.log(this.organCount);
+
+        // -- derrota
+        if(this.gameTime <= 0 && this.organCount > 0) {
+            //alert('HAS PERDIDO');
+            this.perder = true;
         }
     
-        this.organsPool.forEach(organ => {
-            organ.checkCollisionWithGoal(this, this.goal);
-        });
-
-        if(this.organCount == 0) {
-            console.log("0 organos");
+        if(this.organCount == 0 && this.gameTime > 0) {
+            //alert('HAS GANADO');
+            this.ganar = true;
         }
 
         // organs
@@ -330,6 +342,9 @@ export default class Game1 extends Phaser.Scene {
                 }
             });
         }
+
+        // fin de juego
+        this.endLevel();
     }
 
     decreaseOrganCount() {
@@ -369,38 +384,43 @@ export default class Game1 extends Phaser.Scene {
     endLevel()
     {
         let result;
-        if (this.gameTime > 0 && this.gameEnd) {
+        if (this.ganar) {
             console.log("victoria");
             result = 'victoria';
         }
 
-        else if (this.gameTime <= 0 && !this.gameEnd) {
+        else if (this.perder) {
             console.log("derrota");
             result = 'derrota';
         }
- 
+
         if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
-            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+            this.gameState.minigamesResults.Game1[currentDayIndex] = result;
+        }
+
+        if(this.ganar || this.perder) {
+            console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game1}`);
+            this.scene.start("GameSelectorMenu");
         }
     }
 
     setDifficulty() {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
-            this.gameTime = 10;
+            this.gameTime = 90;
             this.tileKey = 'tilemap1';
             this.mapKey = 'map1';
         }
         else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
         {
-            this.gameTime = 10;
+            this.gameTime = 70;
             this.tileKey = 'tilemap2';
             this.mapKey = 'map2';
         }
         else if(this.gameState.currentDay == 5)
         {
-            this.gameTime = 10;
+            this.gameTime = 60;
             this.tileKey = 'tilemap3';
             this.mapKey = 'map3';
         }

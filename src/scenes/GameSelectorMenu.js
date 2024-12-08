@@ -7,7 +7,9 @@ let gameState = {
     minigamesResults: {
         Game1: [null, null, null, null, null] ,
         Game2: [null, null, null, null, null] ,
-        Game4: [null, null, null, null, null] 
+        Game3: [null, null, null, null, null] ,
+        Game4: [null, null, null, null, null] ,
+        Game5: [null, null, null, null, null] 
     }
 };
 
@@ -20,8 +22,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
     
     }
     
-    create (){
+    init(data) {
+        this.endResults = data.endResults; // Guarda gameState en la escena
+    }
 
+    create () {
         this.sound.stopAll();
 
         // Música.
@@ -35,14 +40,14 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.createButton("Tiro al Arco Mágico", 800, 600, 'white', 50, 'Game4');
         this.createButton("El Sendero al Sol", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 50, 'Game5');
 
-         this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
+        this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
             fontFamily: 'Arial',
             fontSize: '24px',
             color: '#ffffff',
         });
 
-          // Boton para pasar al siguiente día
-          this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Next Day', {
+        // Boton para pasar al siguiente día
+        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Next Day', {
             fontFamily: 'Arial',
             fontSize: '30px',
             color: '#ffffff',
@@ -94,6 +99,26 @@ export default class GameSelectorMenu extends Phaser.Scene {
             this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
         } else {
             alert('¡Has alcanzado el ultimo dia!');
+            this.saveEndResults();
+            this.resetGame();
+            this.scene.start("EndMenu");
         }
+    }
+
+    saveEndResults() {
+        this.endResults = gameState.minigamesResults;
+    }
+
+    resetGame() {
+        gameState.currentDay = 1;
+        gameState.actionsLeft = 3;
+        gameState.maxDays = 5;
+        gameState.minigamesResults = {
+            Game1: [null, null, null, null, null] ,
+            Game2: [null, null, null, null, null] ,
+            Game3: [null, null, null, null, null] ,
+            Game4: [null, null, null, null, null] ,
+            Game5: [null, null, null, null, null] 
+        };
     }
 }
