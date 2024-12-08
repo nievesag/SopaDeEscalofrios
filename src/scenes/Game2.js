@@ -228,7 +228,6 @@ export default class Game2 extends Phaser.Scene {
     gameOver(){
 
         if(!this.isGameOver){ // SI NO HAY GAME OVER AÚN...
-            console.log('Game Over Executed.');
             this.isGameOver = true; // ... lo hay ahora.
             
             // --- LÓGICA DE GAME OVER SI TRUE... ---

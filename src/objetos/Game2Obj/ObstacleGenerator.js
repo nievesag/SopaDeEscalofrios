@@ -43,10 +43,15 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     }
 
     setObstaclesPerDay(){
+        // ponemos obsclass al principio como array vacio.
+        this.obsClass = []; 
+
         // segun el día hay unos obstáculos u otros.
         if(this.gameState.currentDay === 1 || this.gameState.currentDay === 2){ // DIFICULTAD 1.
             // cocodrilos single:
-            this.obsClass = [{type: 'crocodile', class: Crocodile}];
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile}
+            ];
         }
         else if(this.gameState.currentDay === 3 || this.gameState.currentDay === 4){ // DIFICULTAD 2.
     
@@ -56,7 +61,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
                 {type: 'hippo', class: Hippo}
             ];
         }
-        else if(gameState.currentDay === 5){ // DIFICULTAD FINAL.
+        else if(this.gameState.currentDay === 5){ // DIFICULTAD FINAL.
             // + maelstrom.
             this.obsClass = [
                 {type: 'crocodile', class: Crocodile},
