@@ -121,7 +121,13 @@ export default class Game2 extends Phaser.Scene {
         this.background.initialLandscape();
         this.cannon = new Cannon(this);
 
-        this.obstacleGen = new ObstaclesGenerator(this, this.gameState);
+        this.obsClass = [
+            {type: 'crocodile', class: Crocodile},
+            {type: 'hippo', class: Hippo},
+            {type: 'maelstrom', class: Maelstrom},
+        ];
+
+        this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
         this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
         this.vessel.vesselCollisions();
 
@@ -206,10 +212,12 @@ export default class Game2 extends Phaser.Scene {
             // si se detiene el movimiento Y LA VASIJA HA SIDO LANZADA.
             if((Math.abs(this.vessel.body.velocity.x) < 0.5) && this.vessel.isLaunched){ 
                 if(!this.stopTimer){ // si no exite timer lo crea.
+
                     this.stopTimer = this.time.addEvent({
                         delay: 2000, // espera 2 segs.
                         callback: () => 
                         {
+
                             this.gameOver(); // se nos ha jodio la flesbos.
                         }
                     });
@@ -217,6 +225,7 @@ export default class Game2 extends Phaser.Scene {
             }
             else{
                 if(this.stopTimer){ // si esite y no esta para la vasija ni es lanzada..
+
                     this.stopTimer.remove(); // para el crono.
                     this.stopTimer = null; // quita refe.
                 }  
@@ -228,6 +237,7 @@ export default class Game2 extends Phaser.Scene {
     gameOver(){
 
         if(!this.isGameOver){ // SI NO HAY GAME OVER AÚN...
+            console.log('Game Over Executed.');
             this.isGameOver = true; // ... lo hay ahora.
             
             // --- LÓGICA DE GAME OVER SI TRUE... ---

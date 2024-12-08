@@ -1,27 +1,25 @@
-import Crocodile from "./Crocodile.js";
-import Hippo from "./Hippo.js";
-import Maelstrom from "./Maelstrom.js";
-
 export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
-    constructor(scene, gameState){ 
+    constructor(scene, obsClass){ 
         super(scene, scene.cameras.main.centerX + 1115, scene.cameras.main.centerY + 300, 'obstacleGenerator');
         
         this.scene = scene;
-        this.gameState = gameState
+        this.obsClass = obsClass;
 
         // mete el objeto en la escena con físicas.
         scene.add.existing(this);
 
-        // configuración de las fisicas.
-        this.setScale(0.25, 0.25).setDepth(2).setScrollFactor(0); // config de la UI.
+        // Configuración de las fisicas.
+        this.setScale(0.25, 0.25).setDepth(2);
 
-        // grupo estático.
-        this.obsGroup = this.scene.physics.add.group({ 
+        // Conifg de la UIII.
+        this.setScrollFactor(0);
+
+        // Grupo de obstacles.
+        //this.obsGroup = this.scene.physics.add.staticGroup({ -> grupo dinamico.
+        // HAY GRUPOS ESTÁTICOS (NO SE MUEVEN PERO TIENEN COLISIONES).
+        this.obsGroup = this.scene.physics.add.group({ // grupo estático.
             runChildUpdate: true // cada objeto tiene su movida single (cada UPDATE).
         });
-
-        // pone los obstáculos dependiendo del día que sea.
-        this.setObstaclesPerDay();
 
         // Contador y eliminación de obstáculos.
         this.scene.time.addEvent({
@@ -38,38 +36,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         this.minDistanceBetweenObstacles = Phaser.Math.Between(300, 500); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
     }
 
-    update(){
-        if(this.scene)this.dissappearObstacle();
-    }
-
-    setObstaclesPerDay(){
-        // ponemos obsclass al principio como array vacio.
-        this.obsClass = []; 
-
-        // segun el día hay unos obstáculos u otros.
-        if(this.gameState.currentDay === 1 || this.gameState.currentDay === 2){ // DIFICULTAD 1.
-            // cocodrilos single:
-            this.obsClass = [
-                {type: 'crocodile', class: Crocodile}
-            ];
-        }
-        else if(this.gameState.currentDay === 3 || this.gameState.currentDay === 4){ // DIFICULTAD 2.
-    
-            // + hippos.
-            this.obsClass = [
-                {type: 'crocodile', class: Crocodile},
-                {type: 'hippo', class: Hippo}
-            ];
-        }
-        else if(this.gameState.currentDay === 5){ // DIFICULTAD FINAL.
-            // + maelstrom.
-            this.obsClass = [
-                {type: 'crocodile', class: Crocodile},
-                {type: 'hippo', class: Hippo},
-                {type: 'maelstrom', class: Maelstrom}
-            ];
-        }
-    }
+    update(){if(this.scene){this.dissappearObstacle();}}
 
     spawnObstacle(){
 
@@ -85,7 +52,6 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         // |                     OBS          OBSTACLEGEN |
         // |                      <----------------->     |
         // + -------------------------------------------- +
-        
         if(this.x - this.lastObstaclePosX >= this.minDistanceBetweenObstacles){ // si la línea es >= ¡¡¡GENERA!!
             // Escoge entre los obstáculos alguno con rnd.next.
             let rndObs = Phaser.Utils.Array.GetRandom(this.obsClass);
