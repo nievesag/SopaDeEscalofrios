@@ -23,7 +23,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
     
     init(data) {
-        this.endResults = data.endResults; // Guarda gameState en la escena
+        this.endResults = data.endResults; // Guarda endResults en la escena
     }
 
     create () {
@@ -106,7 +106,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     saveEndResults() {
-        this.endResults = gameState.minigamesResults;
+        this.endResults.Game1 = gameState.minigamesResults.Game1;
     }
 
     resetGame() {
