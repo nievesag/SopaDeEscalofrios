@@ -256,10 +256,9 @@ export default class Game2 extends Phaser.Scene {
     }
     
 
-    gameOver(){
+    gameOver(){ // ¡¡¡¡¡¡¡¡PENDIENTE: PQ GAME OVER SALE SOLO UNA VEZ???? EL RESTO DE VECES NO.....
 
         if(!this.isGameOver){ // SI NO HAY GAME OVER AÚN...
-            console.log('Game Over Executed.');
             this.isGameOver = true; // ... lo hay ahora.
             
             // --- LÓGICA DE GAME OVER SI TRUE... ---
@@ -305,10 +304,21 @@ export default class Game2 extends Phaser.Scene {
                 restartButton.clearTint();
             });
 
+            // PARA VER LO DE LOS COLLECTIONABLES
+            let result;
+            if (this.isGameOver) {
+            console.log("victoria");
+            result = 'victoria';
+            }
+            if (result) {
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+            }
+            console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game4);
         }
-
-        
     }
+
+    
 
     destroyAll(){ // elimina todos los objetos del juego.
         if(this.background)
