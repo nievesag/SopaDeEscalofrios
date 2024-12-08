@@ -121,11 +121,8 @@ export default class Game2 extends Phaser.Scene {
         this.background.initialLandscape();
         this.cannon = new Cannon(this);
 
-        this.obsClass = [
-            {type: 'crocodile', class: Crocodile},
-            {type: 'hippo', class: Hippo},
-            {type: 'maelstrom', class: Maelstrom},
-        ];
+        // DIFICULTAD SEGÚN LOS DÍAS.
+        this.setDifficulty();
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
         this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
@@ -182,6 +179,31 @@ export default class Game2 extends Phaser.Scene {
         {
             this.cannon.cannonAngle(pointer); 
         });
+    }
+
+    setDifficulty(){
+        // lógica según el día.
+        let day = this.gameState.currentDay;
+        this.obsClass = []; // crea un array vacío para después llenarlo según el día.
+
+        if(day === 1 || day === 2){
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile},
+            ];
+        }
+        else if(day === 3 || day === 4){
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile},
+                {type: 'hippo', class: Hippo},
+            ];
+        }
+        else if(day === 5){
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile},
+                {type: 'hippo', class: Hippo},
+                {type: 'maelstrom', class: Maelstrom},
+            ];
+        }
     }
 
     update(){
