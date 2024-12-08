@@ -12,6 +12,10 @@ export default class Game2 extends Phaser.Scene {
 
         this.isGameOver = false; // inicialmench no es gameOver.
     }
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
     
     preload () { 
         this.loadImages();
@@ -116,15 +120,8 @@ export default class Game2 extends Phaser.Scene {
         this.background = new Background(this);
         this.background.initialLandscape();
         this.cannon = new Cannon(this);
-        
-        
-        this.obsClass = [
-            {type: 'crocodile', class: Crocodile},
-            {type: 'hippo', class: Hippo},
-            {type: 'maelstrom', class: Maelstrom},
-        ];
 
-        this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
+        this.obstacleGen = new ObstaclesGenerator(this, this.gameState);
         this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
         this.vessel.vesselCollisions();
 
@@ -209,12 +206,10 @@ export default class Game2 extends Phaser.Scene {
             // si se detiene el movimiento Y LA VASIJA HA SIDO LANZADA.
             if((Math.abs(this.vessel.body.velocity.x) < 0.5) && this.vessel.isLaunched){ 
                 if(!this.stopTimer){ // si no exite timer lo crea.
-                    console.log('Vessel stopped. Starting Game Over Timer.');
                     this.stopTimer = this.time.addEvent({
                         delay: 2000, // espera 2 segs.
                         callback: () => 
                         {
-                            console.log('Game Over triggered by Timer.');
                             this.gameOver(); // se nos ha jodio la flesbos.
                         }
                     });
@@ -222,7 +217,6 @@ export default class Game2 extends Phaser.Scene {
             }
             else{
                 if(this.stopTimer){ // si esite y no esta para la vasija ni es lanzada..
-                    console.log('Vessel moved. Cancelling Game Over Timer.');
                     this.stopTimer.remove(); // para el crono.
                     this.stopTimer = null; // quita refe.
                 }  
@@ -268,6 +262,16 @@ export default class Game2 extends Phaser.Scene {
 
             restartButton.on('pointerdown', () => {
             this.scene.restart(); // reinicia escena.
+            });
+
+            restartButton.on('pointerover', () => // Al pasar el ratón por encima...
+            {
+                restartButton.setTint(0xdfa919);
+            });
+
+            restartButton.on('pointerout', () => // Al quitar el ratón de encima...
+            {
+                restartButton.clearTint();
             });
 
         }

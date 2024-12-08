@@ -1,3 +1,8 @@
 - Plantilla con Phaser metío.
 - pj que se mueve con saltos y movidas.
 - etc.
+
+//Grupo de obstacles.
+//this.obsGroup = this.scene.physics.add.staticGroup({ -> grupo dinamico.
+// HAY GRUPOS ESTÁTICOS (NO SE MUEVEN PERO TIENEN COLISIONES).
+        

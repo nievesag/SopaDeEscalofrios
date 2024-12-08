@@ -6,6 +6,7 @@ export default class Background{
         this.segments = []; // segmentos actuales.
         this.segmentSize = 5000; // tamaño de cada cacho.
 
+        // VAN LOS NUMEROS AL REVES: MENOS ES MAS
         this.maxY = 550; // máximo absoluto.
         this.minY = 400; // mínimo absoluto.
     }
