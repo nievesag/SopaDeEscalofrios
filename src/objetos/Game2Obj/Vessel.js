@@ -6,11 +6,11 @@ export default class Vessel extends Phaser.GameObjects.Image{
         this.cannon = cannon;
         this.obstacleGen = obstacleGenerator;
 
-        // Añadir el objeto a la escena con físicas.
+        // añadir el objeto a la escena con físicas.
         scene.add.existing(this); 
         scene.physics.add.existing(this);
 
-        // Configuración de las físicas.
+        // config de las físicas.
         this.setScale(0.35); // Le pone el tamaño.
         this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
         this.body.setDrag(50); // Fricción con el suelo (NON OSTUCALOS).
@@ -25,10 +25,14 @@ export default class Vessel extends Phaser.GameObjects.Image{
         // La cámara sigue al vessel.
         this.scene.cameras.main.startFollow(this, false, 0.2, 0.2); 
 
-        this.isRotating = false;
+        this.isLaunched = false; // inicialmench la vasija no es lanzada
+  
     }
 
     launchVessel(angle){
+
+        this.isLaunched = true; // se ha lanzado la vesel.
+
         // guarda la pos inicial de x.
         this.initialPosX = this.x; 
 
@@ -67,7 +71,6 @@ export default class Vessel extends Phaser.GameObjects.Image{
             if(obstacle.type === 'maelstrom'){
                 this.body.enable = false;
                 this.setActive(false).setVisible(false);
-                this.isRotating = false;
             }
             else if(obstacle.type === 'crocodile'){
                 this.scene.physics.velocityFromRotation(-45, 800, this.body.velocity); // Ángulo y velocidad.
@@ -79,6 +82,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
             }
         })
 
+        // SI SE QUISIERA COLISIONAR CON UNA MOVIDA SINGLE (NON LO DE ARRIBA).
         /*if(this.maelstromObs){
             this.scene.physics.add.collider(this, this.maelstromObs, ()=>{
                 this.body.enable = false;

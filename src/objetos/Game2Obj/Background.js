@@ -2,7 +2,7 @@ export default class Background{
     constructor(scene){
         this.scene = scene;
 
-        // En este contexto los segmentos estos son las piramides y picos formaos.
+        // los segmentos estos son las piramides y picos formaos.
         this.segments = []; // segmentos actuales.
         this.segmentSize = 5000; // tamaño de cada cacho.
 
@@ -12,7 +12,7 @@ export default class Background{
     // dibujar un paisaje "procedural(?)"
 
     initialLandscape(){
-        // El ancho de la cámara.
+        // ancho de la cámara.
         let cameraWidth = this.scene.cameras.main.width;
 
         // Divides la anchura de cámara entre cada cacho para ver cuantos cachos pones luego.
@@ -58,7 +58,7 @@ export default class Background{
         let y = this.maxY;
         let up = true; // para ver si sube o baja el pico. 
 
-        // Dibuja el inicio del terreno.
+        // dibuja el inicio del terreno.
         landscape.moveTo(newSegment, 600);
         landscape.lineTo(newSegment, this.maxY);
 
@@ -68,7 +68,7 @@ export default class Background{
         let realSize = newSegment + this.segmentSize
         
         while(x < realSize){
-            // Longitud de cada segmento
+            // longitud de cada segmento
             range = Phaser.Math.Between(20, 100);
 
             if (up) // máximos.
