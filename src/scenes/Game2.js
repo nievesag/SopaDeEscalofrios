@@ -201,7 +201,7 @@ export default class Game2 extends Phaser.Scene {
             this.obsClass = [
                 {type: 'crocodile', class: Crocodile},
                 {type: 'hippo', class: Hippo},
-                {type: 'maelstrom', class: Maelstrom},
+                {type: 'maelstrom', class: Maelstrom}, // MAELSTROM AUN NO MATA!!!
             ];
         }
     }
