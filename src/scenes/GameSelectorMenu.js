@@ -5,11 +5,11 @@ let gameState = {
     actionsLeft: 3,
     maxDays: 5,
     minigamesResults: {
-        Game2: [null, null, null, null, null],
+        Game1: [null, null, null, null, null] ,
+        Game2: [null, null, null, null, null] ,
         Game4: [null, null, null, null, null] 
     }
 };
-
 
 export default class GameSelectorMenu extends Phaser.Scene {
     constructor() {
@@ -50,8 +50,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         this.nextDayButton.setInteractive();
         this.nextDayButton.on('pointerdown', () => this.nextDay());
-
-
     }
 
 	createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -89,7 +87,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         });
     }
 
-
     nextDay() {
         if (gameState.currentDay < gameState.maxDays) {
             gameState.currentDay++;
@@ -99,6 +96,4 @@ export default class GameSelectorMenu extends Phaser.Scene {
             alert('¡Has alcanzado el ultimo dia!');
         }
     }
-
-
-    }
+}
