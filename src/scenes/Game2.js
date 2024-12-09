@@ -296,9 +296,14 @@ export default class Game2 extends Phaser.Scene {
             ).setOrigin(0.5).setInteractive().setDepth(100).setScrollFactor(0);
 
             restartButton.on('pointerdown', () => {
-                this.isGameOver = false;
-                this.gameState.actionsLeft--;
-                this.scene.restart(); // reinicia escena.
+                if (this.gameState.actionsLeft > 0){
+                    this.isGameOver = false;
+                    this.gameState.actionsLeft--;
+                    this.scene.restart(); // reinicia escena.
+                }
+                else{
+                    alert('No te quedan acciones hoy. Pasa al siguiente dia.');
+                }
             });
 
             restartButton.on('pointerover', () => // Al pasar el ratón por encima...
