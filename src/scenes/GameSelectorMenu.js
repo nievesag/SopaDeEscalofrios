@@ -10,16 +10,15 @@ let gameState = {
         Game3: [null, null, null, null, null] ,
         Game4: [null, null, null, null, null] ,
         Game5: [null, null, null, null, null] 
-    }
+    },
+    hasStartedBefore: [
+        false, // game1.
+        false, // game2.
+        false, // game3.
+        false, // game4.
+        false  // game5.
+    ],
 };
-
-let hasStartedBefore = [
-    false, // game1.
-    false, // game2.
-    false, // game3.
-    false, // game4.
-    false  // game5.
-];
 
 export default class GameSelectorMenu extends Phaser.Scene {
     constructor() {

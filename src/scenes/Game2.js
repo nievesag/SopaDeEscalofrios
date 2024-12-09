@@ -14,18 +14,15 @@ export default class Game2 extends Phaser.Scene {
 
     init(data) {
         this.gameState = data.gameState; // Guarda gameState en la escena
-        this.hasStartedBefore = data.hasStartedBefore;
     }
     
     // CAMBIAR TODO PERO TODO E POR SPRITES
     create (){
         this.isGameOver = false; // inicialmench no es gameOver.
-
-        this.hasStartedBefore[1] = false; // inicialmente no ha salido el tutorial/popup
         
         // si es la primera vez q se inicia...
-        if(!this.hasStartedBefore){
-            this.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
+        if(!this.gameState.hasStartedBefore[1]){
+            this.gameState.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
             this.createTanqiaPopUp();
         }
         else{ // si ya se ha iniciado anteriormente...
