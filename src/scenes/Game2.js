@@ -9,23 +9,29 @@ import ObstaclesGenerator from '../objetos/Game2Obj/ObstacleGenerator.js';
 export default class Game2 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game2'});
-
-        this.isGameOver = false; // inicialmench no es gameOver.
+        
     }
 
     init(data) {
         this.gameState = data.gameState; // Guarda gameState en la escena
+        this.hasStartedBefore = data.hasStartedBefore;
     }
-
-    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
-    // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
-    // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
-    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle-2
     
-
     // CAMBIAR TODO PERO TODO E POR SPRITES
     create (){
-        this.createTanqiaPopUp();
+        this.isGameOver = false; // inicialmench no es gameOver.
+
+        this.hasStartedBefore[1] = false; // inicialmente no ha salido el tutorial/popup
+        
+        // si es la primera vez q se inicia...
+        if(!this.hasStartedBefore){
+            this.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
+            this.createTanqiaPopUp();
+        }
+        else{ // si ya se ha iniciado anteriormente...
+            this.startGame(); // empieza el game directamente.
+        }
+        
     }
 
     createTanqiaPopUp(){
@@ -38,7 +44,7 @@ export default class Game2 extends Phaser.Scene {
                 x: 1.9, // anchura
                 y: 2.22, // altura
             },
-            key: 'tanqiaBg'
+            key: 'tanqiaBg',
         });
 
         let tanqia = this.add.image(
