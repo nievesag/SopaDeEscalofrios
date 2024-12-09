@@ -5,4 +5,8 @@
 //Grupo de obstacles.
 //this.obsGroup = this.scene.physics.add.staticGroup({ -> grupo dinamico.
 // HAY GRUPOS ESTÁTICOS (NO SE MUEVEN PERO TIENEN COLISIONES).
-        
+
+     // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
+    // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
+    // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
+    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle-2   
