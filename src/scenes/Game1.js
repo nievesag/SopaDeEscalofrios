@@ -41,6 +41,82 @@ export default class Game1 extends Phaser.Scene {
     }
     
     create () {
+        // si es la primera vez q se inicia...
+        if(!this.gameState.hasStartedBefore[0]){
+            this.gameState.hasStartedBefore[0] = true; // ala ya ha salio el tutorial.
+            this.createTanqiaPopUp();
+        }
+        else{ // si ya se ha iniciado anteriormente...
+            this.startGame(); // empieza el game directamente.
+        }
+    }
+
+    createTanqiaPopUp(){
+        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
+        // Background del dialogo (LUEGO IMAGEN).
+        let dialogueBackground = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1.9, // anchura
+                y: 2.22, // altura
+            },
+            key: 'tanqiaBg',
+        });
+
+        let tanqia = this.add.image(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 175, 
+            'tanqia'
+        ).setScale(0.5, 0.32); // x, y, tag.
+
+        let tanqiaText = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY - 150, 
+            'Socar te ama. A ti y a cada uno de los futuros muertos. Te ama a ti, con tus órganos frescos, y me ama a mí, con mis órganos podridos. Esa piel fina que te recubre te contiene y tras la muerte Socar te contendrá como una piel transitoria en tu viaje por la Duat. Socar alimenta uno a uno cada corazón, cada estómago, cada intestino, cada mínima parte de aquel que llama a La puerta de caminos, inscribe tus peticiones y plegarias en los órganos de los finados de esta ciudad y hazlos llegar a lo más profundo del Mundo Subterráneo',
+            {
+                fontSize: '20px',
+                color: '#ffffff',
+                align: 'center',
+                fontFamily: 'EagleLake',
+                wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5); // danzhu lo tenia y funciona.
+
+        // Botón de aceptar.
+        let acceptButton = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 340, 
+            'Jugar',
+            {
+            fontSize: '50px',
+            fontFamily: 'arabic',
+            color: 'white',
+            align: 'center'
+        }).setOrigin(0.5).setInteractive();
+
+        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            acceptButton.setTint(0xdfa919);
+        });
+
+        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            acceptButton.clearTint();
+        });
+
+        acceptButton.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            dialogueBackground.destroy();
+            tanqia.destroy();
+            tanqiaText.destroy();
+            acceptButton.destroy();
+            this.startGame();
+        })
+    }
+
+    startGame(){
         // Música.
         const music = this.sound.add('theme1');
         music.play();
