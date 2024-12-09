@@ -160,8 +160,9 @@ export default class Game2 extends Phaser.Scene {
         ).setDepth(10).setScrollFactor(0); // pq es UI.
 
         // botón de regreso.
-        this.buttonMainMenu = this.createButton('MAIN MENU',  950,  35, 'white', 30, 'GameSelectorMenu');
+        this.buttonMainMenu = this.createButton('Regresar',  960,  35, 'white', 30, 'GameSelectorMenu');
         this.buttonMainMenu.on('pointerdown', () => { 
+            this.isGameOver = false;
             this.isClickingOnUI = true; 
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
@@ -281,7 +282,7 @@ export default class Game2 extends Phaser.Scene {
             let restartButton = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY + 100,
-            'Reiniciar',
+            'Reiniciar (-1 acción)',
             {
                 fontSize: '40px',
                 fontFamily: 'EagleLake',
@@ -291,7 +292,9 @@ export default class Game2 extends Phaser.Scene {
             ).setOrigin(0.5).setInteractive().setDepth(100).setScrollFactor(0);
 
             restartButton.on('pointerdown', () => {
-            this.scene.restart(); // reinicia escena.
+                this.isGameOver = false;
+                this.gameState.actionsLeft--;
+                this.scene.restart(); // reinicia escena.
             });
 
             restartButton.on('pointerover', () => // Al pasar el ratón por encima...
