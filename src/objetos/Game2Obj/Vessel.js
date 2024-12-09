@@ -71,6 +71,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
             if(obstacle.type === 'maelstrom'){
                 this.body.enable = false;
                 this.setActive(false).setVisible(false);
+                this.scene.gameOver();
             }
             else if(obstacle.type === 'crocodile'){
                 this.scene.physics.velocityFromRotation(-45, 800, this.body.velocity); // Ángulo y velocidad.
