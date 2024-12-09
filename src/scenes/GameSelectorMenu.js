@@ -18,6 +18,13 @@ let gameState = {
         false, // game4.
         false  // game5.
     ],
+    endResults: {
+        Game1: [null, null, null, null, null] ,
+        Game2: [null, null, null, null, null] ,
+        Game3: [null, null, null, null, null] ,
+        Game4: [null, null, null, null, null] ,
+        Game5: [null, null, null, null, null] 
+    }
 };
 
 export default class GameSelectorMenu extends Phaser.Scene {
@@ -25,12 +32,12 @@ export default class GameSelectorMenu extends Phaser.Scene {
         super({ key: 'GameSelectorMenu'});
     }
     
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
     preload () {
     
-    }
-    
-    init(data) {
-        this.endResults = data.endResults; // Guarda endResults en la escena
     }
 
     create () {
@@ -108,24 +115,28 @@ export default class GameSelectorMenu extends Phaser.Scene {
             alert('¡Has alcanzado el ultimo dia!');
             this.saveEndResults();
             this.resetGame();
-            this.scene.start("EndMenu");
+            this.scene.start("EndMenu", { gameState: gameState });
         }
     }
 
-    saveEndResults() {
-        this.endResults.Game1 = gameState.minigamesResults.Game1;
-    }
+   saveEndResults(){
+        gameState.endResults.Game1 = gameState.minigamesResults.Game1;
+        gameState.endResults.Game2 = gameState.minigamesResults.Game2;
+        gameState.endResults.Game3 = gameState.minigamesResults.Game3;
+        gameState.endResults.Game4 = gameState.minigamesResults.Game4;
+        gameState.endResults.Game5 = gameState.minigamesResults.Game5;
+   }
 
-    resetGame() {
-        gameState.currentDay = 1;
-        gameState.actionsLeft = 3;
-        gameState.maxDays = 5;
-        gameState.minigamesResults = {
-            Game1: [null, null, null, null, null] ,
-            Game2: [null, null, null, null, null] ,
-            Game3: [null, null, null, null, null] ,
-            Game4: [null, null, null, null, null] ,
-            Game5: [null, null, null, null, null] 
-        };
-    }
+   resetGame() {
+    gameState.currentDay = 1;
+    gameState.actionsLeft = 3;
+    gameState.maxDays = 5;
+    gameState.minigamesResults = {
+        Game1: [null, null, null, null, null] ,
+        Game2: [null, null, null, null, null] ,
+        Game3: [null, null, null, null, null] ,
+        Game4: [null, null, null, null, null] ,
+        Game5: [null, null, null, null, null] 
+    };
+}
 }
