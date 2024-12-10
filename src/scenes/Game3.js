@@ -369,15 +369,15 @@ export default class Game3 extends Phaser.Scene {
     setDifficulty() {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
-
+            possiblebeetles = new Beetle.beetles['RedBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'PurpleBeetle']
         }
         else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
         {
-
+            Beetle.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'PurpleBeetle']
         }
         else if(this.gameState.currentDay == 5)
         {
-
+            Beetle.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle']
         }
     }
 
