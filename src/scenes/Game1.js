@@ -21,15 +21,6 @@ export default class Game1 extends Phaser.Scene {
         // -- mapa 3
         this.load.tilemapTiledJSON('tilemap3', './assets/tilemap/map3.json');
 
-		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
-		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
-
-		// Recursos de objetos del nivel
-		this.load.image('player', './assets/images/g1/playerG1.png');
-		this.load.image('box', './assets/images/g1/box.png');
-		this.load.image('organ', './assets/images/g1/organ.png');
-		this.load.image('goal', '../../assets/images/g1/goal.png');
-
         // Música
         this.load.audio('theme1', './assets/audio/m1c.mp3');
     }

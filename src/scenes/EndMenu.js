@@ -1,4 +1,17 @@
 let ending = 0;
+let logros = {
+    Game1: ['Amset', 'Hapy', 'Kebeshenuef', 'Duamutef', 'Henu'] ,
+    Game2: ['Pluma de la corona', 'Concha cauri', 'Frasco Asuán', 'Cetro de Papiro', 'Cefalea bóvida'] ,
+    Game3: ['Escarabajo negro', 'Escarabajo verde', 'Escarabajo azul', 'Escarabajo rojo', 'Escarabajo dorado'] ,
+    Game4: ['Flecha', 'Lanza', 'Flecha mágica', 'Lanza mágica', 'Pluma'] ,
+    Game5: ['Pequeña estrella', 'Estrella', 'Gran estrella', 'Sol', 'Sol radiante'] 
+};
+
+let logros1 = [];
+let logros2 = [];
+let logros3 = [];
+let logros4 = [];
+let logros5 = [];
 
 export default class EndMenu extends Phaser.Scene {
 	constructor() {
@@ -63,6 +76,7 @@ export default class EndMenu extends Phaser.Scene {
         // Gestion de finales
         this.checkEnding();
         this.showEnding(ending);
+        this.manageLogros();
 
         // Botones
         this.createButton('VOLVER',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
@@ -163,5 +177,36 @@ export default class EndMenu extends Phaser.Scene {
                 key: 'Generico',
             }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
         }
+    }
+
+    manageLogros() {
+        for(var i = 0; i < this.gameState.endResults.Game1.length; i++) {
+            // --- logros g1
+            if(this.gameState.endResults.Game1[i] != null && this.gameState.endResults.Game1[i] != 'derrota') {
+                logros1.push(logros.Game1[i]);
+            }
+            // --- logros g2
+            if(this.gameState.endResults.Game2[i] != null && this.gameState.endResults.Game2[i] != 'derrota') {
+                logros2.push(logros.Game2[i]);
+            }
+            // --- logros g3
+            if(this.gameState.endResults.Game3[i] != null && this.gameState.endResults.Game3[i] != 'derrota') {
+                logros3.push(logros.Game3[i]);
+            }
+            // --- logros g4
+            if(this.gameState.endResults.Game4[i] != null && this.gameState.endResults.Game4[i] != 'derrota') {
+                logros4.push(logros.Game4[i]);
+            }
+            // --- logros g5
+            if(this.gameState.endResults.Game5[i] != null && this.gameState.endResults.Game5[i] != 'derrota') {
+                logros5.push(logros.Game5[i]);
+            }
+        }
+
+        console.log(logros1);
+        console.log(logros2);
+        console.log(logros3);
+        console.log(logros4);
+        console.log(logros5);
     }
 }
