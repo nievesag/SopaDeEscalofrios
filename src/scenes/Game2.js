@@ -105,8 +105,8 @@ export default class Game2 extends Phaser.Scene {
         })
 
         // música.
-        let music = this.sound.add('theme2');
-        music.play();
+        this.music = this.sound.add('theme2');
+        this.music.play();
         this.sound.pauseOnBlur = true;
 
         // background y rio.
@@ -134,12 +134,12 @@ export default class Game2 extends Phaser.Scene {
         this.musicButton = this.add.image(40, 40, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
-            if (music.isPlaying) {
-                music.pause();
+            if (this.music.isPlaying) {
+                this.music.pause();
                 this.musicButton.setTexture('muteButton');
             } 
             else {
-                music.resume();
+                this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
@@ -168,7 +168,7 @@ export default class Game2 extends Phaser.Scene {
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
         {
-            if (!this.isClickingOnUI) { // si no se clica en la UI...
+            if (!this.isClickingOnUI && !this.vessel.isLaunched) { // si no se clica en la UI y no se ha lanzado......
             this.vessel.launchVessel(this.cannon.angle); // lanza vasija.
             }
         });
@@ -300,6 +300,7 @@ export default class Game2 extends Phaser.Scene {
 
             restartButton.on('pointerdown', () => {
                 if (this.gameState.actionsLeft > 0){
+                    this.music.stop();
                     this.isGameOver = false;
                     this.gameState.actionsLeft--;
                     this.scene.restart(); // reinicia escena.
@@ -327,9 +328,9 @@ export default class Game2 extends Phaser.Scene {
             }
             if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
-            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+            this.gameState.minigamesResults.Game2[currentDayIndex] = result;
             }
-            console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game4);
+            console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game2);
         }
     }
 
