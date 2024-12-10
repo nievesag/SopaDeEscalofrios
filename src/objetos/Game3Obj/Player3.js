@@ -1,5 +1,7 @@
 // Clase del Player del Minijuego 3. 
+import { Tilemaps } from 'phaser';
 import Beetle from './Beetle.js';
+import Matrix from './Matrix.js';
 
 export default class Player3 extends Phaser.GameObjects.Sprite
 {
@@ -13,10 +15,10 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     this.setDisplaySize(100, 200);
     this.origin = new Phaser.Math.Vector2(x, y);
 
-    this.x = 0; //Pos en x
-    this.y = 0; //Pos en y
-    this.angle = 0; //Angulo de disparo
-    this.cellType = 0; //Color del bicho
+    this.x = 500; //Pos en x
+    this.y = 700; //Pos en y
+    this.angle = 90; //Angulo de disparo
+    this.cellType = 0; //0 - empty, 1 - normal, 2 - bomb, 3 - color bomb
     this.actualBeetle = 
     {
       x : 0,
@@ -24,14 +26,14 @@ export default class Player3 extends Phaser.GameObjects.Sprite
       angle : 0,
       speed : 1000,
       dropspeed : 900,
-      cellType : 0,
+      cellType : 1,
       visible : false
     };
     this.nextBeetle = 
     {
-      x : 0,
-      y: 0,
-      celltype: 0
+      x : this.x,
+      y: this.y + 20,
+      celltype: 1
     }
 
     //Randomizamos el color;

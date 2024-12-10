@@ -123,10 +123,6 @@ export default class Game3 extends Phaser.Scene {
         // --- BOTON VOLVER A MAIN MENU ---.
         this.createButton('Exit',  925,  700, 'white', 50, 'GameSelectorMenu');
 
-        // --- ESTADOS DEL JUEGO ---.
-        let gamestates = { init: 0, ready: 1, shootbubble: 2, removecluster: 3, gameover: 4 };
-        let gamestate = gamestates.init;
-
         // --- PUNTUACIÓN
         let points = 0;
 
@@ -143,8 +139,9 @@ export default class Game3 extends Phaser.Scene {
         // --- CREACION OBJETOS ESCENA ---.
         // Cannon
         this.player3 = new Player3(this, 500, 750); // Ajusta las coordenadas
-        //// Matrix
-        //this.matrix = new Matrix(this, 200, 30);
+        // Matrix
+        this.matrix = new Matrix(this, 200, 30);
+        // Shooting Beetle 
 
 
         // --- COLISIONES ---.
@@ -152,6 +149,9 @@ export default class Game3 extends Phaser.Scene {
         this.physics.add.collider(borders, shootingBeetle);
 
         // --- COLISIONES MATRIX - DISPARO ---.
+        if (Phaser.Geom.Intersects.CircleToCircle(this.player.shootingBeetle, this.matrix)) {
+            console.log("Choca");
+        }
         /*for (let i = 0; i < groupMatrix.length; i++){
         groupMatrix[i].getChildren().forEach(element => {
         //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
@@ -166,174 +166,16 @@ export default class Game3 extends Phaser.Scene {
     
 
 
-        /*// --- CANNON ---.
-        const cannonBase = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-            x: 500,
-            y: 800, 
-            key: 'cannonBase',
-            scale : {
-                x: 0.25,
-                y: 0.25
-            },
-        }).setDepth(1);
-
-        const cannonDisparo = this.make.image({ // Cannon Head.
-            x: 500,
-            y: 730, 
-            angle: 90,
-            key: 'cannonDisparo',
-
-            scale : {
-                x: 0.3,
-                y: 0.3,
-            },
-        }).setDepth(2);
-
-        // --- SHOOTABLES ---. 
-        let beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
-        //El que vamos a disparar
-        let shootingBeetle;
-
-        // Dibuja la línea de la dir DE LANZAMIENTO
-        const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
-        const line = new Phaser.Geom.Line(); 
-
-        let angle = 0; // Inicializa el ángulo a 0.
-
-        // --- GRID DE BICHOS ---.
-        this.groupImpares = this.physics.add.group({
-            runChildUpdate: true
-        });
-
-        // Create multiple beetles and add them to the group
-        this.beetlesImpares = this.groupImpares.createMultiple({
-            key: 'beetles',
-            frame: [0, 1, 2, 3, 4, 5, 6],
-            quantity: 11,
-            setXY: { x: 185.5, y: 10 },
-            randomKey: true
-        });
-
-        // Align the beetles in a grid
-        Phaser.Actions.GridAlign(this.beetlesImpares, {
-            width: 11, // Columns
-            height: 3, // Rows
-            cellWidth: 55,
-            cellHeight: 75,
-            x: 185.5,
-            y: 10,
-        });
-
-        // Repeat for groupPares
-        this.groupPares = this.physics.add.group({
-            runChildUpdate: true
-            
-        });
-
-        this.beetlesPares = this.groupPares.createMultiple({
-            key: 'beetles',
-            frame: [0, 1, 2, 3, 4, 5, 6],
-            quantity: 11,
-            setXY: { x: 212, y: 47.5 },
-            randomKey: true
-        });
-
-        Phaser.Actions.GridAlign(this.beetlesPares, {
-            width: 11, // Columns
-            height: 3, // Rows
-            cellWidth: 55,
-            cellHeight: 75,
-            x: 212,
-            y: 47.5,
-        });
-
-        //Lo agrupamos en un solo array
-        let groupMatrix = [];
-        groupMatrix.push(this.physics.add.groupImpares); // Group for odd rows
-        groupMatrix.push(this.physics.add.groupPares); // Group for even rows
-
-
-        console.log("Antes de rellenar" + groupMatrix[0] + groupMatrix[1]);
-
-
-        groupMatrix.forEach((group, index) => {
-            console.log('Grupo', index, 'tiene', group.getChildren().length, 'bichos');
-        
-            // Acceder a cada bicho dentro de este grupo
-            group.getChildren().forEach((beetle, i) => {
-                console.log(`Bicho ${i} del grupo ${index}:`, beetle);
-        
-                // Puedes modificar las propiedades de cada bicho, como su posición o animaciones
-                beetle.body.setImmovable(true); // El suelo no se moverá
-                beetle.body.setAllowGravity(false); // No tendrá gravedad
-                //beetle.setVelocity(100, 0); // Por ejemplo, ponerle una velocidad
-            });
-        });
-        
-        console.log("Después de rellenar" + groupMatrix[0] + groupMatrix[1]);
-
-        //Metemos físicas
-        for (let i = 0; i < groupMatrix.length; i++){
-            groupMatrix[i].getChildren().forEach(element => {
-             
-            //this.physics.world.enable(element);
-            //elememnt.setCircle(10);
-            element.body.setImmovable(true); 
-            element.body.setAllowGravity(false);
-            
-            //console.log(element);
-            
-            })
-            //console.log(i);
-        }
-        });*/
     
     }
 
-    //Se añade pero no se une
-    /*addToMatrix(shootingBeetle, element){
-
-        let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-            x: shootingBeetle.x,
-            y: shootingBeetle.y, 
-            key: shootingBeetle.texture.key,
-            scale : {
-                x: 1,
-                y: 1,
-            },
-        }).setDepth(1);
-
-        //Creamos el bicho que se va a añadir a la matriz
-        
-        //newBeetle.texture = shootingBeetle.texture;
-        //newBeetle.y = shootingBeetle.y;
-        console.log(newBeetle.texture.key);
-        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-        //Miramos la posición de la colisión
-        //Impar
-        if (newBeetle.y % 10 == 0){
-            groupMatrix[0].add(newBeetle);
-            groupMatrix[0].frameQuantity++;
-            //groupImpares.frameQuantity++;
-        }
-        //Par
-        else if(newBeetle.y % 65 == 0){
-            groupMatrix[1].add(newBeetle);
-            groupMatrix[1].frameQuantity++;
-            //groupPares.frameQuantity++;
-        }
-        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-        //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
-
-        //newBeetle.body.setImmovable(true); 
-        newBeetle.body.setAllowGravity(false);
-    }*/
-
-
     update (){
-        //console.log(timer);
-        //this.timer.setText(`time: ${time.ToString()}`);
+
     }
+
+
+
+    
 
     // --- BOTONES ---.
     createButton(text, x, y, textColor, fontsize, sceneName) {
