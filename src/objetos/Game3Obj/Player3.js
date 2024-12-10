@@ -1,5 +1,5 @@
 // Clase del Player del Minijuego 3. 
-import Beetle from '../objetos/Game3Obj/Beetle.js';
+import Beetle from './Beetle.js';
 
 export default class Player3 extends Phaser.GameObjects.Sprite
 {
@@ -31,7 +31,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     {
       x : 0,
       y: 0,
-      tiletype: 0
+      celltype: 0
     }
 
     //Randomizamos el color;

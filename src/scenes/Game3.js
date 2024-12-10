@@ -120,8 +120,18 @@ export default class Game3 extends Phaser.Scene {
             borders[i].body.setAllowGravity(false); // No tendrá gravedad
         }
 
-        // --- BOTON VOLVER A MAIN MENU ---
+        // --- BOTON VOLVER A MAIN MENU ---.
         this.createButton('Exit',  925,  700, 'white', 50, 'GameSelectorMenu');
+
+        // --- ESTADOS DEL JUEGO ---.
+        let gamestates = { init: 0, ready: 1, shootbubble: 2, removecluster: 3, gameover: 4 };
+        let gamestate = gamestates.init;
+
+        // --- PUNTUACIÓN
+        let points = 0;
+
+
+  
 
         // --- TIMER ---
         //let timer = this.add.text(10, 30, { font: '16px Courier', fill: '#00FF00' });
@@ -355,6 +365,23 @@ export default class Game3 extends Phaser.Scene {
 
         });
     }
+
+    setDifficulty() {
+        if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
+        {
+
+        }
+        else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
+        {
+
+        }
+        else if(this.gameState.currentDay == 5)
+        {
+
+        }
+    }
+
+
 }
 
 

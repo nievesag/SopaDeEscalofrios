@@ -1,4 +1,3 @@
-// Clase del Beetle del Minijuego 3. 
 export default class Beetle extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto

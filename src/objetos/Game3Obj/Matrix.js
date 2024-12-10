@@ -1,10 +1,12 @@
 // Clase del Matrix del Minijuego 3. 
+import Beetle from './Beetle.js';
+
 export default class Matrix extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
   constructor (scene, x, y, key)
   {
-    super(scene, x, y, { key: "Matrix" });
+    super(scene, x, y, { key: "Matrix" }, nColors);
 
     //Cualidades del nivel
     this.x = 185.5; //Pos en x
@@ -16,9 +18,16 @@ export default class Matrix extends Phaser.GameObjects.Container
     this.cellWidth = 55; //Ancho celda
     this.cellHeight = 75; //Alto celda
     this.cells = []; //Matrix bidimensional celdas
+    this.EvenRowOffset = 0; //Donde empiezan las filas pares
 
+    //Para mirar vecinos
     let neighborsoffsets = [[[1, 0], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]], // Even row tiles
     [[1, 0], [1, 1], [0, 1], [-1, 0], [0, -1], [1, -1]]];  // Odd row tiles
+
+    //Para romper grupos
+    //var showcluster = false;
+    var beetlesGroup = [];
+    var savedBeetlesGroup = [];
 
     //Se añade a escena
     this.scene.add.existing(this);
@@ -29,6 +38,21 @@ export default class Matrix extends Phaser.GameObjects.Container
   destructor ()
   {
     this.destroy();
+  }
+
+  createLevel (nColors) {
+    if (nColors == 5) //Dia 1 y 2 
+    {
+
+    } 
+    else if (nColors == 6) //Dia 3 y 4
+    {
+
+    }
+    else if (nColors == 7) //Día 5
+    {
+
+    }
   }
 
 
