@@ -107,7 +107,7 @@ export default class Game1 extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
+        this.cameras.main.setBounds(-65,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
         
