@@ -19,7 +19,82 @@ export default class Game4 extends Phaser.Scene {
     }
     
     create (){
+        // si es la primera vez q se inicia...
+        if(!this.gameState.hasStartedBefore[3]){
+            this.gameState.hasStartedBefore[3] = true; // ala ya ha salio el tutorial.
+            this.createTanqiaPopUp();
+        }
+        else{ // si ya se ha iniciado anteriormente...
+            this.startGame(); // empieza el game directamente.
+        }
+    }
 
+    createTanqiaPopUp(){
+        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
+        // Background del dialogo (LUEGO IMAGEN).
+        let dialogueBackground = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1.9, // anchura
+                y: 2.22, // altura
+            },
+            key: 'tanqiaBg',
+        });
+
+        let tanqia = this.add.image(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 175, 
+            'tanqia'
+        ).setScale(0.5, 0.32); // x, y, tag.
+
+        let tanqiaText = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY - 150, 
+            'Inheret, «aquel que ha traído la diosa lejana  y aquel que simboliza el poder creativo del sol», te ha encargado dar exterminio a aquellos animales indignos de vivir en su desierto. Se te será otorgado su arco mágico para cumplir con tu deber o serás castigado con cien años perdido en las arenas infinitas de su desierto .',
+            {
+                fontSize: '20px',
+                color: '#ffffff',
+                align: 'center',
+                fontFamily: 'EagleLake',
+                wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5); // danzhu lo tenia y funciona.
+
+        // Botón de aceptar.
+        let acceptButton = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 340, 
+            'Jugar',
+            {
+            fontSize: '50px',
+            fontFamily: 'arabic',
+            color: 'white',
+            align: 'center'
+        }).setOrigin(0.5).setInteractive();
+
+        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            acceptButton.setTint(0xdfa919);
+        });
+
+        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            acceptButton.clearTint();
+        });
+
+        acceptButton.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            dialogueBackground.destroy();
+            tanqia.destroy();
+            tanqiaText.destroy();
+            acceptButton.destroy();
+            this.startGame();
+        })
+    }
+
+    startGame(){
         console.log(this.gameState.currentDay);
         // Música.
         const music = this.sound.add('theme4');
@@ -67,36 +142,37 @@ export default class Game4 extends Phaser.Scene {
         this.enemiesCounter = 0;
 
         this.createInfoTexts();
-
-
     }
 
 
     update()
     {
-        //Colision flecha con enemigos
-        this.enemiesPool.forEach(enemy => {
-                enemy.checkCollisionWithArrow(this, this.activeArrowsPool);
+        if(this.enemiesPool){
+            //Colision flecha con enemigos
+            this.enemiesPool.forEach(enemy => {
+            enemy.checkCollisionWithArrow(this, this.activeArrowsPool);
 
-        });
+            });
 
-        //Colision flecha con obstaculos
-        this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstacle) => {
-            if (arrow.type === 'explosive') {
-                arrow.handleCollision(obstacle);
-            } else {
-                obstacle.checkCollisionWithArrowObs(this, arrow);
+            //Colision flecha con obstaculos
+            this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstacle) => {
+                if (arrow.type === 'explosive') {
+                    arrow.handleCollision(obstacle);
+                } else {
+                    obstacle.checkCollisionWithArrowObs(this, arrow);
+                }
+            });
+            
+
+            if (this.bow && this.bow.projectile) {
+                this.bow.projectile.updateRotation();
             }
-        });
-        
 
-        if (this.bow && this.bow.projectile) {
-            this.bow.projectile.updateRotation();
+            this.updateInfoTexts();
+
+            this.endLevel();
         }
-
-      this.updateInfoTexts();
-
-       this.endLevel();
+        
     }
 
 
@@ -247,7 +323,4 @@ export default class Game4 extends Phaser.Scene {
             ]);
         }
     }
-
-
-
 }

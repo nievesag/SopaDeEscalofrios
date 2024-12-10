@@ -5,7 +5,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         this.scene = scene;
         this.obsClass = obsClass;
 
-        // Mete el objeto en la escena con físicas.
+        // mete el objeto en la escena con físicas.
         scene.add.existing(this);
 
         // Configuración de las fisicas.
@@ -19,8 +19,9 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         });
 
         // Contador y eliminación de obstáculos.
+        let randomTime = Phaser.Math.Between(3000, 8000);
         this.scene.time.addEvent({
-            delay: 2000, // tiempo entre obstáculo y obstáculo (2 segundos) 
+            delay: randomTime, // tiempo entre obstáculo y obstáculo (2 segundos) 
             loop: true,
             callback: () => 
             {

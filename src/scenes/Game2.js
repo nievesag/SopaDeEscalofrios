@@ -9,21 +9,26 @@ import ObstaclesGenerator from '../objetos/Game2Obj/ObstacleGenerator.js';
 export default class Game2 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game2'});
+        
+    }
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
     }
     
-    preload () { 
-        this.loadImages();
-        this.loadAudios();
-        this.load.css('EagleLake', 'style.css');
-    }
-    
-    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle
-    // https://phaser.io/examples/v3.85.0/camera/view/graphics-landscape
-    // https://phaser.io/examples/v3.85.0/animation/view/60fps-animation-test
-    // https://phaser.io/examples/v3.85.0/physics/arcade/view/velocity-from-angle-2
-    
+    // CAMBIAR TODO PERO TODO E POR SPRITES
     create (){
-        this.createTanqiaPopUp();
+        this.isGameOver = false; // inicialmench no es gameOver.
+        
+        // si es la primera vez q se inicia...
+        if(!this.gameState.hasStartedBefore[1]){
+            this.gameState.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
+            this.createTanqiaPopUp();
+        }
+        else{ // si ya se ha iniciado anteriormente...
+            this.startGame(); // empieza el game directamente.
+        }
+        
     }
 
     createTanqiaPopUp(){
@@ -36,7 +41,7 @@ export default class Game2 extends Phaser.Scene {
                 x: 1.9, // anchura
                 y: 2.22, // altura
             },
-            key: 'tanqiaBg'
+            key: 'tanqiaBg',
         });
 
         let tanqia = this.add.image(
@@ -48,7 +53,7 @@ export default class Game2 extends Phaser.Scene {
         let tanqiaText = this.add.text(
             this.cameras.main.centerX, 
             this.cameras.main.centerY - 150, 
-            'Nun, Las Aguas de la Vida, está encolerizado: una fuerte \ntempestad llena el paisaje. Una fuerte lluvia que se siente como pedradas, fortísimos relámpagos que son capaces de acobardar al más valeroso, vorágines que tragan todo a su paso, incluso las formas de vida de esta zona caudalosa parecieran haber enloquecido. Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sacrificada metidos en un vaso canopo para que ayude en la causa de apaciguar las aguas y traer de vuelta a la normalidad al río Nilo.',
+            'Nun, Las Aguas de la Vida, está encolerizado: una fuerte tempestad llena el paisaje. Una fuerte lluvia que se siente como pedradas, fortísimos relámpagos que son capaces de acobardar al más valeroso, vorágines que tragan todo a su paso, incluso las formas de vida de esta zona caudalosa parecieran haber enloquecido. Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sacrificada metidos en un vaso canopo para que ayude en la causa de apaciguar las aguas y traer de vuelta a la normalidad al río Nilo.',
             {
                 fontSize: '20px',
                 color: '#ffffff',
@@ -100,25 +105,21 @@ export default class Game2 extends Phaser.Scene {
         })
 
         // música.
-        const music = this.sound.add('theme2');
+        let music = this.sound.add('theme2');
         music.play();
         this.sound.pauseOnBlur = true;
 
         // background y rio.
-        this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0);
-        this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0);
+        this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0).setScrollFactor(0);
+        this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0).setScrollFactor(0);
 
         // creación de los objetos del juego.
         this.background = new Background(this);
         this.background.initialLandscape();
         this.cannon = new Cannon(this);
-        
-        
-        this.obsClass = [
-            {type: 'crocodile', class: Crocodile},
-            {type: 'hippo', class: Hippo},
-            {type: 'maelstrom', class: Maelstrom},
-        ];
+
+        // DIFICULTAD SEGÚN LOS DÍAS.
+        this.setDifficulty();
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
         this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
@@ -130,7 +131,7 @@ export default class Game2 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
 
         // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton').setScale(0.3).setInteractive();
+        this.musicButton = this.add.image(40, 40, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
             if (music.isPlaying) {
@@ -141,27 +142,28 @@ export default class Game2 extends Phaser.Scene {
                 music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setDepth(10); // pq es UI
-
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
+        
         // contador de distancia.
         this.distanceCounter = this.add.text(
-            this.cameras.main.centerX, 
-            this.cameras.main.centerY,
+            400, 
+            35,
             'Distancia: 0m', // inicialmench 0m..
             {
                 fontSize: '24px',
                 color: 'white',
                 fontFamily: 'EagleLake'
             }
-        ).setDepth(10); // pq es UI.
+        ).setDepth(10).setScrollFactor(0); // pq es UI.
 
         // botón de regreso.
-        this.buttonMainMenu = this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+        this.buttonMainMenu = this.createButton('Regresar',  960,  35, 'white', 30, 'GameSelectorMenu');
         this.buttonMainMenu.on('pointerdown', () => { 
+            this.isGameOver = false;
             this.isClickingOnUI = true; 
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
-        }).setDepth(10); // pq es UI 
+        }).setDepth(10).setScrollFactor(0); // pq es UI 
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
@@ -175,6 +177,31 @@ export default class Game2 extends Phaser.Scene {
         {
             this.cannon.cannonAngle(pointer); 
         });
+    }
+
+    setDifficulty(){
+        // lógica según el día.
+        let day = this.gameState.currentDay;
+        this.obsClass = []; // crea un array vacío para después llenarlo según el día.
+
+        if(day === 1 || day === 2){
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile},
+            ];
+        }
+        else if(day === 3 || day === 4){
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile},
+                {type: 'hippo', class: Hippo},
+            ];
+        }
+        else if(day === 5){
+            this.obsClass = [
+                {type: 'crocodile', class: Crocodile},
+                {type: 'hippo', class: Hippo},
+                {type: 'maelstrom', class: Maelstrom}, // MAELSTROM AUN NO MATA!!!
+            ];
+        }
     }
 
     update(){
@@ -191,34 +218,34 @@ export default class Game2 extends Phaser.Scene {
             this.vessel.update();
             this.obstacleGen.update();
 
-            let scrollX = this.cameras.main.scrollX; // posx camara
-            let scrollY = this.cameras.main.scrollY; // posy camara
+            //let scrollX = this.cameras.main.scrollX; // posx camara
+            //let scrollY = this.cameras.main.scrollY; // posy camara
 
-            this.bg.setPosition(scrollX,scrollY);
-            this.rio.setPosition(scrollX, 600);
-
-            this.buttonMainMenu.setPosition(scrollX + 955, scrollY + 25);
-            this.musicButton.setPosition(scrollX + 45, scrollY + 40);
-        
+            // NOTA: COMPROBAR SI PUEDO HACER .SETSCROLLFACTOR PARA BG Y RIO
+            //this.bg.setPosition(scrollX,scrollY);
+            //this.rio.setPosition(scrollX, 600);
             
             let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
             this.distanceCounter.setText('Distancia: ' + distance.toFixed(2) + 'm'); // el tofixed es para que tenga solo 2 decimales.
-            this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
+            //this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
             
-            // si se detiene el movimiento.
-            if(Math.abs(this.vessel.body.velocity.x) < 1){ 
+            // si se detiene el movimiento Y LA VASIJA HA SIDO LANZADA.
+            if((Math.abs(this.vessel.body.velocity.x) < 0.5) && this.vessel.isLaunched){ 
                 if(!this.stopTimer){ // si no exite timer lo crea.
+
                     this.stopTimer = this.time.addEvent({
                         delay: 2000, // espera 2 segs.
                         callback: () => 
                         {
+
                             this.gameOver(); // se nos ha jodio la flesbos.
                         }
                     });
                 } 
             }
             else{
-                if(this.stopTimer){
+                if(this.stopTimer){ // si esite y no esta para la vasija ni es lanzada..
+
                     this.stopTimer.remove(); // para el crono.
                     this.stopTimer = null; // quita refe.
                 }  
@@ -227,11 +254,27 @@ export default class Game2 extends Phaser.Scene {
     }
     
 
-    gameOver(){
-        // quita las físicas.
-        this.physics.pause(); 
+    gameOver(){ // ¡¡¡¡¡¡¡¡PENDIENTE: PQ GAME OVER SALE SOLO UNA VEZ???? EL RESTO DE VECES NO.....
 
-        let gameOverText = this.add.text(
+        if(!this.isGameOver){ // SI NO HAY GAME OVER AÚN...
+            this.isGameOver = true; // ... lo hay ahora.
+            
+            // --- LÓGICA DE GAME OVER SI TRUE... ---
+
+            // quita las físicas.
+            this.physics.pause(); 
+
+            let gameOverBg = this.make.image({
+                x: this.cameras.main.centerX, // x
+                y: this.cameras.main.centerY + 50, // y
+                scale:{
+                    x: 2.5, // anchura
+                    y: 1.5, // altura
+                },
+                key: 'rectUI'
+            }).setOrigin(0.5).setDepth(99).setScrollFactor(0);
+
+            let gameOverText = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY,
             '¡Se acabó!',
@@ -241,25 +284,56 @@ export default class Game2 extends Phaser.Scene {
                 color: 'white',
                 align: 'center'
             }
-        ).setOrigin(0.5).setDepth(100);
+            ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-        let restartButton = this.add.text(
+            let restartButton = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY + 100,
-            'Reiniciar',
+            'Reiniciar (-1 acción)',
             {
                 fontSize: '40px',
                 fontFamily: 'EagleLake',
                 color: 'white',
                 align: 'center'
             }
-        ).setOrigin(0.5).setInteractive().setDepth(100);
+            ).setOrigin(0.5).setInteractive().setDepth(100).setScrollFactor(0);
 
-        restartButton.on('pointerdown', () => {
-            this.scene.restart(); // reinicia escena.
-        });
+            restartButton.on('pointerdown', () => {
+                if (this.gameState.actionsLeft > 0){
+                    this.isGameOver = false;
+                    this.gameState.actionsLeft--;
+                    this.scene.restart(); // reinicia escena.
+                }
+                else{
+                    alert('No te quedan acciones hoy. Pasa al siguiente dia.');
+                }
+            });
 
+            restartButton.on('pointerover', () => // Al pasar el ratón por encima...
+            {
+                restartButton.setTint(0x453424);
+            });
+
+            restartButton.on('pointerout', () => // Al quitar el ratón de encima...
+            {
+                restartButton.clearTint();
+            });
+
+            // PARA VER LO DE LOS COLLECTIONABLES
+            let result;
+            if (this.isGameOver) {
+            console.log("victoria");
+            result = 'victoria';
+            }
+            if (result) {
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+            }
+            console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game4);
+        }
     }
+
+    
 
     destroyAll(){ // elimina todos los objetos del juego.
         if(this.background)
@@ -333,29 +407,6 @@ export default class Game2 extends Phaser.Scene {
         });
 
         return button;
-    }
-
-    loadImages(){
-        // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
-        //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
-
-        this.load.image('cannonBody', './assets/images/Game2/cannonBody.png');
-        this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
-        this.load.image('vessel', './assets/images/Game2/vessel.png');
-        this.load.image('river', './assets/images/Game2/rio.jpg');
-        this.load.image('background', './assets/images/Game2/background.jpg');
-        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
-        this.load.image('crocodile', './assets/images/Game2/crocodile.png');
-        this.load.image('hippo', './assets/images/Game2/hippo.png');
-        this.load.image('musicButton', './assets/images/Game2/music.png');
-        this.load.image('muteButton', './assets/images/Game2/mute.png');
-        this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg');
-        this.load.image('tanqia', './assets/images/Game2/tanqia.PNG');
-        this.load.image('tanqiaBg', './assets/images/Game2/tanqiaBackground.jpg');
-    }
-
-    loadAudios(){
-        this.load.audio('theme2', './assets/audio/m2c.mp3');
     }
     
 }

@@ -7,6 +7,10 @@ export default class Game5 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game5' });
     }
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
     
     preload () {
         // Música.
@@ -14,6 +18,82 @@ export default class Game5 extends Phaser.Scene {
     }
     
     create() {
+        // si es la primera vez q se inicia...
+        if(!this.gameState.hasStartedBefore[4]){
+            this.gameState.hasStartedBefore[4] = true; // ala ya ha salio el tutorial.
+            this.createTanqiaPopUp();
+        }
+        else{ // si ya se ha iniciado anteriormente...
+            this.startGame(); // empieza el game directamente.
+        }
+    }
+
+    createTanqiaPopUp(){
+        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
+        // Background del dialogo (LUEGO IMAGEN).
+        let dialogueBackground = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1.9, // anchura
+                y: 2.22, // altura
+            },
+            key: 'tanqiaBg',
+        });
+
+        let tanqia = this.add.image(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 175, 
+            'tanqia'
+        ).setScale(0.5, 0.32); // x, y, tag.
+
+        let tanqiaText = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY - 150, 
+            'Shu, divinidad danzante del aire, él desea iluminar todo a su paso,  él es la sequedad, él es el tenue brillo de atardecer… Ayuda a Shu a apartar la tenebrosa oscuridad de las profundidades de la pirámide para completar su destino. Coloca y mueve los espejos para guiar a Shu, y él te dará su bendición.',
+            {
+                fontSize: '20px',
+                color: '#ffffff',
+                align: 'center',
+                fontFamily: 'EagleLake',
+                wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5); // danzhu lo tenia y funciona.
+
+        // Botón de aceptar.
+        let acceptButton = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 340, 
+            'Jugar',
+            {
+            fontSize: '50px',
+            fontFamily: 'arabic',
+            color: 'white',
+            align: 'center'
+        }).setOrigin(0.5).setInteractive();
+
+        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            acceptButton.setTint(0xdfa919);
+        });
+
+        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            acceptButton.clearTint();
+        });
+
+        acceptButton.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            dialogueBackground.destroy();
+            tanqia.destroy();
+            tanqiaText.destroy();
+            acceptButton.destroy();
+            this.startGame();
+        })
+    }
+
+    startGame(){
         // --- BOTON VOLVER A MAIN MENU ---
         this.createButton('MainMenu',  100,  700, 'white');
         

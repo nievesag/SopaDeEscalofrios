@@ -9,6 +9,10 @@ export default class Game3 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game3'});
     }
+
+    init(data) {
+        this.gameState = data.gameState; // Guarda gameState en la escena
+    }
     
     preload () {
         // Musica.
@@ -16,6 +20,82 @@ export default class Game3 extends Phaser.Scene {
     }
     
     create (){
+        // si es la primera vez q se inicia...
+        if(!this.gameState.hasStartedBefore[2]){
+            this.gameState.hasStartedBefore[2] = true; // ala ya ha salio el tutorial.
+            this.createTanqiaPopUp();
+        }
+        else{ // si ya se ha iniciado anteriormente...
+            this.startGame(); // empieza el game directamente.
+        }
+    }
+
+    createTanqiaPopUp(){
+        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
+        // Background del dialogo (LUEGO IMAGEN).
+        let dialogueBackground = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1.9, // anchura
+                y: 2.22, // altura
+            },
+            key: 'tanqiaBg',
+        });
+
+        let tanqia = this.add.image(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 175, 
+            'tanqia'
+        ).setScale(0.5, 0.32); // x, y, tag.
+
+        let tanqiaText = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY - 150, 
+            'Jepri, el dios del sol autocreado, sufre de una fuerte tristeza: sus adorados ahijados, los escarabajos de todo Egipto, han sido capturados.Para contentarle de nuevo, y evitar su ira, deberás rescatar al mayor número de escarabajos posibles, en el menor tiempo posible.',
+            {
+                fontSize: '20px',
+                color: '#ffffff',
+                align: 'center',
+                fontFamily: 'EagleLake',
+                wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5); // danzhu lo tenia y funciona.
+
+        // Botón de aceptar.
+        let acceptButton = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY + 340, 
+            'Jugar',
+            {
+            fontSize: '50px',
+            fontFamily: 'arabic',
+            color: 'white',
+            align: 'center'
+        }).setOrigin(0.5).setInteractive();
+
+        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            acceptButton.setTint(0xdfa919);
+        });
+
+        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            acceptButton.clearTint();
+        });
+
+        acceptButton.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            dialogueBackground.destroy();
+            tanqia.destroy();
+            tanqiaText.destroy();
+            acceptButton.destroy();
+            this.startGame();
+        })
+    }
+
+    startGame(){
 
         //// --- MUSIC ---.
         //const music = this.sound.add('theme3');
@@ -156,7 +236,7 @@ export default class Game3 extends Phaser.Scene {
             x: 212,
             y: 47.5,
         });
-;
+
         //Lo agrupamos en un solo array
         let groupMatrix = [];
         groupMatrix.push(this.physics.add.groupImpares); // Group for odd rows
@@ -196,9 +276,6 @@ export default class Game3 extends Phaser.Scene {
             })
             //console.log(i);
         }
-
-
-
         });*/
     
     }
