@@ -2,13 +2,23 @@
 export default class Matrix extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
-  constructor (scene, x, y)
+  constructor (scene, x, y, key)
   {
     super(scene, x, y, { key: "Matrix" });
 
-    //Cualidades
-    this.x = x;
-    this.y = y;
+    //Cualidades del nivel
+    this.x = 185.5; //Pos en x
+    this.y = 10; //Pos en y
+    this.width = 0; //Lo calcularemos luego
+    this.height = 0; //Lo calcularemos luego
+    this.columns = 11; //Total columnas
+    this.rows = 15; //Total filas
+    this.cellWidth = 55; //Ancho celda
+    this.cellHeight = 75; //Alto celda
+    this.cells = []; //Matrix bidimensional celdas
+
+    let neighborsoffsets = [[[1, 0], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]], // Even row tiles
+    [[1, 0], [1, 1], [0, 1], [-1, 0], [0, -1], [1, -1]]];  // Odd row tiles
 
     //Se añade a escena
     this.scene.add.existing(this);
@@ -20,6 +30,7 @@ export default class Matrix extends Phaser.GameObjects.Container
   {
     this.destroy();
   }
+
 
   //Colisiones círculo
   colisions() 

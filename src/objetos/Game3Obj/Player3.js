@@ -13,6 +13,27 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     this.setDisplaySize(100, 200);
     this.origin = new Phaser.Math.Vector2(x, y);
 
+    this.x = 0; //Pos en x
+    this.y = 0; //Pos en y
+    this.angle = 0; //Angulo de disparo
+    this.cellType = 0; //Color del bicho
+    this.actualBeetle = 
+    {
+      x : 0,
+      y : 0,
+      angle : 0,
+      speed : 1000,
+      dropspeed : 900,
+      cellType : 0,
+      visible : false
+    };
+    this.nextBeetle = 
+    {
+      x : 0,
+      y: 0,
+      tiletype: 0
+    }
+
     //Randomizamos el color;
     this.randomBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
     //El que vamos a disparar

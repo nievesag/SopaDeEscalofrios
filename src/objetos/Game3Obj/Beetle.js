@@ -13,31 +13,15 @@ export default class Beetle extends Phaser.GameObjects.Sprite
     this.body.setAllowGravity(false);
     this.body.setImmovable(true);
     
-    this.velX = 0;
-    this.velY = 0;
-    this.setDisplaySize(100, 20);
-    this.body.onCollide = true;
-
-    // Posibles beetles
-    this.beetlesColor = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle', 'BlackBeetle', 'GoldenBeetle'];
-
-     //Colores de los bichos
-     const COLOR = {
-      RED: 'RED',
-      ORANGE: 'ORANGE',
-      YELLOW: 'YELLOW',
-      GREEN: 'GREEN',
-      CIAN: 'CIAN',
-      BLUE: 'BLUE',
-      PURPLE: 'PURPLE',
-      BLACK: 'BLACK',
-      GOLDEN: 'GOLDEN'
-    } //Se accede como color.RED...
-    //Cualidades
-    this.x = x;
-    this.y = y;
-    this.sprite = sprite;
-    this.color = color;
+    this.x = x; //Pos en x
+    this.y = y; //Pos en y
+    this.color = color; 
+    this.removed = false; //Si se ha quitado del nivel o no
+    this.shift = shift; //
+    this.velocity = 0; //Velocidad 
+    this.alpha = 1; //?
+    this.processed = false; //Si ha sido procesado en vecinos o no
+    this.type = [normal, bomb, colorbomb]; //Tipo: normal, colorBomb, normalBomb
 
     //Se añade a escena
     this.scene.add.existing(this);
