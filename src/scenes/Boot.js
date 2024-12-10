@@ -64,6 +64,14 @@ export default class Boot extends Phaser.Scene {
 
         // La Vasija Entresija.
         this.load.image('cannon', 'assets/images/cannon.png')
+
+        // Endings
+        this.load.image('Final1', 'assets/images/endings/g1.png');
+        this.load.image('Final2', 'assets/images/endings/g2.png');
+        this.load.image('Final3', 'assets/images/endings/g3.png');
+        this.load.image('Final4', 'assets/images/endings/g4.png');
+        this.load.image('Final5', 'assets/images/endings/g5.png');
+        this.load.image('Generico', 'assets/images/endings/nog.png');
     }
     
     create()
