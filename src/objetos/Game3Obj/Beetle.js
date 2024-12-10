@@ -1,16 +1,26 @@
-// Clase del Beetle del Minijuego 3. 
-export default class Beetle extends Phaser.GameObjects.Container
+export default class Beetle extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto
-  constructor (scene, x, y, sprite, color)
+  constructor (scene, x, y, key)
   {
-    super(scene, x, y, { key: "Beetle" });
+    super(scene, x, y, { key: "beetle" });
 
-    //Cualidades
-    this.x = x;
-    this.y = y;
-    this.sprite = sprite;
-    this.color = color;
+    this.scene = scene;
+    this.scene.add.existing(this);
+    this.scene.physics.world.enable(this);
+
+    this.body.setAllowGravity(false);
+    this.body.setImmovable(true);
+    
+    this.x = x; //Pos en x
+    this.y = y; //Pos en y
+    this.color = color; 
+    this.removed = false; //Si se ha quitado del nivel o no
+    this.shift = shift; //
+    this.velocity = 0; //Velocidad 
+    this.alpha = 1; //?
+    this.processed = false; //Si ha sido procesado en vecinos o no
+    this.type = [normal, bomb, colorbomb]; //Tipo: normal, colorBomb, normalBomb
 
     //Se añade a escena
     this.scene.add.existing(this);
