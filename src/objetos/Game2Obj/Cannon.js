@@ -7,7 +7,7 @@
       scene.add.existing(this);
 
       // Configuración.
-      this.setScale(0.5);
+      //this.setScale(0.5);
       this.setDepth(1);
 
       this.cannonHead = this.scene.make.image({ // Cannon Head.

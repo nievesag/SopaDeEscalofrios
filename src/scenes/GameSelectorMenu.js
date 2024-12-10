@@ -24,7 +24,8 @@ let gameState = {
         Game3: [null, null, null, null, null] ,
         Game4: [null, null, null, null, null] ,
         Game5: [null, null, null, null, null] 
-    }
+    },
+    gameSelectorMenuHasStartedBefore: false
 };
 
 export default class GameSelectorMenu extends Phaser.Scene {
@@ -41,6 +42,114 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     create () {
+
+        if(gameState.gameSelectorMenuHasStartedBefore === false){
+            let actualDiapo = 0; // inicialmente la 0.
+
+            // Fondo de las diapositivas de lore.
+            this.diaposBG = this.make.image({
+                x: this.cameras.main.centerX, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1.9, // anchura
+                    y: 2.22, // altura
+                },
+                key: 'tanqiaBg',
+            });
+
+            let D1Text = this.add.text( // diapo 1 text.
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY - 150, 
+                'hola esto es la diapo 1',
+                {
+                    fontSize: '20px',
+                    color: '#ffffff',
+                    align: 'center',
+                    fontFamily: 'EagleLake',
+                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5); // danzhu lo tenia y funciona.
+
+            let D2Text = this.add.text( // diapo 1 text.
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY - 150, 
+                'hola esto es la diapo 2',
+                {
+                    fontSize: '20px',
+                    color: '#ffffff',
+                    align: 'center',
+                    fontFamily: 'EagleLake',
+                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+
+            let D3Text = this.add.text( // diapo 1 text.
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY - 150, 
+                'hola esto es la diapo 3',
+                {
+                    fontSize: '20px',
+                    color: '#ffffff',
+                    align: 'center',
+                    fontFamily: 'EagleLake',
+                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+
+            this.continueButton = this.add.text(
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY + 340, 
+                'Continuar',
+                {
+                fontSize: '50px',
+                fontFamily: 'arabic',
+                color: 'white',
+                align: 'center'
+            }).setOrigin(0.5).setInteractive();
+
+            this.continueButton.on('pointerover', () => // Al pasar el ratón por encima...
+            {
+                this.continueButton.setTint(0xdfa919);
+            });
+
+            this.continueButton.on('pointerout', () => // Al quitar el ratón de encima...
+            {
+                this.continueButton.clearTint();
+            });
+
+            this.continueButton.on('pointerdown', ()=>{ // al hacer clic...
+                if(actualDiapo === 0){
+                    D1Text.setVisible(false);
+                    D2Text.setVisible(true);
+                    actualDiapo++;
+                }
+                else if(actualDiapo === 1){
+                    D2Text.setVisible(false);
+                    D3Text.setVisible(true);
+                    actualDiapo++;
+                }
+                else if(actualDiapo === 2){
+                    D1Text.destroy();
+                    D2Text.destroy();
+                    D3Text.destroy();
+                    this.continueButton.destroy();
+                    this.diaposBG.destroy();
+                    this.createGameSelectorMenu();
+                    gameState.gameSelectorMenuHasStartedBefore = true;
+                }
+            });
+
+        }
+        else{
+            this.createGameSelectorMenu();
+        }
+        
+    }
+
+    createGameSelectorMenu(){
         this.sound.stopAll();
 
         // Música.

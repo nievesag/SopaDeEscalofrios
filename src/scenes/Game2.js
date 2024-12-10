@@ -93,7 +93,7 @@ export default class Game2 extends Phaser.Scene {
             tanqiaText.destroy();
             acceptButton.destroy();
             this.startGame();
-        })
+        });
     }
 
     startGame(){
@@ -110,8 +110,8 @@ export default class Game2 extends Phaser.Scene {
         this.sound.pauseOnBlur = true;
 
         // background y rio.
-        this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0).setScrollFactor(0);
-        this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0).setScrollFactor(0);
+        this.bg = this.add.tileSprite(0, -100, 1920, 1080, 'background').setOrigin(0, 0).setScrollFactor(0);
+        this.rio = this.add.tileSprite(0, 600, 3200, 1992, 'river').setOrigin(0,0).setScrollFactor(0).setScale(1, 0.1);
 
         // creación de los objetos del juego.
         this.background = new Background(this);
@@ -211,7 +211,9 @@ export default class Game2 extends Phaser.Scene {
 
         if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.musicButton && this.vessel && this.vessel.body){
             // parallax scroller.
-            this.bg.tilePositionX += 2;
+            if(this.vessel.isLaunched){
+                this.bg.tilePositionX += this.vessel.body.velocity.x / 500; // el fondo va segun la velocidad del vessel (aprox /500)
+            }
             this.rio.tilePositionX -=6;
 
             this.background.update();
