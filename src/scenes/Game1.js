@@ -13,7 +13,7 @@ export default class Game1 extends Phaser.Scene {
     }
 
     preload () {
-        // Cargamos el Tilemap (JsSON)
+        // Cargamos el Tilemap (JSON)
         // -- mapa 1
 		this.load.tilemapTiledJSON('tilemap1', './assets/tilemap/map1.json');
         // -- mapa 2
@@ -21,22 +21,7 @@ export default class Game1 extends Phaser.Scene {
         // -- mapa 3
         this.load.tilemapTiledJSON('tilemap3', './assets/tilemap/map3.json');
 
-		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
-		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
-
-		// Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('player', './assets/images/g1/playerG1.png');
-
-        // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('box', './assets/images/g1/box.png');
-
-        // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('organ', './assets/images/g1/organ.png');
-
-        // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('goal', '../../assets/images/g1/goal.png');
-
-        // Música.
+        // Música
         this.load.audio('theme1', './assets/audio/m1c.mp3');
     }
     
