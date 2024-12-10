@@ -1,5 +1,5 @@
-// Clase del Player del Minijuego 3. 
-import { Tilemaps } from 'phaser';
+
+import Game3 from '../../scenes/Game3.js';
 import Beetle from './Beetle.js';
 import Matrix from './Matrix.js';
 
@@ -36,8 +36,9 @@ export default class Player3 extends Phaser.GameObjects.Sprite
       celltype: 1
     }
 
-    //Randomizamos el color;
-    this.randomBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
+    //Randomizamos el color (de 0 a 6, porque hay 7 colores de bicho);
+    this.randomBeetle = new Beetle(this.scene, this.x, this.y);
+    this.randomBeetle.color = Phaser.Math.RND.between(0, Beetle.beetles.length());
     //El que vamos a disparar
     this.shootingBeetle;
     //El siguiente
@@ -46,6 +47,22 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     this.setProjectile(); // Inicializa el primer proyectil y el siguiente
     this.inputEvents();
     //Se empieza con todos los colores, según se vayan eliminando de pantalla todos los esc de un color, ese color ya no aparece más.
+  }
+
+  create()
+  {
+    if(this.scene.gameState.currentDay == 1 || this.scene.gameState.currentDay == 2)
+      {
+        possiblebeetles = new Beetle.beetles['RedBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'PurpleBeetle']
+      }
+      else if(this.scene.gameState.currentDay == 3 || this.scene.gameState.currentDay == 4)
+      {
+        possiblebeetles = new Beetle.beetles['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'PurpleBeetle']
+      }
+      else if(this.scene.gameState.currentDay == 5)
+      {
+        possiblebeetles = new Beetle.beetles['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle']
+      }
   }
 
   setProjectile() {

@@ -1,13 +1,14 @@
-// Clase del Matrix del Minijuego 3. 
 import Game3 from '../../scenes/Game3.js';
 import Beetle from './Beetle.js';
 
 export default class Matrix extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
-  constructor (scene, x, y, nColors)
+
+  constructor (scene, x, y)
   {
-    super(scene, x, y, nColors);
+    super(scene, x, y);
+
 
     //Cualidades del nivel
     this.x = 185.5; //Pos en x
@@ -33,6 +34,8 @@ export default class Matrix extends Phaser.GameObjects.Container
     //Se añade a escena
     this.scene.add.existing(this);
     this.isDead = false;
+
+    this.createLevel();
   }
 
   //Destructora del objeto
@@ -41,7 +44,9 @@ export default class Matrix extends Phaser.GameObjects.Container
     this.destroy();
   }
 
-  createLevel (nColors) {
+
+  createLevel () {
+
     for (let i = 0; i < this.columns; i++) {
       this.level.cells[i] = [];
       for (let j = 0; j < this.rows; j++) {
@@ -49,15 +54,70 @@ export default class Matrix extends Phaser.GameObjects.Container
           level.cells[i][j] = new Beetle(Game3, i, j);
       }
     }
+
+    // Inicializa con escarabajos random
+    for (let i = 0; i < this.rows; i++) {
+
+      //Randomizamos el color;
+      let randomBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
+      let count = 0;
+      for (let i = 0; i < this.columns; i++) {
+        //Máximo de 3 del mismo color seguidos
+        if (count >= 2) 
+        {
+          // Añadimos uno
+          var newBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
+          
+          // Aseguramos que sea distinto del siguiente
+          if (newBeetle == randomBeetle) 
+          {
+            newBeetle = (newBeetle + 1) % Beetle.beetles.length;
+          }
+          randomBeetle = newBeetle;
+          count = 0;
+        }
+        
+        count++;
+          
+        /*if (j < this.rows/2) 
+        {
+          this.cells[i][j].type = 0;
+        } 
+        else 
+        {
+          this.cells[i][j].type = -1;
+        }*/
+      }
+
   }
 
+
+  }
 
   //Colisiones círculo
   colisions() 
   {
     container.setInteractive(new Phaser.Geom.Circle(0, 0, radius), Phaser.Geom.Circle.Contains);
     // container.setInteractive(false); // disable
+      
   }
+
+  addToMatrix(){
+
+  }
+
+  //En base a la posición de choque de 
+  getMatrixPos(x, y)
+  {
+
+
+  }
+
+
+
+
+
+
 
   //Visita los escarabajos vecinos
   visitNeighbours()
