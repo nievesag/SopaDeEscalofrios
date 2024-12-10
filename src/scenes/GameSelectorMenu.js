@@ -18,6 +18,8 @@ let gameState = {
         false, // game4.
         false  // game5.
     ],
+
+    playedInCurrentDay: [false, false, false, false, false],
     endResults: {
         Game1: [null, null, null, null, null] ,
         Game2: [null, null, null, null, null] ,
@@ -204,8 +206,17 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
+            const gameIndex = parseInt(sceneName.split('Game')[1]) - 1;
+
+            if(gameState.playedInCurrentDay[gameIndex])
+            {
+                alert('Ya has jugado este minijuego hoy.');
+                return;
+            }
+
             if (gameState.actionsLeft > 0) {
                 gameState.actionsLeft--;
+                gameState.playedInCurrentDay[gameIndex] = true;
                 this.scene.start(sceneName, { gameState: gameState });
                 this.sound.stopAll();
             } else {
@@ -217,15 +228,22 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
     nextDay() {
         if (gameState.currentDay < gameState.maxDays) {
-            gameState.currentDay++;
-            gameState.actionsLeft = 3;
-            this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
+          this.resetDay();
         } else {
             alert('¡Has alcanzado el ultimo dia!');
             this.saveEndResults();
-            this.resetGame();
+           
             this.scene.start("EndMenu", { gameState: gameState });
+            this.resetGame();
         }
+    }
+
+
+    resetDay() {
+        gameState.currentDay++;
+        gameState.actionsLeft = 3;
+        gameState.playedInCurrentDay = [false, false, false, false, false]; 
+        this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
     }
 
    saveEndResults(){
