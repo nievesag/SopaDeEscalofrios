@@ -1,13 +1,26 @@
+@font-face {
+  font-family: 'yatra';
+  src: url('./assets/fonts/Yatra.ttf') format('truetype');
+}
+
+/*Colores introito
+  rojo introito: #740101
+  azul introito: #00207e
+  blanco introito: #bbb8b1
+  ocre introito: #735500
+  negro introito: #181818
+*/
 
 body {
-  font-family: 'Silkscreen', sans-serif;
+  font-family: 'yatra';
   margin: 0;
   color: #F6F6F6;
-  background-color: #21263f;
+  background-color:  #181818;
 
   justify-content: center;
   align-items: center;
   height: calc(100vh - 250px);
+
 
  
 }
@@ -19,14 +32,15 @@ body {
 
 .titulo h1 {
   font-size: 3rem; 
-  color:  #bbb8b1;
+  color:  #0035d3;
   margin: 0;
 }
 
 .titulo h2 {
   font-size: 1.5rem; 
-  color:  #bbb8b1;
+  color:  #0035d3;
   margin: 0;
+
 }
 
 p {
@@ -35,28 +49,37 @@ p {
 }
 
 footer {
-  background-color: #333;
-  color: #F6F6F6;
+  background-color: #181818;
+  color: #0035d3;
 }
 
 #phaser-game {
-  width: 60vw; 
+  width: 30vw; 
   height: 100vw; 
-  background-color: #000;
+ 
   align-items: center;
 
 }
 
 section {
   padding: 2rem 1rem;
+  align-items: center; 
+  text-align: left;
 }
 
 .container {
   max-width: 800px;
+  align-items: center; 
+  text-align: left;
+
+}
+
+.container h2 {
+  color:  #cb9600;
 }
 
 a {
-  color: #1E90FF;
+  color: #cb9600;
   text-decoration: none;
 }
 
@@ -66,20 +89,20 @@ a:hover {
 
 .social-links {
   display: flex; 
-  flex-direction: column; 
-  align-items: flex-start; 
+  align-items: center; 
 }
 
 .social-item {
-  display: flex; 
+ 
   align-items: center; 
   margin: 10px 0; 
+  margin-right: 50px;
 }
 
 .social-icon {
   width: 30px; 
   height: auto; 
-  margin-right: 10px;
-  margin-top: 0px;
+  margin-right: 10px;  
+  margin-top: 0px; 
 }
 
