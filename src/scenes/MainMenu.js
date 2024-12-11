@@ -27,7 +27,7 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 150,
             'Introito Antiapotropaigro',
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 100,
 
                 color: '#dfa919',
@@ -41,7 +41,7 @@ export default class MainMenu extends Phaser.Scene {
             this.cameras.main.centerY - 75,
             '(o Cómo contactar con los dioses para propositos malignos\npor mandato de la Faraona Suprema)',
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 25,
                 color: '#e3be5b'
             }
@@ -66,7 +66,7 @@ export default class MainMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 50,
 
                 color: textColor

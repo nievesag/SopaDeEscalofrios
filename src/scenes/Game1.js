@@ -63,7 +63,7 @@ export default class Game1 extends Phaser.Scene {
                 fontSize: '20px',
                 color: '#ffffff',
                 align: 'center',
-                fontFamily: 'EagleLake',
+                fontFamily: 'yatra',
                 wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
@@ -76,7 +76,7 @@ export default class Game1 extends Phaser.Scene {
             'Jugar',
             {
             fontSize: '50px',
-            fontFamily: 'arabic',
+            fontFamily: 'yatra',
             color: 'white',
             align: 'center'
         }).setOrigin(0.5).setInteractive();
@@ -278,8 +278,15 @@ export default class Game1 extends Phaser.Scene {
         });
         
         // tiempo
-        this.timerText = this.add.text(20, 20, this.gameTime,
-            { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+        this.timerText = this.add.text(
+            20, 
+            20, 
+            this.gameTime,
+            { 
+                fontFamily: 'yatra', 
+                fontSize: 15, 
+                color: 'White' 
+            }).setOrigin(0.5, 0.5);
             
             this.timerHUD();
             
@@ -297,7 +304,7 @@ export default class Game1 extends Phaser.Scene {
             if(this.gameTime > 0) {
                 // crea texto nuevo
                 this.timerText = this.add.text(20, 20, this.gameTime,
-                    { fontFamily: 'EagleLake', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+                    { fontFamily: 'yatra', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
 
@@ -418,7 +425,7 @@ export default class Game1 extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: fontsize,
                 color: textColor
             }

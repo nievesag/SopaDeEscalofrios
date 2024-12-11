@@ -56,7 +56,7 @@ export default class Game4 extends Phaser.Scene {
                 fontSize: '20px',
                 color: '#ffffff',
                 align: 'center',
-                fontFamily: 'EagleLake',
+                fontFamily: 'yatra',
                 wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
@@ -69,7 +69,7 @@ export default class Game4 extends Phaser.Scene {
             'Jugar',
             {
             fontSize: '50px',
-            fontFamily: 'arabic',
+            fontFamily: 'yatra',
             color: 'white',
             align: 'center'
         }).setOrigin(0.5).setInteractive();
