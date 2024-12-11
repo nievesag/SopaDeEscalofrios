@@ -6,12 +6,7 @@ export default class Boot extends Phaser.Scene {
     //Esta escena sirve para cargar todos los assets que tengamos para tenerlo organizado//
     preload () {
         // ----- CARGAR IMAGENES DEL JUEGO -----
-        this.load.image('Intro1', './assets/images/intro/png/i1.png');
-        this.load.image('Intro2', './assets/images/intro/png/i2.png');
-        this.load.image('Intro3', './assets/images/intro/png/i3.png');
-        this.load.image('Intro4', './assets/images/intro/png/i4.png');
-        this.load.image('Intro5', './assets/images/intro/png/i5.png');
-        this.load.image('Intro6', './assets/images/intro/png/i6.png');
+        
 
         // -------- MAINMENU
         this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
@@ -19,7 +14,12 @@ export default class Boot extends Phaser.Scene {
 		this.load.image("startButton", "./assets/images/startButton.jpg");
 
         // -------- INTRO
-
+        this.load.image('Intro1', './assets/images/intro/png/i1.png');
+        this.load.image('Intro2', './assets/images/intro/png/i2.png');
+        this.load.image('Intro3', './assets/images/intro/png/i3.png');
+        this.load.image('Intro4', './assets/images/intro/png/i4.png');
+        this.load.image('Intro5', './assets/images/intro/png/i5.png');
+        this.load.image('Intro6', './assets/images/intro/png/i6.png');
 
         // -------- GAME 1
         // Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
