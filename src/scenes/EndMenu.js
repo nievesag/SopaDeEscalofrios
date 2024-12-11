@@ -179,6 +179,44 @@ export default class EndMenu extends Phaser.Scene {
         }
     }
 
+    showLogros() {
+        for(var i = 0; i < logros1.length; i++) {
+            if(i == 0) {
+                // --- logro 1 g1
+                if(logros1[i] != null) {
+                    let l11 = this.make.image({
+                        key: 'Final4',
+                    }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+                }
+                // --- logro 1 g2
+                if(logros2[i] != null) {
+                    
+                }
+                // --- logro 1 g3
+                if(logros3[i] != null) {
+
+                }
+                // --- logro 1 g4
+                if(logros4[i] != null) {
+
+                }
+                // --- logro 1 g5
+                if(logros5[i] != null) {
+
+                }
+            }
+            else if(i == 1) {
+                
+            }
+            else if(i == 2) {
+
+            }
+            else if(i == 3) {
+
+            }
+        }
+    }
+
     manageLogros() {
         for(var i = 0; i < this.gameState.endResults.Game1.length; i++) {
             // --- logros g1
