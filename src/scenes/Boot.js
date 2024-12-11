@@ -6,11 +6,20 @@ export default class Boot extends Phaser.Scene {
     //Esta escena sirve para cargar todos los assets que tengamos para tenerlo organizado//
     preload () {
         // ----- CARGAR IMAGENES DEL JUEGO -----
+        this.load.image('Intro1', './assets/images/intro/png/i1.png');
+        this.load.image('Intro2', './assets/images/intro/png/i2.png');
+        this.load.image('Intro3', './assets/images/intro/png/i3.png');
+        this.load.image('Intro4', './assets/images/intro/png/i4.png');
+        this.load.image('Intro5', './assets/images/intro/png/i5.png');
+        this.load.image('Intro6', './assets/images/intro/png/i6.png');
 
         // -------- MAINMENU
         this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
         this.load.image("mainMenu", "./assets/images/mainMenu.jpg");
 		this.load.image("startButton", "./assets/images/startButton.jpg");
+
+        // -------- INTRO
+
 
         // -------- GAME 1
         // Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
@@ -78,12 +87,20 @@ export default class Boot extends Phaser.Scene {
         this.load.image('EspejoTablero', 'assets/images/Game5/EspejoTablero.png');
 
         // -------- ENDINGS
-        this.load.image('Final1', 'assets/images/endings/g1.png');
-        this.load.image('Final2', 'assets/images/endings/g2.png');
-        this.load.image('Final3', 'assets/images/endings/g3.png');
-        this.load.image('Final4', 'assets/images/endings/g4.png');
-        this.load.image('Final5', 'assets/images/endings/g5.png');
-        this.load.image('Generico', 'assets/images/endings/nog.png');
+        // ph
+        this.load.image('Final1PH', 'assets/images/endings/ph/g1.png');
+        this.load.image('Final2PH', 'assets/images/endings/ph/g2.png');
+        this.load.image('Final3PH', 'assets/images/endings/ph/g3.png');
+        this.load.image('Final4PH', 'assets/images/endings/ph/g4.png');
+        this.load.image('Final5PH', 'assets/images/endings/ph/g5.png');
+        this.load.image('GenericoPH', 'assets/images/endings/ph/nog.png');
+        // reales
+        this.load.image('Final1', 'assets/images/endings/png/g1.png');
+        this.load.image('Final2', 'assets/images/endings/png/g2.png');
+        this.load.image('Final3', 'assets/images/endings/png/g3.png');
+        this.load.image('Final4', 'assets/images/endings/png/g4.png');
+        this.load.image('Final5', 'assets/images/endings/png/g5.png');
+        this.load.image('Generico', 'assets/images/endings/png/g6.png');
     }
     
     create()
@@ -91,8 +108,5 @@ export default class Boot extends Phaser.Scene {
         console.log("Boot");
         //this.loadAnimations();
         this.scene.start("MainMenu");
-
-
     }
-
-    }
+}
