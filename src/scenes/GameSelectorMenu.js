@@ -67,7 +67,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
                     fontSize: '20px',
                     color: '#ffffff',
                     align: 'center',
-                    fontFamily: 'EagleLake',
+                    fontFamily: 'yatra',
                     wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                     wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
                 }
@@ -81,7 +81,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
                     fontSize: '20px',
                     color: '#ffffff',
                     align: 'center',
-                    fontFamily: 'EagleLake',
+                    fontFamily: 'yatra',
                     wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                     wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
                 }
@@ -95,7 +95,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
                     fontSize: '20px',
                     color: '#ffffff',
                     align: 'center',
-                    fontFamily: 'EagleLake',
+                    fontFamily: 'yatra',
                     wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                     wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
                 }
@@ -107,7 +107,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
                 'Continuar',
                 {
                 fontSize: '50px',
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 color: 'white',
                 align: 'center'
             }).setOrigin(0.5).setInteractive();
@@ -166,14 +166,14 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.createButton("El Sendero al Sol", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 50, 'Game5');
 
         this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
-            fontFamily: 'Arial',
+            fontFamily: 'yatra',
             fontSize: '24px',
             color: '#ffffff',
         });
 
         // Boton para pasar al siguiente día
         this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Next Day', {
-            fontFamily: 'Arial',
+            fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff',
         }).setOrigin(0.5, 0.5);
@@ -188,7 +188,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: fontsize,
                 color: textColor
             }

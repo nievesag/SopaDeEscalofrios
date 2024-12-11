@@ -45,7 +45,7 @@ export default class EndMenu extends Phaser.Scene {
             this.cameras.main.centerY - 150,
             'FIN DEL PERIODO DE CONTACTO CON LOS DIOSES',
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 30,
 
                 color: '#dfa919',
@@ -59,7 +59,7 @@ export default class EndMenu extends Phaser.Scene {
             this.cameras.main.centerY - 75,
             'Estos son tus resultados:',
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 25,
                 color: '#e3be5b'
             }
@@ -89,7 +89,7 @@ export default class EndMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 50,
 
                 color: textColor
