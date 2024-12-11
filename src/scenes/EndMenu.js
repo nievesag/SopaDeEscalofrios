@@ -214,6 +214,9 @@ export default class EndMenu extends Phaser.Scene {
             else if(i == 3) {
 
             }
+            else if(i == 4) {
+
+            }
         }
     }
 
