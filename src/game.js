@@ -15,7 +15,7 @@ import EndMenu from './scenes/EndMenu.js';
  */
 
 let config = {     
-  parent: 'Juego',  
+  parent: 'phaser-game',  
   type: Phaser.AUTO,      
 
   scale: {
