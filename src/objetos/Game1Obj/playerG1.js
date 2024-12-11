@@ -21,22 +21,22 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         // izq
         this.grabAreaIzq = this.scene.physics.add.sprite(this.x-10, this.y, null);
         this.grabAreaIzq.body.setAllowGravity(false).setSize(2, 10); // Width / Height
-        this.grabAreaIzq.setDepth(10);
+        //this.grabAreaIzq.setDepth(10);
         this.grabAreaIzq.visible = false;
         // der
         this.grabAreaDer = this.scene.physics.add.sprite(this.x+32, this.y, null);
         this.grabAreaDer.body.setAllowGravity(false).setSize(2, 10); // Width / Height
-        this.grabAreaDer.setDepth(10);
+        //this.grabAreaDer.setDepth(10);
         this.grabAreaDer.visible = false;
         // arr
         this.grabAreaArr = this.scene.physics.add.sprite(this.x, this.y-10, null);
         this.grabAreaArr.body.setAllowGravity(false).setSize(10, 2); // Width / Height
-        this.grabAreaArr.setDepth(10);
+        //this.grabAreaArr.setDepth(10);
         this.grabAreaArr.visible = false;
         // abj
         this.grabAreaAbj = this.scene.physics.add.sprite(this.x, this.y+32, null);
         this.grabAreaAbj.body.setAllowGravity(false).setSize(10, 2); // Width / Height
-        this.grabAreaAbj.setDepth(10);
+        //this.grabAreaAbj.setDepth(10);
         this.grabAreaAbj.visible = false;
 
 		this.body.setSize(20, 20); // Para que entre mejor por los pasillos
