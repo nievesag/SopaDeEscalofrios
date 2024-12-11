@@ -107,7 +107,7 @@ export default class Game4 extends Phaser.Scene {
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
 
          // --- BOTON VOLVER A MAIN MENU ---
-         this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+         //this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
 
 
         // Crear el suelo invisible en la parte inferior de la pantalla
@@ -171,6 +171,8 @@ export default class Game4 extends Phaser.Scene {
             this.updateInfoTexts();
 
             this.endLevel();
+
+         
         }
         
     }
@@ -180,32 +182,73 @@ export default class Game4 extends Phaser.Scene {
 
         this.obstaclePool = [];
 
-        const leftObstacle = new Obstaculo(this, 600, 668, 3, 'vertical');
-        const rightObstacle = new Obstaculo(this, 700, 668, 3, 'vertical');
-        const topObstacle = new Obstaculo(this, 650, 600, 3, 'horizontal');
+        if(this.gameState.currentDay == 5)
+        {
+            const leftObstacle = new Obstaculo(this, 750, 535, 3, 'vertical');
+            const rightObstacle = new Obstaculo(this, 850, 535, 3, 'vertical');
+            const topObstacle = new Obstaculo(this, 800, 470, 3, 'horizontal');
+    
+            const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
+            const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
+            const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
 
-        const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
-        const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
-        const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
+            const leftObstacle3 = new Obstaculo(this, 600, 668, 3, 'vertical');
+            const rightObstacle3 = new Obstaculo(this, 700, 668, 3, 'vertical');
+            const topObstacle3 = new Obstaculo(this, 650, 600, 3, 'horizontal');
+            const aux1 = new Obstaculo(this, 650, 668, 3, 'vertical');
 
-        const topObstacle3 = new Obstaculo(this, 725, 570, 3, 'horizontal');
-        const leftObstacle3 = new Obstaculo(this, 670, 505, 3, 'vertical');
-        const rightObstacle3 = new Obstaculo(this, 780, 505, 3, 'vertical');
+            const leftObstacle4 = new Obstaculo(this, 625, 535, 3, 'vertical');
+            const rightObstacle4 = new Obstaculo(this, 675, 535, 3, 'vertical');
+            const topObstacle4 = new Obstaculo(this, 650, 470, 3, 'horizontal');
 
-        const topObstacle4 = new Obstaculo(this, 725, 440, 3, 'horizontal');
+            this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
+                leftObstacle2, rightObstacle2, topObstacle2,
+                topObstacle3, leftObstacle3, rightObstacle3,
+                aux1, leftObstacle4, rightObstacle4, topObstacle4);
+        }
+        else
+        {
+            const leftObstacle = new Obstaculo(this, 600, 668, 3, 'vertical');
+            const rightObstacle = new Obstaculo(this, 700, 668, 3, 'vertical');
+            const topObstacle = new Obstaculo(this, 650, 600, 3, 'horizontal');
+    
+            const leftObstacle2 = new Obstaculo(this, 750, 668, 3, 'vertical');
+            const rightObstacle2 = new Obstaculo(this, 850, 668, 3, 'vertical');
+            const topObstacle2 = new Obstaculo(this, 800, 600, 3, 'horizontal');
+    
+            const topObstacle3 = new Obstaculo(this, 725, 570, 3, 'horizontal');
+            const leftObstacle3 = new Obstaculo(this, 670, 505, 3, 'vertical');
+            const rightObstacle3 = new Obstaculo(this, 780, 505, 3, 'vertical');
+    
+            const topObstacle4 = new Obstaculo(this, 725, 440, 3, 'horizontal');
+           
+            this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
+                leftObstacle2, rightObstacle2, topObstacle2,
+                topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
+        }
+
+
        
-        this.obstaclePool.push(topObstacle, leftObstacle, rightObstacle, 
-            leftObstacle2, rightObstacle2, topObstacle2,
-            topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
     }
 
     createEnemies() {
 
         this.enemiesPool = [];
-        const enemy1 = new Enemy(this, 650, 668);
-        const enemy2 = new Enemy(this, 800, 668);
-        const enemy3 = new Enemy(this, 725, 530);
-        this.enemiesPool.push(enemy1, enemy2, enemy3);
+
+        if(this.gameState.currentDay == 5)
+        {
+            const enemy1 = new Enemy(this, 800, 568, 'rat');
+            const enemy2 = new Enemy(this, 800, 668, 'rat');
+            this.enemiesPool.push(enemy1, enemy2);
+        }
+        else
+        {
+            const enemy1 = new Enemy(this, 650, 668, 'lion');
+            const enemy2 = new Enemy(this, 800, 668, 'lion');
+            const enemy3 = new Enemy(this, 725, 530, 'lion');
+            this.enemiesPool.push(enemy1, enemy2, enemy3);
+        }
+       
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -232,7 +275,7 @@ export default class Game4 extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start(sceneName);
+            this.scene.start('GameSelectorMenu');
             this.sound.stopAll();
 
         });
@@ -245,20 +288,28 @@ export default class Game4 extends Phaser.Scene {
         if (this.enemiesCounter == this.enemiesPool.length) {
             console.log("victoria");
             result = 'victoria';
+            this.time.delayedCall(2000, () => {
+                this.scene.start('GameSelectorMenu');
+            });
         } 
         else if (this.bow.totalArrows == 0 && this.enemiesCounter < this.enemiesPool.length) {
             console.log("derrota");
             result = 'derrota';
+            this.time.delayedCall(2000, () => {
+                this.scene.start('GameSelectorMenu');
+            });
         }
  
 
-    if (result) {
-        const currentDayIndex = this.gameState.currentDay - 1; 
-        this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+        if (result) {
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+        }
+    }
 
-       // console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
-    }
-    }
+   
+
+
 
 
     createInfoTexts()
@@ -297,8 +348,8 @@ export default class Game4 extends Phaser.Scene {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-                // { type: 'Normal', count: 3 },
-                // { type: 'Explosive Arrow', count: 3 },
+                { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 2 },
                  { type: 'Ball Arrow', count: 5 },
                 { type: 'Split Arrow', count: 3 }
 
@@ -308,7 +359,7 @@ export default class Game4 extends Phaser.Scene {
         {
             this.bow = new Bow(this, 150, 600, [
                 { type: 'Normal', count: 3 },
-                { type: 'Explosive Arrow', count: 2 },
+                { type: 'Explosive Arrow', count: 1 },
                 { type: 'Ball Arrow', count: 2 },
                 { type: 'Split Arrow', count: 2 }
             ]);
