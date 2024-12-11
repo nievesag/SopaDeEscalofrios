@@ -31,7 +31,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
 
         // Para evitar que se solapen los obsjetos.
         this.lastObstaclePosX = 0; // inicialmench es 0.
-        this.minDistanceBetweenObstacles = Phaser.Math.Between(300, 500); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
+        this.minDistanceBetweenObstacles = Phaser.Math.Between(700, 1000); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
     }
 
     update(){

@@ -40,7 +40,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('vessel', './assets/images/Game2/vessel.png');
         this.load.image('river', './assets/images/Game2/rio.jpg');
         this.load.image('background', './assets/images/Game2/background.jpg');
-        this.load.image('maelstrom', './assets/images/Game2/maelstrom.jpg');
+        this.load.image('maelstrom', './assets/images/Game2/maelstrom.png');
         this.load.image('crocodile', './assets/images/Game2/crocodile.png');
         this.load.image('hippo', './assets/images/Game2/hippo.png');
         this.load.image('musicButton', './assets/images/Game2/music.png');
