@@ -19,13 +19,13 @@ let config = {
   type: Phaser.AUTO,      
 
   scale: {
-      autoCenter: Phaser.Scale.CENTER_BOTH,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
      
-      mode: Phaser.Scale.FIT,  
-      max: {
-        width: 1280,   
-        height: 720, 
-      }
+    mode: Phaser.Scale.FIT,  
+    max: {
+      width: 1280,   
+      height: 720, 
+    }
      
   },
   
