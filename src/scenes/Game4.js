@@ -107,7 +107,7 @@ export default class Game4 extends Phaser.Scene {
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
 
          // --- BOTON VOLVER A MAIN MENU ---
-         this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
+         //this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
 
 
         // Crear el suelo invisible en la parte inferior de la pantalla
@@ -214,7 +214,7 @@ export default class Game4 extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: fontsize,
                 color: textColor
             }
@@ -232,7 +232,7 @@ export default class Game4 extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start(sceneName);
+            this.scene.start('GameSelectorMenu');
             this.sound.stopAll();
 
         });
@@ -255,29 +255,33 @@ export default class Game4 extends Phaser.Scene {
     if (result) {
         const currentDayIndex = this.gameState.currentDay - 1; 
         this.gameState.minigamesResults.Game4[currentDayIndex] = result;
-
-       // console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game4}`);
     }
+
+    this.scene.time.delayedCall(2000, () => {
+        this.scene.start(sceneName);
+    });
+
+
     }
 
 
     createInfoTexts()
     {
           this.enemiesText = this.add.text(10, 10, `Enemigos restantes: ${this.enemiesPool.length}`, {
-            fontFamily: 'Arial',
+            fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff'
         });
 
         console.log(this.bow.remainingArrows);
         this.arrowsText = this.add.text(10, 40, `Flechas restantes: ${this.bow.remainingArrows}`, {
-            fontFamily: 'Arial',
+            fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff'
         });
 
         this.arrowTypeText = this.add.text(10, 70, `Arrow Type: ${this.bow.getCurrentArrowType()}`, {
-            fontFamily: 'Arial',
+            fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff',
         });
@@ -297,8 +301,8 @@ export default class Game4 extends Phaser.Scene {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-                // { type: 'Normal', count: 3 },
-                // { type: 'Explosive Arrow', count: 3 },
+                { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 3 },
                  { type: 'Ball Arrow', count: 5 },
                 { type: 'Split Arrow', count: 3 }
 

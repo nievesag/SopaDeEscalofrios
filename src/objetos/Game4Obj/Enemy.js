@@ -17,15 +17,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         // Desactivar la gravedad
         this.body.setAllowGravity(true);
 
-        // // Añadir tween para movimiento armónico simple con duración más larga
-        // this.tween = this.scene.tweens.add({
-        //     targets: this,
-        //     x: x + 75 * this.direction, // Ajusta la amplitud del movimiento
-        //     ease: 'Sine.easeInOut',
-        //     yoyo: true,
-        //     repeat: -1,
-        //     duration: 3000 // Ajusta la duración del tween (en milisegundos)
-        // });
+   
         this.scene.physics.add.collider(this, this.scene.ground, () => {
             this.body.setVelocityX(0); 
             this.body.setVelocityY(0);
@@ -62,12 +54,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.destroy();
     }
 
-    freeze(){
-        this.body.setAllowGravity(false);
-        this.setVelocityX(0);
-        this.setVelocityY(0);
-        this.tween.stop();  // Detener el tween al congelar al enemigo
-    }
+
 
     getId() {
         return this.enemyId;
