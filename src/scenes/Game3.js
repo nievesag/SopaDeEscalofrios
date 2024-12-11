@@ -123,11 +123,7 @@ export default class Game3 extends Phaser.Scene {
         // --- BOTON VOLVER A MAIN MENU ---.
         this.createButton('Exit',  925,  700, 'white', 50, 'GameSelectorMenu');
 
-        // --- ESTADOS DEL JUEGO ---.
-        let gamestates = { init: 0, ready: 1, shootbubble: 2, removecluster: 3, gameover: 4 };
-        let gamestate = gamestates.init;
-
-        // --- PUNTUACIÓN
+        // --- PUNTUACIÓN ---.
         let points = 0;
 
 
@@ -142,16 +138,21 @@ export default class Game3 extends Phaser.Scene {
 
         // --- CREACION OBJETOS ESCENA ---.
         // Cannon
-        this.player3 = new Player3(this, 500, 750); // Ajusta las coordenadas
-        //// Matrix
+        this.player3 = new Player3(this, 500, 750, 'Player3'); // Ajusta las coordenadas
+        this.physics.world.enable(this);
+        // Matrix
         //this.matrix = new Matrix(this, 200, 30);
-
+        // Shooting Beetle 
+        
 
         // --- COLISIONES ---.
         // --- COLISIONES BORDERS - DISPARO ---.
-        this.physics.add.collider(borders, shootingBeetle);
+        //this.physics.add.collider(borders, shootingBeetle);
 
         // --- COLISIONES MATRIX - DISPARO ---.
+        //if (Phaser.Geom.Intersects.CircleToCircle(this.player.shootingBeetle, this.matrix)) {
+            //console.log("Choca");
+        //}
         /*for (let i = 0; i < groupMatrix.length; i++){
         groupMatrix[i].getChildren().forEach(element => {
         //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
@@ -166,39 +167,8 @@ export default class Game3 extends Phaser.Scene {
     
 
 
-        /*// --- CANNON ---.
-        const cannonBase = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-            x: 500,
-            y: 800, 
-            key: 'cannonBase',
-            scale : {
-                x: 0.25,
-                y: 0.25
-            },
-        }).setDepth(1);
+     /*
 
-        const cannonDisparo = this.make.image({ // Cannon Head.
-            x: 500,
-            y: 730, 
-            angle: 90,
-            key: 'cannonDisparo',
-
-            scale : {
-                x: 0.3,
-                y: 0.3,
-            },
-        }).setDepth(2);
-
-        // --- SHOOTABLES ---. 
-        let beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
-        //El que vamos a disparar
-        let shootingBeetle;
-
-        // Dibuja la línea de la dir DE LANZAMIENTO
-        const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } });
-        const line = new Phaser.Geom.Line(); 
-
-        let angle = 0; // Inicializa el ángulo a 0.
 
         // --- GRID DE BICHOS ---.
         this.groupImpares = this.physics.add.group({

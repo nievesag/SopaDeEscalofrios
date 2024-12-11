@@ -43,7 +43,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('bg3', "./assets/images/Game3/bg.jpg")
         //Player (place holder)
         //this.load.image('cannonBase', './assets/images/icon500.jpg');
-        this.load.image('cannon', './assets/images/Game3/Cannon.png');
+        this.load.image('player3', './assets/images/Game3/Cannon.png');
         //Escarabajos
         this.load.image('RedBeetle', './assets/images/Game3/BurbujaRoja.png')
         this.load.image('OrangeBeetle', './assets/images/Game3/BurbujaNaranja.png')
