@@ -11,7 +11,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
         scene.physics.add.existing(this);
 
         // config de las físicas.
-        this.setScale(0.35); // Le pone el tamaño.
+        this.setScale(0.4); // Le pone el tamaño.
         this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
         this.body.setDrag(50); // Fricción con el suelo (NON OSTUCALOS).
         this.body.setAngularDrag(50); // rotación angular con el airew y tal.
