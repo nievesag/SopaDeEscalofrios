@@ -1,9 +1,10 @@
-// Clase del Matrix del Minijuego 3. 
+import Game3 from '../../scenes/Game3.js';
 import Beetle from './Beetle.js';
 
 export default class Matrix extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
+
   constructor (scene, x, y)
   {
     super(scene, x, y);
@@ -12,15 +13,15 @@ export default class Matrix extends Phaser.GameObjects.Container
     //Cualidades del nivel
     this.x = 185.5; //Pos en x
     this.y = 10; //Pos en y
-    this.width = 0; //Lo calcularemos luego
-    this.height = 0; //Lo calcularemos luego
     this.columns = 11; //Total columnas
     this.rows = 15; //Total filas
     this.cellWidth = 55; //Ancho celda
     this.cellHeight = 75; //Alto celda
     this.cells = []; //Matrix bidimensional celdas
     this.EvenRowOffset = 0; //Donde empiezan las filas pares
-
+    this.width = this.columns * this.cellWidth + this.cellWidth / 2; //Ancho
+    this.height = this.rows * this.cellHeight + this.cellHeight; //Alto
+    
     //Para mirar vecinos
     let neighborsoffsets = [[[1, 0], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]], // Even row tiles
     [[1, 0], [1, 1], [0, 1], [-1, 0], [0, -1], [1, -1]]];  // Odd row tiles
@@ -45,13 +46,13 @@ export default class Matrix extends Phaser.GameObjects.Container
 
 
   createLevel () {
+
     for (let i = 0; i < this.columns; i++) {
       this.level.cells[i] = [];
       for (let j = 0; j < this.rows; j++) {
           // Define a tile type and a shift parameter for animation
           level.cells[i][j] = new Beetle(Game3, i, j);
       }
-
     }
 
     // Inicializa con escarabajos random
@@ -87,6 +88,7 @@ export default class Matrix extends Phaser.GameObjects.Container
           this.cells[i][j].type = -1;
         }*/
       }
+
   }
 
 

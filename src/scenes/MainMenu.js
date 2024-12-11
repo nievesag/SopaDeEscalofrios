@@ -11,13 +11,13 @@ export default class MainMenu extends Phaser.Scene {
         this.load.audio('f3ale', './assets/audio/f3ale.mp3');
 	}
 	create() {
-        // Paramos el audio
+        /*// Paramos el audio
         this.sound.stopAll();
         
         // Música.
         const music = this.sound.add('f3ale');
         music.play();
-        this.sound.pauseOnBlur = true;
+        this.sound.pauseOnBlur = true;*/
 
         
 

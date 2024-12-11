@@ -1,7 +1,7 @@
 export default class Beetle extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto
-  constructor (scene, x, y, key)
+  constructor (scene, x, y)
   {
     super(scene, x, y);
 

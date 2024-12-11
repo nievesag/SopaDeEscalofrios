@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'arabic';
-  src: url('./assets/fonts/arabic.otf') format('truetype');
+  font-family: 'yatra';
+  src: url('./assets/fonts/Yatra.ttf') format('truetype');
 }
 
 @font-face{
@@ -8,15 +8,26 @@
   src: url('./assets/fonts/EagleLake.ttf') format('truetype');
 }
 
+
+/*Colores introito
+  rojo introito: #740101
+  azul introito: #00207e
+  blanco introito: #bbb8b1
+  ocre introito: #735500
+  negro introito: #181818
+*/
+
 body {
-  font-family: 'arabic';
+  font-family: 'yatra';
   margin: 0;
   padding: 0;
-  background-color: bisque; 
+  background-color: #181818; 
   /*background-image: url('/assets/images/bgProvisional.jpg'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
+  color:  #bbb8b1;
+ 
   
 }
 
@@ -27,8 +38,13 @@ body {
 
 .titulo h1 {
   font-size: 3rem; 
-  color: white;
-  text-shadow: 2px 2px 5px #000;
+  color:  #bbb8b1;
+  margin: 0;
+}
+
+.titulo h2 {
+  font-size: 1.5rem; 
+  color:  #bbb8b1;
   margin: 0;
 }
 
@@ -53,11 +69,9 @@ body {
   height: calc(60vw * 9 / 16); 
   max-width: 1080px; 
   max-height: 600px; 
-  background-color: #815f2c;
+  background-color: #090909;
   padding: 20px;
-  border-radius: 30px;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
   font-size: 1vw;
 
 }
@@ -71,7 +85,6 @@ body {
   padding: 15px;
   background-color: #b67940; 
   border-radius: 30%; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
   transition: background-color 0.3s ease;
 }
 
@@ -128,8 +141,8 @@ img {
 }
 
 footer {
-  background-color: antiquewhite;
-  color: rgb(197, 132, 35);
+  background-color: #090909;
+  color: #735500;
   text-align: center;
   padding: 10px;
   position: fixed;

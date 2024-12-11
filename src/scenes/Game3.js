@@ -123,7 +123,11 @@ export default class Game3 extends Phaser.Scene {
         // --- BOTON VOLVER A MAIN MENU ---.
         this.createButton('Exit',  925,  700, 'white', 50, 'GameSelectorMenu');
 
+<<<<<<< HEAD
         // --- PUNTUACIÓN ---.
+=======
+        // --- PUNTUACIÓN
+>>>>>>> main
         let points = 0;
 
 
@@ -138,21 +142,35 @@ export default class Game3 extends Phaser.Scene {
 
         // --- CREACION OBJETOS ESCENA ---.
         // Cannon
+<<<<<<< HEAD
         this.player3 = new Player3(this, 500, 750, 'Player3'); // Ajusta las coordenadas
         this.physics.world.enable(this);
         // Matrix
         //this.matrix = new Matrix(this, 200, 30);
         // Shooting Beetle 
         
+=======
+        this.player3 = new Player3(this, 500, 750); // Ajusta las coordenadas
+        // Matrix
+        this.matrix = new Matrix(this, 200, 30);
+        // Shooting Beetle 
+
+>>>>>>> main
 
         // --- COLISIONES ---.
         // --- COLISIONES BORDERS - DISPARO ---.
         //this.physics.add.collider(borders, shootingBeetle);
 
         // --- COLISIONES MATRIX - DISPARO ---.
+<<<<<<< HEAD
         //if (Phaser.Geom.Intersects.CircleToCircle(this.player.shootingBeetle, this.matrix)) {
             //console.log("Choca");
         //}
+=======
+        if (Phaser.Geom.Intersects.CircleToCircle(this.player.shootingBeetle, this.matrix)) {
+            console.log("Choca");
+        }
+>>>>>>> main
         /*for (let i = 0; i < groupMatrix.length; i++){
         groupMatrix[i].getChildren().forEach(element => {
         //Hacemos que se llame a la función cuando se choque el escarabajo con la matriz
@@ -167,6 +185,7 @@ export default class Game3 extends Phaser.Scene {
     
 
 
+<<<<<<< HEAD
      /*
 
 
@@ -257,53 +276,18 @@ export default class Game3 extends Phaser.Scene {
             //console.log(i);
         }
         });*/
+=======
+>>>>>>> main
     
     }
 
-    //Se añade pero no se une
-    /*addToMatrix(shootingBeetle, element){
-
-        let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-            x: shootingBeetle.x,
-            y: shootingBeetle.y, 
-            key: shootingBeetle.texture.key,
-            scale : {
-                x: 1,
-                y: 1,
-            },
-        }).setDepth(1);
-
-        //Creamos el bicho que se va a añadir a la matriz
-        
-        //newBeetle.texture = shootingBeetle.texture;
-        //newBeetle.y = shootingBeetle.y;
-        console.log(newBeetle.texture.key);
-        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-        //Miramos la posición de la colisión
-        //Impar
-        if (newBeetle.y % 10 == 0){
-            groupMatrix[0].add(newBeetle);
-            groupMatrix[0].frameQuantity++;
-            //groupImpares.frameQuantity++;
-        }
-        //Par
-        else if(newBeetle.y % 65 == 0){
-            groupMatrix[1].add(newBeetle);
-            groupMatrix[1].frameQuantity++;
-            //groupPares.frameQuantity++;
-        }
-        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-        //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
-
-        //newBeetle.body.setImmovable(true); 
-        newBeetle.body.setAllowGravity(false);
-    }*/
-
-
     update (){
-        //console.log(timer);
-        //this.timer.setText(`time: ${time.ToString()}`);
+
     }
+
+
+
+    
 
     // --- BOTONES ---.
     createButton(text, x, y, textColor, fontsize, sceneName) {

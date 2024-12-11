@@ -19,9 +19,10 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     this.y = 700; //Pos en y
     this.angle = 90; //Angulo de disparo
     this.cellType = 0; //0 - empty, 1 - normal, 2 - bomb, 3 - color bomb
-    this.actualBeetle = {
-      x : this.x,
-      y : this.y,
+    this.actualBeetle = 
+    {
+      x : 0,
+      y : 0,
       angle : 0,
       speed : 1000,
       dropspeed : 900,
@@ -32,6 +33,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     {
       x : this.x,
       y: this.y + 25,
+
       celltype: 1
     }
 

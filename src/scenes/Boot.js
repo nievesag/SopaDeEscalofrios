@@ -5,20 +5,27 @@ export default class Boot extends Phaser.Scene {
     
     //Esta escena sirve para cargar todos los assets que tengamos para tenerlo organizado//
     preload () {
-        //Cargar imagenes del juego
+        // ----- CARGAR IMAGENES DEL JUEGO -----
 
-        //Main Menu
+        // -------- MAINMENU
         this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
         this.load.image("mainMenu", "./assets/images/mainMenu.jpg");
 		this.load.image("startButton", "./assets/images/startButton.jpg");
 
-        //Game 1
+        // -------- GAME 1
+        // Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
+        this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
 
+        // Recursos de objetos del nivel
+        this.load.image('player', './assets/images/g1/playerG1.png');
+        this.load.image('box', './assets/images/g1/box.png');
+        this.load.image('organ', './assets/images/g1/organ.png');
+        this.load.image('goal', '../../assets/images/g1/goal.png');
 
-
-        //Game 2
+        // -------- GAME 2
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
-        //this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
+        // this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
+        this.load.image('cannon', 'assets/images/cannon.png')
         this.load.image('cannonBody', './assets/images/Game2/cannonBody.png');
         this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
         this.load.image('vessel', './assets/images/Game2/vessel.png');
@@ -36,9 +43,7 @@ export default class Boot extends Phaser.Scene {
         this.load.audio('theme2', './assets/audio/m2c.mp3');
         this.load.css('EagleLake', 'style.css');
 
-
-
-        //Game 3
+        // -------- GAME 3
         //Background
         this.load.image('bg3', "./assets/images/Game3/bg.jpg")
         //Player (place holder)
@@ -54,7 +59,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
         this.load.spritesheet('beetles', './assets/images/Game3/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
 
-        //Game 4
+        // ------- GAME 4
         this.load.image("bg1", "./assets/images/game4/bg1_game4.jpg");
         this.load.image("bow", "./assets/images/game4/bow.png");
         this.load.image("arrow1", "./assets/images/game4/arrow1.png");
@@ -65,17 +70,20 @@ export default class Boot extends Phaser.Scene {
         this.load.image("obstaculo2", "./assets/images/game4/obs2.png");
         this.load.image("lion", "./assets/images/game4/lion.png");
 
-
-        //Game 5
-        
+        // -------- GAME 5
         this.load.image('MuroTablero', 'assets/images/Game5/MuroTablero.png');
         this.load.image('VacioTablero', 'assets/images/Game5/VacioTablero.png');
         this.load.image('FondoTablero', 'assets/images/Game5/FondoTablero.png');
         this.load.image('DisparadorTablero', 'assets/images/Game5/DisparadorTablero.png');
         this.load.image('EspejoTablero', 'assets/images/Game5/EspejoTablero.png');
 
-        // La Vasija Entresija.
-        this.load.image('cannon', 'assets/images/cannon.png')
+        // -------- ENDINGS
+        this.load.image('Final1', 'assets/images/endings/g1.png');
+        this.load.image('Final2', 'assets/images/endings/g2.png');
+        this.load.image('Final3', 'assets/images/endings/g3.png');
+        this.load.image('Final4', 'assets/images/endings/g4.png');
+        this.load.image('Final5', 'assets/images/endings/g5.png');
+        this.load.image('Generico', 'assets/images/endings/nog.png');
     }
     
     create()
