@@ -1,18 +1,30 @@
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'lion');
+    constructor(scene, x, y, sprite) {
+        super(scene, x, y, sprite);
 
         // Asignar un identificador único al enemigo
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
-        this.offsetRight = {x: 50, y: 0};
-        this.offsetLeft = {x: 0, y: 20};
+        
         this.setImmovable(false);
         this.isDead = false;
-        this.setScale(0.4, 0.4);
        
-        this.body.setSize(150, 150);
-        this.body.setOffset(this.offsetRight.x, this.offsetLeft.y);
+        this.sprite = sprite;
+        if(this.sprite == 'lion')
+        {
+            this.offsetRight = {x: 50, y: 0};
+            this.offsetLeft = {x: 0, y: 20};
+            this.body.setSize(150, 150);
+            this.setScale(0.4, 0.4);
+            this.body.setOffset(this.offsetRight.x, this.offsetLeft.y);
+        }
+        else if(this.sprite == 'rat')
+        {
+           
+            this.setScale(0.1, 0.1);
+        }
+       
+      
 
         // Desactivar la gravedad
         this.body.setAllowGravity(true);
