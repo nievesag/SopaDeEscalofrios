@@ -30,6 +30,13 @@ body {
   padding: 20px;
 }
 
+.titulo img.titulo-imagen {
+  width: 30%; 
+  height: 10%;   
+  display: block; 
+  margin: 0 auto; 
+}
+
 .titulo h1 {
   font-size: 3rem; 
   color:  #0035d3;
