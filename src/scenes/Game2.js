@@ -157,13 +157,35 @@ export default class Game2 extends Phaser.Scene {
         ).setDepth(10).setScrollFactor(0); // pq es UI.
 
         // botón de regreso.
-        this.buttonMainMenu = this.createButton('Regresar',  960,  35, 'white', 30, 'GameSelectorMenu');
-        this.buttonMainMenu.on('pointerdown', () => { 
+        this.buttonMainMenu = this.add.text(
+            960, 
+            35, 
+            'Regresar', 
+            {
+                fontFamily: 'arabic',
+                fontSize: 30,
+                color: 'white'
+            }
+        ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0);
+
+        this.buttonMainMenu.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            this.buttonMainMenu.setTint(0x290b0d);
+        });
+
+        this.buttonMainMenu.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            this.buttonMainMenu.clearTint();
+        });
+
+        this.buttonMainMenu.on("pointerdown", () => { // Al hacer clic...
             this.isGameOver = false;
             this.isClickingOnUI = true; 
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
-        }).setDepth(10).setScrollFactor(0); // pq es UI 
+            this.scene.start('GameSelectorMenu');
+            this.sound.stopAll();
+        });
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
@@ -288,39 +310,7 @@ export default class Game2 extends Phaser.Scene {
             }
             ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-            let restartButton = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY + 100,
-            'Reiniciar (-1 acción)',
-            {
-                fontSize: '40px',
-                fontFamily: 'EagleLake',
-                color: 'white',
-                align: 'center'
-            }
-            ).setOrigin(0.5).setInteractive().setDepth(100).setScrollFactor(0);
-
-            restartButton.on('pointerdown', () => {
-                if (this.gameState.actionsLeft > 0){
-                    this.music.stop();
-                    this.isGameOver = false;
-                    this.gameState.actionsLeft--;
-                    this.scene.restart(); // reinicia escena.
-                }
-                else{
-                    alert('No te quedan acciones hoy. Pasa al siguiente dia.');
-                }
-            });
-
-            restartButton.on('pointerover', () => // Al pasar el ratón por encima...
-            {
-                restartButton.setTint(0x453424);
-            });
-
-            restartButton.on('pointerout', () => // Al quitar el ratón de encima...
-            {
-                restartButton.clearTint();
-            });
+            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(50);
 
             // PARA VER LO DE LOS COLLECTIONABLES
             let result;
