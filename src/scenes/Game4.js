@@ -335,7 +335,7 @@ export default class Game4 extends Phaser.Scene {
 
 
     setDifficulty() {
-        this.gameState.currentDay = 5;
+
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
