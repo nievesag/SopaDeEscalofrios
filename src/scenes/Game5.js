@@ -16,6 +16,8 @@ export default class Game5 extends Phaser.Scene {
     preload () {
         // Música.
         this.load.audio('theme5', './assets/audio/m5c.mp3');
+
+        this.load.json('tableroData', './src/objetos/Game5Obj/tablero.json');
     }
     
     create() {
@@ -31,6 +33,7 @@ export default class Game5 extends Phaser.Scene {
     }
 
     createTanqiaPopUp(){
+
         this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
         
         let tanqiaText = this.add.text(
@@ -95,16 +98,9 @@ export default class Game5 extends Phaser.Scene {
             }
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
-        // 1 para los muro, 0 para los vacios, 2 para la gun
-        const tablero = [
-            [1, 1, 0, 0, 0, 2],
-            [1, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 1],
-            [1, 1, 0, 0, 0, 0],
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 3, 0, 1],
-            [1, 1, 1, 1, 1, 1]
-        ];
+        const level = this.gameState.currentDay; // Nivel actual
+        const tableroData = this.cache.json.get('tableroData');
+        const tablero = tableroData.levels[level];
 
         const tileSize = 100;
         const centroX = this.cameras.main.centerX - tablero[0].length * tileSize / 2;
@@ -128,16 +124,16 @@ export default class Game5 extends Phaser.Scene {
                 let x = col * tileSize + tileSize / 2 + centroX;
                 let y = row * tileSize + tileSize / 2 + centroY;
 
-                if (tileValue === 0) {
-                    const v = new Void(this, x, y, tileSize);
-                    this.voids.push(v);
-                } else if (tileValue === 1) {
+                if (tileValue === 1) {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
                 } else if (tileValue === 2 && gun == null) {
                     gun = new Gun(this, x, y, 'left', tileSize);
                 } else if (tileValue === 3 && destiny == null) {
                     destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
+                } else {
+                    const v = new Void(this, x, y, tileSize);
+                    this.voids.push(v);
                 }
                 
             }
