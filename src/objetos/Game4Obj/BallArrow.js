@@ -28,9 +28,9 @@ export default class BallArrow extends Arrow {
         velX = Math.cos(angleToGround) * Math.abs(velX);  
 
      
-        this.arrowBall = this.scene.add.circle(posX, posY, 100, 0xFFD700);
+        this.arrowBall = this.scene.add.circle(posX, posY, 100, 0x740101);
         this.scene.physics.world.enable(this.arrowBall);
-        this.arrowBall.setFillStyle(0xFF4500);  
+        //this.arrowBall.setFillStyle(0x740101);  
         this.arrowBall.setSize(80, 80);  
         this.arrowBall.body.setCircle(100);  
 
