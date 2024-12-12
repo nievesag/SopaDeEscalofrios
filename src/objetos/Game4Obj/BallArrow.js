@@ -3,7 +3,7 @@ import Arrow from '../Game4Obj/Arrow.js';
 export default class BallArrow extends Arrow {
     constructor(scene, x, y) {
         super(scene, x, y, 'arrow3');
-        this.type = 'ball';  // Tipo de flecha
+        this.type = 'ball';  
     }
 
     transformToBall() {

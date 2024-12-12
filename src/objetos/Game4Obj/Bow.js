@@ -76,7 +76,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
             }
         });
 
-        this.scene.input.keyboard.on('keydown-SPACE', () => {
+        this.scene.input.keyboard.on('keydown-E', () => {
             if (this.projectile && this.hasBeenLaunched) {
                 // Si la flecha es de tipo SplitArrow
                 if (this.projectile instanceof SplitArrow) {
@@ -104,7 +104,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
 
 
         // Destruye la flecha después de un tiempo y configura la siguiente
-        this.scene.time.delayedCall(2000, () => {
+        this.scene.time.delayedCall(4000, () => {
 
             this.hasBeenLaunched = false;
             this.projectile.destroy();
@@ -119,7 +119,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
             }
 
             if (this.currentArrowIndex < this.arrowOrder.length) {
-                this.setProjectile(); // Crea el siguiente tipo de flecha en orden
+                this.setProjectile(); 
                 this.scene.input.setDraggable(this.projectile);
             }
         });
