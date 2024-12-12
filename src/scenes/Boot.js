@@ -54,7 +54,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('hippo', './assets/images/Game2/hippo.png');
         this.load.image('musicButton', './assets/images/Game2/music.png');
         this.load.image('muteButton', './assets/images/Game2/mute.png');
-        this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.jpg');
+        this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.png');
         this.load.image('tanqia', './assets/images/Game2/tanqia.PNG');
         this.load.image('rectUI', './assets/images/Game2/rectUI.png');
         this.load.audio('theme2', './assets/audio/m2c.mp3');
@@ -79,7 +79,7 @@ export default class Boot extends Phaser.Scene {
         this.load.audio('theme3', './assets/audio/m3c.mp3');
 
         // ------- GAME 4
-        this.load.image("bg1", "./assets/images/game4/bg1_game4.jpg");
+        this.load.image("bg1", "./assets/images/game4/bg1_game4.png");
         this.load.image("bow", "./assets/images/game4/bow.png");
         this.load.image("arrow1", "./assets/images/game4/arrow1.png");
         this.load.image("arrow2", "./assets/images/game4/arrow2.png");
