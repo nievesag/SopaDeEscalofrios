@@ -78,7 +78,7 @@ export default class Game4 extends Phaser.Scene {
         this.sound.pauseOnBlur = true;
 
         // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
+        this.musicButton = this.add.image(this.cameras.main.width - 50, 40, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
             if (this.music.isPlaying) {
@@ -317,7 +317,7 @@ export default class Game4 extends Phaser.Scene {
             color: '#ffffff'
         });
 
-        this.arrowTypeText = this.add.text(10, 70, `Arrow Type: ${this.bow.getCurrentArrowType()}`, {
+        this.arrowTypeText = this.add.text(10, 70, `Tipo de flecha: ${this.bow.getCurrentArrowType()}`, {
             fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff',
@@ -327,10 +327,10 @@ export default class Game4 extends Phaser.Scene {
 
     updateInfoTexts() {
 
-        this.enemiesText.setText(`Enemies left: ${this.enemiesPool.length - this.enemiesCounter}`);
-        this.arrowsText.setText(`Arrows left: ${this.bow.totalArrows}`);
+        this.enemiesText.setText(`Enemigos restantes: ${this.enemiesPool.length - this.enemiesCounter}`);
+        this.arrowsText.setText(`Flechas restantes: ${this.bow.totalArrows}`);
         if(this.bow.totalArrows >= 1)
-            this.arrowTypeText.setText(`Arrow type: ${this.bow.getCurrentArrowType()}`);
+            this.arrowTypeText.setText(`Tipo de flecha: ${this.bow.getCurrentArrowType()}`);
     }
 
 

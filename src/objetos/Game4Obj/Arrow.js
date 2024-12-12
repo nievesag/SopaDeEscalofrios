@@ -17,7 +17,6 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.scene.events.on('update', this.updateRotation, this);
     }
 
-    // Método para lanzar la flecha con una velocidad determinada
     launch(velocityX, velocityY) {
 
         this.velX = velocityX;
