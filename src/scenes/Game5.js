@@ -95,7 +95,7 @@ export default class Game5 extends Phaser.Scene {
 
     startGame(){
         // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MainMenu',  100,  700, 'white');
+        //this.createButton('MainMenu',  100,  700, 'white');
         
 
         // Música.

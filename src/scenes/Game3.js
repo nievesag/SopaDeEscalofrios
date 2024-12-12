@@ -143,7 +143,7 @@ export default class Game3 extends Phaser.Scene
         }
 
         //Boton SALIR
-        this.createButton('Exit',  100, 200, 'white', 30, 'GameSelectorMenu');
+        //this.createButton('Exit',  100, 200, 'white', 30, 'GameSelectorMenu');
 
         // --- PLAYER ---.
         this.player = this.make.image({ 

@@ -320,7 +320,7 @@ export default class Game2 extends Phaser.Scene {
             }
             if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
-            this.gameState.minigamesResults.Game2[currentDayIndex] = result;
+            this.gameState.minigamesResults.Game2[currentDayIndex] = 'victoria';
             }
             console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game2);
         }

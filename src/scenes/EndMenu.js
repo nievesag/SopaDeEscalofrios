@@ -22,14 +22,6 @@ export default class EndMenu extends Phaser.Scene {
         this.gameState = data.gameState; // Guarda gameState en la escena
     }
 
-	preload () {
-		// Background.
-        this.load.image('backgroundMenu', './assets/images/menuBackground.jpg');
-
-        // Música.s
-        this.load.audio('f3ale', './assets/audio/f3ale.mp3');
-	}
-
 	create() {
         // Paramos el audio
         this.sound.stopAll();
@@ -39,11 +31,7 @@ export default class EndMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        let blackBackground = this.make.image({
-            key: 'tanqiaBackground'
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.8, 1.11);
-
-        // Texto del Título con borde de color aleatorio
+        /*// Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY - 150,
@@ -56,22 +44,10 @@ export default class EndMenu extends Phaser.Scene {
                 stroke: '#453424',   
                 strokeThickness: 10
             }
-        ).setOrigin(0.5, 0.5);
-
-		let title2 = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY - 75,
-            'Estos son tus resultados:',
-            {
-                fontFamily: 'yatra',
-                fontSize: 25,
-                color: '#e3be5b'
-            }
-        ).setOrigin(0.5, 0.5);
+        ).setOrigin(0.5, 0.5);*
 
         // Alineacion y profundidad del texto.
-        title.setAlign('center').setDepth(1);
-		title2.setAlign('center').setDepth(1);
+        title.setAlign('center').setDepth(1);*/
 
         // Gestion de finales
         this.checkEnding();
@@ -79,7 +55,7 @@ export default class EndMenu extends Phaser.Scene {
         this.manageLogros();
 
         // Botones
-        this.createButton('VOLVER',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
+        this.createButton('VOLVER',  this.cameras.main.width -50,  this.cameras.main.scrollY + 25, 'white');
     }
 
 	createButton(text, x, y, textColor) {
@@ -89,7 +65,7 @@ export default class EndMenu extends Phaser.Scene {
             text,
             {
                 fontFamily: 'yatra',
-                fontSize: 50,
+                fontSize: 20,
 
                 color: textColor
             }
@@ -146,51 +122,129 @@ export default class EndMenu extends Phaser.Scene {
 
     showEnding(e) {
 
+        let blackBackground = this.make.image({
+            key: 'tanqiaBg'
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(2, 2.5);
+
+        let collectableWall = this.make.image({
+            key: 'collectableWall'
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 302).setOrigin(0.5).setScale(4, 1);
+
         let bg;
-        let bgText;
+        let endText
         if(e == 1) {
             bg = this.make.image({
                 key: 'Final1',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
-
-            bgText = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                'yeli yeli',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65); 
+        
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Centenares de entrañas han sido traídas al cielo inferior y cargadas en la embarcación Henu. Pronto seré transportada a través de la Duat, convirtiéndome así en la diosa de la putrefacción de la carne.',
                 {
-                    fontSize: '20px',
+                    fontFamily: 'yatra',
+                    fontSize: 20,
                     color: '#ffffff',
                     align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
                     wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
                 }
-            ).setOrigin(0.5); // danzhu lo tenia y funciona.
+            ).setOrigin(0.5, 0.5).setDepth(1);
         }
         else if(e == 2) {
             bg = this.make.image({
                 key: 'Final2',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+        
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Multitud de vasos canopos han sido arrojados a las profundidades del río Nilo y ninguno de ellos pese a su fragilidad ha sido fragmentado. Dentro de no mucho seré la próxima diosa de la primera catarata.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
         }
         else if(e == 3) {
             bg = this.make.image({
                 key: 'Final3',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+        
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Un sinnúmero de escarabajos han sido liberados de ese oscilante y viscoso fluido ámbar. Pronto podré ser una nueva mujer: la diosa del crepúsculo que teñirá el firmamento entero de sangre.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
         }
         else if(e == 4) {
             bg = this.make.image({
                 key: 'Final4',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Una manada de leones ha sido sacrificada. Se les conoce por ser los animales más poderosos de la vida y la muerte, símbolo de valía. Estoy preparada para ser la próxima diosa de la violencia.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
         }
         else if(e == 5) {
             bg = this.make.image({
                 key: 'Final5',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Los rayos luminosos han sido reflejados sobre las cristalinas paredes estratégicamente posicionadas. Mi bello resplandor causará dolor a los ojos de cualquier mortal, porque seré la futura diosa del centelleo.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
         }
         else if(e == 6) {
             bg = this.make.image({ 
                 key: 'Generico',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Ningún dios me ha otorgado su favor... en su lugar he sido castigada siendo encadenada por el resto de la eternidad. Imperios nacerán, civilizaciónes caerán, pero yo permaneceré aquí hasta el fin de los tiempos. Humillada, condenada, despreciada, sola.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
         }
     }
 

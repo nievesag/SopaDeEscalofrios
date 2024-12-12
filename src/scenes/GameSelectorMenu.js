@@ -298,19 +298,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        this.createIcon('Icon1', 200, 200, 'Game1');
-        this.createIcon('Icon2', 800, 200, 'Game2');
-        this.createIcon('Icon3', 200, 600, 'Game3');
-        this.createIcon('Icon4', 800, 600, 'Game4');
-        this.createIcon('Icon5', this.cameras.main.centerX, this.cameras.main.centerY, 'Game5');
-
-        /*
-        this.createButton("Camino a la Duat", 200, 200, 'white', 50, 'Game1');
-        this.createButton("La Vasija Entresija", 800, 200, 'white', 50, 'Game2');
-        this.createButton("Al Rescate de los Escarabajos", 200, 600, 'white', 35, 'Game3');
-        this.createButton("Tiro al Arco Mágico", 800, 600, 'white', 50, 'Game4');
-        this.createButton("El Sendero al Sol", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 50, 'Game5');
-        */
+        this.createIcon('Icon1', 350, 225, 'Game1');
+        this.createIcon('Icon2', 670, 225, 'Game2');
+        this.createIcon('Icon3', 350, 450, 'Game3');
+        this.createIcon('Icon4', 670, 450, 'Game4');
+        this.createIcon('Icon5', this.cameras.main.centerX - 7, this.cameras.main.centerY - 50, 'Game5');
 
         this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
             fontFamily: 'yatra',
@@ -336,7 +328,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         icon.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            icon.setTint(0xdfa919);
+            icon.setTint(0x8a9597);
         });
 
         icon.on('pointerout', () => // Al quitar el ratón de encima...
