@@ -7,6 +7,7 @@ import Game3 from './scenes/Game3.js';
 import Game4 from './scenes/Game4.js';
 import Game5 from './scenes/Game5.js';
 import EndMenu from './scenes/EndMenu.js';
+import LogrosMenu from './scenes/LogrosMenu.js';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -29,7 +30,7 @@ let config = {
      
   },
   
-  scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, EndMenu],
+  scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, EndMenu, LogrosMenu],
   physics: {
     default: 'arcade', 
     arcade: {
