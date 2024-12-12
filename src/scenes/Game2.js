@@ -166,7 +166,7 @@ export default class Game2 extends Phaser.Scene {
                 fontSize: 30,
                 color: 'white'
             }
-        ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0);
+        ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0).setVisible(false);
 
         this.buttonMainMenu.on('pointerover', () => // Al pasar el ratón por encima...
         {
@@ -310,7 +310,7 @@ export default class Game2 extends Phaser.Scene {
             }
             ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(50);
+            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(50).setVisible(true);
 
             // PARA VER LO DE LOS COLLECTIONABLES
             let result;
