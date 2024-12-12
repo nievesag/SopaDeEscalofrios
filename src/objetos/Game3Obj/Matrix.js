@@ -4,15 +4,15 @@ import Beetle from './Beetle.js';
 export default class Matrix extends Phaser.GameObjects.Container
 {
   //Constructora del objeto
-
   constructor (scene, x, y)
   {
     super(scene, x, y);
 
-
+    this.scene = scene;
+    this.scene.add.existing(this);
     //Cualidades del nivel
-    this.x = 185.5; //Pos en x
-    this.y = 10; //Pos en y
+    this.x = x; 
+    this.y = y;
     this.columns = 11; //Total columnas
     this.rows = 15; //Total filas
     this.cellWidth = 55; //Ancho celda
@@ -21,21 +21,24 @@ export default class Matrix extends Phaser.GameObjects.Container
     this.EvenRowOffset = 0; //Donde empiezan las filas pares
     this.width = this.columns * this.cellWidth + this.cellWidth / 2; //Ancho
     this.height = this.rows * this.cellHeight + this.cellHeight; //Alto
+
+    this.key = 'beetles';
+    this.frame = [ 0,1,2,3,4,5,6 ];
+    this.randomKey = true;
     
     //Para mirar vecinos
-    let neighborsoffsets = [[[1, 0], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]], // Even row tiles
-    [[1, 0], [1, 1], [0, 1], [-1, 0], [0, -1], [1, -1]]];  // Odd row tiles
+    // dcha, arriba-dcha, arriba-izqd, izqd, abajo-izqd, abajo-dcha
+    let neighborsoffsets = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]]; 
 
     //Para romper grupos
-    //var showcluster = false;
-    var beetlesGroup = [];
-    var savedBeetlesGroup = [];
+    let showGroups = false;
+    let beetlesGroup = [];
+    let savedBeetlesGroup = [];
+    
+    this.possiblebeetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
 
-    //Se añade a escena
-    this.scene.add.existing(this);
     this.isDead = false;
 
-    this.createLevel();
   }
 
   //Destructora del objeto
@@ -44,55 +47,41 @@ export default class Matrix extends Phaser.GameObjects.Container
     this.destroy();
   }
 
-
+  // Creamos la matriz del nivel, con bichos randoms (es un cuadrado, pero lo vamos a tumbar)
   createLevel () {
-
-    for (let i = 0; i < this.columns; i++) {
-      this.level.cells[i] = [];
-      for (let j = 0; j < this.rows; j++) {
-          // Define a tile type and a shift parameter for animation
-          level.cells[i][j] = new Beetle(Game3, i, j);
-      }
-    }
-
     // Inicializa con escarabajos random
-    for (let i = 0; i < this.rows; i++) {
+    for (let j = 0; j < this.rows; j++) {
 
       //Randomizamos el color;
-      let randomBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
+      let randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
+      let texture =  this.possiblebeetles[randomBeetle];
       let count = 0;
       for (let i = 0; i < this.columns; i++) {
         //Máximo de 3 del mismo color seguidos
-        if (count >= 2) 
+        if (count <= 2) 
         {
           // Añadimos uno
-          var newBeetle = Phaser.Math.RND.between(0, Beetle.beetles.length - 1);
+          console.log("scene: " + this.scene + " x: "+ i + " y: " + j + " cellType: " + this.cellType + " texture: " + texture);
+          this.cells[i][j] = new Beetle(this.scene, i, j, "normal", texture);
           
           // Aseguramos que sea distinto del siguiente
-          if (newBeetle == randomBeetle) 
+          if ( this.cells[i][j] == this.cells[i-1][j]) 
           {
-            newBeetle = (newBeetle + 1) % Beetle.beetles.length;
+            randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
+            let texture =  this.possiblebeetles[randomBeetle];
+            this.cells[i][j] = new Beetle(this.scene, i, j, "normal", texture);
           }
-          randomBeetle = newBeetle;
-          count = 0;
         }
-        
         count++;
+
+        if (count == 3) count = 0;
           
-        /*if (j < this.rows/2) 
-        {
-          this.cells[i][j].type = 0;
-        } 
-        else 
-        {
-          this.cells[i][j].type = -1;
-        }*/
       }
-
+    }
   }
 
 
-  }
+  
 
   //Colisiones círculo
   colisions() 
@@ -126,23 +115,21 @@ export default class Matrix extends Phaser.GameObjects.Container
   }
 
   //Bajará una fila de la matriz. 
-  //Requiere de método rellenaMatrix()
-  bajaMatrix()
-  {
-
-  }
-
-  //Se encarga de poner más escarabajos en la fila superior. 
-  //Auxiliar de bajaMatrix()
-  rellenaMatrix()
-  {
-
-  }
-
-  //Saca un color random para rellenaMatrix()
-  randomBeetles()
-  {
-
+  addRow() {
+    // Baja una fila
+    for (let i = 0; i < this.columns; i++) {
+      for (let j = 0; j < this.rows - 1; j++) 
+      {
+        this.cells[i][j+1] = this.cells[i][j];
+      }
+    }
+    
+    // Añade una fila nueva arriba, rellena con bichos nuevos
+    for (let i = 0; i < this.columns; i++) {
+      randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
+      let texture =  this.possiblebeetles[randomBeetle];
+      this.cells[i][0] = new Beetle(this.scene, i, 0, "normal", texture);
+    }
   }
 
   //Evalúa si la matríz está vacía. 
@@ -150,7 +137,15 @@ export default class Matrix extends Phaser.GameObjects.Container
   //En caso falso, sigue el juego
   emptyMatrix()
   {
-    
+    //Recorre cada punto de la matriz
+    for (let i = 0; i < this.columns; i++) {
+      for (let j = 0; j < this.rows - 1; j++) 
+      {
+        //Busca algún punto que no esté vacío  
+        if (this.cells[i][j].cellType != "empty") {
+          return false;
+        }
+      }
+    }
   }
-
 }
