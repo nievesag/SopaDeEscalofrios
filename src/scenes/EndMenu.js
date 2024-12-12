@@ -39,6 +39,10 @@ export default class EndMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
+        let blackBackground = this.make.image({
+            key: 'tanqiaBackground'
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.8, 1.11);
+
         // Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
@@ -65,10 +69,6 @@ export default class EndMenu extends Phaser.Scene {
             }
         ).setOrigin(0.5, 0.5);
 
-        const bg = this.make.image({ // Background.
-            key: 'backgroundMenu',
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
-
         // Alineacion y profundidad del texto.
         title.setAlign('center').setDepth(1);
 		title2.setAlign('center').setDepth(1);
@@ -80,7 +80,6 @@ export default class EndMenu extends Phaser.Scene {
 
         // Botones
         this.createButton('VOLVER',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
-        //this.createButton('2P Game', 50, 2, 'white');
     }
 
 	createButton(text, x, y, textColor) {
@@ -98,7 +97,7 @@ export default class EndMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
+            this.scene.start("MainMenu");
         });
 
         button.on('pointerover', () => // Al pasar el ratón por encima...
@@ -146,36 +145,52 @@ export default class EndMenu extends Phaser.Scene {
     }
 
     showEnding(e) {
+
         let bg;
+        let bgText;
         if(e == 1) {
             bg = this.make.image({
                 key: 'Final1',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+
+            bgText = this.add.text( // diapo 1 text.
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY - 310, 
+                'yeli yeli',
+                {
+                    fontSize: '20px',
+                    color: '#ffffff',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5); // danzhu lo tenia y funciona.
         }
         else if(e == 2) {
             bg = this.make.image({
                 key: 'Final2',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         }
         else if(e == 3) {
             bg = this.make.image({
                 key: 'Final3',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         }
         else if(e == 4) {
             bg = this.make.image({
                 key: 'Final4',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         }
         else if(e == 5) {
             bg = this.make.image({
                 key: 'Final5',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         }
         else if(e == 6) {
             bg = this.make.image({ 
                 key: 'Generico',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         }
     }
 
