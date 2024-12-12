@@ -423,12 +423,12 @@ export default class Game3 extends Phaser.Scene
 
         let result; 
         //Victoria, alcanzar 2000 puntos
-        if (this.points >= 500){
+        if (this.points >= 2000){
             console.log("Victoria");
             result = 'victoria';
             this.hayEscarabajo = true;
             this.start = false;
-            this.time.delayedCall(2000, () => {
+            this.time.delayedCall(500, () => {
                 this.scene.start('GameSelectorMenu');
             });
         }
