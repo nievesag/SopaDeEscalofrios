@@ -13,7 +13,7 @@ export default class Game1 extends Phaser.Scene {
     }
 
     preload () {
-        // Cargamos el Tilemap (JsSON)
+        // Cargamos el Tilemap (JSON)
         // -- mapa 1
 		this.load.tilemapTiledJSON('tilemap1', './assets/tilemap/map1.json');
         // -- mapa 2
@@ -21,22 +21,7 @@ export default class Game1 extends Phaser.Scene {
         // -- mapa 3
         this.load.tilemapTiledJSON('tilemap3', './assets/tilemap/map3.json');
 
-		// Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
-		this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');
-
-		// Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('player', './assets/images/g1/playerG1.png');
-
-        // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('box', './assets/images/g1/box.png');
-
-        // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('organ', './assets/images/g1/organ.png');
-
-        // Recurso para el personaje principal (imagen simple con un solo frame)
-		this.load.image('goal', '../../assets/images/g1/goal.png');
-
-        // Música.
+        // Música
         this.load.audio('theme1', './assets/audio/m1c.mp3');
     }
     
@@ -78,7 +63,7 @@ export default class Game1 extends Phaser.Scene {
                 fontSize: '20px',
                 color: '#ffffff',
                 align: 'center',
-                fontFamily: 'EagleLake',
+                fontFamily: 'yatra',
                 wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
@@ -91,7 +76,7 @@ export default class Game1 extends Phaser.Scene {
             'Jugar',
             {
             fontSize: '50px',
-            fontFamily: 'arabic',
+            fontFamily: 'yatra',
             color: 'white',
             align: 'center'
         }).setOrigin(0.5).setInteractive();
@@ -122,7 +107,7 @@ export default class Game1 extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        this.cameras.main.setBounds(-100,-65,416,256).setZoom(window.screen.availWidth/1000);
+        this.cameras.main.setBounds(-65,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
         
@@ -293,8 +278,15 @@ export default class Game1 extends Phaser.Scene {
         });
         
         // tiempo
-        this.timerText = this.add.text(20, 20, this.gameTime,
-            { fontFamily: 'arabic', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+        this.timerText = this.add.text(
+            20, 
+            20, 
+            this.gameTime,
+            { 
+                fontFamily: 'yatra', 
+                fontSize: 15, 
+                color: 'White' 
+            }).setOrigin(0.5, 0.5);
             
             this.timerHUD();
             
@@ -312,7 +304,7 @@ export default class Game1 extends Phaser.Scene {
             if(this.gameTime > 0) {
                 // crea texto nuevo
                 this.timerText = this.add.text(20, 20, this.gameTime,
-                    { fontFamily: 'EagleLake', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+                    { fontFamily: 'yatra', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
 
@@ -433,7 +425,7 @@ export default class Game1 extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: fontsize,
                 color: textColor
             }

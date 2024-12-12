@@ -1,5 +1,17 @@
-
 let ending = 0;
+let logros = {
+    Game1: ['Amset', 'Hapy', 'Kebeshenuef', 'Duamutef', 'Henu'] ,
+    Game2: ['Pluma de la corona', 'Concha cauri', 'Frasco Asuán', 'Cetro de Papiro', 'Cefalea bóvida'] ,
+    Game3: ['Escarabajo negro', 'Escarabajo verde', 'Escarabajo azul', 'Escarabajo rojo', 'Escarabajo dorado'] ,
+    Game4: ['Flecha', 'Lanza', 'Flecha mágica', 'Lanza mágica', 'Pluma'] ,
+    Game5: ['Pequeña estrella', 'Estrella', 'Gran estrella', 'Sol', 'Sol radiante'] 
+};
+
+let logros1 = [];
+let logros2 = [];
+let logros3 = [];
+let logros4 = [];
+let logros5 = [];
 
 export default class EndMenu extends Phaser.Scene {
 	constructor() {
@@ -10,14 +22,6 @@ export default class EndMenu extends Phaser.Scene {
         this.gameState = data.gameState; // Guarda gameState en la escena
     }
 
-	preload () {
-		// Background.
-        this.load.image('backgroundMenu', './assets/images/menuBackground.jpg');
-
-        // Música.s
-        this.load.audio('f3ale', './assets/audio/f3ale.mp3');
-	}
-
 	create() {
         // Paramos el audio
         this.sound.stopAll();
@@ -27,45 +31,32 @@ export default class EndMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        // Texto del Título con borde de color aleatorio
+        /*// Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY - 150,
             'FIN DEL PERIODO DE CONTACTO CON LOS DIOSES',
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: 30,
 
                 color: '#dfa919',
                 stroke: '#453424',   
                 strokeThickness: 10
             }
-        ).setOrigin(0.5, 0.5);
-
-		let title2 = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY - 75,
-            'Estos son tus resultados:',
-            {
-                fontFamily: 'arabic',
-                fontSize: 25,
-                color: '#e3be5b'
-            }
-        ).setOrigin(0.5, 0.5);
-
-        const bg = this.make.image({ // Background.
-            key: 'backgroundMenu',
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+        ).setOrigin(0.5, 0.5);*
 
         // Alineacion y profundidad del texto.
-        title.setAlign('center').setDepth(1);
-		title2.setAlign('center').setDepth(1);
+        title.setAlign('center').setDepth(1);*/
+
+        // Gestion de finales
+        this.checkEnding();
+        this.showEnding(ending);
+        this.manageLogros();
+        this.showLogros();
 
         // Botones
-        this.createButton('VOLVER',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
-        //this.createButton('2P Game', 50, 2, 'white');
-
-        this.checkEnding();
+        this.createButton('VOLVER',  this.cameras.main.width -50,  this.cameras.main.scrollY + 25, 'white');
     }
 
 	createButton(text, x, y, textColor) {
@@ -74,8 +65,8 @@ export default class EndMenu extends Phaser.Scene {
            y,
             text,
             {
-                fontFamily: 'arabic',
-                fontSize: 50,
+                fontFamily: 'yatra',
+                fontSize: 20,
 
                 color: textColor
             }
@@ -83,7 +74,7 @@ export default class EndMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
+            this.scene.start("MainMenu");
         });
 
         button.on('pointerover', () => // Al pasar el ratón por encima...
@@ -108,8 +99,6 @@ export default class EndMenu extends Phaser.Scene {
         let result4 = this.gameState.endResults.Game4.filter(i => i == 'victoria');
         let result5 = this.gameState.endResults.Game5.filter(i => i == 'victoria');
 
-        console.log(result1);
-
         // el largo de esos auxiliares sera el num de victorias por juego
         let num1 = result1.length;
         let num2 = result2.length;
@@ -119,17 +108,225 @@ export default class EndMenu extends Phaser.Scene {
 
         let max = Math.max(num1, num2, num3, num4, num5);
 
-        if(max == num1) { ending = 1; }
-        else if(max == num2) { ending = 2; }
-        else if(max == num3) { ending = 3; }
-        else if(max == num4) { ending = 4; }
-        else if(max == num5) { ending = 5; }
+        if(max != 0) {
+            if(max == num1) { ending = 1; }
+            else if(max == num2) { ending = 2; }
+            else if(max == num3) { ending = 3; }
+            else if(max == num4) { ending = 4; }
+            else if(max == num5) { ending = 5; }
+            else { ending = 6; } // final generico
+        }
         else { ending = 6; } // final generico
+
+        console.log(ending);
     }
 
     showEnding(e) {
 
+        let blackBackground = this.make.image({
+            key: 'tanqiaBg'
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(2, 2.5);
+
+        let collectableWall = this.make.image({
+            key: 'collectableWall'
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 302).setOrigin(0.5).setScale(4, 1);
+
+        let bg;
+        let endText
+        if(e == 1) {
+            bg = this.make.image({
+                key: 'Final1',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65); 
+        
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Centenares de entrañas han sido traídas al cielo inferior y cargadas en la embarcación Henu. Pronto seré transportada a través de la Duat, convirtiéndome así en la diosa de la putrefacción de la carne.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
+        }
+        else if(e == 2) {
+            bg = this.make.image({
+                key: 'Final2',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+        
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Multitud de vasos canopos han sido arrojados a las profundidades del río Nilo y ninguno de ellos pese a su fragilidad ha sido fragmentado. Dentro de no mucho seré la próxima diosa de la primera catarata.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
+        }
+        else if(e == 3) {
+            bg = this.make.image({
+                key: 'Final3',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+        
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Un sinnúmero de escarabajos han sido liberados de ese oscilante y viscoso fluido ámbar. Pronto podré ser una nueva mujer: la diosa del crepúsculo que teñirá el firmamento entero de sangre.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
+        }
+        else if(e == 4) {
+            bg = this.make.image({
+                key: 'Final4',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Una manada de leones ha sido sacrificada. Se les conoce por ser los animales más poderosos de la vida y la muerte, símbolo de valía. Estoy preparada para ser la próxima diosa de la violencia.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
+        }
+        else if(e == 5) {
+            bg = this.make.image({
+                key: 'Final5',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Los rayos luminosos han sido reflejados sobre las cristalinas paredes estratégicamente posicionadas. Mi bello resplandor causará dolor a los ojos de cualquier mortal, porque seré la futura diosa del centelleo.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
+        }
+        else if(e == 6) {
+            bg = this.make.image({ 
+                key: 'Generico',
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+
+            endText = this.add.text(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY - 310,
+                'Ningún dios me ha otorgado su favor... en su lugar he sido castigada siendo encadenada por el resto de la eternidad. Imperios nacerán, civilizaciónes caerán, pero yo permaneceré aquí hasta el fin de los tiempos. Humillada, condenada, despreciada, sola.',
+                {
+                    fontFamily: 'yatra',
+                    fontSize: 20,
+                    color: '#ffffff',
+                    align: 'center',
+                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                }
+            ).setOrigin(0.5, 0.5).setDepth(1);
+        }
     }
 
+    showLogros() {
 
+        // si hay algun logro
+        if(logros1.length != 0 || logros2.length != 0 || logros3.length != 0 || logros4.length != 0 || logros5.length != 0) 
+        {
+            alert('Has obtenido los siguientes logros: ' + logros1 +  ' ' + logros2 +  ' ' + logros3 +  ' ' + logros4 +  ' ' + logros5 );
+        }
+
+        /*
+        for(var i = 0; i < logros1.length; i++) {
+            if(i == 0) {
+                // --- logro 1 g1
+                if(logros1[i] != null) {
+                    let l11 = this.make.image({
+                        key: 'Final4',
+                    }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+                }
+                // --- logro 1 g2
+                if(logros2[i] != null) {
+                    
+                }
+                // --- logro 1 g3
+                if(logros3[i] != null) {
+
+                }
+                // --- logro 1 g4
+                if(logros4[i] != null) {
+
+                }
+                // --- logro 1 g5
+                if(logros5[i] != null) {
+
+                }
+            }
+            else if(i == 1) {
+                
+            }
+            else if(i == 2) {
+
+            }
+            else if(i == 3) {
+
+            }
+            else if(i == 4) {
+
+            }
+        }
+        */
+    }
+
+    manageLogros() {
+        for(var i = 0; i < this.gameState.endResults.Game1.length; i++) {
+            // --- logros g1
+            if(this.gameState.endResults.Game1[i] != null && this.gameState.endResults.Game1[i] != 'derrota') {
+                logros1.push(logros.Game1[i]);
+            }
+            // --- logros g2
+            if(this.gameState.endResults.Game2[i] != null && this.gameState.endResults.Game2[i] != 'derrota') {
+                logros2.push(logros.Game2[i]);
+            }
+            // --- logros g3
+            if(this.gameState.endResults.Game3[i] != null && this.gameState.endResults.Game3[i] != 'derrota') {
+                logros3.push(logros.Game3[i]);
+            }
+            // --- logros g4
+            if(this.gameState.endResults.Game4[i] != null && this.gameState.endResults.Game4[i] != 'derrota') {
+                logros4.push(logros.Game4[i]);
+            }
+            // --- logros g5
+            if(this.gameState.endResults.Game5[i] != null && this.gameState.endResults.Game5[i] != 'derrota') {
+                logros5.push(logros.Game5[i]);
+            }
+        }
+
+        console.log(logros1);
+        console.log(logros2);
+        console.log(logros3);
+        console.log(logros4);
+        console.log(logros5);
+    }
 }

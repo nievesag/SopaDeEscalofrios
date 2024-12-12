@@ -1,20 +1,32 @@
-// Clase del Beetle del Minijuego 3. 
-export default class Beetle extends Phaser.GameObjects.Container
+export default class Beetle extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto
-  constructor (scene, x, y, sprite, color)
-  {
-    super(scene, x, y, { key: "Beetle" });
+  constructor(scene, x, y, type, texture) {
+    super(scene, x, y, type, texture)
 
-    //Cualidades
+    this.scene = scene;
+    this.scene.add.existing(this);
+    this.setOrigin(0.5, 0.5); 
     this.x = x;
     this.y = y;
-    this.sprite = sprite;
-    this.color = color;
+    this.type = type; //"normal", "bomb", "colorbomb"
+    this.sprite = scene.add.sprite(x, y, texture);
+    this.velocity = { x: 0, y: 0 };
+    this.force = 1000;
 
-    //Se añade a escena
-    this.scene.add.existing(this);
+    this.removed = false; //Si se ha quitado del nivel o no
+    this.processed = false; //Si ha sido procesado en vecinos o no
+
+    this.scene.physics.world.enable(this);
+    this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
+    this.body.setBounce(1); // rebote con colisiones.
+    this.body.setAllowGravity(true);
+    this.body.setImmovable(false);
     this.isDead = false;
+  }
+
+  create(){
+    
   }
 
   //Destructora del objeto
@@ -22,6 +34,14 @@ export default class Beetle extends Phaser.GameObjects.Container
   {
     this.destroy();
   }
+
+  //Maneja el disparo de los escarabajos. 
+  //Este método es llamado desde Player3, con el ángulo del pointer del ratón en dado momento. 
+  shoot(angle) {
+    const velocity = this.scene.physics.velocityFromAngle(angle, this.force);
+    this.setVelocity(velocity.x, velocity.y);
+  }
+
 
   //Colisiones círculo
   colisions() 
@@ -46,6 +66,10 @@ export default class Beetle extends Phaser.GameObjects.Container
   collectBeetle()
   {
     
+  }
+
+  setTexture(texture){
+    this.texture = texture;
   }
 
 }

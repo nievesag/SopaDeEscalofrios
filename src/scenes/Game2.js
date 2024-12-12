@@ -58,7 +58,7 @@ export default class Game2 extends Phaser.Scene {
                 fontSize: '20px',
                 color: '#ffffff',
                 align: 'center',
-                fontFamily: 'EagleLake',
+                fontFamily: 'yatra',
                 wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
@@ -71,7 +71,7 @@ export default class Game2 extends Phaser.Scene {
             'Jugar',
             {
             fontSize: '50px',
-            fontFamily: 'arabic',
+            fontFamily: 'yatra',
             color: 'white',
             align: 'center'
         }).setOrigin(0.5).setInteractive();
@@ -93,7 +93,7 @@ export default class Game2 extends Phaser.Scene {
             tanqiaText.destroy();
             acceptButton.destroy();
             this.startGame();
-        })
+        });
     }
 
     startGame(){
@@ -105,13 +105,13 @@ export default class Game2 extends Phaser.Scene {
         })
 
         // música.
-        let music = this.sound.add('theme2');
-        music.play();
+        this.music = this.sound.add('theme2');
+        this.music.play();
         this.sound.pauseOnBlur = true;
 
         // background y rio.
-        this.bg = this.add.tileSprite(0, 0, 3200, 600, 'background').setOrigin(0, 0).setScrollFactor(0);
-        this.rio = this.add.tileSprite(0, 600, 3200, 200, 'river').setOrigin(0,0).setScrollFactor(0);
+        this.bg = this.add.tileSprite(0, -100, 1920, 1080, 'background').setOrigin(0, 0).setScrollFactor(0);
+        this.rio = this.add.tileSprite(0, 600, 3200, 1992, 'river').setOrigin(0,0).setScrollFactor(0).setScale(1, 0.1);
 
         // creación de los objetos del juego.
         this.background = new Background(this);
@@ -134,12 +134,12 @@ export default class Game2 extends Phaser.Scene {
         this.musicButton = this.add.image(40, 40, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
-            if (music.isPlaying) {
-                music.pause();
+            if (this.music.isPlaying) {
+                this.music.pause();
                 this.musicButton.setTexture('muteButton');
             } 
             else {
-                music.resume();
+                this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
@@ -152,23 +152,45 @@ export default class Game2 extends Phaser.Scene {
             {
                 fontSize: '24px',
                 color: 'white',
-                fontFamily: 'EagleLake'
+                fontFamily: 'yatra'
             }
         ).setDepth(10).setScrollFactor(0); // pq es UI.
 
         // botón de regreso.
-        this.buttonMainMenu = this.createButton('Regresar',  960,  35, 'white', 30, 'GameSelectorMenu');
-        this.buttonMainMenu.on('pointerdown', () => { 
+        this.buttonMainMenu = this.add.text(
+            960, 
+            35, 
+            'Regresar', 
+            {
+                fontFamily: 'yatra',
+                fontSize: 30,
+                color: 'white'
+            }
+        ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0).setVisible(false);
+
+        this.buttonMainMenu.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            this.buttonMainMenu.setTint(0x290b0d);
+        });
+
+        this.buttonMainMenu.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            this.buttonMainMenu.clearTint();
+        });
+
+        this.buttonMainMenu.on("pointerdown", () => { // Al hacer clic...
             this.isGameOver = false;
             this.isClickingOnUI = true; 
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
-        }).setDepth(10).setScrollFactor(0); // pq es UI 
+            this.scene.start('GameSelectorMenu');
+            this.sound.stopAll();
+        });
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
         {
-            if (!this.isClickingOnUI) { // si no se clica en la UI...
+            if (!this.isClickingOnUI && !this.vessel.isLaunched) { // si no se clica en la UI y no se ha lanzado......
             this.vessel.launchVessel(this.cannon.angle); // lanza vasija.
             }
         });
@@ -211,7 +233,9 @@ export default class Game2 extends Phaser.Scene {
 
         if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.musicButton && this.vessel && this.vessel.body){
             // parallax scroller.
-            this.bg.tilePositionX += 2;
+            if(this.vessel.isLaunched){
+                this.bg.tilePositionX += this.vessel.body.velocity.x / 500; // el fondo va segun la velocidad del vessel (aprox /500)
+            }
             this.rio.tilePositionX -=6;
 
             this.background.update();
@@ -280,44 +304,13 @@ export default class Game2 extends Phaser.Scene {
             '¡Se acabó!',
             {
                 fontSize: '70px',
-                fontFamily: 'EagleLake',
+                fontFamily: 'yatra',
                 color: 'white',
                 align: 'center'
             }
             ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-            let restartButton = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY + 100,
-            'Reiniciar (-1 acción)',
-            {
-                fontSize: '40px',
-                fontFamily: 'EagleLake',
-                color: 'white',
-                align: 'center'
-            }
-            ).setOrigin(0.5).setInteractive().setDepth(100).setScrollFactor(0);
-
-            restartButton.on('pointerdown', () => {
-                if (this.gameState.actionsLeft > 0){
-                    this.isGameOver = false;
-                    this.gameState.actionsLeft--;
-                    this.scene.restart(); // reinicia escena.
-                }
-                else{
-                    alert('No te quedan acciones hoy. Pasa al siguiente dia.');
-                }
-            });
-
-            restartButton.on('pointerover', () => // Al pasar el ratón por encima...
-            {
-                restartButton.setTint(0x453424);
-            });
-
-            restartButton.on('pointerout', () => // Al quitar el ratón de encima...
-            {
-                restartButton.clearTint();
-            });
+            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(50).setVisible(true);
 
             // PARA VER LO DE LOS COLLECTIONABLES
             let result;
@@ -327,9 +320,9 @@ export default class Game2 extends Phaser.Scene {
             }
             if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
-            this.gameState.minigamesResults.Game4[currentDayIndex] = result;
+            this.gameState.minigamesResults.Game2[currentDayIndex] = 'victoria';
             }
-            console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game4);
+            console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game2);
         }
     }
 
@@ -385,7 +378,7 @@ export default class Game2 extends Phaser.Scene {
             y, 
             text, 
             {
-                fontFamily: 'arabic',
+                fontFamily: 'yatra',
                 fontSize: fontsize,
                 color: textColor
             }
