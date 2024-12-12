@@ -19,10 +19,10 @@ export default class EndMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        /*// Texto del Título con borde de color aleatorio
+        // Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
-            this.cameras.main.centerY - 150,
+            this.cameras.main.centerY +310,
             'FIN DEL PERIODO DE CONTACTO CON LOS DIOSES',
             {
                 fontFamily: 'yatra',
@@ -32,10 +32,10 @@ export default class EndMenu extends Phaser.Scene {
                 stroke: '#453424',   
                 strokeThickness: 10
             }
-        ).setOrigin(0.5, 0.5);*
+        ).setOrigin(0.5, 0.5);
 
         // Alineacion y profundidad del texto.
-        title.setAlign('center').setDepth(1);*/
+        title.setAlign('center').setDepth(1);
 
         // Gestion de finales
         this.checkEnding();
@@ -43,7 +43,7 @@ export default class EndMenu extends Phaser.Scene {
         this.manageLogros();
 
         // Botones
-        this.createButton('VER LOGROS',  this.cameras.main.width -50,  this.cameras.main.scrollY + 25, 'white');
+        this.createButton('VER LOGROS',  this.cameras.main.width -65,  this.cameras.main.scrollY + 25, 'white');
     }
 
 	createButton(text, x, y, textColor) {
@@ -53,7 +53,7 @@ export default class EndMenu extends Phaser.Scene {
             text,
             {
                 fontFamily: 'yatra',
-                fontSize: 20,
+                fontSize: 17,
 
                 color: textColor
             }
@@ -109,16 +109,12 @@ export default class EndMenu extends Phaser.Scene {
     }
 
     showEnding(e) {
-        let collectableWall = this.make.image({
-            key: 'collectableWall'
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 302).setOrigin(0.5).setScale(4, 1);
-
         let bg;
         let endText
         if(e == 1) {
             bg = this.make.image({
                 key: 'Final1',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65); 
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7); 
         
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -137,7 +133,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 2) {
             bg = this.make.image({
                 key: 'Final2',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -156,7 +152,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 3) {
             bg = this.make.image({
                 key: 'Final3',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -175,7 +171,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 4) {
             bg = this.make.image({
                 key: 'Final4',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
             
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -194,7 +190,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 5) {
             bg = this.make.image({
                 key: 'Final5',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
 
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -213,8 +209,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 6) {
             bg = this.make.image({ 
                 key: 'Generico',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
-
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
             endText = this.add.text(
                 this.cameras.main.centerX,
                 this.cameras.main.centerY - 310,

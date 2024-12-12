@@ -76,9 +76,23 @@ export default class Game5 extends Phaser.Scene {
         
 
         // Música.
-        const music = this.sound.add('theme5');
-        music.play();
+        this.music = this.sound.add('theme5');
+        this.music.play();
         this.sound.pauseOnBlur = true;
+
+        // Botón de la música.
+        this.musicButton = this.add.image(40, 40, 'musicButton');
+        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
+            this.isClickingOnUI = true; 
+            if (this.music.isPlaying) {
+                this.music.pause();
+                this.musicButton.setTexture('muteButton');
+            } 
+            else {
+                this.music.resume();
+                this.musicButton.setTexture('musicButton');
+            }
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
         // 1 para los muro, 0 para los vacios, 2 para la gun
         const tablero = [

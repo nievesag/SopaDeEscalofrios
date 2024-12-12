@@ -73,9 +73,23 @@ export default class Game4 extends Phaser.Scene {
     startGame(){
         console.log(this.gameState.currentDay);
         // Música.
-        const music = this.sound.add('theme4');
-        music.play();
+        this.music = this.sound.add('theme4');
+        this.music.play();
         this.sound.pauseOnBlur = true;
+
+        // Botón de la música.
+        this.musicButton = this.add.image(40, 40, 'musicButton');
+        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
+            this.isClickingOnUI = true; 
+            if (this.music.isPlaying) {
+                this.music.pause();
+                this.musicButton.setTexture('muteButton');
+            } 
+            else {
+                this.music.resume();
+                this.musicButton.setTexture('musicButton');
+            }
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
         
           // Background
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')

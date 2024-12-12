@@ -9,27 +9,27 @@ import ObstaclesGenerator from '../objetos/Game2Obj/ObstacleGenerator.js';
 export default class Game2 extends Phaser.Scene {
     constructor() {
         super({ key: 'Game2'});
-        
     }
 
     init(data) {
-        this.gameState = data.gameState; // Guarda gameState en la escena
+        this.gameState = data.gameState; // guarda gameState en la escena.
     }
     
-    // CAMBIAR TODO PERO TODO E POR SPRITES
     create (){
         this.cameras.main.setBackgroundColor(0x181818);
         this.isGameOver = false; // inicialmench no es gameOver.
+
+        // ----- declaración de los this.algo -----.
+        
         
         // si es la primera vez q se inicia...
-        if(!this.gameState.hasStartedBefore[1]){
+        if(!this.gameState.hasStartedBefore[1]){ // [1] es por que es el Game2.
             this.gameState.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
             this.createTanqiaPopUp();
         }
         else{ // si ya se ha iniciado anteriormente...
             this.startGame(); // empieza el game directamente.
-        }
-        
+        }    
     }
 
     createTanqiaPopUp(){
@@ -198,7 +198,7 @@ export default class Game2 extends Phaser.Scene {
             this.obsClass = [
                 {type: 'crocodile', class: Crocodile},
                 {type: 'hippo', class: Hippo},
-                {type: 'maelstrom', class: Maelstrom}, // MAELSTROM AUN NO MATA!!!
+                {type: 'maelstrom', class: Maelstrom}, 
             ];
         }
     }
