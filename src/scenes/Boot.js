@@ -56,7 +56,7 @@ export default class Boot extends Phaser.Scene {
 
         // -------- GAME 3
         //Background
-        this.load.image('bg3', "./assets/images/Game3/bg.jpg")
+        this.load.image('bg3', "./assets/images/Game3/bg.png")
         //Player (place holder)
         //this.load.image('cannonBase', './assets/images/icon500.jpg');
         this.load.image('cannon', './assets/images/Game3/Cannon.png');
