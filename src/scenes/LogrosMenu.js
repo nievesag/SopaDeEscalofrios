@@ -64,37 +64,41 @@ export default class LogrosMenu extends Phaser.Scene {
 
         // --- Textos
         // si hay algun logro
-        if(this.gameState.logros1.length != 0 || this.gameState.logros2.length != 0 || this.gameState.logros3.length != 0 || this.gameState.logros4.length != 0 || this.gameState.logros5.length != 0) 
-        {
-            // -- Logros, nombres
-            // G1
+        if(this.gameState){
 
-            // G2
-
-            // G3
-
-            // G4
-
-            // G5
-
+            if(this.gameState.logros1.length != 0 || this.gameState.logros2.length != 0 || this.gameState.logros3.length != 0 || this.gameState.logros4.length != 0 || this.gameState.logros5.length != 0) 
+            {
+                // -- Logros, nombres
+                // G1
+        
+                // G2
+        
+                // G3
+        
+                // G4
+        
+                // G5      
+            }
+            // ningun logro
+            else
+            {
+                this.ningunLogroText = this.add.text(
+                    this.cameras.main.centerX,
+                    this.cameras.main.centerY - 310,
+                    'No has obtenido ningún logro',
+                    {
+                        fontFamily: 'yatra',
+                        fontSize: 20,
+                        color: '#ffffff',
+                        align: 'center',
+                        wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                        wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+                    }
+                ).setOrigin(0.5, 0.5).setDepth(1);    
+            }
+            
         }
-        // ningun logro
-        else
-        {
-            this.ningunLogroText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'No has obtenido ningún logro',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
-        }
+        
     }
 
     resetLogros() {

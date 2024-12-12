@@ -85,7 +85,7 @@ export default class Game1 extends Phaser.Scene {
         this.sound.pauseOnBlur = true;
 
         // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
+        this.musicButton = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
             if (this.music.isPlaying) {
@@ -96,7 +96,7 @@ export default class Game1 extends Phaser.Scene {
                 this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
+        }).setScale(0.1).setInteractive().setDepth(1000).setScrollFactor(0); // pq es UI
 
         
         this.cameras.main.setBounds(-65,-65,416,256).setZoom(window.screen.availWidth/1000);
