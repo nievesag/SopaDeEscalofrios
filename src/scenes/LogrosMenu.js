@@ -18,7 +18,6 @@ export default class LogrosMenu extends Phaser.Scene {
 
         this.showLogros();
         this.createButton('VOLVER',  this.cameras.main.width -50,  this.cameras.main.scrollY + 25, 'white');
-        
     }
 
     createButton(text, x, y, textColor) {

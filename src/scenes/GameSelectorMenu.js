@@ -17,7 +17,6 @@ let gameState = {
         false, // game4.
         false  // game5.
     ],
-
     playedInCurrentDay: [false, false, false, false, false],
     endResults: {
         Game1: [null, null, null, null, null] ,
@@ -34,7 +33,6 @@ let gameState = {
         Game4: ['Flecha', 'Lanza', 'Flecha mágica', 'Lanza mágica', 'Pluma'] ,
         Game5: ['Pequeña estrella', 'Estrella', 'Gran estrella', 'Sol', 'Sol radiante'] 
     },
-    
     logros1 : [],
     logros2 : [],
     logros3 : [],
@@ -307,14 +305,31 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.createIcon('Icon4', 670, 450, 'Game4');
         this.createIcon('Icon5', this.cameras.main.centerX - 7, this.cameras.main.centerY - 50, 'Game5');
 
-        this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
-            fontFamily: 'yatra',
-            fontSize: '24px',
-            color: '#ffffff',
-        });
+        this.infoText;
+        if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`, {
+                fontFamily: 'yatra',
+                fontSize: '24px',
+                color: '#ffffff',
+            });
+        }
+        else if(gameState.actionsLeft == 1) {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`, {
+                fontFamily: 'yatra',
+                fontSize: '24px',
+                color: '#ffffff',
+            });
+        }
+        else {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`, {
+                fontFamily: 'yatra',
+                fontSize: '24px',
+                color: '#ffffff',
+            });
+        }
 
         // Boton para pasar al siguiente día
-        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Next Day', {
+        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Dormir', {
             fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff',
@@ -422,7 +437,18 @@ export default class GameSelectorMenu extends Phaser.Scene {
         gameState.currentDay++;
         gameState.actionsLeft = 3;
         gameState.playedInCurrentDay = [false, false, false, false, false]; 
+
         this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
+
+        if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) {
+            this.infoText.setText(`DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`);
+        }
+        else if(gameState.actionsLeft == 1) {
+            this.infoText.setText(`DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`);
+        }
+        else {
+            this.infoText.setText(`DÍA: ${gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`);
+        }
     }
 
    saveEndResults(){
