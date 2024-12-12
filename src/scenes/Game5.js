@@ -145,7 +145,7 @@ export default class Game5 extends Phaser.Scene {
                     this.walls.push(wall);
                 } else if (tileValue === 2 && gun == null) {
                     gun = new Gun(this, x, y, 'left', tileSize);
-                } else if (tileValue === 3) {
+                } else if (tileValue === 3 && destiny == null) {
                     destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
                 }
                 
