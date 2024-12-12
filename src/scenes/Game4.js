@@ -19,6 +19,7 @@ export default class Game4 extends Phaser.Scene {
     }
     
     create (){
+        this.cameras.main.setBackgroundColor(0x181818);
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[3]){
             this.gameState.hasStartedBefore[3] = true; // ala ya ha salio el tutorial.
@@ -30,27 +31,10 @@ export default class Game4 extends Phaser.Scene {
     }
 
     createTanqiaPopUp(){
-        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
-        // Background del dialogo (LUEGO IMAGEN).
-        let dialogueBackground = this.make.image({
-            x: this.cameras.main.centerX, // x
-            y: this.cameras.main.centerY, // y
-            scale:{
-                x: 1.9, // anchura
-                y: 2.22, // altura
-            },
-            key: 'tanqiaBg',
-        });
-
-        let tanqia = this.add.image(
-            this.cameras.main.centerX, 
-            this.cameras.main.centerY + 175, 
-            'tanqia'
-        ).setScale(0.5, 0.32); // x, y, tag.
 
         let tanqiaText = this.add.text(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY - 150, 
+            this.cameras.main.centerY - 100, 
             'Inheret, «aquel que ha traído la diosa lejana  y aquel que simboliza el poder creativo del sol», te ha encargado dar exterminio a aquellos animales indignos de vivir en su desierto. Se te será otorgado su arco mágico para cumplir con tu deber o serás castigado con cien años perdido en las arenas infinitas de su desierto .',
             {
                 fontSize: '20px',
@@ -62,44 +46,50 @@ export default class Game4 extends Phaser.Scene {
             }
         ).setOrigin(0.5); // danzhu lo tenia y funciona.
 
-        // Botón de aceptar.
-        let acceptButton = this.add.text(
+        let tanqia = this.add.image(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY + 340, 
-            'Jugar',
-            {
-            fontSize: '50px',
-            fontFamily: 'yatra',
-            color: 'white',
-            align: 'center'
-        }).setOrigin(0.5).setInteractive();
+            this.cameras.main.centerY + 175, 
+            'Icon4'
+        ).setScale(1.5, 1.5).setInteractive(); // x, y, tag.
 
-        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        tanqia.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            acceptButton.setTint(0xdfa919);
+            tanqia.setTint(0x8a9597);
         });
 
-        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        tanqia.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            acceptButton.clearTint();
+            tanqia.clearTint();
         });
 
-        acceptButton.on('pointerdown', ()=>{
+        tanqia.on('pointerdown', ()=>{
             // Destruye todo y pone el juego a funcionarch.
-            dialogueBackground.destroy();
             tanqia.destroy();
             tanqiaText.destroy();
-            acceptButton.destroy();
             this.startGame();
-        })
+        });
     }
 
     startGame(){
         console.log(this.gameState.currentDay);
         // Música.
-        const music = this.sound.add('theme4');
-        music.play();
+        this.music = this.sound.add('theme4');
+        this.music.play();
         this.sound.pauseOnBlur = true;
+
+        // Botón de la música.
+        this.musicButton = this.add.image(this.cameras.main.width - 50, 40, 'musicButton');
+        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
+            this.isClickingOnUI = true; 
+            if (this.music.isPlaying) {
+                this.music.pause();
+                this.musicButton.setTexture('muteButton');
+            } 
+            else {
+                this.music.resume();
+                this.musicButton.setTexture('musicButton');
+            }
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
         
           // Background
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
@@ -327,7 +317,7 @@ export default class Game4 extends Phaser.Scene {
             color: '#ffffff'
         });
 
-        this.arrowTypeText = this.add.text(10, 70, `Arrow Type: ${this.bow.getCurrentArrowType()}`, {
+        this.arrowTypeText = this.add.text(10, 70, `Tipo de flecha: ${this.bow.getCurrentArrowType()}`, {
             fontFamily: 'yatra',
             fontSize: '30px',
             color: '#ffffff',
@@ -337,10 +327,10 @@ export default class Game4 extends Phaser.Scene {
 
     updateInfoTexts() {
 
-        this.enemiesText.setText(`Enemies left: ${this.enemiesPool.length - this.enemiesCounter}`);
-        this.arrowsText.setText(`Arrows left: ${this.bow.totalArrows}`);
+        this.enemiesText.setText(`Enemigos restantes: ${this.enemiesPool.length - this.enemiesCounter}`);
+        this.arrowsText.setText(`Flechas restantes: ${this.bow.totalArrows}`);
         if(this.bow.totalArrows >= 1)
-            this.arrowTypeText.setText(`Arrow type: ${this.bow.getCurrentArrowType()}`);
+            this.arrowTypeText.setText(`Tipo de flecha: ${this.bow.getCurrentArrowType()}`);
     }
 
 
@@ -348,9 +338,9 @@ export default class Game4 extends Phaser.Scene {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 3 },
+                { type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 2 },
-                 { type: 'Ball Arrow', count: 5 },
+                 { type: 'Ball Arrow', count: 2 },
                 { type: 'Split Arrow', count: 3 }
 
             ]);
@@ -358,16 +348,16 @@ export default class Game4 extends Phaser.Scene {
         else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 3 },
+                { type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 1 },
-                { type: 'Ball Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 1 },
                 { type: 'Split Arrow', count: 2 }
             ]);
         }
         else if(this.gameState.currentDay == 5)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Ball Arrow', count: 1 },
+                { type: 'Explosive Arrow', count: 1 },
                 { type: 'Split Arrow', count: 1 },
                 { type: 'Normal', count: 10 }
                 //{ type: 'Explosive Arrow', count: 1 },

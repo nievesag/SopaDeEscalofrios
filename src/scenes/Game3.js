@@ -18,6 +18,7 @@ export default class Game3 extends Phaser.Scene
 
     create ()
     {
+        this.cameras.main.setBackgroundColor(0x181818);
         //Empieza sin ser game over
         this.gameOver = false;
         // si es la primera vez q se inicia...
@@ -33,27 +34,9 @@ export default class Game3 extends Phaser.Scene
 
     createTanqiaPopUp()
     {
-        this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
-        // Background del dialogo (LUEGO IMAGEN).
-        let dialogueBackground = this.make.image({
-            x: this.cameras.main.centerX, // x
-            y: this.cameras.main.centerY, // y
-            scale:{
-                x: 1.9, // anchura
-                y: 2.22, // altura
-            },
-            key: 'tanqiaBg',
-        });
-
-        let tanqia = this.add.image(
-            this.cameras.main.centerX, 
-            this.cameras.main.centerY + 175, 
-            'tanqia'
-        ).setScale(0.5, 0.32); // x, y, tag.
-
         let tanqiaText = this.add.text(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY - 150, 
+            this.cameras.main.centerY - 100, 
             'Jepri, el dios del sol autocreado, sufre de una fuerte tristeza: sus adorados ahijados, los escarabajos de todo Egipto, han sido capturados.Para contentarle de nuevo, y evitar su ira, deberás rescatar al mayor número de escarabajos posibles, en el menor tiempo posible.',
             {
                 fontSize: '20px',
@@ -65,36 +48,28 @@ export default class Game3 extends Phaser.Scene
             }
         ).setOrigin(0.5); // danzhu lo tenia y funciona.
 
-        // Botón de aceptar.
-        let acceptButton = this.add.text(
+        let tanqia = this.add.image(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY + 340, 
-            'Jugar',
-            {
-            fontSize: '50px',
-            fontFamily: 'yatra',
-            color: 'white',
-            align: 'center'
-        }).setOrigin(0.5).setInteractive();
+            this.cameras.main.centerY + 175, 
+            'Icon3'
+        ).setScale(1.5, 1.5).setInteractive(); // x, y, tag.
 
-        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        tanqia.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            acceptButton.setTint(0xdfa919);
+            tanqia.setTint(0x8a9597);
         });
 
-        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        tanqia.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            acceptButton.clearTint();
+            tanqia.clearTint();
         });
 
-        acceptButton.on('pointerdown', ()=>{
+        tanqia.on('pointerdown', ()=>{
             // Destruye todo y pone el juego a funcionarch.
-            dialogueBackground.destroy();
             tanqia.destroy();
             tanqiaText.destroy();
-            acceptButton.destroy();
             this.startGame();
-        })
+        });
     }
 
     startGame()
@@ -105,10 +80,24 @@ export default class Game3 extends Phaser.Scene
             this.input.mouse.enabled = true;
         })
 
-        //// --- MUSIC ---.
-        //const music = this.sound.add('theme3');
-        //music.play();
-        //this.sound.pauseOnBlur = true;
+        // --- MUSIC ---.
+        this.music = this.sound.add('theme3');
+        this.music.play();
+        this.sound.pauseOnBlur = true;
+
+        // Botón de la música.
+        this.musicButton = this.add.image(40, 40, 'musicButton');
+        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
+            this.isClickingOnUI = true; 
+            if (this.music.isPlaying) {
+                this.music.pause();
+                this.musicButton.setTexture('muteButton');
+            } 
+            else {
+                this.music.resume();
+                this.musicButton.setTexture('musicButton');
+            }
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
 
         // --- PUNTUACIÓN ---.
@@ -130,10 +119,10 @@ export default class Game3 extends Phaser.Scene
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
 
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xbb953e, 10);
-        const borderRight = this.add.rectangle(933, 385, 230, 775, 0xbb953e, 10);
-        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xbb953e, 10);
-        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xbb953e, 10);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0x181818, 10);
+        const borderRight = this.add.rectangle(933, 385, 230, 775, 0x181818, 10);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0x181818, 10);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0x181818, 10);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
         // Fisicas para bordes
         for (let i = 0; i < borders.length; i++){

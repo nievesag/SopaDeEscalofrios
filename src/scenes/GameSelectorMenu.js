@@ -17,7 +17,6 @@ let gameState = {
         false, // game4.
         false  // game5.
     ],
-
     playedInCurrentDay: [false, false, false, false, false],
     endResults: {
         Game1: [null, null, null, null, null] ,
@@ -26,7 +25,19 @@ let gameState = {
         Game4: [null, null, null, null, null] ,
         Game5: [null, null, null, null, null] 
     },
-    gameSelectorMenuHasStartedBefore: false
+    gameSelectorMenuHasStartedBefore: false,
+    logros : {
+        Game1: ['Amset', 'Hapy', 'Kebeshenuef', 'Duamutef', 'Henu'] ,
+        Game2: ['Pluma de la corona', 'Concha cauri', 'Frasco Asuán', 'Cetro de Papiro', 'Cefalea bóvida'] ,
+        Game3: ['Escarabajo negro', 'Escarabajo verde', 'Escarabajo azul', 'Escarabajo rojo', 'Escarabajo dorado'] ,
+        Game4: ['Flecha', 'Lanza', 'Flecha mágica', 'Lanza mágica', 'Pluma'] ,
+        Game5: ['Pequeña estrella', 'Estrella', 'Gran estrella', 'Sol', 'Sol radiante'] 
+    },
+    logros1 : [],
+    logros2 : [],
+    logros3 : [],
+    logros4 : [],
+    logros5 : []
 };
 
 export default class GameSelectorMenu extends Phaser.Scene {
@@ -40,21 +51,12 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     create () {
-
+        this.cameras.main.setBackgroundColor(0x181818);
         if(gameState.gameSelectorMenuHasStartedBefore === false){
+            
+            
             let actualDiapo = 0; // inicialmente la 0.
-
-            // Fondo de las diapositivas de lore.
-            this.diaposBG = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 1.9, // anchura
-                    y: 2.23, // altura
-                },
-                key: 'tanqiaBg',
-            });
-
+            
             // ----- TEXTOS -----.
             let D1Text = this.add.text( // diapo 1 text.
                 this.cameras.main.centerX, 
@@ -272,7 +274,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
                     D5Image.destroy();
                     D6Image.destroy();
                     this.continueButton.destroy();
-                    this.diaposBG.destroy();
                     this.createGameSelectorMenu();
                     gameState.gameSelectorMenuHasStartedBefore = true;
                 }
@@ -304,20 +305,49 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.createIcon('Icon4', 670, 450, 'Game4');
         this.createIcon('Icon5', this.cameras.main.centerX - 7, this.cameras.main.centerY - 50, 'Game5');
 
-        this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
-            fontFamily: 'yatra',
-            fontSize: '24px',
-            color: '#ffffff',
-        });
+        this.infoText;
+        if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`, {
+                fontFamily: 'yatra',
+                fontSize: '24px',
+                color: '#ffffff',
+            });
+        }
+        else if(gameState.actionsLeft == 1) {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`, {
+                fontFamily: 'yatra',
+                fontSize: '24px',
+                color: '#ffffff',
+            });
+        }
+        else {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`, {
+                fontFamily: 'yatra',
+                fontSize: '24px',
+                color: '#ffffff',
+            });
+        }
 
         // Boton para pasar al siguiente día
-        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Next Day', {
+        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 30, 'Dormir', {
             fontFamily: 'yatra',
-            fontSize: '30px',
-            color: '#ffffff',
+            fontSize: '40px',
+            color: '#735500',
         }).setOrigin(0.5, 0.5);
 
         this.nextDayButton.setInteractive();
+
+        this.nextDayButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            this.nextDayButton.setColor('#0032c3');
+            //this.nextDayButton.setTint(0xdfa919);
+        });
+
+        this.nextDayButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            this.nextDayButton.setColor('#735500');
+        });
+
         this.nextDayButton.on('pointerdown', () => this.nextDay());
     }
 
@@ -419,7 +449,18 @@ export default class GameSelectorMenu extends Phaser.Scene {
         gameState.currentDay++;
         gameState.actionsLeft = 3;
         gameState.playedInCurrentDay = [false, false, false, false, false]; 
+
         this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
+
+        if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) {
+            this.infoText.setText(`DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`);
+        }
+        else if(gameState.actionsLeft == 1) {
+            this.infoText.setText(`DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`);
+        }
+        else {
+            this.infoText.setText(`DÍA: ${gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`);
+        }
     }
 
    saveEndResults(){

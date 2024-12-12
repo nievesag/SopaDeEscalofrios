@@ -19,7 +19,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         });
 
         // Contador y eliminación de obstáculos.
-        let randomTime = Phaser.Math.Between(3000, 8000);
+        let randomTime = Phaser.Math.Between(5000, 10000);
         this.scene.time.addEvent({
             delay: randomTime, // tiempo entre obstáculo y obstáculo (2 segundos) 
             loop: true,
@@ -31,7 +31,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
 
         // Para evitar que se solapen los obsjetos.
         this.lastObstaclePosX = 0; // inicialmench es 0.
-        this.minDistanceBetweenObstacles = Phaser.Math.Between(700, 1000); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
+        this.minDistanceBetweenObstacles = Phaser.Math.Between(800, 1000); // distancia mínima hasta summonear otro cacharro (a veces una a veces otra)
     }
 
     update(){

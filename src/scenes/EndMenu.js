@@ -1,18 +1,4 @@
 let ending = 0;
-let logros = {
-    Game1: ['Amset', 'Hapy', 'Kebeshenuef', 'Duamutef', 'Henu'] ,
-    Game2: ['Pluma de la corona', 'Concha cauri', 'Frasco Asuán', 'Cetro de Papiro', 'Cefalea bóvida'] ,
-    Game3: ['Escarabajo negro', 'Escarabajo verde', 'Escarabajo azul', 'Escarabajo rojo', 'Escarabajo dorado'] ,
-    Game4: ['Flecha', 'Lanza', 'Flecha mágica', 'Lanza mágica', 'Pluma'] ,
-    Game5: ['Pequeña estrella', 'Estrella', 'Gran estrella', 'Sol', 'Sol radiante'] 
-};
-
-let logros1 = [];
-let logros2 = [];
-let logros3 = [];
-let logros4 = [];
-let logros5 = [];
-
 export default class EndMenu extends Phaser.Scene {
 	constructor() {
 		super({ key: 'EndMenu'});
@@ -23,6 +9,8 @@ export default class EndMenu extends Phaser.Scene {
     }
 
 	create() {
+        this.cameras.main.setBackgroundColor(0x181818);
+
         // Paramos el audio
         this.sound.stopAll();
         
@@ -31,32 +19,31 @@ export default class EndMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
-        /*// Texto del Título con borde de color aleatorio
+        // Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
-            this.cameras.main.centerY - 150,
+            this.cameras.main.centerY +310,
             'FIN DEL PERIODO DE CONTACTO CON LOS DIOSES',
             {
                 fontFamily: 'yatra',
                 fontSize: 30,
 
-                color: '#dfa919',
-                stroke: '#453424',   
-                strokeThickness: 10
+                color: '#dfa919'
+                //stroke: '#453424',   
+                //strokeThickness: 10
             }
-        ).setOrigin(0.5, 0.5);*
+        ).setOrigin(0.5, 0.5);
 
         // Alineacion y profundidad del texto.
-        title.setAlign('center').setDepth(1);*/
+        title.setAlign('center').setDepth(1);
 
         // Gestion de finales
         this.checkEnding();
         this.showEnding(ending);
         this.manageLogros();
-        this.showLogros();
 
         // Botones
-        this.createButton('VOLVER',  this.cameras.main.width -50,  this.cameras.main.scrollY + 25, 'white');
+        this.createButton('VER LOGROS',  this.cameras.main.width -65,  this.cameras.main.scrollY + 25, 'white');
     }
 
 	createButton(text, x, y, textColor) {
@@ -66,7 +53,7 @@ export default class EndMenu extends Phaser.Scene {
             text,
             {
                 fontFamily: 'yatra',
-                fontSize: 20,
+                fontSize: 17,
 
                 color: textColor
             }
@@ -74,7 +61,7 @@ export default class EndMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("MainMenu");
+            this.scene.start("LogrosMenu", { gameState: this.gameState });
         });
 
         button.on('pointerover', () => // Al pasar el ratón por encima...
@@ -122,21 +109,12 @@ export default class EndMenu extends Phaser.Scene {
     }
 
     showEnding(e) {
-
-        let blackBackground = this.make.image({
-            key: 'tanqiaBg'
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(2, 2.5);
-
-        let collectableWall = this.make.image({
-            key: 'collectableWall'
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 302).setOrigin(0.5).setScale(4, 1);
-
         let bg;
         let endText
         if(e == 1) {
             bg = this.make.image({
                 key: 'Final1',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65); 
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7); 
         
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -155,7 +133,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 2) {
             bg = this.make.image({
                 key: 'Final2',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -174,7 +152,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 3) {
             bg = this.make.image({
                 key: 'Final3',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
         
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -193,7 +171,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 4) {
             bg = this.make.image({
                 key: 'Final4',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
             
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -212,7 +190,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 5) {
             bg = this.make.image({
                 key: 'Final5',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
 
             endText = this.add.text(
                 this.cameras.main.centerX,
@@ -231,8 +209,7 @@ export default class EndMenu extends Phaser.Scene {
         else if(e == 6) {
             bg = this.make.image({ 
                 key: 'Generico',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY-15).setOrigin(0.5).setScale(0.65, 0.65);
-
+            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
             endText = this.add.text(
                 this.cameras.main.centerX,
                 this.cameras.main.centerY - 310,
@@ -249,84 +226,34 @@ export default class EndMenu extends Phaser.Scene {
         }
     }
 
-    showLogros() {
-
-        // si hay algun logro
-        if(logros1.length != 0 || logros2.length != 0 || logros3.length != 0 || logros4.length != 0 || logros5.length != 0) 
-        {
-            alert('Has obtenido los siguientes logros: ' + logros1 +  ' ' + logros2 +  ' ' + logros3 +  ' ' + logros4 +  ' ' + logros5 );
-        }
-
-        /*
-        for(var i = 0; i < logros1.length; i++) {
-            if(i == 0) {
-                // --- logro 1 g1
-                if(logros1[i] != null) {
-                    let l11 = this.make.image({
-                        key: 'Final4',
-                    }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
-                }
-                // --- logro 1 g2
-                if(logros2[i] != null) {
-                    
-                }
-                // --- logro 1 g3
-                if(logros3[i] != null) {
-
-                }
-                // --- logro 1 g4
-                if(logros4[i] != null) {
-
-                }
-                // --- logro 1 g5
-                if(logros5[i] != null) {
-
-                }
-            }
-            else if(i == 1) {
-                
-            }
-            else if(i == 2) {
-
-            }
-            else if(i == 3) {
-
-            }
-            else if(i == 4) {
-
-            }
-        }
-        */
-    }
-
     manageLogros() {
         for(var i = 0; i < this.gameState.endResults.Game1.length; i++) {
             // --- logros g1
             if(this.gameState.endResults.Game1[i] != null && this.gameState.endResults.Game1[i] != 'derrota') {
-                logros1.push(logros.Game1[i]);
+                this.gameState.logros1.push(this.gameState.logros.Game1[i]);
             }
             // --- logros g2
             if(this.gameState.endResults.Game2[i] != null && this.gameState.endResults.Game2[i] != 'derrota') {
-                logros2.push(logros.Game2[i]);
+                this.gameState.logros2.push(this.gameState.logros.Game2[i]);
             }
             // --- logros g3
             if(this.gameState.endResults.Game3[i] != null && this.gameState.endResults.Game3[i] != 'derrota') {
-                logros3.push(logros.Game3[i]);
+                this.gameState.logros3.push(this.gameState.logros.Game3[i]);
             }
             // --- logros g4
             if(this.gameState.endResults.Game4[i] != null && this.gameState.endResults.Game4[i] != 'derrota') {
-                logros4.push(logros.Game4[i]);
+                this.gameState.logros4.push(this.gameState.logros.Game4[i]);
             }
             // --- logros g5
             if(this.gameState.endResults.Game5[i] != null && this.gameState.endResults.Game5[i] != 'derrota') {
-                logros5.push(logros.Game5[i]);
+                this.gameState.logros5.push(this.gameState.logros.Game5[i]);
             }
         }
 
-        console.log(logros1);
-        console.log(logros2);
-        console.log(logros3);
-        console.log(logros4);
-        console.log(logros5);
+        console.log(this.gameState.logros1);
+        console.log(this.gameState.logros2);
+        console.log(this.gameState.logros3);
+        console.log(this.gameState.logros4);
+        console.log(this.gameState.logros5);
     }
 }

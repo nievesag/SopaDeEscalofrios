@@ -19,6 +19,7 @@ export default class Game5 extends Phaser.Scene {
     }
     
     create() {
+        this.cameras.main.setBackgroundColor(0x181818);
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[4]){
             this.gameState.hasStartedBefore[4] = true; // ala ya ha salio el tutorial.
@@ -31,26 +32,10 @@ export default class Game5 extends Phaser.Scene {
 
     createTanqiaPopUp(){
         this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
-        // Background del dialogo (LUEGO IMAGEN).
-        let dialogueBackground = this.make.image({
-            x: this.cameras.main.centerX, // x
-            y: this.cameras.main.centerY, // y
-            scale:{
-                x: 1.9, // anchura
-                y: 2.22, // altura
-            },
-            key: 'tanqiaBg',
-        });
-
-        let tanqia = this.add.image(
-            this.cameras.main.centerX, 
-            this.cameras.main.centerY + 175, 
-            'tanqia'
-        ).setScale(0.5, 0.32); // x, y, tag.
-
+        
         let tanqiaText = this.add.text(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY - 150, 
+            this.cameras.main.centerY - 100, 
             'Shu, divinidad danzante del aire, él desea iluminar todo a su paso,  él es la sequedad, él es el tenue brillo de atardecer… Ayuda a Shu a apartar la tenebrosa oscuridad de las profundidades de la pirámide para completar su destino. Coloca y mueve los espejos para guiar a Shu, y él te dará su bendición.',
             {
                 fontSize: '20px',
@@ -62,36 +47,28 @@ export default class Game5 extends Phaser.Scene {
             }
         ).setOrigin(0.5); // danzhu lo tenia y funciona.
 
-        // Botón de aceptar.
-        let acceptButton = this.add.text(
+        let tanqia = this.add.image(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY + 340, 
-            'Jugar',
-            {
-            fontSize: '50px',
-            fontFamily: 'yatra',
-            color: 'white',
-            align: 'center'
-        }).setOrigin(0.5).setInteractive();
+            this.cameras.main.centerY + 175, 
+            'Icon5'
+        ).setScale(1.5, 1.5).setInteractive(); // x, y, tag.
 
-        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        tanqia.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            acceptButton.setTint(0xdfa919);
+            tanqia.setTint(0x8a9597);
         });
 
-        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        tanqia.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            acceptButton.clearTint();
+            tanqia.clearTint();
         });
 
-        acceptButton.on('pointerdown', ()=>{
+        tanqia.on('pointerdown', ()=>{
             // Destruye todo y pone el juego a funcionarch.
-            dialogueBackground.destroy();
             tanqia.destroy();
             tanqiaText.destroy();
-            acceptButton.destroy();
             this.startGame();
-        })
+        });
     }
 
     startGame(){
@@ -100,9 +77,23 @@ export default class Game5 extends Phaser.Scene {
         
 
         // Música.
-        const music = this.sound.add('theme5');
-        music.play();
+        this.music = this.sound.add('theme5');
+        this.music.play();
         this.sound.pauseOnBlur = true;
+
+        // Botón de la música.
+        this.musicButton = this.add.image(40, 40, 'musicButton');
+        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
+            this.isClickingOnUI = true; 
+            if (this.music.isPlaying) {
+                this.music.pause();
+                this.musicButton.setTexture('muteButton');
+            } 
+            else {
+                this.music.resume();
+                this.musicButton.setTexture('musicButton');
+            }
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
         // 1 para los muro, 0 para los vacios, 2 para la gun
         const tablero = [
