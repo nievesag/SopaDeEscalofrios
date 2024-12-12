@@ -324,9 +324,9 @@ export default class Game4 extends Phaser.Scene {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 3 },
+                { type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 2 },
-                 { type: 'Ball Arrow', count: 5 },
+                 { type: 'Ball Arrow', count: 2 },
                 { type: 'Split Arrow', count: 3 }
 
             ]);
@@ -334,16 +334,16 @@ export default class Game4 extends Phaser.Scene {
         else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Normal', count: 3 },
+                { type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 1 },
-                { type: 'Ball Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 1 },
                 { type: 'Split Arrow', count: 2 }
             ]);
         }
         else if(this.gameState.currentDay == 5)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Ball Arrow', count: 1 },
+                { type: 'Explosive Arrow', count: 1 },
                 { type: 'Split Arrow', count: 1 },
                 { type: 'Normal', count: 10 }
                 //{ type: 'Explosive Arrow', count: 1 },
