@@ -61,7 +61,7 @@ export default class EndMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("LogrosMenu");
+            this.scene.start("LogrosMenu", { gameState: this.gameState });
         });
 
         button.on('pointerover', () => // Al pasar el ratón por encima...

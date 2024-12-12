@@ -314,14 +314,14 @@ export default class GameSelectorMenu extends Phaser.Scene {
             });
         }
         else if(gameState.actionsLeft == 1) {
-            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`, {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`, {
                 fontFamily: 'yatra',
                 fontSize: '24px',
                 color: '#ffffff',
             });
         }
         else {
-            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`, {
+            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`, {
                 fontFamily: 'yatra',
                 fontSize: '24px',
                 color: '#ffffff',
@@ -329,13 +329,25 @@ export default class GameSelectorMenu extends Phaser.Scene {
         }
 
         // Boton para pasar al siguiente día
-        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 40, 'Dormir', {
+        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 30, 'Dormir', {
             fontFamily: 'yatra',
-            fontSize: '30px',
-            color: '#ffffff',
+            fontSize: '40px',
+            color: '#735500',
         }).setOrigin(0.5, 0.5);
 
         this.nextDayButton.setInteractive();
+
+        this.nextDayButton.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            this.nextDayButton.setColor('#0032c3');
+            //this.nextDayButton.setTint(0xdfa919);
+        });
+
+        this.nextDayButton.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            this.nextDayButton.setColor('#735500');
+        });
+
         this.nextDayButton.on('pointerdown', () => this.nextDay());
     }
 
