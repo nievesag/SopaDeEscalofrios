@@ -289,7 +289,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         this.bg = this.make.image({ 
             key: 'EscenaPrincipal',
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5);
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);
 
         this.sound.stopAll();
 
