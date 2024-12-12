@@ -105,10 +105,10 @@ export default class Game3 extends Phaser.Scene
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
 
         // --- BORDERS ---.
-        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0xbb953e, 10);
-        const borderRight = this.add.rectangle(933, 385, 230, 775, 0xbb953e, 10);
-        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0xbb953e, 10);
-        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0xbb953e, 10);
+        const borderLeft = this.add.rectangle(90, 385, 200, 775, 0x181818, 10);
+        const borderRight = this.add.rectangle(933, 385, 230, 775, 0x181818, 10);
+        const borderUp = this.add.rectangle(550, 5, 1100, 10, 0x181818, 10);
+        const borderDown = this.add.rectangle(550, 765, 1100, 10, 0x181818, 10);
         const borders = [borderLeft, borderRight, borderUp, borderDown];
         // Fisicas para bordes
         for (let i = 0; i < borders.length; i++){
