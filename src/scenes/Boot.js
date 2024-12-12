@@ -68,8 +68,7 @@ export default class Boot extends Phaser.Scene {
         // -------- GAME 3
         //Background
         this.load.image('bg3', "./assets/images/Game3/bg.png")
-        //Player (place holder)
-        //this.load.image('cannonBase', './assets/images/icon500.jpg');
+        //Player
         this.load.image('player3', './assets/images/Game3/Cannon.png');
         //Escarabajos
         this.load.image('EmptyBeetle', './assets/images/Game3/BurbujaEmpty.png')
@@ -80,8 +79,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('CianBeetle', './assets/images/Game3/BurbujaCian.png')
         this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
-        this.load.spritesheet('beetles', './assets/images/Game3/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
-        this.load.audio('theme3', './assets/audio/m3c.mp3');
+        this.load.audio('theme3', './assets/audio/Egipto.mp3');
 
         // ------- GAME 4
         this.load.image("bg1", "./assets/images/game4/bg1_game4.png");
