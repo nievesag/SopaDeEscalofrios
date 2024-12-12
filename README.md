@@ -267,7 +267,7 @@ Para cada uno de los cinco días habrá un tablero diferente que tendrá más o 
 #### 7.1.1. Paleta
 Para infundir miedo por medio de la estética, hemos optado por unos colores poco saturados y apagados, para otorgarle un estilo oscuro, sombrío, decrépito, melancólico y deprimente.
 
-![Pantalla inicio](./assets/images/gddREADME/paleta.PNG)
+![Pantalla inicio](./assets/images/gddREADME/paleta.png)
 
 #### 7.1.2. Tanqia, el heraldo del caos y faraona de la luna
 Se muestran aquí imágenes de la faraona Tanqia representada en el juego:
