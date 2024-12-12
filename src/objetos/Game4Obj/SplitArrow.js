@@ -21,7 +21,6 @@ export default class SplitArrow extends Arrow {
         const velocityX3 = Math.cos(angle3) * 300;
         const velocityY3 = Math.sin(angle3) * 300;
 
-        // Crear nuevas flechas para la division
         const arrows = [
             new Arrow(this.scene, this.arrow.x, this.arrow.y),
             new Arrow(this.scene, this.arrow.x, this.arrow.y),
@@ -40,8 +39,7 @@ export default class SplitArrow extends Arrow {
             });
     
         });
-    
-        // Destruir flechas después de 4 segundos
+
         this.scene.time.delayedCall(4000, () => {
             arrows.forEach((arrow) => arrow.destroy());
         });

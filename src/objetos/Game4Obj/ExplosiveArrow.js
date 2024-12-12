@@ -39,11 +39,6 @@ export default class ExplosiveArrow extends Arrow {
             this.destroy();
         });
 
-        // const explosion = this.scene.add.sprite(this.x, this.y, 'explosion');
-        // explosion.play('explodeAnimation'); // Define esta animación en tu preload
-        // explosion.once('animationcomplete', () => {
-        //     explosion.destroy();
-        // });
 
       
     }

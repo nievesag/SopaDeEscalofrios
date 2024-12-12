@@ -61,8 +61,8 @@ footer {
 }
 
 #phaser-game {
-  width: 30vw; 
-  height: 100vw; 
+  width: 100vw; 
+  height: 50vw; 
  
   align-items: center;
 

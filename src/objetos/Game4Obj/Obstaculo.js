@@ -6,7 +6,7 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.world.enable(this);
         this.offsetRight = {x: 0, y: 0};
         this.offsetLeft = {x: 0, y: 0};
-        this.setImmovable(false);
+        this.setImmovable(true);
         this.isDead = false;
 
         this.body.setOffset(this.offsetRight.x, this.offsetLeft.y);
@@ -31,7 +31,6 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
         this.setVisible(false); 
         this.body.destroy(); 
 
-        // Crear fragmentos
         for (let i = 0; i < this.fragments; i++) {
             const fragment = this.scene.add.sprite(
                 this.x + Phaser.Math.Between(-10, 10),
@@ -57,7 +56,7 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
                 fragment.body.setBounce(0);  
             });
 
-            this.scene.time.delayedCall(5000, () => {
+            this.scene.time.delayedCall(4000, () => {
                 fragment.destroy();
             });
         }
@@ -73,7 +72,6 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
         {
             return false;
         }
-            console.log("si");
             arrow.destroy();
             this.isDead = true;
             this.breakApart();
