@@ -4,6 +4,7 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        this.setOrigin(0.5, 0.5);
         this.entryDirection1 = entryDirection1;
         this.entryDirection2 = entryDirection2;
         this.exitDirection1 = this.getContraryDirection(entryDirection1);

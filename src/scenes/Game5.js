@@ -2,6 +2,7 @@
 import Wall from '../objetos/Game5Obj/Wall.js';
 import Gun from '../objetos/Game5Obj/Gun.js';
 import Void from '../objetos/Game5Obj/Void.js';
+import Destiny from '../objetos/Game5Obj/Destiny.js';
 
 export default class Game5 extends Phaser.Scene {
     constructor() {
@@ -110,7 +111,7 @@ export default class Game5 extends Phaser.Scene {
             [1, 0, 0, 0, 0, 1],
             [1, 1, 0, 0, 0, 0],
             [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 1],
+            [1, 0, 0, 3, 0, 1],
             [1, 1, 1, 1, 1, 1]
         ];
 
@@ -128,6 +129,7 @@ export default class Game5 extends Phaser.Scene {
         this.mirrors = [];
         this.laser = null;
         let gun = null;
+        let destiny = null;
 
         for (let row = 0; row < tablero.length; row++) {
             for (let col = 0; col < tablero[0].length; col++) {
@@ -141,9 +143,12 @@ export default class Game5 extends Phaser.Scene {
                 } else if (tileValue === 1) {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
-                } else if (tileValue === 2) {
+                } else if (tileValue === 2 && gun == null) {
                     gun = new Gun(this, x, y, 'left', tileSize);
+                } else if (tileValue === 3) {
+                    destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
                 }
+                
             }
         }
 
@@ -158,6 +163,7 @@ export default class Game5 extends Phaser.Scene {
                     this.walls.forEach(wall => {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
                     });
+                    this.physics.add.overlap(this.laser, destiny, this.CollideWithDestiny, null, this);
                 }
             });
         }
@@ -170,7 +176,7 @@ export default class Game5 extends Phaser.Scene {
                 this.laser.y < this.boardMinY ||
                 this.laser.y > this.boardMaxY
             ) {
-                DestroyLaser(this.laser);
+                this.DestroyLaser(this.laser);
             }
         }
     }
@@ -183,6 +189,12 @@ export default class Game5 extends Phaser.Scene {
         laser.destroy();
         this.laser = null;
     }
+
+    CollideWithDestiny(laser, destiny) {
+        destiny.laserColision(laser);
+        this.DestroyLaser(laser);
+    }
+    
     
     createButton(text, x, y, textColor) {
         let button = this.add.text(
