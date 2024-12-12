@@ -25,15 +25,15 @@
       // POWERBAR.
       
       this.powerBarRectangle = this.scene.add.rectangle(
-        350,     // x.
+        300,     // x.
         650,     // y.
         40,      // anchura.
         200,     // altura.
-        0x444444 // color.
+        0x181818 // color.
       ).setDepth(1);
 
       this.powerBar = this.scene.add.rectangle(
-        350,     // x.    
+        300,     // x.    
         750,     // y.
         25,      // anchura.
         -27,       // altura (inicialmench es -27 porque sube y baja y kiero margen).
@@ -42,12 +42,6 @@
 
       this.power = 0; // potensya. (0 apagao 1 encendio).
       this.powerDir = 1; // 1 baja -1 sube (inicialmench sube).
-
-      // Dibuja la línea de la dir.
-      this.graphics = this.scene.add.graphics({ 
-        lineStyle: { width: 10, color: 0x6714d8 , alpha: 0.5 } 
-      });
-      this.line = new Phaser.Geom.Line(); 
 
       // Evento para animar la barra arriba y abajo.
       this.scene.time.addEvent({
@@ -102,27 +96,27 @@
 
       if(power === 0){ // 0 -> poca fuerza.
         // Verde.
-        color = 0x34c73f;
+        color = 0x07522b;
       }
       else if(power === 1){ // 1 -> jijijuju.
         // Verde again
-        color = 0x34c73f;
+        color = 0x07522b;
       }
       else if(power === 2){ // 2 -> ni mas ni menos.
         // Amarillo.
-        color = 0xc7c534;
+        color = 0x735500;
       }
       else if(power === 3){ // 3 -> va folledo.
         // Naranja
-        color = 0xc77534;
+        color = 0x732c00;
       }
       else if(power === 4){ // 4 -> joder lo folledo que va.
         // Rojo.
-        color = 0xc73434;
+        color = 0x740101;
       }
       else if(power === 5){ // 5 -> NITRO.
         // Rojo
-        color = 0xc73434;
+        color = 0x740101;
       }
 
       this.powerBar.fillColor = color;

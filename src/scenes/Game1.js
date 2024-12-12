@@ -85,7 +85,7 @@ export default class Game1 extends Phaser.Scene {
         this.sound.pauseOnBlur = true;
 
         // Botón de la música.
-        this.musicButton = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'musicButton');
+        this.musicButton = this.add.image(this.cameras.main.centerX - 5, this.cameras.main.center-5, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
             if (this.music.isPlaying) {

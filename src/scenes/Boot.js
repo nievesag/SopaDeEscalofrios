@@ -55,7 +55,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('musicButton', './assets/images/Game2/music.png');
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.png');
-        this.load.image('tanqia', './assets/images/Game2/tanqia.PNG');
         this.load.image('rectUI', './assets/images/Game2/rectUI.png');
         this.load.audio('theme2', './assets/audio/m2c.mp3');
         this.load.css('EagleLake', 'style.css');

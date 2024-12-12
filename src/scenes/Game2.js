@@ -18,10 +18,7 @@ export default class Game2 extends Phaser.Scene {
     create (){
         this.cameras.main.setBackgroundColor(0x181818);
         this.isGameOver = false; // inicialmench no es gameOver.
-
-        // ----- declaración de los this.algo -----.
-        
-        
+  
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[1]){ // [1] es por que es el Game2.
             this.gameState.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
@@ -204,11 +201,9 @@ export default class Game2 extends Phaser.Scene {
     }
 
     update(){
-
-        // HAY QUE PONERLE A TODO IF POR LA CARA PQ SI NO FALLA
-        // HAY Q INVESTIGAR COMO HACER ESO MAS LIMPIO :/
-
+        // Esto es pq en el primer tick del update las cosas no se han creado :)
         if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.musicButton && this.vessel && this.vessel.body){
+            
             // parallax scroller.
             if(this.vessel.isLaunched){
                 this.bg.tilePositionX += this.vessel.body.velocity.x / 500; // el fondo va segun la velocidad del vessel (aprox /500)
@@ -227,7 +222,13 @@ export default class Game2 extends Phaser.Scene {
             //this.rio.setPosition(scrollX, 600);
             
             let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
-            this.distanceCounter.setText('Distancia: ' + distance.toFixed(2) + 'm'); // el tofixed es para que tenga solo 2 decimales.
+            if(!this.vessel.isLaunched){ // si no se ha lanzado...
+                this.distanceCounter.setText('Distancia: 0 codos');
+            }
+            else{
+                this.distanceCounter.setText('Distancia: ' + (distance * 0.524).toFixed(2) + ' codos'); // el tofixed es para que tenga solo 2 decimales y se multiplica por '0.524 para convertirlo a codos reales.
+            }
+            
             //this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
             
             // si se detiene el movimiento Y LA VASIJA HA SIDO LANZADA.
