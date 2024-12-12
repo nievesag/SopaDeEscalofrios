@@ -29,6 +29,13 @@ export default class Boot extends Phaser.Scene {
 		this.load.image("Icon4", "./assets/images/iconosJuegos/iconG4.png"); // g4
 		this.load.image("Icon5", "./assets/images/iconosJuegos/iconG5.png"); // g5
 
+        // --------- TUTORIALES
+        this.load.image("Tuto1", './assets/images/tutos/tutoG1.png');
+        this.load.image("Tuto2", './assets/images/tutos/tutoG2.png');
+        this.load.image("Tuto3", './assets/images/tutos/tutoG3.png');
+        this.load.image("Tuto4", './assets/images/tutos/tutoG4.png');
+        this.load.image("Tuto5", './assets/images/tutos/tutoG5.png');
+
         // -------- GAME 1
         // Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
         this.load.image('patronesTilemap', './assets/tilemap/tileset_duat.png');

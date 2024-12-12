@@ -66,7 +66,48 @@ export default class Game2 extends Phaser.Scene {
             // Destruye todo y pone el juego a funcionarch.
             tanqia.destroy();
             tanqiaText.destroy();
+            this.showTutorial();
+        });
+    }
+
+    showTutorial(){
+        let tutoImage = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1, // anchura
+                y: 1.1, // altura
+            },
+            key: 'Tuto2',
+        });
+
+        let tuto2Text = this.add.text( // diapo 1 text.
+            this.cameras.main.width - 30, 
+            this.cameras.main.scrollY + 30, 
+            'X',
+            {
+                fontSize: '40px',
+                color: '#181818',
+                align: 'center',
+                fontFamily: 'yatra',
+            }
+        ).setOrigin(0.5).setInteractive();
+
+        tuto2Text.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            tutoImage.destroy();
+            tuto2Text.destroy();
             this.startGame();
+        });
+
+        tuto2Text.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            tuto2Text.setColor('#0032c3');
+        });
+
+        tuto2Text.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            tuto2Text.setColor('#181818');
         });
     }
 
