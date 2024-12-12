@@ -28,9 +28,9 @@ export default class EndMenu extends Phaser.Scene {
                 fontFamily: 'yatra',
                 fontSize: 30,
 
-                color: '#dfa919',
-                stroke: '#453424',   
-                strokeThickness: 10
+                color: '#dfa919'
+                //stroke: '#453424',   
+                //strokeThickness: 10
             }
         ).setOrigin(0.5, 0.5);
 
