@@ -84,7 +84,7 @@ export default class Game2 extends Phaser.Scene {
         this.sound.pauseOnBlur = true;
 
         // background y rio.
-        this.bg = this.add.tileSprite(0, -100, 1920, 1080, 'background').setOrigin(0, 0).setScrollFactor(0);
+        this.bg = this.add.tileSprite(0, this.cameras.main.centerY - 400, 5220, 1080, 'background').setOrigin(0, 0).setScrollFactor(0).setScale(1, 0.6);
         this.rio = this.add.tileSprite(0, 600, 3200, 1992, 'river').setOrigin(0,0).setScrollFactor(0).setScale(1, 0.1);
 
         // creación de los objetos del juego.

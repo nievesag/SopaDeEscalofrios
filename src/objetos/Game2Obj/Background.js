@@ -50,8 +50,8 @@ export default class Background{
         //  Draw a random 'landscape'
         let landscape = this.scene.add.graphics();
 
-        landscape.fillStyle(0x433920, 1); // color de relleno.
-        landscape.lineStyle(9, 0x290b0d, 1); // color de línea.
+        landscape.fillStyle(0x0d0d0d, 1); // color de relleno.
+        landscape.lineStyle(9, 0x0d0d0d, 1); // color de línea.
 
         landscape.beginPath();
 
