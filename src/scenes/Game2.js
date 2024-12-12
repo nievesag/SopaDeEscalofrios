@@ -134,22 +134,22 @@ export default class Game2 extends Phaser.Scene {
         this.buttonMainMenu = this.add.text(
             960, 
             35, 
-            'Regresar', 
+            'Volver', 
             {
                 fontFamily: 'yatra',
-                fontSize: 30,
+                fontSize: 20,
                 color: 'white'
             }
         ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0).setVisible(false);
 
         this.buttonMainMenu.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            this.buttonMainMenu.setTint(0x290b0d);
+            this.buttonMainMenu.setColor(0x181818);
         });
 
         this.buttonMainMenu.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            this.buttonMainMenu.clearTint();
+            this.buttonMainMenu.setColor(0xffffff);
         });
 
         this.buttonMainMenu.on("pointerdown", () => { // Al hacer clic...
@@ -270,8 +270,8 @@ export default class Game2 extends Phaser.Scene {
                 x: this.cameras.main.centerX, // x
                 y: this.cameras.main.centerY + 50, // y
                 scale:{
-                    x: 2.5, // anchura
-                    y: 1.5, // altura
+                    x: 2.8, // anchura
+                    y: 1, // altura
                 },
                 key: 'rectUI'
             }).setOrigin(0.5).setDepth(99).setScrollFactor(0);
@@ -279,16 +279,16 @@ export default class Game2 extends Phaser.Scene {
             let gameOverText = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY,
-            '¡Se acabó!',
+            'La vasija se ha hundido',
             {
-                fontSize: '70px',
+                fontSize: '50px',
                 fontFamily: 'yatra',
                 color: 'white',
                 align: 'center'
             }
             ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(50).setVisible(true);
+            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(40).setVisible(true);
 
             // PARA VER LO DE LOS COLLECTIONABLES
             let result;

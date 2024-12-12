@@ -9,7 +9,6 @@ export default class Boot extends Phaser.Scene {
     
         // -------- MAINMENU
         this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
-        this.load.image("mainMenu", "./assets/images/mainMenu.jpg");
         this.load.image('backgroundMenu', './assets/images/menuBackground.png');
         this.load.audio('f3ale', './assets/audio/f3ale.mp3');
 
