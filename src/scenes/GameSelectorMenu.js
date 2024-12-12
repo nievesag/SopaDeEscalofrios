@@ -1,4 +1,3 @@
-
 // Variable global para gestionar el dia y las acciones
 let gameState = {
     currentDay: 1,
@@ -287,6 +286,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     createGameSelectorMenu(){
+
+        this.bg = this.make.image({ 
+            key: 'EscenaPrincipal',
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5);
+
         this.sound.stopAll();
 
         // Música.
@@ -294,11 +298,19 @@ export default class GameSelectorMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
+        this.createIcon('Icon1', 200, 200, 'Game1');
+        this.createIcon('Icon2', 800, 200, 'Game2');
+        this.createIcon('Icon3', 200, 600, 'Game3');
+        this.createIcon('Icon4', 800, 600, 'Game4');
+        this.createIcon('Icon5', this.cameras.main.centerX, this.cameras.main.centerY, 'Game5');
+
+        /*
         this.createButton("Camino a la Duat", 200, 200, 'white', 50, 'Game1');
         this.createButton("La Vasija Entresija", 800, 200, 'white', 50, 'Game2');
         this.createButton("Al Rescate de los Escarabajos", 200, 600, 'white', 35, 'Game3');
         this.createButton("Tiro al Arco Mágico", 800, 600, 'white', 50, 'Game4');
         this.createButton("El Sendero al Sol", this.cameras.main.centerX, this.cameras.main.centerY, 'white', 50, 'Game5');
+        */
 
         this.infoText = this.add.text(10, 10, `Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`, {
             fontFamily: 'yatra',
@@ -315,6 +327,43 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         this.nextDayButton.setInteractive();
         this.nextDayButton.on('pointerdown', () => this.nextDay());
+    }
+
+    createIcon(sprite, x, y, sceneName) {
+        let icon = this.make.image({ 
+            key: sprite,
+        }).setPosition(x, y);
+
+        icon.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            icon.setTint(0xdfa919);
+        });
+
+        icon.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            icon.clearTint();
+        });
+
+        icon.setInteractive();
+
+        icon.on("pointerdown", () => { // Al hacer clic...
+            const gameIndex = parseInt(sceneName.split('Game')[1]) - 1;
+
+            if(gameState.playedInCurrentDay[gameIndex])
+            {
+                alert('Ya has jugado este minijuego hoy.');
+                return;
+            }
+
+            if (gameState.actionsLeft > 0) {
+                gameState.actionsLeft--;
+                gameState.playedInCurrentDay[gameIndex] = true;
+                this.scene.start(sceneName, { gameState: gameState });
+                this.sound.stopAll();
+            } else {
+                alert('No te quedan acciones hoy. Pasa al siguiente dia.');
+            }
+        });
     }
 
 	createButton(text, x, y, textColor, fontsize, sceneName) {
