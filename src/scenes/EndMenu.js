@@ -77,6 +77,7 @@ export default class EndMenu extends Phaser.Scene {
         this.checkEnding();
         this.showEnding(ending);
         this.manageLogros();
+        this.showLogros();
 
         // Botones
         this.createButton('VOLVER',  this.cameras.main.centerX,  80 + this.cameras.main.centerY, 'white');
@@ -195,6 +196,14 @@ export default class EndMenu extends Phaser.Scene {
     }
 
     showLogros() {
+
+        // si hay algun logro
+        if(logros1.length != 0 || logros2.length != 0 || logros3.length != 0 || logros4.length != 0 || logros5.length != 0) 
+        {
+            alert('Has obtenido los siguientes logros: ' + logros1 +  ' ' + logros2 +  ' ' + logros3 +  ' ' + logros4 +  ' ' + logros5 );
+        }
+
+        /*
         for(var i = 0; i < logros1.length; i++) {
             if(i == 0) {
                 // --- logro 1 g1
@@ -233,6 +242,7 @@ export default class EndMenu extends Phaser.Scene {
 
             }
         }
+        */
     }
 
     manageLogros() {
