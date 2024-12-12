@@ -40,21 +40,12 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     create () {
-
+        this.cameras.main.setBackgroundColor(0x181818);
         if(gameState.gameSelectorMenuHasStartedBefore === false){
+            
+            
             let actualDiapo = 0; // inicialmente la 0.
-
-            // Fondo de las diapositivas de lore.
-            this.diaposBG = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 1.9, // anchura
-                    y: 2.23, // altura
-                },
-                key: 'tanqiaBg',
-            });
-
+            
             // ----- TEXTOS -----.
             let D1Text = this.add.text( // diapo 1 text.
                 this.cameras.main.centerX, 
@@ -272,7 +263,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
                     D5Image.destroy();
                     D6Image.destroy();
                     this.continueButton.destroy();
-                    this.diaposBG.destroy();
                     this.createGameSelectorMenu();
                     gameState.gameSelectorMenuHasStartedBefore = true;
                 }

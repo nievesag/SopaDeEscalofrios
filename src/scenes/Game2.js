@@ -18,6 +18,7 @@ export default class Game2 extends Phaser.Scene {
     
     // CAMBIAR TODO PERO TODO E POR SPRITES
     create (){
+        this.cameras.main.setBackgroundColor(0x181818);
         this.isGameOver = false; // inicialmench no es gameOver.
         
         // si es la primera vez q se inicia...
@@ -33,65 +34,41 @@ export default class Game2 extends Phaser.Scene {
 
     createTanqiaPopUp(){
         this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
-        // Background del dialogo (LUEGO IMAGEN).
-        let dialogueBackground = this.make.image({
-            x: this.cameras.main.centerX, // x
-            y: this.cameras.main.centerY, // y
-            scale:{
-                x: 1.9, // anchura
-                y: 2.22, // altura
-            },
-            key: 'tanqiaBg',
-        });
-
-        let tanqia = this.add.image(
-            this.cameras.main.centerX, 
-            this.cameras.main.centerY + 175, 
-            'tanqia'
-        ).setScale(0.5, 0.32); // x, y, tag.
 
         let tanqiaText = this.add.text(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY - 150, 
+            this.cameras.main.centerY - 100, 
             'Nun, Las Aguas de la Vida, está encolerizado: una fuerte tempestad llena el paisaje. Una fuerte lluvia que se siente como pedradas, fortísimos relámpagos que son capaces de acobardar al más valeroso, vorágines que tragan todo a su paso, incluso las formas de vida de esta zona caudalosa parecieran haber enloquecido. Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sacrificada metidos en un vaso canopo para que ayude en la causa de apaciguar las aguas y traer de vuelta a la normalidad al río Nilo.',
             {
                 fontSize: '20px',
                 color: '#ffffff',
                 align: 'center',
                 fontFamily: 'yatra',
-                wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
+                wordWrap: {width: 600}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
         ).setOrigin(0.5); // danzhu lo tenia y funciona.
 
-        // Botón de aceptar.
-        let acceptButton = this.add.text(
+        let tanqia = this.add.image(
             this.cameras.main.centerX, 
-            this.cameras.main.centerY + 340, 
-            'Jugar',
-            {
-            fontSize: '50px',
-            fontFamily: 'yatra',
-            color: 'white',
-            align: 'center'
-        }).setOrigin(0.5).setInteractive();
+            this.cameras.main.centerY + 175, 
+            'Icon2'
+        ).setScale(1.5, 1.5).setInteractive(); // x, y, tag.
 
-        acceptButton.on('pointerover', () => // Al pasar el ratón por encima...
+        tanqia.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            acceptButton.setTint(0xdfa919);
+            tanqia.setTint(0x8a9597);
         });
 
-        acceptButton.on('pointerout', () => // Al quitar el ratón de encima...
+        tanqia.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            acceptButton.clearTint();
+            tanqia.clearTint();
         });
 
-        acceptButton.on('pointerdown', ()=>{
+        tanqia.on('pointerdown', ()=>{
             // Destruye todo y pone el juego a funcionarch.
-            dialogueBackground.destroy();
             tanqia.destroy();
             tanqiaText.destroy();
-            acceptButton.destroy();
             this.startGame();
         });
     }

@@ -23,6 +23,8 @@ export default class EndMenu extends Phaser.Scene {
     }
 
 	create() {
+        this.cameras.main.setBackgroundColor(0x181818);
+
         // Paramos el audio
         this.sound.stopAll();
         
@@ -122,11 +124,6 @@ export default class EndMenu extends Phaser.Scene {
     }
 
     showEnding(e) {
-
-        let blackBackground = this.make.image({
-            key: 'tanqiaBg'
-        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(2, 2.5);
-
         let collectableWall = this.make.image({
             key: 'collectableWall'
         }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 302).setOrigin(0.5).setScale(4, 1);
