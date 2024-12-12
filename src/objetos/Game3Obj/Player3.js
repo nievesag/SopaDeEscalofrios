@@ -8,34 +8,18 @@ export default class Player3 extends Phaser.GameObjects.Sprite
   //Constructora del objeto
   constructor (scene, x, y)
   {
-    super(scene, x, y, 'Player3');
+    super(scene, x, y, 'player3');
 
     this.scene.add.existing(this);
     this.scene = scene;
     this.setDisplaySize(100, 200);
     this.origin = new Phaser.Math.Vector2(x, y);
 
-    this.x = 500; //Pos en x
-    this.y = 700; //Pos en y
+    this.x = x; //Pos en x
+    this.y = y; //Pos en y
     this.angle = 90; //Angulo de disparo
-    this.cellType = 0; //0 - empty, 1 - normal, 2 - bomb, 3 - color bomb
-    this.actualBeetle = 
-    {
-      x : 0,
-      y : 0,
-      angle : 0,
-      speed : 1000,
-      dropspeed : 900,
-      cellType : 1,
-      visible : false
-    };
-    this.nextBeetle = 
-    {
-      x : this.x,
-      y: this.y + 25,
-
-      celltype: 1
-    }
+    this.cellType = "normal"; //0 - empty, 1 - normal, 2 - bomb, 3 - color bomb
+    this.force = 1000;
 
     this.image = this.scene.make.image({
       x : this.x,
@@ -49,7 +33,6 @@ export default class Player3 extends Phaser.GameObjects.Sprite
       }
     }).setDepth(2);
 
-
     // Dibuja la línea de la dir.
     this.graphics = this.scene.add.graphics({ 
       lineStyle: { width: 5, color: 0xffffff , alpha: 1} 
@@ -58,7 +41,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
 
     this.possiblebeetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
 
-    this.setProjectile(); // Inicializa el primer proyectil y el siguiente
+    //this.setProjectile(); // Inicializa el primer proyectil y el siguiente
     this.inputEvents();
     //Se empieza con todos los colores, según se vayan eliminando de pantalla todos los esc de un color, ese color ya no aparece más.
   }
@@ -119,16 +102,20 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     // AL HACER CLIC. DISPARO
     this.scene.input.on('pointerup', () =>
     {
-      console.log("Dispara");
-      this.shootingBeetle = new Beetle (this.scene, this.actualBeetle.x, this.actualBeetle.y, this.actualBeetle.key);
-      this.shootingBeetle.shoot(this.actualBeetle, this.rotation);
+      this.randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
+      const texture = this.possiblebeetles[this.randomBeetle];
+
+      //console.log("scene: " + this.scene + " x: "+ this.x + " y: " + this.y + " cellType: " + this.cellType + " texture: " + texture)
+      //this.shootingBeetle = new Beetle (this.scene, this.x, this.y, 'normal', texture);
+      //console.log(this.shootingBeetle);
+      //this.shootingBeetle.shoot(this.rotation);
       //this.setNextProjectile(this.nextBeetle);
     });
 
     // AL PULSAR ESPACIO. CAMBIA ESCARABAJO POR EL SIGUIENTE
-    this.scene.input.keyboard.on('keydown-SPACE', () => {
+    //this.scene.input.keyboard.on('keydown-SPACE', () => {
       //this.changeBeetle()
-  });
+    //});
   }
 
   //Intercambia los escarabajos dentro del cannon
@@ -137,18 +124,6 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     actualBeetle = this.actualBeetle;
     nextBeetle = this.nextBeetle;
     this.swap(actualBeetle, nextBeetle);
-  }
-
-  //Según la posición del ratón en pantalla, la convierte en coordenadas del ordenador
-  //Método auxiliar del shoot()
-  findDirection(pointer)
-  {
-    this.angle = Phaser.Math.Angle.BetweenPoints(this, pointer); // Pone la rotación del cañón mirando al mouse (con unos ajustes).
-    this.rotation = this.angle + 30;
-
-    // Línea gráfica
-    Phaser.Geom.Line.SetToAngle(this.line, this.x, this.y, this.angle+0.15, 128); 
-    this.graphics.clear().strokeLineShape(this.line); // Limpia y redibuja la línea.
   }
 
   //Dispara en la dirección del input

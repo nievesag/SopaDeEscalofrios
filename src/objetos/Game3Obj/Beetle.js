@@ -1,31 +1,27 @@
 export default class Beetle extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto
-  constructor (scene, x, y)
-  {
-    super(scene, x, y);
+  constructor(scene, x, y, type, texture) {
+    super(scene, x, y, type, texture)
 
     this.scene = scene;
     this.scene.add.existing(this);
-    this.scene.physics.world.enable(this);
+    this.setOrigin(0.5, 0.5); 
+    this.x = x;
+    this.y = y;
+    this.type = type; //"normal", "bomb", "colorbomb"
+    this.sprite = scene.add.sprite(x, y, texture);
+    this.velocity = { x: 0, y: 0 };
+    this.force = 1000;
 
-    this.body.setAllowGravity(false);
-    this.body.setImmovable(true);
-    
-    this.x = x; //Pos en x
-    this.y = y; //Pos en y
     this.removed = false; //Si se ha quitado del nivel o no
-    this.velocity = 1000; //Velocidad 
     this.processed = false; //Si ha sido procesado en vecinos o no
-    this.type = ["normal", "bomb", "colorbomb"]; 
 
+    this.scene.physics.world.enable(this);
     this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
     this.body.setBounce(1); // rebote con colisiones.
     this.body.setAllowGravity(true);
     this.body.setImmovable(false);
-
-    //Se añade a escena
-    this.scene.add.existing(this);
     this.isDead = false;
   }
 
@@ -39,17 +35,13 @@ export default class Beetle extends Phaser.GameObjects.Sprite
     this.destroy();
   }
 
-  shoot(key, angle){
-    //this.body.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); 
-    //this.shootingBeetle = this.body.add.image(this.x, this.y, key).setScale(1); //Instancia el escarabajo
-    //console.log(shootingBeetle.texture.key);
-    //Le metemos físicas
-    this.physics.world.enable(this);
-    //shootingBeetle.setCircle(10);
-    this.shootingBeetle.enableBody(true, this.x, this.y, true, true); // Activa la vessel y la pone donde cannonHead.
-
-    this.physics.velocityFromRotation(angle, 1000, shootingBeetle.body.velocity); // Lanza el escarabajo con un ángulo y velocidad.
+  //Maneja el disparo de los escarabajos. 
+  //Este método es llamado desde Player3, con el ángulo del pointer del ratón en dado momento. 
+  shoot(angle) {
+    const velocity = this.scene.physics.velocityFromAngle(angle, this.force);
+    this.setVelocity(velocity.x, velocity.y);
   }
+
 
   //Colisiones círculo
   colisions() 
@@ -74,6 +66,10 @@ export default class Beetle extends Phaser.GameObjects.Sprite
   collectBeetle()
   {
     
+  }
+
+  setTexture(texture){
+    this.texture = texture;
   }
 
 }
