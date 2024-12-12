@@ -96,11 +96,11 @@ export default class LogrosMenu extends Phaser.Scene {
             // -- Logros, nombres
             this.ningunLogroText = this.add.text(
                 this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
+                this.cameras.main.centerY,
                 logrosEnd,
                 {
                     fontFamily: 'yatra',
-                    fontSize: 20,
+                    fontSize: 40,
                     color: '#ffffff',
                     align: 'center',
                     wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
@@ -113,11 +113,11 @@ export default class LogrosMenu extends Phaser.Scene {
         {
             this.ningunLogroText = this.add.text(
                 this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
+                this.cameras.main.centerY,
                 'No has obtenido ningún logro',
                 {
                     fontFamily: 'yatra',
-                    fontSize: 20,
+                    fontSize: 40,
                     color: '#ffffff',
                     align: 'center',
                     wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.

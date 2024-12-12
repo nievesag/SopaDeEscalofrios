@@ -26,7 +26,7 @@ export default class Game1 extends Phaser.Scene {
     }
     
     create () {
-        //this.cameras.main.setBackgroundColor(0x181818);
+        this.cameras.main.setBackgroundColor(0x181818);
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[0]){
             this.gameState.hasStartedBefore[0] = true; // ala ya ha salio el tutorial.

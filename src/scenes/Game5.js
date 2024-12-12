@@ -66,7 +66,7 @@ export default class Game5 extends Phaser.Scene {
             // Destruye todo y pone el juego a funcionarch.
             tanqia.destroy();
             tanqiaText.destroy();
-            this.startGame();
+            this.showTutorial();
         });
     }
 
