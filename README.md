@@ -19,9 +19,9 @@ Podrá jugar a diferentes minijuegos para poder ser más afín a según qué dio
 nievesag.github.io/SopaDeEscalofrios/
 
 ### Imágenes del juego
-![Camino a la Duat](./assets/images/gddREADME/G1/1.png)
+![Camino a la Duat](./assets/images/gddREADME/G1/2.PNG)
 ![La Vasija Entresija](./assets/images/gddREADME/G2/captura.png)
-![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.png)
+![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.PNG)
 ![El Tiro del Arco Mágico](./assets/images//gddREADME/G4/captura.png)
 ![Al Sendero del Sol](./assets/images//gddREADME/G1)
 
@@ -76,7 +76,7 @@ El juego se basa en 5 ciclos, representados en días, en los que el jugador pued
 ## 5. Minijuegos
 Los minijuegos irán por etapas de dificultad según se vaya avanzando en el transcurso de los días. Las etapas son fácil (días 1 y 2), normal (días 3 y 4), difícil (día 5). Las diferencias entre dificultades variarán según el minijuego (se explica más abajo, en los detalles de cada minijuego). Al día se pueden hacer como máximo tres minijuegos, siempre y cuando no se repita un minijuego más de una vez, ya que nuestro escriba solo puede escribir tres cartas de recomendación al día antes de cansarse. Si el jugador decide no escribir todas las cartas o ninguna también podrá hacerlo afectando así al resultado final del juego. 
 
-![Camino a la Duat](./assets/images/gddREADME/G1/1.png)
+![Camino a la Duat](./assets/images/gddREADME/G1/1.PNG)
 
 
 ### 5.1. Minijuego 1: «Camino a la Duat»
@@ -149,7 +149,7 @@ Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sa
 ### 5.3. Minijuego 3: «Al rescate de los escarabajos»
 La idea es rescatar a unos escarabajos que han sido pegados con miel de su dulce cárcel. A mayor número de escarabajos rescatados, mayor puntuación. Es un bubble shot.
 
-![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.png)
+![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.PNG)
 
 #### 4.3.1. Contexto
 > "Jepri, el dios del sol autocreado, sufre de una fuerte tristeza: sus adorados ahijados, los escarabajos de todo Egipto, han sido capturados. Para contentarle de nuevo, y evitar su ira, deberás rescatar al mayor número de escarabajos posibles, en el menor tiempo posible."
@@ -250,14 +250,14 @@ Para cada uno de los cinco días habrá un tablero diferente que tendrá más o 
 
 #### 6.1.1. Pantalla de iniciar partida
 
-![Pantalla inicio](./assets/images/gddREADME/playMenu.png)
+![Pantalla inicio](./assets/images/gddREADME/playMenu.PNG)
 
 #### 6.1.2. Menú seleccionador de minijuego
 
-![Pantalla inicio](./assets/images/gddREADME/menuSelector.png)
+![Pantalla inicio](./assets/images/gddREADME/menuSelector.PNG)
 
 #### 6.1.3. Final
-![Pantalla inicio](./assets/images/gddREADME/FINAL.png)
+![Pantalla inicio](./assets/images/gddREADME/FINAL.PNG)
 
 
 ## 7. Estética
@@ -266,6 +266,8 @@ Para cada uno de los cinco días habrá un tablero diferente que tendrá más o 
 
 #### 7.1.1. Paleta
 Para infundir miedo por medio de la estética, hemos optado por unos colores poco saturados y apagados, para otorgarle un estilo oscuro, sombrío, decrépito, melancólico y deprimente.
+
+![Pantalla inicio](./assets/images/gddREADME/paleta.PNG)
 
 #### 7.1.2. Tanqia, el heraldo del caos y faraona de la luna
 Se muestran aquí imágenes de la faraona Tanqia representada en el juego:
