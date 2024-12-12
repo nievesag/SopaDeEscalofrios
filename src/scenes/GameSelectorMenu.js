@@ -26,7 +26,20 @@ let gameState = {
         Game4: [null, null, null, null, null] ,
         Game5: [null, null, null, null, null] 
     },
-    gameSelectorMenuHasStartedBefore: false
+    gameSelectorMenuHasStartedBefore: false,
+    logros : {
+        Game1: ['Amset', 'Hapy', 'Kebeshenuef', 'Duamutef', 'Henu'] ,
+        Game2: ['Pluma de la corona', 'Concha cauri', 'Frasco Asuán', 'Cetro de Papiro', 'Cefalea bóvida'] ,
+        Game3: ['Escarabajo negro', 'Escarabajo verde', 'Escarabajo azul', 'Escarabajo rojo', 'Escarabajo dorado'] ,
+        Game4: ['Flecha', 'Lanza', 'Flecha mágica', 'Lanza mágica', 'Pluma'] ,
+        Game5: ['Pequeña estrella', 'Estrella', 'Gran estrella', 'Sol', 'Sol radiante'] 
+    },
+    
+    logros1 : [],
+    logros2 : [],
+    logros3 : [],
+    logros4 : [],
+    logros5 : []
 };
 
 export default class GameSelectorMenu extends Phaser.Scene {

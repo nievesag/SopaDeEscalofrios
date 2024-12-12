@@ -39,6 +39,8 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
         //this.grabAreaAbj.setDepth(10);
         this.grabAreaAbj.visible = false;
 
+        console.log(this.grabAreaIzq);
+
 		this.body.setSize(20, 20); // Para que entre mejor por los pasillos
 
         // flags de teclas
