@@ -45,7 +45,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('player', './assets/images/g1/playerG1.png');
         this.load.image('box', './assets/images/g1/box.png');
         this.load.image('organ', './assets/images/g1/organ.png');
-        this.load.image('goal', '../../assets/images/g1/goal.png');
+        this.load.image('goal', './assets/images/g1/goal.png');
 
         // -------- GAME 2
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
