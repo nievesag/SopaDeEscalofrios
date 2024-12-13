@@ -106,14 +106,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('BotonEliminar', 'assets/images/Game5/BotonEliminar.png');
 
         // -------- ENDINGS
-        // ph
-        this.load.image('Final1PH', 'assets/images/endings/ph/g1.png');
-        this.load.image('Final2PH', 'assets/images/endings/ph/g2.png');
-        this.load.image('Final3PH', 'assets/images/endings/ph/g3.png');
-        this.load.image('Final4PH', 'assets/images/endings/ph/g4.png');
-        this.load.image('Final5PH', 'assets/images/endings/ph/g5.png');
-        this.load.image('GenericoPH', 'assets/images/endings/ph/nog.png');
-        // reales
         this.load.image('Final1', 'assets/images/endings/png/g1.png');
         this.load.image('Final2', 'assets/images/endings/png/g2.png');
         this.load.image('Final3', 'assets/images/endings/png/g3.png');
@@ -126,6 +118,7 @@ export default class Boot extends Phaser.Scene {
 
         // -------- LOGROS
         // G1
+        /*
         this.load.image('l11', 'assets/images/logros/g1/G1logro1.png');
         this.load.image('l12', 'assets/images/logros/g1/G1logro2.png');
         this.load.image('l13', 'assets/images/logros/g1/G1logro3.png');
@@ -159,6 +152,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('l53', 'assets/images/logros/g5/G5logro3.png');
         this.load.image('l54', 'assets/images/logros/g5/G5logro4.png');
         this.load.image('l55', 'assets/images/logros/g5/G5logro5.png');
+        */
     }
     
     create()
