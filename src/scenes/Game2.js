@@ -18,10 +18,7 @@ export default class Game2 extends Phaser.Scene {
     create (){
         this.cameras.main.setBackgroundColor(0x181818);
         this.isGameOver = false; // inicialmench no es gameOver.
-
-        // ----- declaración de los this.algo -----.
-        
-        
+  
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[1]){ // [1] es por que es el Game2.
             this.gameState.hasStartedBefore[1] = true; // ala ya ha salio el tutorial.
@@ -69,7 +66,48 @@ export default class Game2 extends Phaser.Scene {
             // Destruye todo y pone el juego a funcionarch.
             tanqia.destroy();
             tanqiaText.destroy();
+            this.showTutorial();
+        });
+    }
+
+    showTutorial(){
+        let tutoImage = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1, // anchura
+                y: 1.1, // altura
+            },
+            key: 'Tuto2',
+        });
+
+        let tuto2Text = this.add.text( // diapo 1 text.
+            this.cameras.main.width - 30, 
+            this.cameras.main.scrollY + 30, 
+            'X',
+            {
+                fontSize: '40px',
+                color: '#181818',
+                align: 'center',
+                fontFamily: 'yatra',
+            }
+        ).setOrigin(0.5).setInteractive();
+
+        tuto2Text.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            tutoImage.destroy();
+            tuto2Text.destroy();
             this.startGame();
+        });
+
+        tuto2Text.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            tuto2Text.setColor('#0032c3');
+        });
+
+        tuto2Text.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            tuto2Text.setColor('#181818');
         });
     }
 
@@ -87,7 +125,7 @@ export default class Game2 extends Phaser.Scene {
         this.sound.pauseOnBlur = true;
 
         // background y rio.
-        this.bg = this.add.tileSprite(0, -100, 1920, 1080, 'background').setOrigin(0, 0).setScrollFactor(0);
+        this.bg = this.add.tileSprite(0, this.cameras.main.centerY - 400, 5220, 1080, 'background').setOrigin(0, 0).setScrollFactor(0).setScale(1, 0.6);
         this.rio = this.add.tileSprite(0, 600, 3200, 1992, 'river').setOrigin(0,0).setScrollFactor(0).setScale(1, 0.1);
 
         // creación de los objetos del juego.
@@ -137,22 +175,22 @@ export default class Game2 extends Phaser.Scene {
         this.buttonMainMenu = this.add.text(
             960, 
             35, 
-            'Regresar', 
+            'Volver', 
             {
                 fontFamily: 'yatra',
-                fontSize: 30,
+                fontSize: 20,
                 color: 'white'
             }
         ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0).setVisible(false);
 
         this.buttonMainMenu.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            this.buttonMainMenu.setTint(0x290b0d);
+            this.buttonMainMenu.setColor(0x181818);
         });
 
         this.buttonMainMenu.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            this.buttonMainMenu.clearTint();
+            this.buttonMainMenu.setColor(0xffffff);
         });
 
         this.buttonMainMenu.on("pointerdown", () => { // Al hacer clic...
@@ -204,11 +242,9 @@ export default class Game2 extends Phaser.Scene {
     }
 
     update(){
-
-        // HAY QUE PONERLE A TODO IF POR LA CARA PQ SI NO FALLA
-        // HAY Q INVESTIGAR COMO HACER ESO MAS LIMPIO :/
-
+        // Esto es pq en el primer tick del update las cosas no se han creado :)
         if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.musicButton && this.vessel && this.vessel.body){
+            
             // parallax scroller.
             if(this.vessel.isLaunched){
                 this.bg.tilePositionX += this.vessel.body.velocity.x / 500; // el fondo va segun la velocidad del vessel (aprox /500)
@@ -227,7 +263,13 @@ export default class Game2 extends Phaser.Scene {
             //this.rio.setPosition(scrollX, 600);
             
             let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
-            this.distanceCounter.setText('Distancia: ' + distance.toFixed(2) + 'm'); // el tofixed es para que tenga solo 2 decimales.
+            if(!this.vessel.isLaunched){ // si no se ha lanzado...
+                this.distanceCounter.setText('Distancia: 0 codos');
+            }
+            else{
+                this.distanceCounter.setText('Distancia: ' + (distance * 0.524).toFixed(2) + ' codos'); // el tofixed es para que tenga solo 2 decimales y se multiplica por '0.524 para convertirlo a codos reales.
+            }
+            
             //this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
             
             // si se detiene el movimiento Y LA VASIJA HA SIDO LANZADA.
@@ -269,8 +311,8 @@ export default class Game2 extends Phaser.Scene {
                 x: this.cameras.main.centerX, // x
                 y: this.cameras.main.centerY + 50, // y
                 scale:{
-                    x: 2.5, // anchura
-                    y: 1.5, // altura
+                    x: 2.8, // anchura
+                    y: 1, // altura
                 },
                 key: 'rectUI'
             }).setOrigin(0.5).setDepth(99).setScrollFactor(0);
@@ -278,16 +320,16 @@ export default class Game2 extends Phaser.Scene {
             let gameOverText = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY,
-            '¡Se acabó!',
+            'La vasija se ha hundido',
             {
-                fontSize: '70px',
+                fontSize: '50px',
                 fontFamily: 'yatra',
                 color: 'white',
                 align: 'center'
             }
             ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(50).setVisible(true);
+            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(40).setVisible(true);
 
             // PARA VER LO DE LOS COLLECTIONABLES
             let result;

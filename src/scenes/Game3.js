@@ -30,6 +30,19 @@ export default class Game3 extends Phaser.Scene
             this.startGame(); // empieza el game directamente.
         }
         this.start = false;
+
+        // --- PUNTUACIÓN ---.
+        this.points = 0;
+        this.pointUI = this.add.text(
+        40, 
+        50,
+        'Puntos: 0',
+        {
+            fontSize: 20,
+            color: 'white',
+            fontFamily: 'yatra'
+        }).setDepth(3);
+
     }
 
     createTanqiaPopUp()
@@ -68,7 +81,48 @@ export default class Game3 extends Phaser.Scene
             // Destruye todo y pone el juego a funcionarch.
             tanqia.destroy();
             tanqiaText.destroy();
+            this.showTutorial();
+        });
+    }
+
+    showTutorial(){
+        let tutoImage = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1, // anchura
+                y: 1.1, // altura
+            },
+            key: 'Tuto3',
+        });
+
+        let tuto3Text = this.add.text( // diapo 1 text.
+            this.cameras.main.width - 30, 
+            this.cameras.main.scrollY + 30, 
+            'X',
+            {
+                fontSize: '40px',
+                color: '#181818',
+                align: 'center',
+                fontFamily: 'yatra',
+            }
+        ).setOrigin(0.5).setInteractive();
+
+        tuto3Text.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            tutoImage.destroy();
+            tuto3Text.destroy();
             this.startGame();
+        });
+
+        tuto3Text.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            tuto3Text.setColor('#0032c3');
+        });
+
+        tuto3Text.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            tuto3Text.setColor('#181818');
         });
     }
 
@@ -100,18 +154,6 @@ export default class Game3 extends Phaser.Scene
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
 
-        // --- PUNTUACIÓN ---.
-        this.points = 0;
-        this.pointUI = this.add.text(
-            50, 
-            50,
-            'Puntos: ',
-            {
-                fontSize: '24px',
-                color: 'white',
-                fontFamily: 'EagleLake'
-            }
-        ).setDepth(3);
 
         // --- BACKGROUND ---.
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
@@ -153,93 +195,53 @@ export default class Game3 extends Phaser.Scene
 
         // --- SHOOTABLES ---. 
         this.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
-        //La dificultad, que depende de beetles
-        //this.setDifficulty();
         // El que vamos a disparar
         this.shootingBeetle;
-/*
+        //Randomizamos el color
+        const texture = Phaser.Math.RND.between(0, this.beetles.length - 1);
+        //Instancia escarabajo   
+        this.shootingBeetle = this.physics.add.sprite(this.player.x, this.player.y, this.beetles[texture]).setDepth(5).setScale(1.25);
+        //Quitar gravedad 
+        this.shootingBeetle.body.setAllowGravity(false);
+
         // --- GRID DE BICHOS ---.
-        let cols = 12; //Columnas totales
-        let fils = 12; //Filas totales - Rellenable solo hasta fila 13
-        let filIni = 3;
-        let height = 50; //Alto bicho
-        let width = 50; //Ancho bicho
-        let x = 220;
-        let y = 40;
-        let offset = width / 2;
-        const row = new Array(cols);
-        const lvl = new Array(fils);
-        for (let j = 0; j < fils; j++){
-            if (j % 2 == 1) //Miramos las filas pares
-            {
-                x += offset;
-            }
-            for (let i = 0; i < cols; i++){
-                //Rellena filas
-                let texture = Phaser.Math.RND.between(0, this.beetles.length - 1);
-                //Color random
-                if (j < filIni){
-
-                    row.push(this.physics.add.sprite(x + width * i, y, this.beetles[texture]).setScale(1.25));
-                }
-                //Color Empty
-                else {
-                    row.push(this.add.sprite(x + width * i, y, "EmptyBeetle").setScale(1.25));
-                }
-
-            }
-            //Collider en bichos
-            row.forEach(element => {
-                //console.log(element.texture.key);
-                if (element.texture.key!= "EmptyBeetle"){
-                    element.body.setAllowGravity(false);
-                }
-  
-            });
-            lvl.push(row);
-            //Reseteamos la x 
-            x = 220;
-            y += height;
+        this.lvl = [];
+        this.lvlcols = 12; //Columnas totales
+        this.lvlfils = 12; //Filas totales - Rellenable solo hasta fila 13
+        this.lvlfilIni;
+        //La dificultad, que depende de beetles
+        this.setDifficulty();
+        this.lvlheight = 50; //Alto bicho
+        this.lvlwidth = 50; //Ancho bicho
+        this.lvlx = 220;
+        this.lvly = 40;
+        this.lvloffset = this.lvlwidth / 2;
+        this.hayEscarabajo = false;
+        for (let j = 0; j <  this.lvlfils; j++){
+        this.lvl[j] = []; 
+        if (j % 2 == 1) //Miramos las filas pares
+        {
+            this.lvlx += this.lvloffset;
         }
- */   
-
-         // --- GRID DE BICHOS ---.
-         let cols = 12; //Columnas totales
-         let fils = 12; //Filas totales - Rellenable solo hasta fila 13
-         let filIni = 3;
-         let height = 50; //Alto bicho
-         let width = 50; //Ancho bicho
-         let x = 220;
-         let y = 40;
-         let offset = width / 2;
-         this.lvl = [];
-         for (let j = 0; j < fils; j++){
-            this.lvl[j] = []; 
-            if (j % 2 == 1) //Miramos las filas pares
+        for (let i = 0; i < this.lvlcols; i++)
+        {
+            //Rellena filas
+            let texture = Phaser.Math.RND.between(0, this.beetles.length - 1);
+            //Color random
+            if (j < this.lvlfilIni)
             {
-                x += offset;
+                this.lvl[j][i] = this.add.sprite(this.lvlx + this.lvlwidth * i, this.lvly, this.beetles[texture]).setScale(1.25);
             }
-            for (let i = 0; i < cols; i++){
-                //Rellena filas
-                let texture = Phaser.Math.RND.between(0, this.beetles.length - 1);
-                //Color random
-                if (j < filIni){
-                    this.lvl[j][i] = this.add.sprite(x + width * i, y, this.beetles[texture]).setScale(1.25);
-                    //this.lvl[j][i].body.setAllowGravity(false);
-                }
-                //Color Empty
-                else {
-                    this.lvl[j][i] = this.add.sprite(x + width * i, y,  "EmptyBeetle").setScale(1.25);
-                }
+            //Color Empty
+            else 
+            {
+                this.lvl[j][i] = this.add.sprite(this.lvlx + this.lvlwidth * i, this.lvly, "EmptyBeetle").setScale(1.25);
             }
-             //Reseteamos la x 
-             x = 220;
-             y += height;
-         }
-        
-        
-        
-        
+        }
+            //Reseteamos la x 
+            this.lvlx = 220;
+            this.lvly += this.lvlheight;
+        }
         
         // --- INPUT ---.
         // SIGUE AL MOUSE.
@@ -257,141 +259,135 @@ export default class Game3 extends Phaser.Scene
         // AL HACER CLIC. DISPARO
         this.input.on('pointerup', () =>
         {
-            //Randomizamos el color
-            const texture = Phaser.Math.RND.between(0, this.beetles.length - 1);
-            //Instancia escarabajo   
-            this.shootingBeetle = this.physics.add.sprite(this.player.x, this.player.y - 50, this.beetles[texture]).setDepth(3).setScale(1.25);
-            //Quitar gravedad 
-            this.shootingBeetle.body.setAllowGravity(false);
-            // Para que no se salga de los límites del mundo.
+            // Para que rebote
             this.shootingBeetle.setBounce(1);
             // Lanza el escarabajo con un ángulo y velocidad.
             this.physics.velocityFromRotation(this.angle, 1000, this.shootingBeetle.body.velocity); 
-            
             // --- COLISIONES CON BORDERS ---.
             this.physics.add.collider(borders, this.shootingBeetle);
 
-            // --- COLISIONES LEVEL CON DISPARO ---.
-            //this.physics.add.collider(this.shootingBeetle, lvl, colisiona());
-            //this.physics.arcade.collide(this.lvl[0][0], this.shootingBeetle, colisiona);
-            //console.log(this.lvl[0][0]);
-            
-            //let overlapea = this.physics.overlap(this.shootingBeetle, this.lvl, colisiona());
-            //console.log(overlapea);
-            /*let infoCol = []
-            for (let i = 0; i < lvl.length; i++){
-                row.forEach(element => {
-                    //console.log(element.texture.key);
-                    if (element.texture.key!= "EmptyBeetle"){
-                        let intersection = Phaser.Geom.Intersects.GetRectangleIntersection(this.shootingBeetle, element, infoCol);
-                        console.log(intersection);
-                        console.log(infoCol);
-                    }
-      
-                });
-            }*/
-
+            // --- COLISIONES LEVEL CON DISPARO ---. //EN UPDATE
+            this.hayEscarabajo = true;
             this.start = true;
         })
 
-       
-        function colisiona(){
-            console.log("pum");
-        }
-
-
-
-
-
-        function createButton(text, x, y, textColor, fontsize, sceneName) {
-            let button = this.add.text(
-                x,
-                y,
-                text,
-                {
-                    fontFamily: 'arabic',
-                    fontSize: fontsize,
-                    color: textColor
-                }
-            ).setOrigin(0.5, 0.5);
-    
-            button.on('pointerover', () => // Al pasar el ratón por encima...
-            {
-                button.setTint(0xdfa919);
-            });
-    
-            button.on('pointerout', () => // Al quitar el ratón de encima...
-            {
-                button.clearTint();
-            });
-    
-            button.setInteractive();
-            button.on("pointerdown", () => { // Al hacer clic...
-                this.scene.start(sceneName);
-                this.sound.stopAll();
-    
-            });
-        }
-
-
-
-
     }
-
-    //Se añade pero no se une
-    addToMatrix(shootingBeetle, element)
-    {
-        let newBeetle = this.make.image({ // Cannon Base. Aquí habría que poner los siguientes bichos que van a salir
-            x: shootingBeetle.x,
-            y: shootingBeetle.y, 
-            key: shootingBeetle.texture.key,
-            scale : {
-                x: 1,
-                y: 1,
-            },
-        }).setDepth(1);
-
-        //Creamos el bicho que se va a añadir a la matriz
-        
-        //newBeetle.texture = shootingBeetle.texture;
-        //newBeetle.y = shootingBeetle.y;
-        console.log(newBeetle.texture.key);
-        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-        //Miramos la posición de la colisión
-        //Impar
-        if (newBeetle.y % 10 == 0){
-            groupMatrix[0].add(newBeetle);
-            groupMatrix[0].frameQuantity++;
-            //groupImpares.frameQuantity++;
-        }
-        //Par
-        else if(newBeetle.y % 65 == 0){
-            groupMatrix[1].add(newBeetle);
-            groupMatrix[1].frameQuantity++;
-            //groupPares.frameQuantity++;
-        }
-        //console.log(groupMatrix[0].frameQuantity, groupMatrix[1].frameQuantity);
-        //console.log(groupMatrix); //Se está añadiendo, pero no se queda quieto
-
-        //newBeetle.body.setImmovable(true); 
-        newBeetle.body.setAllowGravity(false);
-    }
-
 
     update ()
-    {  
-        //Una vez que ya ha empezado el juego
+    {   
         if (this.start) {
-            let intersection = Phaser.Geom.Intersects.GetRectangleIntersection(this.shootingBeetle, this.lvl[1][1]);
-            //let overlapea = this.physics.overlap(this.shootingBeetle, this.lvl[1][1]);   
-            console.log(intersection); 
+
+            // ACOPLAR LANZADO A LVL
+            for (let j = 0; j < this.lvlfils; j++)
+            {
+                for (let i = 0; i < this.lvlcols; i++) 
+                {
+                    if (this.shootingBeetle.y <= this.lvl[j][i].y + this.lvlheight //Entonces lo pone en j+1
+                        && this.shootingBeetle.x >= this.lvl[j][i].x
+                        && this.shootingBeetle.x <= this.lvl[j][i].x + this.lvlwidth
+                        && this.lvl[j][i].texture.key != "EmptyBeetle" //Si el de encima esá lleno
+                        && this.lvl[j+1][i].texture.key == "EmptyBeetle" //Y la posición nueva está vacía
+                        && this.hayEscarabajo)
+                    {
+                        console.log(this.lvl[j][i].texture.key);
+                        this.lvl[j+1][i].destroy();
+                        this.lvl[j+1][i] = this.add.sprite(this.lvl[j+1][i].x, this.lvl[j + 1][i].y, this.shootingBeetle.texture.key).setScale(1.25);
+                        //Destruimos el lanzado
+                        this.shootingBeetle.destroy();
+                        this.hayEscarabajo = false;
+
+                        //Creamos el siguiente bicho
+                        //Randomizamos el color
+                        const texture = Phaser.Math.RND.between(0, this.beetles.length - 1);
+                        //Instancia escarabajo   
+                        this.shootingBeetle = this.physics.add.sprite(this.player.x, this.player.y, this.beetles[texture]).setDepth(5).setScale(1.25);
+                        //Quitar gravedad 
+                        this.shootingBeetle.body.setAllowGravity(false);
+                        //Destruir vecinos contiguos
+                        this.destroyNeighbour(j+1, i);
+
+                    }
+                }
+            }
         }
 
-        //Pone los puntos
-        //this.pointUI.setText('Puntos: ' + this.points);
+        this.pointUI.setText('Puntos: ' + this.points);
+
+        this.endGame();
     }
 
-    //'Exit',  925,  700, 'white', 50, 'GameSelectorMenu'
+    destroyNeighbour(y , x){
+        let neighbourCount = 1;
+        let myBeetle= this.lvl[y][x];
+        let destroyArray = [];
+        destroyArray.push(myBeetle);
+        //Fila par
+        if (y % 2 == 1)
+        {
+            //Arriba-Dcha
+            if ((y-1) > 0 && (x+1) < this.lvlcols && this.lvl[y-1][x + 1].texture.key == myBeetle.texture.key) 
+            {    
+                neighbourCount++;
+                destroyArray.push(this.lvl[y-1][x + 1]);
+            }
+            //Abajo-Dcha
+            if ((y+1) < this.lvlfils && (x+1) < this.lvlcols && this.lvl[y + 1][x + 1].texture.key == myBeetle.texture.key) 
+            {    
+                neighbourCount++;
+                destroyArray.push(this.lvl[y + 1][x + 1]);
+            }
+        }
+        //Fila impar
+        else
+        {
+            //Arriba-Izqd
+            if ((y-1) > 0 && (x-1) > 0 && this.lvl[y-1][x - 1].texture.key == myBeetle.texture.key) 
+            {    
+                neighbourCount++;
+                destroyArray.push(this.lvl[y-1][x - 1]);
+            }
+            //Abajo-Izqd
+            if ((y+1) < this.lvlfils && (x-1) > 0 && this.lvl[y + 1][x - 1].texture.key == myBeetle.texture.key) 
+            {    
+                neighbourCount++;
+                destroyArray.push(this.lvl[y+1][x - 1]);
+            }
+        }
+
+        if ((y-1) > 0 && this.lvl[y-1][x].texture.key == myBeetle.texture.key) 
+        {    
+            neighbourCount++;
+            destroyArray.push(this.lvl[y-1][x]);
+        } 
+        if ((y+1) < this.lvlfils && this.lvl[y+1][x].texture.key == myBeetle.texture.key) 
+        {    
+            neighbourCount++;
+            destroyArray.push(this.lvl[y+1][x]);
+        } 
+        if ((x+1) < this.lvlcols && this.lvl[y][x+1].texture.key == myBeetle.texture.key) 
+        {    
+            neighbourCount++;
+            destroyArray.push(this.lvl[y][x+1]);
+        } 
+        if ((x-1) > 0 && this.lvl[y][x-1].texture.key == myBeetle.texture.key)
+        {    
+            neighbourCount++;
+            destroyArray.push(this.lvl[y][x-1]);
+        }
+
+        //Si hay 3 o mas vecinos de ese color, los destruye
+        if (neighbourCount >= 3)
+        {
+            for (let i = destroyArray.length - 1; i >= 0; i--){
+                this.points += 100;
+                console.log(this.points);
+                destroyArray[i].texture.key = "EmptyBeetle";
+                destroyArray[i].destroy(true);
+            }
+
+        }
+    }
+
     // --- BOTONES ---.
     createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
@@ -423,23 +419,57 @@ export default class Game3 extends Phaser.Scene
         });
     }
 
-    // --- DIFICULTAD ---.
-    /*setDifficulty() 
-    {
+    endGame(){
 
+        let result; 
+        //Victoria, alcanzar 2000 puntos
+        if (this.points >= 2000){
+            console.log("Victoria");
+            result = 'victoria';
+            this.hayEscarabajo = true;
+            this.start = false;
+            this.time.delayedCall(500, () => {
+                this.scene.start('GameSelectorMenu');
+            });
+        }
+        else {
+
+            for (let i = 0; i < this.lvlcols; i++)
+            {
+                if (this.lvl[10][i].texture.key != "EmptyBeetle"){
+                    console.log("Derrota");
+                    result = 'victoria';
+                    this.hayEscarabajo = true;
+                    this.start = false;
+                    this.time.delayedCall(500, () => {
+                    this.scene.start('GameSelectorMenu'); });
+                }
+            }
+        }
+
+        if (result) {
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game3[currentDayIndex] = result;
+        }
+    }
+
+
+    // --- DIFICULTAD ---.
+    setDifficulty() 
+    {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
-            this.beetles.length = 5;
+            this.lvlfilIni = 3;
         }
         else if(this.gameState.currentDay == 3 || this.gameState.currentDay == 4)
         {
-            this.beetles.length = 6;
+            this.lvlfilIni = 4;
         }
         else if(this.gameState.currentDay == 5)
         {
-            this.beetles.length = 7;
+            this.lvlfilIni = 5;
         }
-    }*/
+    }
 
 }
 

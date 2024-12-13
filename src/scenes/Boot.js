@@ -9,7 +9,6 @@ export default class Boot extends Phaser.Scene {
     
         // -------- MAINMENU
         this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
-        this.load.image("mainMenu", "./assets/images/mainMenu.jpg");
         this.load.image('backgroundMenu', './assets/images/menuBackground.png');
         this.load.audio('f3ale', './assets/audio/f3ale.mp3');
 
@@ -29,6 +28,13 @@ export default class Boot extends Phaser.Scene {
 		this.load.image("Icon3", "./assets/images/iconosJuegos/iconG3.png"); // g3
 		this.load.image("Icon4", "./assets/images/iconosJuegos/iconG4.png"); // g4
 		this.load.image("Icon5", "./assets/images/iconosJuegos/iconG5.png"); // g5
+
+        // --------- TUTORIALES
+        this.load.image("Tuto1", './assets/images/tutos/tutoG1.png');
+        this.load.image("Tuto2", './assets/images/tutos/tutoG2.png');
+        this.load.image("Tuto3", './assets/images/tutos/tutoG3.png');
+        this.load.image("Tuto4", './assets/images/tutos/tutoG4.png');
+        this.load.image("Tuto5", './assets/images/tutos/tutoG5.png');
 
         // -------- GAME 1
         // Cargamos la imagen que compone el Tileset (Imagen con los tiles usados por el tilemap)
@@ -55,7 +61,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('musicButton', './assets/images/Game2/music.png');
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.png');
-        this.load.image('tanqia', './assets/images/Game2/tanqia.PNG');
         this.load.image('rectUI', './assets/images/Game2/rectUI.png');
         this.load.audio('theme2', './assets/audio/m2c.mp3');
         this.load.css('EagleLake', 'style.css');
@@ -63,8 +68,7 @@ export default class Boot extends Phaser.Scene {
         // -------- GAME 3
         //Background
         this.load.image('bg3', "./assets/images/Game3/bg.png")
-        //Player (place holder)
-        //this.load.image('cannonBase', './assets/images/icon500.jpg');
+        //Player
         this.load.image('player3', './assets/images/Game3/Cannon.png');
         //Escarabajos
         this.load.image('EmptyBeetle', './assets/images/Game3/BurbujaEmpty.png')
@@ -75,8 +79,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('CianBeetle', './assets/images/Game3/BurbujaCian.png')
         this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
-        this.load.spritesheet('beetles', './assets/images/Game3/Burbujas.png', { frameWidth: 55, frameHeight: 53 });
-        this.load.audio('theme3', './assets/audio/m3c.mp3');
+        this.load.audio('theme3', './assets/audio/Egipto.mp3');
 
         // ------- GAME 4
         this.load.image("bg1", "./assets/images/game4/bg1_game4.png");

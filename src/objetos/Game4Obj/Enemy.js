@@ -2,7 +2,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, sprite) {
         super(scene, x, y, sprite);
 
-        // Asignar un identificador único al enemigo
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
         
@@ -23,13 +22,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
            
             this.setScale(0.1, 0.1);
         }
-       
-      
 
         // Desactivar la gravedad
         this.body.setAllowGravity(true);
 
-   
         this.scene.physics.add.collider(this, this.scene.ground, () => {
             this.body.setVelocityX(0); 
             this.body.setVelocityY(0);
@@ -45,7 +41,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     checkCollisionWithArrow(scene, arrow) {
         if (this.isDead) {
-            // Si el enemigo ya está muerto, no hay colisión
             return false;
         }
 

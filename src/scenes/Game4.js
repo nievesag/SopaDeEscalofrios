@@ -66,7 +66,48 @@ export default class Game4 extends Phaser.Scene {
             // Destruye todo y pone el juego a funcionarch.
             tanqia.destroy();
             tanqiaText.destroy();
+            this.showTutorial();
+        });
+    }
+
+    showTutorial(){
+        let tutoImage = this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 1, // anchura
+                y: 1.1, // altura
+            },
+            key: 'Tuto4',
+        });
+
+        let tuto4Text = this.add.text( // diapo 1 text.
+            this.cameras.main.width - 30, 
+            this.cameras.main.scrollY + 30, 
+            'X',
+            {
+                fontSize: '40px',
+                color: '#181818',
+                align: 'center',
+                fontFamily: 'yatra',
+            }
+        ).setOrigin(0.5).setInteractive();
+
+        tuto4Text.on('pointerdown', ()=>{
+            // Destruye todo y pone el juego a funcionarch.
+            tutoImage.destroy();
+            tuto4Text.destroy();
             this.startGame();
+        });
+
+        tuto4Text.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            tuto4Text.setColor('#0032c3');
+        });
+
+        tuto4Text.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            tuto4Text.setColor('#181818');
         });
     }
 
@@ -335,13 +376,15 @@ export default class Game4 extends Phaser.Scene {
 
 
     setDifficulty() {
+
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
+               
                 { type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 2 },
-                 { type: 'Ball Arrow', count: 2 },
-                { type: 'Split Arrow', count: 3 }
+                { type: 'Ball Arrow', count: 2 },
+                { type: 'Split Arrow', count: 2 }
 
             ]);
         }
