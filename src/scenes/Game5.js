@@ -2,6 +2,7 @@
 import Wall from '../objetos/Game5Obj/Wall.js';
 import Gun from '../objetos/Game5Obj/Gun.js';
 import Void from '../objetos/Game5Obj/Void.js';
+import Destiny from '../objetos/Game5Obj/Destiny.js';
 
 export default class Game5 extends Phaser.Scene {
     constructor() {
@@ -15,10 +16,14 @@ export default class Game5 extends Phaser.Scene {
     preload () {
         // Música.
         this.load.audio('theme5', './assets/audio/m5c.mp3');
+
+        this.load.json('tableroData', './src/objetos/Game5Obj/tablero.json');
     }
     
     create() {
         this.cameras.main.setBackgroundColor(0x181818);
+
+        this.gameOver = false;
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[4]){
             this.gameState.hasStartedBefore[4] = true; // ala ya ha salio el tutorial.
@@ -30,6 +35,7 @@ export default class Game5 extends Phaser.Scene {
     }
 
     createTanqiaPopUp(){
+
         this.isClickingOnUI = true; // inicialmente lo de Tanqia es UI (bloquea interacciones).
         
         let tanqiaText = this.add.text(
@@ -113,12 +119,13 @@ export default class Game5 extends Phaser.Scene {
 
 
     startGame(){
-        // --- BOTON VOLVER A MAIN MENU ---
-        //this.createButton('MainMenu',  100,  700, 'white');
-        
 
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
+          .setOrigin(0.5, 0.5)
+          .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
+          
         // Música.
-        this.music = this.sound.add('theme5');
+        this.music = this.sound.add('theme2');
         this.music.play();
         this.sound.pauseOnBlur = true;
 
@@ -136,16 +143,9 @@ export default class Game5 extends Phaser.Scene {
             }
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
-        // 1 para los muro, 0 para los vacios, 2 para la gun
-        const tablero = [
-            [1, 1, 0, 0, 0, 2],
-            [1, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 1],
-            [1, 1, 0, 0, 0, 0],
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 1],
-            [1, 1, 1, 1, 1, 1]
-        ];
+        const level = this.gameState.currentDay; // Nivel actual
+        const tableroData = this.cache.json.get('tableroData');
+        const tablero = tableroData.levels[level];
 
         const tileSize = 100;
         const centroX = this.cameras.main.centerX - tablero[0].length * tileSize / 2;
@@ -161,6 +161,7 @@ export default class Game5 extends Phaser.Scene {
         this.mirrors = [];
         this.laser = null;
         let gun = null;
+        let destiny = null;
 
         for (let row = 0; row < tablero.length; row++) {
             for (let col = 0; col < tablero[0].length; col++) {
@@ -168,22 +169,25 @@ export default class Game5 extends Phaser.Scene {
                 let x = col * tileSize + tileSize / 2 + centroX;
                 let y = row * tileSize + tileSize / 2 + centroY;
 
-                if (tileValue === 0) {
-                    const v = new Void(this, x, y, tileSize);
-                    this.voids.push(v);
-                } else if (tileValue === 1) {
+                if (tileValue === 1) {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
-                } else if (tileValue === 2) {
+                } else if (tileValue === 2 && gun == null) {
                     gun = new Gun(this, x, y, 'left', tileSize);
+                } else if (tileValue === 3 && destiny == null) {
+                    destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
+                } else {
+                    const v = new Void(this, x, y, tileSize);
+                    this.voids.push(v);
                 }
+                
             }
         }
 
         if (gun) {
             gun.setInteractive();
             gun.on('pointerdown', () => {
-                if (this.laser == null) {
+                if (this.laser == null && this.gameOver == false) {
                     this.laser = gun.shootLaser(this);
                     this.mirrors.forEach(mirror => {
                         this.physics.add.overlap(this.laser, mirror, this.TrayChangeDirection, null, this);
@@ -191,9 +195,21 @@ export default class Game5 extends Phaser.Scene {
                     this.walls.forEach(wall => {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
                     });
+                    this.physics.add.overlap(this.laser, destiny, this.CollideWithDestiny, null, this);
                 }
             });
+            gun.on('pointerover', () => 
+                {
+                    gun.setTint(0xdddddd);
+                });
+            gun.on('pointerout', () => 
+                {
+                    gun.clearTint();
+                });
         }
+
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MAIN MENU',  200,  700, 'white');
     }
 
     update() {
@@ -203,7 +219,7 @@ export default class Game5 extends Phaser.Scene {
                 this.laser.y < this.boardMinY ||
                 this.laser.y > this.boardMaxY
             ) {
-                DestroyLaser(this.laser);
+                this.DestroyLaser(this.laser);
             }
         }
     }
@@ -216,6 +232,32 @@ export default class Game5 extends Phaser.Scene {
         laser.destroy();
         this.laser = null;
     }
+
+    CollideWithDestiny(laser, destiny) {
+        destiny.laserColision(laser);
+        this.DestroyLaser(laser);
+    }
+    
+    startEndGame(){
+        this.gameOver = true;
+
+        this.stopTimer = this.time.addEvent({
+            delay: 2000, // espera 2 segs.
+            callback: () => 
+            {
+                this.EndGame(); // se nos ha jodio la flesbos.
+            }
+        });
+        
+    }
+
+    EndGame(){
+        if (this.gameOver){
+            this.scene.start("GameSelectorMenu");
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game5[currentDayIndex] = 'victoria';
+        }
+    }
     
     createButton(text, x, y, textColor) {
         let button = this.add.text(
@@ -224,7 +266,7 @@ export default class Game5 extends Phaser.Scene {
             text,
             {
                 fontFamily: 'yatra',
-                fontSize: 50,
+                fontSize: 40,
 
                 color: textColor
             }
