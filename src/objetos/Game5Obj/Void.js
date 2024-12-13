@@ -21,8 +21,11 @@ export default class Void extends Phaser.GameObjects.Sprite {
         });
     }
     createMirror(scene) {
-        const mirror = new Mirror(scene, this.x, this.y, 'left', 'up');
+        
+        if(scene.currMirrors < scene.maxMirros){
+            const mirror = new Mirror(scene, this.x, this.y, 'left', 'up');
         scene.mirrors.push(mirror);
         this.destroy();
+        }
     }
 }

@@ -148,12 +148,12 @@ export default class Game5 extends Phaser.Scene {
         const tablero = tableroData.levels[level];
 
         const tileSize = 100;
-        const centroX = this.cameras.main.centerX - tablero[0].length * tileSize / 2;
-        const centroY = this.cameras.main.centerY - tablero.length * tileSize / 2;
+        const centroX = this.cameras.main.centerX - tablero[1].length * tileSize / 2;
+        const centroY = this.cameras.main.centerY - (tablero.length - 1) * tileSize / 2 - tileSize;
 
         this.boardMinX = centroX;
-        this.boardMaxX = centroX + tablero[0].length * tileSize;
-        this.boardMinY = centroY;
+        this.boardMaxX = centroX + tablero[1].length * tileSize;
+        this.boardMinY = centroY + tileSize;
         this.boardMaxY = centroY + tablero.length * tileSize;
 
         this.voids = [];
@@ -162,9 +162,11 @@ export default class Game5 extends Phaser.Scene {
         this.laser = null;
         let gun = null;
         let destiny = null;
+        this.maxMirros = tablero[0][0];
+        this.currMirrors = 0;
 
-        for (let row = 0; row < tablero.length; row++) {
-            for (let col = 0; col < tablero[0].length; col++) {
+        for (let row = 1; row < tablero.length; row++) {
+            for (let col = 0; col < tablero[1].length; col++) {
                 const tileValue = tablero[row][col];
                 let x = col * tileSize + tileSize / 2 + centroX;
                 let y = row * tileSize + tileSize / 2 + centroY;
@@ -208,8 +210,35 @@ export default class Game5 extends Phaser.Scene {
                 });
         }
 
+        this.caunter;
+        this.mirrorCaunter();
+
         // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MAIN MENU',  200,  700, 'white');
+        this.createButton('MAIN MENU',  50,  this.cameras.main.height - 50, 'white');
+    }
+
+    mirrorCaunter(){
+        
+        this.add.sprite(this.cameras.main.width - 50,  50, 'EspejoTablero').setScale(0.7, 0.7);
+
+        let num = this.maxMirros;
+        this.caunter = this.add.text(
+            this.cameras.main.width - 50,
+            100,
+            num,
+             {
+                 fontFamily: 'yatra',
+                 fontSize: 40,
+                 color: 'black'
+             }
+         ).setOrigin(0.5, 0.5);
+    }
+
+    updateMirrorCaunter() {
+        if (this.caunter) {
+            let num = this.maxMirros - this.currMirrors;
+            this.caunter.setText(num);
+        }
     }
 
     update() {
@@ -222,6 +251,7 @@ export default class Game5 extends Phaser.Scene {
                 this.DestroyLaser(this.laser);
             }
         }
+        this.updateMirrorCaunter();
     }
 
     TrayChangeDirection(laser, mirror) {
@@ -242,10 +272,10 @@ export default class Game5 extends Phaser.Scene {
         this.gameOver = true;
 
         this.stopTimer = this.time.addEvent({
-            delay: 2000, // espera 2 segs.
+            delay: 1500, // tiempo de espera
             callback: () => 
             {
-                this.EndGame(); // se nos ha jodio la flesbos.
+                this.EndGame();
             }
         });
         
@@ -270,7 +300,7 @@ export default class Game5 extends Phaser.Scene {
 
                 color: textColor
             }
-        ).setOrigin(0.5, 0.5);
+        ).setOrigin(0, 0);
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...

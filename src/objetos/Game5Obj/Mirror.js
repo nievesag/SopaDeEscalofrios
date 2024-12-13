@@ -6,6 +6,7 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        scene.currMirrors = scene.currMirrors + 1;
         this.setOrigin(0.5, 0.5);
         this.entryDirection1 = entryDirection1;
         this.entryDirection2 = entryDirection2;
@@ -63,6 +64,7 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
     }
 
     createVoid(scene) {
+        scene.currMirrors = scene.currMirrors - 1;
         const v = new Void(scene, this.x, this.y, scene.tileSize);
         scene.voids.push(v);
         if (this.rotateButton) {
