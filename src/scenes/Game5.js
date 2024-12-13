@@ -175,7 +175,8 @@ export default class Game5 extends Phaser.Scene {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
                 } else if (tileValue === 2 && gun == null) {
-                    gun = new Gun(this, x, y, 'left', tileSize);
+                    let direction = this.getDirection(tablero[0][1]);
+                    gun = new Gun(this, x, y, direction, tileSize);
                 } else if (tileValue === 3 && destiny == null) {
                     destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
                 } else {
@@ -215,6 +216,27 @@ export default class Game5 extends Phaser.Scene {
 
         // --- BOTON VOLVER A MAIN MENU ---
         this.createButton('MAIN MENU',  50,  this.cameras.main.height - 50, 'white');
+    }
+
+    getDirection(number) {
+        let direction;
+        switch (number) {
+            case 1:
+                direction = 'left';
+                break;
+            case 2:
+                direction = 'up';
+                break;
+            case 3:
+                direction = 'right';
+                break;
+            case 4:
+                direction = 'down';
+                break;
+            default:
+                direction = 'up';
+        }
+        return direction;
     }
 
     mirrorCaunter(){
