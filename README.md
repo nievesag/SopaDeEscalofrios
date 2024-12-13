@@ -279,8 +279,6 @@ Se muestran aquí imágenes de la faraona Tanqia representada en el juego:
 
 ### 7.2. Sonora
 
-- La canción del juego "Al rescate del escarabajo" ha sido realizada por Javier Tirado Ríos.
-
 #### 7.2.3. Minijuegos
 
 #### 7.2.4. Otros
