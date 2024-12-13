@@ -351,7 +351,7 @@ Inspiración artística adicional de:
 - [Ka en la mitología egipcia](https://es.wikipedia.org/wiki/Ka_(mitolog%C3%ADa))
 
 #### Assets
-- Sprites minijuegos: Caemen Gómez
+- Sprites minijuegos: Carmen Gómez
 - Fondos: Nieves Alonso
 - Ilustraciones inicio y final: Nieves Alonso
 - Concept art: Carmen Gómez
