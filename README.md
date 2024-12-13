@@ -350,3 +350,9 @@ Inspiración artística adicional de:
 - [Hermandad del Faraón Negro](https://hplovecraft.fandom.com/es/wiki/Hermandad_del_Fara%C3%B3n_Negro)
 - [Ka en la mitología egipcia](https://es.wikipedia.org/wiki/Ka_(mitolog%C3%ADa))
 
+#### Assets
+- Sprites minijuegos: Caemen Gómez
+- Fondos: Nieves Alonso
+- Ilustraciones inicio y final: Nieves Alonso
+- Concept art: Carmen Gómez
+
