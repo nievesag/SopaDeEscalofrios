@@ -51,6 +51,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     create () {
+        // Música.
+        const music = this.sound.add('ambience');
+        music.play();
+        this.sound.pauseOnBlur = true;
+
         this.cameras.main.setBackgroundColor(0x181818);
         if(gameState.gameSelectorMenuHasStartedBefore === false){
             
@@ -292,13 +297,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
             key: 'EscenaPrincipal',
         }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);
 
-        this.sound.stopAll();
-
-        /*// Música.
-        const music = this.sound.add('f3ale');
-        music.play();
-        this.sound.pauseOnBlur = true;*/
-
         this.createIcon('Icon1', 350, 225, 'Game1');
         this.createIcon('Icon2', 670, 225, 'Game2');
         this.createIcon('Icon3', 350, 450, 'Game3');
@@ -381,7 +379,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
                 gameState.actionsLeft--;
                 gameState.playedInCurrentDay[gameIndex] = true;
                 this.scene.start(sceneName, { gameState: gameState });
-                this.sound.stopAll();
             } else {
                 alert('No te quedan acciones hoy. Pasa al siguiente dia.');
             }
@@ -424,7 +421,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
                 gameState.actionsLeft--;
                 gameState.playedInCurrentDay[gameIndex] = true;
                 this.scene.start(sceneName, { gameState: gameState });
-                this.sound.stopAll();
             } else {
                 alert('No te quedan acciones hoy. Pasa al siguiente dia.');
             }

@@ -307,7 +307,6 @@ export default class Game4 extends Phaser.Scene {
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
             this.scene.start('GameSelectorMenu');
-            this.sound.stopAll();
 
         });
     }

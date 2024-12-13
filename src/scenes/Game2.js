@@ -199,7 +199,6 @@ export default class Game2 extends Phaser.Scene {
             this.destroyAll();
             this.scene.stop(); // detiene la escena.
             this.scene.start('GameSelectorMenu');
-            this.sound.stopAll();
         });
         
         // VASIJA.
@@ -415,7 +414,6 @@ export default class Game2 extends Phaser.Scene {
 
         button.on("pointerdown", () => { // Al hacer clic...
             this.scene.start(sceneName);
-            this.sound.stopAll();
         });
 
         return button;
