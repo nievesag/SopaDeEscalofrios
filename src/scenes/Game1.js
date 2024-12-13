@@ -120,7 +120,7 @@ export default class Game1 extends Phaser.Scene {
     }
 
     startGame(){
-        // Música.
+        /*// Música.
         this.music = this.sound.add('theme1');
         this.music.play();
         this.sound.pauseOnBlur = true;
@@ -137,7 +137,7 @@ export default class Game1 extends Phaser.Scene {
                 this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setScale(0.1).setInteractive().setDepth(1000).setScrollFactor(0); // pq es UI
+        }).setScale(0.1).setInteractive().setDepth(1000).setScrollFactor(0); // pq es UI*/
 
         
         this.cameras.main.setBounds(-65,-65,416,256).setZoom(window.screen.availWidth/1000);
@@ -477,7 +477,6 @@ export default class Game1 extends Phaser.Scene {
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
             this.scene.start(sceneName);
-            this.sound.stopAll();
 
         });
     }

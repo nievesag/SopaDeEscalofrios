@@ -113,7 +113,7 @@ export default class Game4 extends Phaser.Scene {
 
     startGame(){
         console.log(this.gameState.currentDay);
-        // Música.
+        /*// Música.
         this.music = this.sound.add('theme4');
         this.music.play();
         this.sound.pauseOnBlur = true;
@@ -130,7 +130,7 @@ export default class Game4 extends Phaser.Scene {
                 this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
         
           // Background
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
@@ -307,7 +307,6 @@ export default class Game4 extends Phaser.Scene {
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
             this.scene.start('GameSelectorMenu');
-            this.sound.stopAll();
 
         });
     }

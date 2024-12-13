@@ -124,7 +124,7 @@ export default class Game5 extends Phaser.Scene {
           .setOrigin(0.5, 0.5)
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
           
-        // Música.
+        /*// Música.
         this.music = this.sound.add('theme2');
         this.music.play();
         this.sound.pauseOnBlur = true;
@@ -141,7 +141,7 @@ export default class Game5 extends Phaser.Scene {
                 this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
 
         // Los tableros contienen una array de array. 
         // La primera fila de cada tablero solo tiene dos numero que representan:

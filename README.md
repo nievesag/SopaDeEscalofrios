@@ -155,20 +155,18 @@ La idea es rescatar a unos escarabajos que han sido pegados con miel de su dulce
 > "Jepri, el dios del sol autocreado, sufre de una fuerte tristeza: sus adorados ahijados, los escarabajos de todo Egipto, han sido capturados. Para contentarle de nuevo, y evitar su ira, deberás rescatar al mayor número de escarabajos posibles, en el menor tiempo posible."
 
 #### 4.3.2. Dificultades
-- **Fácil (Días 1 y 2):** Empezaremos con 2 colores de recolectables (verde y rojo). Bajarán de forma lenta.
-- **Intermedio (Días 3 y 4):** Empezaremos con 3 colores de recolectables (verde, azul y rojo). Bajarán de forma más moderada.
-- **Difícil (Día 5):** Empezaremos con 4 colores de recolectables (verde, azul, amarillo y rojo). Bajarán de forma rápida a lo largo del tiempo.
+- **Fácil (Días 1 y 2):** Empezaremos con 3 filas iniciales completas. 
+- **Intermedio (Días 3 y 4):**  Empezaremos con 4 filas iniciales completas. 
+- **Difícil (Día 5):**  Empezaremos con 5 filas iniciales completas. 
 
 #### 4.3.3. Mecánicas
-- **Lanzamiento:** Con el ratón, apuntaremos hacia el lugar al que queremos disparar y click para disparar. Podrá rebotar con las paredes.
+- **Lanzamiento:** Con el ratón, apuntaremos hacia el lugar al que queremos disparar y click izquierdo para disparar. Podrá rebotar con las paredes. 
 
-- **Escarabajos Especiales:**
-  - **Escarabomba:** Eliminarán todos los escarabajos en un área. Todos los 	vecinos a 1 hueco de distancia. Está identificada con 	un jeroglífico de una ola, como si se tratase de una onda expansiva y un color negro.	
-  - **Escolorobajo:** Elimina todos los escarabajos de dicho color de la pantalla.Está identificada con un jeroglífico de un sol y el escarabajo será del color correspondiente. 
-  - **Combos:** En ese caso, se activará el escalorobajo de dicho color, y llevará a cabo su funcionalidad normal, igual que si se hubiese reducido por al unir escarabajos de dicho color. 
+- **Escarabajos Especiales:** 
+  - **Escarabomba:** Eliminarán todos los escarabajos en un área. Todos los 	vecinos a 1 hueco de distancia. Está identificada con 	un jeroglífico de una ola, como si se tratase de una onda expansiva y un color negro.	(Pendiente)
+  - **Escolorobajo:** Elimina todos los escarabajos de dicho color de la pantalla.Está identificada con un jeroglífico de un sol y el escarabajo será del color correspondiente. (Pendiente)
 
-- **Caída:** Hará falta reunir un conjunto de al menos 3 escarabajos para poder liberarlos.
-
+- **Caída:** Cuando haya 3 o más vecinos justamente contiguos, los eliminará.
 
 #### 4.3.4. Coleccionables
 - **Primer día:** Tras completar el juego el primer día recibirá un escarabajo negro.
@@ -281,6 +279,8 @@ Se muestran aquí imágenes de la faraona Tanqia representada en el juego:
 
 ### 7.2. Sonora
 
+- La canción del juego "Al rescate del escarabajo" ha sido realizada por Javier Tirado Ríos.
+
 #### 7.2.3. Minijuegos
 
 #### 7.2.4. Otros
@@ -307,10 +307,10 @@ No hay ka tan puro como el mío. No hay cuerpo, no hay sangre, ni carne más lim
 **Descripción sobre el "ka":** En la mitología egipcia, el "ka" era considerado la fuerza vital de cada individuo, otorgada en el momento de la concepción. Se creía que podía conferir inmortalidad y, en algunos casos, permitir que los humanos se transformaran en dioses.
 #### 8.2.3. Deidades
 - **Socar** Persuade a Aquel que está sobre su arena, y no habrá difunto desamparado. Los cuerpos permanecerán a salvo hasta la infinitud de mi existencia.
-- **Socar** Convence a La regente de Nubia, y tendré el favor de las aguas, fuente de la que todo nace y emerge, existencia misma, germen de todo.
-- **Socar** Seduce a El que es transformado, y no habrá eclipse que ennegrezca mi optimismo, el sendero de mi apoteosis se trazará cada día más claro.
-- **Socar** Fascina a Quien trae a la lejana, y jamás necesitaré escudo, pues cualquier conflagración que emerja no será rival para mi férreo poder de dominación. 
-- **Socar** Atrae a La Luz y toda mi sangre acabará por envenenarse de ese preciado fulgor que se deja tras las tinieblas de aquellos ojos que decoran el firmamento. 
+- **Nun** Convence a La regente de Nubia, y tendré el favor de las aguas, fuente de la que todo nace y emerge, existencia misma, germen de todo.
+- **Jepri** Seduce a El que es transformado, y no habrá eclipse que ennegrezca mi optimismo, el sendero de mi apoteosis se trazará cada día más claro.
+- **Inheret** Fascina a Quien trae a la lejana, y jamás necesitaré escudo, pues cualquier conflagración que emerja no será rival para mi férreo poder de dominación. 
+- **Shy** Atrae a La Luz y toda mi sangre acabará por envenenarse de ese preciado fulgor que se deja tras las tinieblas de aquellos ojos que decoran el firmamento. 
 
 
 #### 8.3. Coleccionables
@@ -327,6 +327,7 @@ Inspiraciones para las mecánicas del juego:
 - *Toss the Turtle* - GonzoSSM (2016)
 - *Angry Birds* - Rovio Entertainment (2009)
 - *LIT: Bend the Light* - Copperglass (2020)
+- *Bubble Shooter*
 
 ### 9.2. Artísticas
 
@@ -348,4 +349,10 @@ Inspiración artística adicional de:
 - [Lovecraft y Egipto](https://lovecraft.fandom.com/wiki/Nephren-Ka)
 - [Hermandad del Faraón Negro](https://hplovecraft.fandom.com/es/wiki/Hermandad_del_Fara%C3%B3n_Negro)
 - [Ka en la mitología egipcia](https://es.wikipedia.org/wiki/Ka_(mitolog%C3%ADa))
+
+#### Assets
+- Sprites minijuegos: Carmen Gómez
+- Fondos: Nieves Alonso
+- Ilustraciones inicio y final: Nieves Alonso
+- Concept art: Carmen Gómez
 
