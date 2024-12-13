@@ -143,6 +143,10 @@ export default class Game5 extends Phaser.Scene {
             }
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
 
+        // Los tableros contienen una array de array. 
+        // La primera fila de cada tablero solo tiene dos numero que representan:
+        // 0 -> el numero de espejos maximo
+        // 1 -> la direccion del disparador
         const level = this.gameState.currentDay; // Nivel actual
         const tableroData = this.cache.json.get('tableroData');
         const tablero = tableroData.levels[level];
