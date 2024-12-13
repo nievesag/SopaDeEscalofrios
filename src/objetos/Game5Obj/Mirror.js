@@ -53,10 +53,12 @@ export default class Mirror extends Phaser.Physics.Arcade.Sprite {
         this.on('pointerover', () => {
             this.rotateButton.setVisible(true);
             this.deleteButton.setVisible(true);
+            this.setTint(0xdddddd);
         });
         this.on('pointerout', () => {
             this.rotateButton.setVisible(false);
             this.deleteButton.setVisible(false);
+            this.clearTint();
         });
     }
 

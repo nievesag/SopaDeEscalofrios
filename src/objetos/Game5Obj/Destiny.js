@@ -18,6 +18,7 @@ export default class Destiny extends Phaser.Physics.Arcade.Sprite {
             if (!this.active) {
                 this.active = true;
                 this.setTexture(this.onsprite);
+                this.scene.startEndGame();
             }
         }
     }

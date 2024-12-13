@@ -22,6 +22,8 @@ export default class Game5 extends Phaser.Scene {
     
     create() {
         this.cameras.main.setBackgroundColor(0x181818);
+
+        this.gameOver = false;
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[4]){
             this.gameState.hasStartedBefore[4] = true; // ala ya ha salio el tutorial.
@@ -75,12 +77,13 @@ export default class Game5 extends Phaser.Scene {
     }
 
     startGame(){
-        // --- BOTON VOLVER A MAIN MENU ---
-        //this.createButton('MainMenu',  100,  700, 'white');
-        
 
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
+          .setOrigin(0.5, 0.5)
+          .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
+          
         // Música.
-        this.music = this.sound.add('theme5');
+        this.music = this.sound.add('theme2');
         this.music.play();
         this.sound.pauseOnBlur = true;
 
@@ -142,7 +145,7 @@ export default class Game5 extends Phaser.Scene {
         if (gun) {
             gun.setInteractive();
             gun.on('pointerdown', () => {
-                if (this.laser == null) {
+                if (this.laser == null && this.gameOver == false) {
                     this.laser = gun.shootLaser(this);
                     this.mirrors.forEach(mirror => {
                         this.physics.add.overlap(this.laser, mirror, this.TrayChangeDirection, null, this);
@@ -153,7 +156,18 @@ export default class Game5 extends Phaser.Scene {
                     this.physics.add.overlap(this.laser, destiny, this.CollideWithDestiny, null, this);
                 }
             });
+            gun.on('pointerover', () => 
+                {
+                    gun.setTint(0xdddddd);
+                });
+            gun.on('pointerout', () => 
+                {
+                    gun.clearTint();
+                });
         }
+
+        // --- BOTON VOLVER A MAIN MENU ---
+        this.createButton('MAIN MENU',  200,  700, 'white');
     }
 
     update() {
@@ -182,6 +196,26 @@ export default class Game5 extends Phaser.Scene {
         this.DestroyLaser(laser);
     }
     
+    startEndGame(){
+        this.gameOver = true;
+
+        this.stopTimer = this.time.addEvent({
+            delay: 2000, // espera 2 segs.
+            callback: () => 
+            {
+                this.EndGame(); // se nos ha jodio la flesbos.
+            }
+        });
+        
+    }
+
+    EndGame(){
+        if (this.gameOver){
+            this.scene.start("GameSelectorMenu");
+            const currentDayIndex = this.gameState.currentDay - 1; 
+            this.gameState.minigamesResults.Game5[currentDayIndex] = 'victoria';
+        }
+    }
     
     createButton(text, x, y, textColor) {
         let button = this.add.text(
@@ -190,7 +224,7 @@ export default class Game5 extends Phaser.Scene {
             text,
             {
                 fontFamily: 'yatra',
-                fontSize: 50,
+                fontSize: 40,
 
                 color: textColor
             }
