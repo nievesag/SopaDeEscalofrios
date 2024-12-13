@@ -41,7 +41,7 @@ export default class Game3 extends Phaser.Scene
             fontSize: 20,
             color: 'white',
             fontFamily: 'yatra'
-        }).setDepth(3);
+        }).setDepth(3).setVisible(false);
 
     }
 
@@ -128,13 +128,14 @@ export default class Game3 extends Phaser.Scene
 
     startGame()
     {
+        this.pointUI.setVisible(true);
         this.input.mouse.enabled = false;
         // durante 100 milisegs bloquea el input.
         this.time.delayedCall(100, ()=>{
             this.input.mouse.enabled = true;
         })
 
-        // --- MUSIC ---.
+        /*// --- MUSIC ---.
         this.music = this.sound.add('theme3');
         this.music.play();
         this.sound.pauseOnBlur = true;
@@ -151,7 +152,7 @@ export default class Game3 extends Phaser.Scene
                 this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
 
 
 

@@ -294,10 +294,10 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         this.sound.stopAll();
 
-        // Música.
+        /*// Música.
         const music = this.sound.add('f3ale');
         music.play();
-        this.sound.pauseOnBlur = true;
+        this.sound.pauseOnBlur = true;*/
 
         this.createIcon('Icon1', 350, 225, 'Game1');
         this.createIcon('Icon2', 670, 225, 'Game2');

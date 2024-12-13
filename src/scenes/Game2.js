@@ -119,10 +119,10 @@ export default class Game2 extends Phaser.Scene {
             this.isClickingOnUI = false; // permite interaccion tras 2 segs
         })
 
-        // música.
+        /*// música.
         this.music = this.sound.add('theme2');
         this.music.play();
-        this.sound.pauseOnBlur = true;
+        this.sound.pauseOnBlur = true;*/
 
         // background y rio.
         this.bg = this.add.tileSprite(0, this.cameras.main.centerY - 400, 5220, 1080, 'background').setOrigin(0, 0).setScrollFactor(0).setScale(1, 0.6);
@@ -145,7 +145,7 @@ export default class Game2 extends Phaser.Scene {
         this.physics.world.setBounds(0, -350, Number.MAX_SAFE_INTEGER, 1050);
         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
 
-        // Botón de la música.
+        /*// Botón de la música.
         this.musicButton = this.add.image(40, 40, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
             this.isClickingOnUI = true; 
@@ -157,7 +157,7 @@ export default class Game2 extends Phaser.Scene {
                 this.music.resume();
                 this.musicButton.setTexture('musicButton');
             }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI
+        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
         
         // contador de distancia.
         this.distanceCounter = this.add.text(
@@ -243,7 +243,7 @@ export default class Game2 extends Phaser.Scene {
 
     update(){
         // Esto es pq en el primer tick del update las cosas no se han creado :)
-        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.musicButton && this.vessel && this.vessel.body){
+        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.vessel && this.vessel.body){
             
             // parallax scroller.
             if(this.vessel.isLaunched){
@@ -383,11 +383,11 @@ export default class Game2 extends Phaser.Scene {
             this.buttonMainMenu = null;
         } 
 
-        if(this.musicButton)
+        /*if(this.musicButton)
         {
             this.musicButton.destroy();
             this.buttonMainMenu = null;
-        } 
+        } */
     }
 
     // botón de la UI.

@@ -10,9 +10,6 @@ export default class LogrosMenu extends Phaser.Scene {
     }
 
     create() {
-        // Paramos el audio
-        this.sound.stopAll();
-        
         // Música
         const music = this.sound.add('f3ale');
         music.play();
@@ -39,6 +36,8 @@ export default class LogrosMenu extends Phaser.Scene {
 
         button.setInteractive();
         button.on("pointerdown", () => { // Al hacer clic...
+            // Paramos el audio
+            this.sound.stopAll();
             this.resetLogros();
             this.scene.start("MainMenu");
         });
