@@ -324,7 +324,7 @@ export default class Game1 extends Phaser.Scene {
             this.timerHUD();
             
             // boton
-            this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
+            //this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
             
             // -----------------------------------
         }
