@@ -8,7 +8,7 @@ export default class Boot extends Phaser.Scene {
         // ----- CARGAR IMAGENES DEL JUEGO -----
     
         // -------- MAINMENU
-        this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
+       // this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
         this.load.image('backgroundMenu', './assets/images/menuBackground.png');
         this.load.audio('f3ale', './assets/audio/f3ale.mp3');
         this.load.audio('ambience', './assets/audio/ambience.mp3');
@@ -50,7 +50,7 @@ export default class Boot extends Phaser.Scene {
         // -------- GAME 2
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
         // this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
-        this.load.image('cannon', 'assets/images/cannon.png')
+       // this.load.image('cannon', 'assets/images/cannon.png')
         this.load.image('cannonBody', './assets/images/Game2/cannonBody.png');
         this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
         this.load.image('vessel', './assets/images/Game2/vessel.png');
@@ -63,7 +63,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.png');
         this.load.image('rectUI', './assets/images/Game2/rectUI.png');
-        this.load.audio('theme2', './assets/audio/m2c.mp3');
+       // this.load.audio('theme2', './assets/audio/m2c.mp3');
         this.load.css('EagleLake', 'style.css');
 
         // -------- GAME 3
@@ -80,7 +80,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('CianBeetle', './assets/images/Game3/BurbujaCian.png')
         this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
-        this.load.audio('theme3', './assets/audio/Egipto.mp3');
+      //  this.load.audio('theme3', './assets/audio/Egipto.mp3');
 
         // ------- GAME 4
         this.load.image("bg1", "./assets/images/game4/bg1_game4.png");
@@ -114,7 +114,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('Generico', 'assets/images/endings/png/g6.png');
 
         //other
-        this.load.image('collectableWall', 'assets/images/collectableWall.png');
+       // this.load.image('collectableWall', 'assets/images/collectableWall.png');
 
         // -------- LOGROS
         // G1
