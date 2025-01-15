@@ -81,6 +81,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
         this.load.audio('theme3', './assets/audio/Egipto.mp3');
+        this.load.audio('beep', './assets/audio/beep.wav');
 
         // ------- GAME 4
         this.load.image("bg1", "./assets/images/game4/bg1_game4.png");
