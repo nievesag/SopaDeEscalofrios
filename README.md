@@ -223,7 +223,7 @@ Para activar el efecto especial de cada flecha mágica hay que pulsar la tecla E
 ---
 
 ### 5.5. Minijuego 5: «El sendero del Sol»
-Un minijuego de tipo puzle en el objetivo es guiar un rayo de sol a través de distintos niveles utilizando espejos. Los jugadores deberán mover y rotar los espejos estratégicamente para hacer que el rayo de luz rebote en la dirección correcta, superando obstáculos y resolviendo rompecabezas visuales.
+Un minijuego de tipo puzle en el objetivo es guiar un rayo de sol a través de distintos niveles utilizando espejos. Los jugadores deberán mover y rotar los espejos estratégicamente para hacer que el rayo de luz rebote en la dirección correcta y resolviendo rompecabezas visuales.
 
 #### 5.5.1. Contexto
 > "Shu, divinidad danzante del aire, él desea iluminar todo a su paso,  él es la sequedad, él es el tenue brillo de atardecer… Ayuda a Shu a apartar la tenebrosa oscuridad de las profundidades de la pirámide para completar su destino. Coloca y mueve los espejos para guiar a Shu, y él te dará su bendición."
