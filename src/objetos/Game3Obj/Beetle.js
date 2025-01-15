@@ -16,11 +16,6 @@ export default class Beetle extends Phaser.GameObjects.Sprite
     this.isDead = false;
   }
 
-  preUpdate(t, dt) 
-  {
-    super.preUpdate(t, dt);
-  }
-
   //Destructora del objeto
   selfDestroy ()
   {

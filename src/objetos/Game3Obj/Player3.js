@@ -27,13 +27,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     //¿Esto aquí?
     this.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
   }
-
-  // Time - t y DeltaTime - dt
-  preUpdate(t, dt) {
-    super.preUpdate(t, dt);
-    //this.setProjectile(); // Inicializa el primer proyectil y el siguiente
-  }
-
+  
   setProjectile() {
     this.randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
     this.actualBeetle = this.scene.make.image({

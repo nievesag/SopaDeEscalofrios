@@ -53,9 +53,6 @@ export default class Game3 extends Phaser.Scene
             color: 'white',
             fontFamily: 'yatra'
         }).setDepth(3).setVisible(false);
-
-
-
     }
 
     createTanqiaPopUp()
@@ -143,7 +140,8 @@ export default class Game3 extends Phaser.Scene
     {
         //Muestra el marcador de puntos
         this.pointUI.setVisible(true);
-        this.victory = 2000;
+        this.victory = 2000; //Puntos victoria
+        this.lost = 10; //Fila máxima
 
         //Muestra el temporizador del disparo
         this.timeUI.setVisible(true);
@@ -345,7 +343,6 @@ export default class Game3 extends Phaser.Scene
         {
             for (let i = 0; i < this.level.cols; i++) 
             {
-
                 if (this.shootingBeetle.y <= this.level.lvl[j][i].y + this.level.height //Entonces lo pone en j+1
                     && this.shootingBeetle.x >= this.level.lvl[j][i].x
                     && this.shootingBeetle.x <= this.level.lvl[j][i].x + this.level.width 
@@ -356,7 +353,7 @@ export default class Game3 extends Phaser.Scene
                 {
                     //Destruye lo que había antes
                     this.level.lvl[j+1][i].selfDestroy();
-                    //Añade otro sprite -- Cambiar por un MATRIXBEETLE
+                    //Añade otro sprite 
                     this.level.lvl[j+1][i] = new MatrixBeetle(this, this.level.lvl[j+1][i].x, this.level.lvl[j+1][i].y).setScale(1.25);
                     this.level.lvl[j+1][i].setTexture(this.shootingBeetle.texture);
                     //Destruimos el lanzado
@@ -368,7 +365,6 @@ export default class Game3 extends Phaser.Scene
                     this.shootingBeetle = new ShootingBeetle(this, this.player.x, this.player.y).setDepth(5).setScale(1.25);
                     //Destruir vecinos contiguos
                     this.destroyNeighbour(j+1, i);
-
                 }
             }
         }

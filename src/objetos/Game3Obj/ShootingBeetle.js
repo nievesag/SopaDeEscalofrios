@@ -16,7 +16,4 @@ export default class ShootingBeetle extends Beetle
     this.body.setAllowGravity(false); //Inicialmente no tienen. La activamos cuando nos conviene
 
   }
-
-  collisionBorders
-
 }
