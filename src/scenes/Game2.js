@@ -145,6 +145,23 @@ export default class Game2 extends Phaser.Scene {
         this.physics.world.setBounds(0, -350, Number.MAX_SAFE_INTEGER, 1050);
         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
 
+        this.setInGameUI();
+        
+        // VASIJA.
+        this.input.on('pointerup', () => // AL HACER CLIC.
+        {
+            if (!this.isClickingOnUI && !this.vessel.isLaunched) { // si no se clica en la UI y no se ha lanzado......
+            this.vessel.launchVessel(this.cannon.angle); // lanza vasija.
+            }
+        });
+        
+        this.input.on('pointermove', (pointer) => // SIGUE AL MOUSE.
+        {
+            this.cannon.cannonAngle(pointer); 
+        });
+    }
+
+    setInGameUI(){
         /*// Botón de la música.
         this.musicButton = this.add.image(40, 40, 'musicButton');
         this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
@@ -200,19 +217,28 @@ export default class Game2 extends Phaser.Scene {
             this.scene.stop(); // detiene la escena.
             this.scene.start('GameSelectorMenu');
         });
-        
-        // VASIJA.
-        this.input.on('pointerup', () => // AL HACER CLIC.
-        {
-            if (!this.isClickingOnUI && !this.vessel.isLaunched) { // si no se clica en la UI y no se ha lanzado......
-            this.vessel.launchVessel(this.cannon.angle); // lanza vasija.
-            }
-        });
-        
-        this.input.on('pointermove', (pointer) => // SIGUE AL MOUSE.
-        {
-            this.cannon.cannonAngle(pointer); 
-        });
+
+        this.colorFeedback = this.add.sprite(90, 80, 'player3').setScale(0.2);
+
+        // FEEDBACK DE FUERZA DE LANZADO.
+        if(this.cannon.powerColor === 0){ // 0 -> poca fuerza.
+            // Verde.
+          }
+          else if(this.cannon.powerColor === 1){ // 1 -> jijijuju.
+            // Verde again
+          }
+          else if(this.cannon.powerColor === 2){ // 2 -> ni mas ni menos.
+            // Amarillo.
+          }
+          else if(this.cannon.powerColor === 3){ // 3 -> va folledo.
+            // Naranja
+          }
+          else if(this.cannon.powerColor === 4){ // 4 -> joder lo folledo que va.
+            // Rojo.
+          }
+          else if(this.cannon.powerColor === 5){ // 5 -> NITRO.
+            // Rojo
+          }
     }
 
     setDifficulty(){
@@ -242,7 +268,7 @@ export default class Game2 extends Phaser.Scene {
 
     update(){
         // Esto es pq en el primer tick del update las cosas no se han creado :)
-        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.vessel && this.vessel.body){
+        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.vessel && this.vessel.body && this.colorFeedback){
             
             // parallax scroller.
             if(this.vessel.isLaunched){
@@ -268,6 +294,8 @@ export default class Game2 extends Phaser.Scene {
             else{
                 this.distanceCounter.setText('Distancia: ' + (distance * 0.524).toFixed(2) + ' codos'); // el tofixed es para que tenga solo 2 decimales y se multiplica por '0.524 para convertirlo a codos reales.
             }
+
+            this.colorFeedback.setRotation(this.colorFeedback.rotation+0.01);
             
             //this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
             
