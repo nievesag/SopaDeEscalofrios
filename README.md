@@ -105,9 +105,9 @@ Socar alimenta uno a uno cada corazón, cada estómago, cada intestino, cada mí
 #### 5.1.4. Dificultades
 La dificultad de este minijuego se basa en los tiempos para resolver los puzles y en el mapa a resolver que cada vez tendrá más complejidad.
 
-- **Fácil (primer y segundo día):** Tiempo: 45 segundos. Mapa: Primer mapa.
-- **Normal (tercer y cuarto día):** Tiempo: 60 segundos. Mapa: Segundo mapa.
-- **Difícil (quinto día):** Tiempo: 70 segundos. Mapa: Tercer mapa.
+- **Fácil (primer y segundo día):** Tiempo: 90 segundos. Mapa: Primer mapa.
+- **Normal (tercer y cuarto día):** Tiempo: 70 segundos. Mapa: Segundo mapa.
+- **Difícil (quinto día):** Tiempo: 60 segundos. Mapa: Tercer mapa.
 
 ---
 
