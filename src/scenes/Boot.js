@@ -106,6 +106,10 @@ export default class Boot extends Phaser.Scene {
         this.load.image('BotonRotar', 'assets/images/Game5/BotonRotar.png');
         this.load.image('BotonEliminar', 'assets/images/Game5/BotonEliminar.png');
 
+        // -------- FEEDBACK
+        this.load.image('Enviada', 'assets/images/feedback/enviada.png');
+        this.load.image('NoEnviada', 'assets/images/feedback/noenviada.png');
+
         // -------- ENDINGS
         this.load.image('Final1', 'assets/images/endings/png/g1.png');
         this.load.image('Final2', 'assets/images/endings/png/g2.png');
