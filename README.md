@@ -312,7 +312,7 @@ No hay ka tan puro como el mío. No hay cuerpo, no hay sangre, ni carne más lim
 
 
 #### 8.3. Coleccionables
-Al final del juego en función de en qué día se ha jugado y ganado un minijuego u otro se podrán conseguir logros. Habrá cinco logros por juego, uno por cada día. En total se pueden conseguir 15 minijuegos, 3 por día en los 5 días totales.
+Cada vez que se completa un minijuego correctamente se podrá conseguir un logro. Cada juego tendrá 5 logros en total, uno por cada día, y, dado que según el ciclo de juego solo se pueden jugar 3 juegos diferentes cada día, al final del juego se podrán haber conseguido 15 logros en total.
 
 ---
 
