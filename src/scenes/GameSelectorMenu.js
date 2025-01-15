@@ -45,7 +45,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         super({ key: 'GameSelectorMenu'});
     }
     
-
     init(data) {
         this.gameState = data.gameState; // Guarda gameState en la escena
     }
