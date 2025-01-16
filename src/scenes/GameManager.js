@@ -1,5 +1,8 @@
 export default class GameManager {
     constructor(scene) {
+        this.scene = scene;
+
+        // VARIABLE GESTION DEL ESTADO DE JUEGO
         this.gameState = {
             // dia actual
             currentDay: 1,
@@ -66,9 +69,9 @@ export default class GameManager {
 
     // ---- GESTION DE DIAS ----
     nextDay() {
-        if (gameState.currentDay < gameState.maxDays) 
+        if (this.gameState.currentDay < this.gameState.maxDays) 
         {
-          this.resetDay();
+            this.resetDay();
         } 
         else 
         {
@@ -81,41 +84,40 @@ export default class GameManager {
     }
 
     resetDay() {
-        gameState.currentDay++;
-        gameState.actionsLeft = 3;
-        gameState.playedInCurrentDay = [false, false, false, false, false]; 
+        this.gameState.currentDay++;
+        this.gameState.actionsLeft = 3;
+        this.gameState.playedInCurrentDay = [false, false, false, false, false]; 
 
-        this.infoText.setText(`Día: ${gameState.currentDay} - Acciones restantes: ${gameState.actionsLeft}`);
+        this.infoText.setText(`Día: ${this.gameState.currentDay} - Acciones restantes: ${this.gameState.actionsLeft}`);
 
-        if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) 
+        if(this.gameState.actionsLeft > 0 && this.gameState.actionsLeft != 1) 
         {
-            this.infoText.setText(`DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`);
+            this.infoText.setText(`DÍA: ${this.gameState.currentDay} - Aún puedes escribir ${this.gameState.actionsLeft} cartas`);
         }
-        else if(gameState.actionsLeft == 1) 
+        else if(this.gameState.actionsLeft == 1) 
         {
-            this.infoText.setText(`DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`);
+            this.infoText.setText(`DÍA: ${this.gameState.currentDay} - Aún puedes escribir ${this.gameState.actionsLeft} carta`);
         }
         else 
         {
-            this.infoText.setText(`DÍA: ${gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`);
+            this.infoText.setText(`DÍA: ${this.gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`);
         }
     }
     // ---
 
     // ---- GESTION DE VICTORIA / DERROTA ----
     saveEndResults() {
-        gameState.endResults.Game1 = gameState.minigamesResults.Game1;
-        gameState.endResults.Game2 = gameState.minigamesResults.Game2;
-        gameState.endResults.Game3 = gameState.minigamesResults.Game3;
-        gameState.endResults.Game4 = gameState.minigamesResults.Game4;
-        gameState.endResults.Game5 = gameState.minigamesResults.Game5;
+        this.gameState.endResults.Game1 = this.gameState.minigamesResults.Game1;
+        this.gameState.endResults.Game2 = this.gameState.minigamesResults.Game2;
+        this.gameState.endResults.Game3 = this.gameState.minigamesResults.Game3;
+        this.gameState.endResults.Game4 = this.gameState.minigamesResults.Game4;
+        this.gameState.endResults.Game5 = this.gameState.minigamesResults.Game5;
     }
 
     resetGame() {
-        gameState.currentDay = 1;
-        gameState.actionsLeft = 3;
-        gameState.maxDays = 5;
-        gameState.minigamesResults = {
+        this.gameState.currentDay = 1;
+        this.gameState.actionsLeft = 3;
+        this.gameState.minigamesResults = {
             Game1: [null, null, null, null, null] ,
             Game2: [null, null, null, null, null] ,
             Game3: [null, null, null, null, null] ,

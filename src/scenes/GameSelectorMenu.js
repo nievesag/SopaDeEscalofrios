@@ -1,3 +1,5 @@
+import GameManager from "./GameManager.js";
+
 // Variable global para gestionar el dia y las acciones
 let gameState = {
     currentDay: 1,
@@ -43,6 +45,9 @@ let gameState = {
 export default class GameSelectorMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'GameSelectorMenu'});
+
+        // GAMEMANAGER
+        this.manager = new GameManager(this);
     }
     
     init(data) {
