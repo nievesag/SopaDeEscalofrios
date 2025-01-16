@@ -68,50 +68,10 @@ export default class GameManager {
     }
 
     // ---- GESTION DE DIAS ----
-    nextDay() {
-        if (this.gameState.currentDay < this.gameState.maxDays) 
-        {
-            this.resetDay();
-        } 
-        else 
-        {
-            alert('¡Has alcanzado el ultimo dia!');
-            this.saveEndResults();
-           
-            this.scene.start("EndMenu", { gameState: gameState });
-            this.resetGame();
-        }
-    }
-
     resetDay() {
         this.gameState.currentDay++;
         this.gameState.actionsLeft = 3;
         this.gameState.playedInCurrentDay = [false, false, false, false, false]; 
-
-        this.infoText.setText(`Día: ${this.gameState.currentDay} - Acciones restantes: ${this.gameState.actionsLeft}`);
-
-        if(this.gameState.actionsLeft > 0 && this.gameState.actionsLeft != 1) 
-        {
-            this.infoText.setText(`DÍA: ${this.gameState.currentDay} - Aún puedes escribir ${this.gameState.actionsLeft} cartas`);
-        }
-        else if(this.gameState.actionsLeft == 1) 
-        {
-            this.infoText.setText(`DÍA: ${this.gameState.currentDay} - Aún puedes escribir ${this.gameState.actionsLeft} carta`);
-        }
-        else 
-        {
-            this.infoText.setText(`DÍA: ${this.gameState.currentDay} - Estás muy cansado para escribir cartas, ve a dormir`);
-        }
-    }
-    // ---
-
-    // ---- GESTION DE VICTORIA / DERROTA ----
-    saveEndResults() {
-        this.gameState.endResults.Game1 = this.gameState.minigamesResults.Game1;
-        this.gameState.endResults.Game2 = this.gameState.minigamesResults.Game2;
-        this.gameState.endResults.Game3 = this.gameState.minigamesResults.Game3;
-        this.gameState.endResults.Game4 = this.gameState.minigamesResults.Game4;
-        this.gameState.endResults.Game5 = this.gameState.minigamesResults.Game5;
     }
 
     resetGame() {
@@ -124,6 +84,20 @@ export default class GameManager {
             Game4: [null, null, null, null, null] ,
             Game5: [null, null, null, null, null] 
         };
+        this.hasStartedBefore = [false, false, false, false, false];
+        this.playedInCurrentDay = [false, false, false, false, false];
+        this.gameSelectorMenuHasStartedBefore = false;
+
+    }
+    // ---
+
+    // ---- GESTION DE VICTORIA / DERROTA ----
+    saveEndResults() {
+        this.gameState.endResults.Game1 = this.gameState.minigamesResults.Game1;
+        this.gameState.endResults.Game2 = this.gameState.minigamesResults.Game2;
+        this.gameState.endResults.Game3 = this.gameState.minigamesResults.Game3;
+        this.gameState.endResults.Game4 = this.gameState.minigamesResults.Game4;
+        this.gameState.endResults.Game5 = this.gameState.minigamesResults.Game5;
     }
     // ---
 

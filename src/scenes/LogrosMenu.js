@@ -80,14 +80,6 @@ export default class LogrosMenu extends Phaser.Scene {
     }
 
     showLogros() {
-        // --- Alerta
-        // si hay algun logro
-        /*
-        if(this.gameState.logros1.length != 0 || this.gameState.logros2.length != 0 || this.gameState.logros3.length != 0 || this.gameState.logros4.length != 0 || this.gameState.logros5.length != 0) 
-        {
-            alert('Has obtenido los siguientes logros: ' + logros1 +  ' ' + logros2 +  ' ' + logros3 +  ' ' + logros4 +  ' ' + logros5 );
-        }
-        */
 
         // --- Textos
         // si hay algun logro
