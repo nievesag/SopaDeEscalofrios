@@ -28,18 +28,30 @@ export default class ExplosiveArrow extends Arrow {
             return distance <= explosionRadius && !obstacle.isDead;
         });
 
-        console.log(obstaclesToDestroy)
-
-      
+   
 
         this.scene.time.delayedCall(2000, () => {
             obstaclesToDestroy.forEach(obstacle => {
                 obstacle.breakApart();
+
+                this.explosionAnim();
+
             });
             this.destroy();
         });
 
 
       
+    }
+
+
+    explosionAnim() {
+        const explosionSprite = this.scene.add.sprite(this.x, this.y, 'explosion'); 
+        explosionSprite.setScale(0.5); 
+
+        this.scene.time.delayedCall(150, () => {
+           
+            explosionSprite.destroy();
+        });
     }
 }
