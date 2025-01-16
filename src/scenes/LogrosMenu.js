@@ -39,6 +39,7 @@ export default class LogrosMenu extends Phaser.Scene {
             // Paramos el audio
             this.sound.stopAll();
             this.resetLogros();
+
             this.scene.start("MainMenu");
         });
 
@@ -132,5 +133,6 @@ export default class LogrosMenu extends Phaser.Scene {
         this.gameState.logros3 = [];
         this.gameState.logros4 = [];
         this.gameState.logros5 = [];
+        logrosEnd = [];
     }
 }
