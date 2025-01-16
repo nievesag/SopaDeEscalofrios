@@ -18,8 +18,6 @@ export default class Game3 extends Phaser.Scene
     create ()
     {
         this.cameras.main.setBackgroundColor(0x181818);
-        //Empieza sin ser game over
-        //this.gameOver = false;
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[2]){
             this.gameState.hasStartedBefore[2] = true; // ala ya ha salio el tutorial.
@@ -141,7 +139,6 @@ export default class Game3 extends Phaser.Scene
         //Muestra el marcador de puntos
         this.pointUI.setVisible(true);
         this.victory = 2000; //Puntos victoria
-        this.lost = 10; //Fila máxima
 
         //Muestra el temporizador del disparo
         this.timeUI.setVisible(true);
@@ -216,7 +213,7 @@ export default class Game3 extends Phaser.Scene
         this.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
         // El que vamos a disparar
         //Instancia escarabajo   
-        this.shootingBeetle = new ShootingBeetle(this, this.player.x, this.player.y).setDepth(5).setScale(1.25);
+        this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 28).setDepth(5).setScale(1.25);
         this.freeBeetle = false;
         this.start = false;
 
@@ -269,7 +266,7 @@ export default class Game3 extends Phaser.Scene
         // Verificamos si se ha acabado el nivel
         // +this.victory puntos - victoria
         // bichos en fila 11 - derrota
-        this.endGame();
+        if (this.finish) this.endGame();
     }
 
     updateTime(){ 
@@ -345,30 +342,39 @@ export default class Game3 extends Phaser.Scene
             {
                 if (this.shootingBeetle.y <= this.level.lvl[j][i].y + this.level.height //Entonces lo pone en j+1
                     && this.shootingBeetle.x >= this.level.lvl[j][i].x
-                    && this.shootingBeetle.x <= this.level.lvl[j][i].x + this.level.width 
+                    && this.shootingBeetle.x < this.level.lvl[j][i].x + this.level.width 
                     && this.level.lvl[j][i].texture.key != "EmptyBeetle" //Si el de encima esá lleno
-                    && this.level.lvl[j+1][i].texture.key == "EmptyBeetle" //Y la posición nueva está vacía
                     && this.level.freeBeetle
                     )   
                 {
-                    //Destruye lo que había antes
-                    this.level.lvl[j+1][i].selfDestroy();
-                    //Añade otro sprite 
-                    this.level.lvl[j+1][i] = new MatrixBeetle(this, this.level.lvl[j+1][i].x, this.level.lvl[j+1][i].y).setScale(1.25);
-                    this.level.lvl[j+1][i].setTexture(this.shootingBeetle.texture);
-                    //Destruimos el lanzado
-                    this.shootingBeetle.selfDestroy();
-                    //Ya no hay escarabajo pululando por ahí
-                    this.level.freeBeetle = false;
-
-                    //Creamos el siguiente bicho  
-                    this.shootingBeetle = new ShootingBeetle(this, this.player.x, this.player.y).setDepth(5).setScale(1.25);
-                    //Destruir vecinos contiguos
-                    this.destroyNeighbour(j+1, i);
+                    if (j == this.level.fils - 1)
+                    {
+                        //Derrota
+                        this.endGame(false);
+                    }
+                    else 
+                    {
+                        if (this.level.lvl[j+1][i].texture.key == "EmptyBeetle") //Y la posición nueva está vacía
+                        {
+                            //Destruye lo que había antes
+                            this.level.lvl[j+1][i].selfDestroy();
+                            //Añade otro sprite 
+                            this.level.lvl[j+1][i] = new MatrixBeetle(this, this.level.lvl[j+1][i].x, this.level.lvl[j+1][i].y).setScale(1.25);
+                            this.level.lvl[j+1][i].setTexture(this.shootingBeetle.texture);
+                            //Destruimos el lanzado
+                            this.shootingBeetle.selfDestroy();
+                            //Ya no hay escarabajo pululando por ahí
+                            this.level.freeBeetle = false;
+        
+                            //Creamos el siguiente bicho  
+                            this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 28).setDepth(5).setScale(1.25);
+                            //Destruir vecinos contiguos
+                            this.destroyNeighbour(j+1, i);
+                        }
+                    }
                 }
             }
         }
-
     }
  
     destroyNeighbour(y , x){
@@ -455,6 +461,11 @@ export default class Game3 extends Phaser.Scene
 
         //Reinicia el sonido del pitidito
         this.beep.play();
+
+        if (this.points >= this.victory){
+            //Victoria
+            this.endGame(true);
+        }
     }
 
     // --- BOTONES ---.
@@ -487,34 +498,28 @@ export default class Game3 extends Phaser.Scene
         });
     }
 
-    endGame(){
+    endGame(finish){
 
         let result; 
         //Victoria, alcanzar this.victory puntos
-        if (this.points >= this.victory){
+        if (finish){
             console.log("Victoria");
             result = 'victoria';
-            this.freeBeetle = true;
-            this.start = false;
-            this.time.delayedCall(500, () => {
-                this.scene.start('GameSelectorMenu');
-            });
         }
-        //Derrota si hay en la fila 10 bichos
+        //Derrota si hay en la fila final 
         else {
-
-            for (let i = 0; i < this.lvlcols; i++)
-            {
-                if (this.lvl[10][i].texture.key != "EmptyBeetle"){
-                    console.log("Derrota");
-                    result = 'victoria';
-                    this.freeBeetle = true;
-                    this.start = false;
-                    this.time.delayedCall(500, () => {
-                    this.scene.start('GameSelectorMenu'); });
-                }
-            }
+            console.log("Derrota");
+            result = 'derrota';
         }
+
+        this.freeBeetle = true;
+        this.start = false;
+
+        //Muestra el temporizador del disparo
+        this.timeUI.setVisible(false);
+        //Muestra el marcador de puntos
+        this.pointUI.setVisible(false);
+        this.pantallaResultado(finish);
 
         if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
@@ -522,37 +527,116 @@ export default class Game3 extends Phaser.Scene
         }
     }
 
+    pantallaResultado(finish)
+    {
+        //La imagen del final
+        let endImage;
+        //El mensaje que aparece abajo
+        let cartaEnviada;
+
+        //Si ha ganado, se envía la carta
+        if (finish) 
+        {
+            endImage = this.make.image({
+                x: this.cameras.main.centerX, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1, // anchura
+                    y: 1.1, // altura
+                },
+                key: 'Enviada',
+            }).setDepth(10);
+    
+            cartaEnviada = this.add.text( 
+                this.cameras.main.centerX + 200,
+                this.cameras.main.centerY + 150,
+                'Carta correctamente enviada \n ¿Regresar?',
+                {
+                    fontSize: '30px',
+                    color: '#181818',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                }
+            ).setOrigin(0.5).setDepth(11).setInteractive();
+        }
+        //Si no se ha enviado
+        else
+        {
+            endImage = this.make.image({
+                x: this.cameras.main.centerX, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1, // anchura
+                    y: 1.1, // altura
+                },
+                key: 'NoEnviada',
+            }).setDepth(10);
+    
+            cartaEnviada = this.add.text( 
+                this.cameras.main.centerX + 200,
+                this.cameras.main.centerY + 150, 
+                'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
+                {
+                    fontSize: '30px',
+                    color: '#181818',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                }
+            ).setOrigin(0.5).setDepth(11).setInteractive();
+        }
+
+        cartaEnviada.on('pointerdown', ()=>{
+            // Destruye todo y vuelve al menu principal
+            endImage.destroy();
+            cartaEnviada.destroy();
+            this.scene.start('GameSelectorMenu');
+        });
+
+        cartaEnviada.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            cartaEnviada.setColor('#0032c3');
+        });
+
+        cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            cartaEnviada.setColor('#181818');
+        });
+    }
 
     // --- DIFICULTAD ---.
     setDifficulty() 
     {
+        //Muestra el temporizador del disparo
+        this.timeUI.setVisible(true);
+        //Muestra el marcador de puntos
+        this.pointUI.setVisible(true);
         if(this.gameState.currentDay == 1)
         {
-            this.victory = 6000;
+            this.victory = 3000;
             this.beetles.length = 4;
             this.level.filIni = 3;
         }
         else if (this.gameState.currentDay == 2)
         {
-            this.victory = 5000;
+            this.victory = 2500;
             this.beetles.length = 7;
             this.level.filIni = 4;
         }
         else if(this.gameState.currentDay == 3)
         {
-            this.victory = 4000;
+            this.victory = 2000;
             this.beetles.length = 6;
             this.level.filIni = 5;
         }
         else if(this.gameState.currentDay == 4)
         {
-            this.victory = 3000;
+            this.victory = 1500;
             this.beetles.length = 5;
             this.level.filIni = 6;
         }
         else if(this.gameState.currentDay == 5)
         {
-            this.victory = 2000;
+            this.victory = 1000;
             this.beetles.length = 5;
             this.level.filIni = 7;
         }
