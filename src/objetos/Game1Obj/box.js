@@ -8,7 +8,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
         this.setScale(0.5,.5);
         this.scene.physics.add.existing(this);
         this.body.setAllowGravity(false);
-        this.body.setDrag(800); // rozamiento
+        this.body.setDrag(500); // rozamiento
 
         this.grabDer = false;
         this.grabIzq = false;
@@ -20,18 +20,6 @@ export default class Box extends Phaser.GameObjects.Sprite {
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-
-		// En el motor arcade no hay rozamiento, lo simulamos ->
-		if(this.body.velocity.x > 5) {
-			this.body.velocity.x -= 5;
-		} 
-        else if(this.body.velocity.x < -5) {
-			this.body.velocity.x += 5;
-		}
-
-		if(this.body.velocity.x <= 5 && this.body.velocity.x > 0 || this.body.velocity.x >= -5 && this.body.velocity.x < 0) {
-			this.body.velocity.x = 0;
-		}
     }
 
     setisDer(g) { this.grabDer = g; }

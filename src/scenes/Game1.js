@@ -20,9 +20,6 @@ export default class Game1 extends Phaser.Scene {
         this.load.tilemapTiledJSON('tilemap2', './assets/tilemap/map2.json');
         // -- mapa 3
         this.load.tilemapTiledJSON('tilemap3', './assets/tilemap/map3.json');
-
-        // Música
-        this.load.audio('theme1', './assets/audio/m1c.mp3');
     }
     
     create () {

@@ -8,8 +8,8 @@ export default class Organ extends Phaser.GameObjects.Sprite {
         this.setScale(0.5,.5);
         this.scene.physics.add.existing(this);
         this.body.setAllowGravity(false);
-        this.body.setDrag(800); // rozamiento
-        this.body.setBounce(0); // rebote con colisiones
+        this.body.setDrag(0,0); // rozamiento
+        this.body.setBounce(0,0); // rebote con colisiones
 
         this.grabDer = false;
         this.grabIzq = false;
@@ -17,22 +17,12 @@ export default class Organ extends Phaser.GameObjects.Sprite {
         this.grabArr = false;
 
 		this.body.setSize(28, 28); // Para que entre mejor por los pasillos
+
+        this.body.slideFactor.set(0, 0);
     }
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-
-		// En el motor arcade no hay rozamiento, lo simulamos ->
-		if(this.body.velocity.x > 5) {
-			this.body.velocity.x -= 5;
-		} 
-        else if(this.body.velocity.x < -5) {
-			this.body.velocity.x += 5;
-		}
-
-		if(this.body.velocity.x <= 5 && this.body.velocity.x > 0 || this.body.velocity.x >= -5 && this.body.velocity.x < 0) {
-			this.body.velocity.x = 0;
-		}
     }
 
     setisDer(g) { this.grabDer = g; }

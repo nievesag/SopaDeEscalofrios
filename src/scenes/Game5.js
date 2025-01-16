@@ -14,9 +14,6 @@ export default class Game5 extends Phaser.Scene {
     }
     
     preload () {
-        // Música.
-        this.load.audio('theme5', './assets/audio/m5c.mp3');
-
         this.load.json('tableroData', './src/objetos/Game5Obj/tablero.json');
     }
     
