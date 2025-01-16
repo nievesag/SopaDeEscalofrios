@@ -167,7 +167,9 @@ export default class Game4 extends Phaser.Scene {
             this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstacle) => {
                 if (arrow.type === 'explosive') {
                     arrow.handleCollision(obstacle);
-                } else {
+                } 
+                else
+                {
                     obstacle.checkCollisionWithArrowObs(this, arrow);
                 }
             });
@@ -357,7 +359,7 @@ export default class Game4 extends Phaser.Scene {
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-                { type: 'Explosive Arrow', count: 10 },
+                { type: 'Ball Arrow', count: 10 },
                 { type: 'Normal', count: 5 },
                // { type: 'Explosive Arrow', count: 2 },
                 { type: 'Ball Arrow', count: 2 },

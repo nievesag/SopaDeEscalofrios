@@ -7,10 +7,6 @@ export default class BallArrow extends Arrow {
     }
 
     transformToBall() {
-        if (!this.scene) {
-            console.error("Scene is undefined!");
-            return; 
-        }
 
         console.log(this.scene);
        
@@ -28,13 +24,19 @@ export default class BallArrow extends Arrow {
         velX = Math.cos(angleToGround) * Math.abs(velX);  
 
      
-        this.arrowBall = this.scene.add.circle(posX, posY, 100, 0x740101);
-        this.scene.physics.world.enable(this.arrowBall);
+        this.arrowBall = this.scene.add.sprite(posX, posY, 'bola'); 
+        this.arrowBall.setScale(0.5); 
         //this.arrowBall.setFillStyle(0x740101);  
-        this.arrowBall.setSize(80, 80);  
-        this.arrowBall.body.setCircle(100);  
+        // this.arrowBall.setSize(80, 80);  
+        // this.arrowBall.body.setCircle(100);  
+        this.scene.physics.world.enable(this.arrowBall);
+        this.arrowBall.body.setCircle(150); 
+        this.arrowBall.body.setBounce(1);  
 
-        this.arrowBall.body.setBounce(0);  
+     
+
+      
+
 
         this.arrowBall.body.setCollideWorldBounds(true);
 
@@ -42,14 +44,23 @@ export default class BallArrow extends Arrow {
         this.arrowBall.body.setVelocity(velX, velY);
         this.arrowBall.setRotation(auxAngle);
 
-        this.scene.physics.add.collider(this.arrowBall, this.scene.ground, () => {
-           // this.arrowBall.body.setVelocityX(0); 
-            this.arrowBall.body.setVelocityY(0); 
-        });
+        // this.scene.physics.add.collider(this.arrowBall, this.scene.ground, () => {
+        //    // this.arrowBall.body.setVelocityX(0); 
+        //     this.arrowBall.body.setVelocityY(0); 
+        // });
+
+        this.scene.physics.add.collider(this.arrowBall, this.scene.ground);
     
         this.scene.enemiesPool.forEach(enemy => {
             enemy.checkCollisionWithArrow(this, this.arrowBall);
 
+        });
+
+        this.scene.physics.add.collider(this.arrowBall, this.scene.obstaclePool, (arrowBall, obstacle) => {
+            const bounceFactor = 2; // Factor de rebote personalizado
+            const newVelX = arrowBall.body.velocity.x * bounceFactor;
+            const newVelY = arrowBall.body.velocity.y * bounceFactor;
+            arrowBall.body.setVelocity(newVelX, newVelY);
         });
     
         this.scene.activeArrowsPool.push(this.arrowBall);

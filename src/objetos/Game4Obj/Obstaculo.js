@@ -72,9 +72,14 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
         {
             return false;
         }
-            arrow.destroy();
+           
             this.isDead = true;
             this.breakApart();
+
+        if(arrow.type === 'explosive' || arrow.type === 'split' || arrow.type === 'normal')
+        {
+            this.destroy();
+        }
 
 
     }

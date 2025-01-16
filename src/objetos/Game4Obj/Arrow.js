@@ -15,6 +15,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.body.onCollide = true;
 
         this.scene.events.on('update', this.updateRotation, this);
+        this.type = 'normal';
     }
 
     launch(velocityX, velocityY) {
