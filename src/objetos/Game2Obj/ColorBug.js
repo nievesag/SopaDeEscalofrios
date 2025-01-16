@@ -31,23 +31,26 @@ export default class ColorBug extends Phaser.GameObjects.Sprite{
             if(launchVelocity === 100 || launchVelocity === 300){ // 0 -> poca fuerza.
                 // Verde.
                 this.setTexture('GreenBeetle').setScale(2);
-                this.feedbackText.setText('Poca fuerza');
+                this.feedbackText.setText('Apenas\nfuerza');
             }
             else if(launchVelocity === 500){ // 2 -> ni mas ni menos.
                 // Amarillo.
-                this.setTexture('YellowBeetle').setScale(200);
-                this.feedbackText.setText('');
+                this.setTexture('YellowBeetle').setScale(2);
+                this.feedbackText.setText('Poca\nfuerza');
             }
             else if(launchVelocity === 700){ // 3 -> va folledo.
                 // Naranja
-                this.setTexture('OrangeBeetle').setScale(2);;
+                this.setTexture('OrangeBeetle').setScale(2);
+                this.feedbackText.setText('Bastante\nfuerza');
             }
             else if(launchVelocity === 900){ // 4 -> joder lo folledo que va.
                 // Rojo.
                 this.setTexture('RedBeetle').setScale(2);
+                this.feedbackText.setText('Muchísima\nfuerza');
             }
             else if(launchVelocity === 1200){
                 this.setTexture('PurpleBeetle').setScale(2);
+                this.feedbackText.setText('NITRO');
             }
         
         
