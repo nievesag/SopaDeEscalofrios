@@ -553,7 +553,7 @@ export default class Game3 extends Phaser.Scene
                 'Carta correctamente enviada \n ¿Regresar?',
                 {
                     fontSize: '30px',
-                    color: '#181818',
+                    color: '#bbb8b1',
                     align: 'center',
                     fontFamily: 'yatra',
                 }
@@ -578,7 +578,7 @@ export default class Game3 extends Phaser.Scene
                 'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
                 {
                     fontSize: '30px',
-                    color: '#181818',
+                    color: '#bbb8b1',
                     align: 'center',
                     fontFamily: 'yatra',
                 }
@@ -599,7 +599,7 @@ export default class Game3 extends Phaser.Scene
 
         cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            cartaEnviada.setColor('#181818');
+            cartaEnviada.setColor('#bbb8b1');
         });
     }
 

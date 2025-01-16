@@ -322,7 +322,25 @@ export default class Game2 extends Phaser.Scene {
             // quita las físicas.
             this.physics.pause(); 
 
-            let gameOverBg = this.make.image({
+            let result;
+            if (this.winCondition) {
+                console.log("victoria");
+                result = 'victoria';
+            }
+            else
+            {
+                console.log("derrota");
+                result = 'derrota';
+            }
+
+            this.pantallaResultado(this.winCondition);
+
+            if (result) {
+                const currentDayIndex = this.gameState.currentDay - 1; 
+                this.gameState.minigamesResults.Game3[currentDayIndex] = result;
+            }
+
+            /*let gameOverBg = this.make.image({
                 x: this.cameras.main.centerX, // x
                 y: this.cameras.main.centerY + 50, // y
                 scale:{
@@ -362,12 +380,86 @@ export default class Game2 extends Phaser.Scene {
             }
 
             this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(40).setVisible(true);
-
+*/
             
         }
     }
 
+    pantallaResultado(finish)
+    {
+        //La imagen del final
+        let endImage;
+        //El mensaje que aparece abajo
+        let cartaEnviada;
+
+        //Si ha ganado, se envía la carta
+        if (finish) 
+        {
+            endImage = this.make.image({
+                x: this.cameras.main.centerX + 127.5, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1, // anchura
+                    y: 1.1, // altura
+                },
+                key: 'Enviada',
+            }).setDepth(10);
     
+            cartaEnviada = this.add.text( 
+                this.cameras.main.centerX + 127.5,
+                this.cameras.main.centerY + 150,
+                'Carta correctamente enviada \n ¿Regresar?',
+                {
+                    fontSize: '30px',
+                    color: '#bbb8b1',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                }
+            ).setOrigin(0.5).setDepth(11).setInteractive();
+        }
+        //Si no se ha enviado
+        else
+        {
+            endImage = this.make.image({
+                x: this.cameras.main.centerX + 127.5, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1, // anchura
+                    y: 1.1, // altura
+                },
+                key: 'NoEnviada',
+            }).setDepth(10);
+    
+            cartaEnviada = this.add.text( 
+                this.cameras.main.centerX + 130,
+                this.cameras.main.centerY + 150, 
+                'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
+                {
+                    fontSize: '30px',
+                    color: '#bbb8b1',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                }
+            ).setOrigin(0.5).setDepth(11).setInteractive();
+        }
+
+        cartaEnviada.on('pointerdown', ()=>{
+            // Destruye todo y vuelve al menu principal
+            endImage.destroy();
+            cartaEnviada.destroy();
+            this.scene.start('GameSelectorMenu');
+        });
+
+        cartaEnviada.on('pointerover', () => // Al pasar el ratón por encima...
+        {
+            cartaEnviada.setColor('#0032c3');
+        });
+
+        cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
+        {
+            cartaEnviada.setColor('bbb8b1');
+        });
+    }
 
     destroyAll(){ // elimina todos los objetos del juego.
         if(this.background)

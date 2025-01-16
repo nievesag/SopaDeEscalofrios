@@ -24,51 +24,14 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     //Textura del sprite
     this.setTexture('player3').setDepth(2);
 
-    //¿Esto aquí?
     this.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
   }
   
-  setProjectile() {
-    this.randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
-    this.actualBeetle = this.scene.make.image({
-      x : this.x,
-      y : this.y + 25,
-      key: this.possiblebeetles[this.randomBeetle]
-    }).setDepth(2);   
-
-    // y preparamos el siguiente
-    this.randomBeetle = Phaser.Math.RND.between(0, this.possiblebeetles.length - 1);
-    this.nextBeetleBeetle = this.scene.make.image({
-      x : this.x,
-      y : this.y + 15,
-      key: this.possiblebeetles[this.randomBeetle]
-    }).setDepth(2); 
-  }
-  
-  setNextProjectile(nextBeetle){
-    //Ahora el que se dispara es el siguiente
-    this.shootingBeetle = nextBeetle;
-    //Y creamos un nuevo siguiente
-    nextBeetle = this.add.image(this.x, this.y, beetles[randomBeetle]).setScale(1); 
-  }
-
-  //Intercambia los escarabajos dentro del cannon
-  changeBeetle(actualBeetle, nextBeetle)
-  {
-    actualBeetle = this.actualBeetle;
-    nextBeetle = this.nextBeetle;
-    this.swap(actualBeetle, nextBeetle);
-  }
-
   //Dispara en la dirección del input
   shoot(beetle)
   {
     //Disparamos
     this.scene.physics.velocityFromRotation(this.rotation - 1.57, beetle.speed, beetle.body.velocity); 
-  }
-
-  freeze(){
-    this.inputEnable = false;
   }
 
 }
