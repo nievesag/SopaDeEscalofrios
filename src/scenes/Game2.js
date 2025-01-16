@@ -5,6 +5,7 @@ import Background from '../objetos/Game2Obj/Background.js';
 import Crocodile from '../objetos/Game2Obj/Crocodile.js';
 import Hippo from '../objetos/Game2Obj/Hippo.js';
 import ObstaclesGenerator from '../objetos/Game2Obj/ObstacleGenerator.js';
+import ColorBug from '../objetos/Game2Obj/ColorBug.js';
 
 export default class Game2 extends Phaser.Scene {
     constructor() {
@@ -132,13 +133,16 @@ export default class Game2 extends Phaser.Scene {
         this.background = new Background(this);
         this.background.initialLandscape();
         this.cannon = new Cannon(this);
+        this.colorBug = new ColorBug(this);
 
         // DIFICULTAD SEGÚN LOS DÍAS.
         this.setDifficulty();
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
-        this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
+        this.vessel = new Vessel(this, this.cannon, this.obstacleGen, this.colorBug);
         this.vessel.vesselCollisions();
+
+        
 
         // establece los límites del mundo y de la cámara.
         // x, y, width, height
@@ -253,6 +257,7 @@ export default class Game2 extends Phaser.Scene {
             this.background.update();
             this.vessel.update();
             this.obstacleGen.update();
+            this.colorBug.update();
 
             //let scrollX = this.cameras.main.scrollX; // posx camara
             //let scrollY = this.cameras.main.scrollY; // posy camara
