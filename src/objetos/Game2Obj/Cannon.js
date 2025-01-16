@@ -57,10 +57,6 @@
     cannonAngle(pointer){
       this.angle = Phaser.Math.Angle.BetweenPoints(this, pointer); // Ángulo cañón -> mouse.
       this.cannonHead.rotation = this.angle + 30; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
-  
-      // Línea gráfica de la dir.
-      Phaser.Geom.Line.SetToAngle(this.line, this.cannonHead.x, this.cannonHead.y, this.angle+0.15, 128); 
-      this.graphics.clear().strokeLineShape(this.line); // Limpia y redibuja la línea.
     }
 
     updatePowerBar(){
@@ -94,12 +90,8 @@
       this.powerColor = Math.trunc(this.power); // trunc trunca xde
       let color;
 
-      if(this.powerColor === 0){ // 0 -> poca fuerza.
+      if(this.powerColor === 0 || this.powerColor === 1){ // 0 -> poca fuerza.
         // Verde.
-        color = 0x07522b;
-      }
-      else if(this.powerColor === 1){ // 1 -> jijijuju.
-        // Verde again
         color = 0x07522b;
       }
       else if(this.powerColor === 2){ // 2 -> ni mas ni menos.
@@ -110,12 +102,8 @@
         // Naranja
         color = 0x732c00;
       }
-      else if(this.powerColor === 4){ // 4 -> joder lo folledo que va.
+      else if(this.powerColor === 4 || this.powerColor === 5){ // 4 -> joder lo folledo que va.
         // Rojo.
-        color = 0x740101;
-      }
-      else if(this.powerColor === 5){ // 5 -> NITRO.
-        // Rojo
         color = 0x740101;
       }
 
