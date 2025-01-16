@@ -80,7 +80,8 @@ export default class Boot extends Phaser.Scene {
         this.load.image('CianBeetle', './assets/images/Game3/BurbujaCian.png')
         this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
-      //  this.load.audio('theme3', './assets/audio/Egipto.mp3');
+      //this.load.audio('theme3', './assets/audio/Egipto.mp3');
+        this.load.audio('beep', './assets/audio/beep.wav');
 
         // ------- GAME 4
         this.load.image("bg1", "./assets/images/game4/bg1_game4.png");
@@ -104,6 +105,10 @@ export default class Boot extends Phaser.Scene {
         this.load.image('DestinoEncendido', 'assets/images/Game5/DestinoEncendidoTablero.png');
         this.load.image('BotonRotar', 'assets/images/Game5/BotonRotar.png');
         this.load.image('BotonEliminar', 'assets/images/Game5/BotonEliminar.png');
+
+        // -------- FEEDBACK
+        this.load.image('Enviada', 'assets/images/feedback/enviada.png');
+        this.load.image('NoEnviada', 'assets/images/feedback/noenviada.png');
 
         // -------- ENDINGS
         this.load.image('Final1', 'assets/images/endings/png/g1.png');

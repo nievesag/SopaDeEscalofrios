@@ -10,7 +10,7 @@ export default class PlayerG1 extends Phaser.GameObjects.Sprite {
 
         this.wKey = this.scene.input.keyboard.addKey('W'); // arriba
 		this.aKey = this.scene.input.keyboard.addKey('A'); // izq
-		this.aKey = this.scene.input.keyboard.addKey('S'); // abajo
+		this.sKey = this.scene.input.keyboard.addKey('S'); // abajo
 		this.dKey = this.scene.input.keyboard.addKey('D'); // der
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // agarrar
 
