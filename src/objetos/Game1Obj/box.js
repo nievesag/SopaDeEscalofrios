@@ -9,7 +9,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         this.body.setAllowGravity(false);
         //this.body.setDrag(500); // rozamiento
-        this.body.slideFactor.set(0, 0);
+        //this.body.slideFactor.set(0, 0);
 
         this.grabDer = false;
         this.grabIzq = false;
