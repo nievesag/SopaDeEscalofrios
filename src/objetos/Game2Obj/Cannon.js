@@ -57,10 +57,6 @@
     cannonAngle(pointer){
       this.angle = Phaser.Math.Angle.BetweenPoints(this, pointer); // Ángulo cañón -> mouse.
       this.cannonHead.rotation = this.angle + 30; // Pone la rotación del cañón mirando al mouse (con unos ajustes).
-  
-      // Línea gráfica de la dir.
-      Phaser.Geom.Line.SetToAngle(this.line, this.cannonHead.x, this.cannonHead.y, this.angle+0.15, 128); 
-      this.graphics.clear().strokeLineShape(this.line); // Limpia y redibuja la línea.
     }
 
     updatePowerBar(){
