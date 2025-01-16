@@ -45,7 +45,6 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     }
 
     spawnObstacle(){
-        console.log(this.obsClass)
 
         // Voy a intentar hacer un dibujo que lo explique:
         // + -------------------------------------------- +
