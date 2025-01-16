@@ -4,6 +4,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
         
         this.scene = scene;
         this.obsClass = obsClass;
+        
 
         // mete el objeto en la escena con físicas.
         scene.add.existing(this);
@@ -44,6 +45,7 @@ export default class ObstaclesGenerator extends Phaser.GameObjects.Image{
     }
 
     spawnObstacle(){
+        console.log(this.obsClass)
 
         // Voy a intentar hacer un dibujo que lo explique:
         // + -------------------------------------------- +
