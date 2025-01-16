@@ -342,7 +342,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.nextDayButton.on('pointerover', () => // Al pasar el ratón por encima...
         {
             this.nextDayButton.setColor('#0032c3');
-            //this.nextDayButton.setTint(0xdfa919);
         });
 
         this.nextDayButton.on('pointerout', () => // Al quitar el ratón de encima...
@@ -472,15 +471,17 @@ export default class GameSelectorMenu extends Phaser.Scene {
    }
 
    resetGame() {
-    gameState.currentDay = 1;
-    gameState.actionsLeft = 3;
-    gameState.maxDays = 5;
-    gameState.minigamesResults = {
-        Game1: [null, null, null, null, null] ,
-        Game2: [null, null, null, null, null] ,
-        Game3: [null, null, null, null, null] ,
-        Game4: [null, null, null, null, null] ,
-        Game5: [null, null, null, null, null] 
-    };
-}
+        gameState.currentDay = 1;
+        gameState.actionsLeft = 3;
+        gameState.maxDays = 5;
+        gameState.playedInCurrentDay = [false, false, false, false, false]; 
+        gameState.minigamesResults = {
+            Game1: [null, null, null, null, null] ,
+            Game2: [null, null, null, null, null] ,
+            Game3: [null, null, null, null, null] ,
+            Game4: [null, null, null, null, null] ,
+            Game5: [null, null, null, null, null] 
+        };
+        gameState.hasStartedBefore = [ false, false, false, false, false ];
+    }
 }
