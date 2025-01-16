@@ -5,6 +5,7 @@ import Background from '../objetos/Game2Obj/Background.js';
 import Crocodile from '../objetos/Game2Obj/Crocodile.js';
 import Hippo from '../objetos/Game2Obj/Hippo.js';
 import ObstaclesGenerator from '../objetos/Game2Obj/ObstacleGenerator.js';
+import ColorBug from '../objetos/Game2Obj/ColorBug.js';
 
 export default class Game2 extends Phaser.Scene {
     constructor() {
@@ -132,13 +133,16 @@ export default class Game2 extends Phaser.Scene {
         this.background = new Background(this);
         this.background.initialLandscape();
         this.cannon = new Cannon(this);
+        this.colorBug = new ColorBug(this);
 
         // DIFICULTAD SEGÚN LOS DÍAS.
         this.setDifficulty();
 
         this.obstacleGen = new ObstaclesGenerator(this, this.obsClass);
-        this.vessel = new Vessel(this, this.cannon, this.obstacleGen);
+        this.vessel = new Vessel(this, this.cannon, this.obstacleGen, this.colorBug);
         this.vessel.vesselCollisions();
+
+        
 
         // establece los límites del mundo y de la cámara.
         // x, y, width, height
@@ -253,6 +257,7 @@ export default class Game2 extends Phaser.Scene {
             this.background.update();
             this.vessel.update();
             this.obstacleGen.update();
+            this.colorBug.update();
 
             //let scrollX = this.cameras.main.scrollX; // posx camara
             //let scrollY = this.cameras.main.scrollY; // posy camara
@@ -262,11 +267,22 @@ export default class Game2 extends Phaser.Scene {
             //this.rio.setPosition(scrollX, 600);
             
             let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
+            let codoDistance = (distance * 0.524).toFixed(2)
             if(!this.vessel.isLaunched){ // si no se ha lanzado...
                 this.distanceCounter.setText('Distancia: 0 codos');
             }
             else{
-                this.distanceCounter.setText('Distancia: ' + (distance * 0.524).toFixed(2) + ' codos'); // el tofixed es para que tenga solo 2 decimales y se multiplica por '0.524 para convertirlo a codos reales.
+                this.distanceCounter.setText('Distancia: ' + codoDistance + ' codos'); // el tofixed es para que tenga solo 2 decimales y se multiplica por '0.524 para convertirlo a codos reales.
+            }
+
+            this.winCondition = false;
+            let day = this.gameState.currentDay;
+            if((codoDistance > 5000 && (day === 1 || day === 2))
+             ||(codoDistance > 2700 && (day === 3 || day === 4))
+             ||(codoDistance > 2500 && day === 5))
+            {
+                this.winCondition = true;
+                this.gameOver();
             }
             
             //this.distanceCounter.setPosition(scrollX + 400, scrollY + 20)
@@ -328,9 +344,11 @@ export default class Game2 extends Phaser.Scene {
             }
             ).setOrigin(0.5).setDepth(100).setScrollFactor(0); // setcrollfactor SIGUE A LA CÁMARA.
 
-            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(40).setVisible(true);
 
-            // PARA VER LO DE LOS COLLECTIONABLES
+            if(this.winCondition){
+                gameOverText.setText('Has ganado, obtener logros');
+
+                // PARA VER LO DE LOS COLLECTIONABLES
             let result;
             if (this.isGameOver) {
             console.log("victoria");
@@ -341,6 +359,11 @@ export default class Game2 extends Phaser.Scene {
             this.gameState.minigamesResults.Game2[currentDayIndex] = 'victoria';
             }
             console.log('Resultados hasta ahora: ' + this.gameState.minigamesResults.Game2);
+            }
+
+            this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(40).setVisible(true);
+
+            
         }
     }
 

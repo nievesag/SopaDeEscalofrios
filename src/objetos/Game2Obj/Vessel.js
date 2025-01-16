@@ -1,10 +1,11 @@
 export default class Vessel extends Phaser.GameObjects.Image{
-    constructor(scene, cannon, obstacleGenerator){
+    constructor(scene, cannon, obstacleGenerator, colorBug){
         super(scene, cannon.x, cannon.y - 50, 'vessel');
         
         this.scene = scene;
         this.cannon = cannon;
         this.obstacleGen = obstacleGenerator;
+        this.colorBug = colorBug;
 
         // añadir el objeto a la escena con físicas.
         scene.add.existing(this); 
@@ -32,6 +33,7 @@ export default class Vessel extends Phaser.GameObjects.Image{
     launchVessel(angle){
 
         this.isLaunched = true; // se ha lanzado la vesel.
+        this.launchVelocity; // velocidad de la vessel cuando sea lanzada.
 
         // guarda la pos inicial de x.
         this.initialPosX = this.x; 
@@ -53,10 +55,14 @@ export default class Vessel extends Phaser.GameObjects.Image{
         else if (cannonForce === 4) launchForce = 900; // joder lo folledo que va.
         else if (cannonForce === 5) launchForce = 1200; // NITRO.
 
+        this.launchVelocity = launchForce; 
+
         // lanza a la vasija con un ángulo y velocidad.
         this.scene.physics.velocityFromRotation(angle, launchForce, this.body.velocity); 
 
         this.body.setAngularVelocity(200); // vel de giro inicial.
+
+        this.colorBug.bugColor(this.launchVelocity);
 
         //chick.play('fly'); // animación de vuelo del pollo.
     }
