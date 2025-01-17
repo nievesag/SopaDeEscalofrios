@@ -403,11 +403,11 @@ export default class Game2 extends Phaser.Scene {
                     y: 1.1, // altura
                 },
                 key: 'Enviada',
-            }).setDepth(10);
+            }).setDepth(10).setScrollFactor(0);
     
             cartaEnviada = this.add.text( 
-                this.cameras.main.centerX + 127.5,
-                this.cameras.main.centerY + 150,
+                this.cameras.main.centerX - 200,
+                this.cameras.main.centerY - 200,
                 'Carta correctamente enviada \n ¿Regresar?',
                 {
                     fontSize: '30px',
@@ -415,7 +415,7 @@ export default class Game2 extends Phaser.Scene {
                     align: 'center',
                     fontFamily: 'yatra',
                 }
-            ).setOrigin(0.5).setDepth(11).setInteractive();
+            ).setOrigin(0.5).setDepth(11).setInteractive().setScrollFactor(0);
         }
         //Si no se ha enviado
         else
@@ -428,11 +428,11 @@ export default class Game2 extends Phaser.Scene {
                     y: 1.1, // altura
                 },
                 key: 'NoEnviada',
-            }).setDepth(10);
+            }).setDepth(10).setScrollFactor(0);
     
             cartaEnviada = this.add.text( 
-                this.cameras.main.centerX + 130,
-                this.cameras.main.centerY + 150, 
+                this.cameras.main.centerX - 200,
+                this.cameras.main.centerY - 200, 
                 'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
                 {
                     fontSize: '30px',
@@ -440,7 +440,7 @@ export default class Game2 extends Phaser.Scene {
                     align: 'center',
                     fontFamily: 'yatra',
                 }
-            ).setOrigin(0.5).setDepth(11).setInteractive();
+            ).setOrigin(0.5).setDepth(11).setInteractive().setScrollFactor(0);
         }
 
         cartaEnviada.on('pointerdown', ()=>{
@@ -457,7 +457,7 @@ export default class Game2 extends Phaser.Scene {
 
         cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            cartaEnviada.setColor('bbb8b1');
+            cartaEnviada.setColor('#bbb8b1');
         });
     }
 
