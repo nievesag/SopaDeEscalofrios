@@ -109,121 +109,45 @@ export default class EndMenu extends Phaser.Scene {
     }
 
     showEnding(e) {
-        let bg;
-        let endText
-        if(e == 1) {
-            bg = this.make.image({
-                key: 'Final1',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7); 
-        
-            endText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'Centenares de entrañas han sido traídas al cielo inferior y cargadas en la embarcación Henu. Pronto seré transportada a través de la Duat, convirtiéndome así en la diosa de la putrefacción de la carne.',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
-        }
-        else if(e == 2) {
-            bg = this.make.image({
-                key: 'Final2',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
-        
-            endText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'Multitud de vasos canopos han sido arrojados a las profundidades del río Nilo y ninguno de ellos pese a su fragilidad ha sido fragmentado. Dentro de no mucho seré la próxima diosa de la primera catarata.',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
-        }
-        else if(e == 3) {
-            bg = this.make.image({
-                key: 'Final3',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
-        
-            endText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'Un sinnúmero de escarabajos han sido liberados de ese oscilante y viscoso fluido ámbar. Pronto podré ser una nueva mujer: la diosa del crepúsculo que teñirá el firmamento entero de sangre.',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
-        }
-        else if(e == 4) {
-            bg = this.make.image({
-                key: 'Final4',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
-            
-            endText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'Una manada de leones ha sido sacrificada. Se les conoce por ser los animales más poderosos de la vida y la muerte, símbolo de valía. Estoy preparada para ser la próxima diosa de la violencia.',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
-        }
-        else if(e == 5) {
-            bg = this.make.image({
-                key: 'Final5',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
+        let finalKey = 'Final' + e;
+        console.log(finalKey)
+        let bg = this.make.image({
+            key: finalKey,
+        }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
 
-            endText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'Los rayos luminosos han sido reflejados sobre las cristalinas paredes estratégicamente posicionadas. Mi bello resplandor causará dolor a los ojos de cualquier mortal, porque seré la futura diosa del centelleo.',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
+        let literalEndText;
+        if(e == 1){
+            literalEndText = 'Centenares de entrañas han sido traídas al cielo inferior y cargadas en la embarcación Henu. Pronto seré transportada a través de la Duat, convirtiéndome así en la diosa de la putrefacción de la carne.';
         }
-        else if(e == 6) {
-            bg = this.make.image({ 
-                key: 'Generico',
-            }).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(0.7, 0.7);
-            endText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY - 310,
-                'Ningún dios me ha otorgado su favor... en su lugar he sido castigada siendo encadenada por el resto de la eternidad. Imperios nacerán, civilizaciónes caerán, pero yo permaneceré aquí hasta el fin de los tiempos. Humillada, condenada, despreciada, sola.',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 20,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);
+        else if(e == 2){
+            literalEndText = 'Multitud de vasos canopos han sido arrojados a las profundidades del río Nilo y ninguno de ellos pese a su fragilidad ha sido fragmentado. Dentro de no mucho seré la próxima diosa de la primera catarata.';
         }
+        else if(e == 3){
+            literalEndText = 'Un sinnúmero de escarabajos han sido liberados de ese oscilante y viscoso fluido ámbar. Pronto podré ser una nueva mujer: la diosa del crepúsculo que teñirá el firmamento entero de sangre.';
+        }
+        else if(e == 4){
+            literalEndText = 'Una manada de leones ha sido sacrificada. Se les conoce por ser los animales más poderosos de la vida y la muerte, símbolo de valía. Estoy preparada para ser la próxima diosa de la violencia.';
+        }
+        else if(e == 5){
+            literalEndText = 'Los rayos luminosos han sido reflejados sobre las cristalinas paredes estratégicamente posicionadas. Mi bello resplandor causará dolor a los ojos de cualquier mortal, porque seré la futura diosa del centelleo.';
+        }
+        else if(e == 6){
+            literalEndText = 'Ningún dios me ha otorgado su favor... en su lugar he sido castigada siendo encadenada por el resto de la eternidad. Imperios nacerán, civilizaciónes caerán, pero yo permaneceré aquí hasta el fin de los tiempos. Humillada, condenada, despreciada, sola.';
+        }
+
+        let endText = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY - 310,
+            literalEndText,
+            {
+                fontFamily: 'yatra',
+                fontSize: 20,
+                color: '#ffffff',
+                align: 'center',
+                wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5, 0.5).setDepth(1);
     }
 
     manageLogros() {
