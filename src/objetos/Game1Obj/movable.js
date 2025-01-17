@@ -14,7 +14,6 @@ export default class Movable extends Phaser.GameObjects.Sprite {
         this.grabAbj = false;
         this.grabArr = false;
 
-        // hola
         this.player = undefined;
         this.touched = false;
     }
@@ -23,7 +22,7 @@ export default class Movable extends Phaser.GameObjects.Sprite {
         super.preUpdate(t, dt);
     }
 
-    update = () => { // hola otra vez que paza pisha
+    update = () => {
         if (this.range == undefined) return;
 
         this.range.x = this.x;
@@ -43,6 +42,7 @@ export default class Movable extends Phaser.GameObjects.Sprite {
         this.range.body.setAllowGravity(false).setSize(32, 32); // Width / Height
         this.range.visible = false;
     }
+
     setTouched(t) { this.touched = t; }
     setPlayer(p) { this.player = p; }
 
