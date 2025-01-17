@@ -549,7 +549,7 @@ export default class Game3 extends Phaser.Scene
     
             cartaEnviada = this.add.text( 
                 this.cameras.main.centerX - 200,
-                this.cameras.main.centerY - 150,
+                this.cameras.main.centerY - 250,
                 'Carta correctamente enviada \n ¿Regresar?',
                 {
                     fontSize: '30px',
@@ -574,7 +574,7 @@ export default class Game3 extends Phaser.Scene
     
             cartaEnviada = this.add.text( 
                 this.cameras.main.centerX - 200,
-                this.cameras.main.centerY - 150, 
+                this.cameras.main.centerY - 250, 
                 'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
                 {
                     fontSize: '30px',
