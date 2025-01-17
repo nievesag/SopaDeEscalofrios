@@ -109,6 +109,7 @@ export default class Boot extends Phaser.Scene {
         // -------- FEEDBACK
         this.load.image('Enviada', 'assets/images/feedback/enviada.png');
         this.load.image('NoEnviada', 'assets/images/feedback/noenviada.png');
+        this.load.image('Fade', 'assets/images/feedback/fade.png');
 
         // -------- ENDINGS
         this.load.image('Final1', 'assets/images/endings/png/g1.png');

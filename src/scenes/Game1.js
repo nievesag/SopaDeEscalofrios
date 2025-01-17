@@ -205,6 +205,23 @@ export default class Game1 extends Phaser.Scene {
         this.physics.add.collider(this.playerG1, this.wallLayer);
         this.physics.add.collider(this.playerG1, this.organsGroup);
         this.physics.add.collider(this.playerG1, this.boxesGroup);
+        this.physics.add.collider(this.boxesGroup, this.goal);
+
+        this.boxesGroup.getChildren().forEach(obj => {
+            obj.setPlayer(this.playerG1);
+            obj.setRangeUp();
+            this.physics.add.overlap(this.playerG1, obj.range, () => {
+                obj.setTouched(true);
+            });
+        });
+
+        this.organsGroup.getChildren().forEach(obj => {
+            obj.setPlayer(this.playerG1);
+            obj.setRangeUp();
+            this.physics.add.overlap(this.playerG1, obj.range, () => {
+                obj.setTouched(true);
+            });
+        });
 
         // ---- GRAB ----
         // -- organs
@@ -376,7 +393,17 @@ export default class Game1 extends Phaser.Scene {
             }
         }
 
-        console.log(this.organCount);
+        if(this.playerG1 != null) {
+            this.boxesGroup.getChildren().forEach(obj => {
+                obj?.update();
+            });
+            this.organsGroup.getChildren().forEach(obj => {
+                obj?.update();
+            });
+        }
+
+
+        //console.log(this.organCount);
 
         // -- derrota
         if(this.gameTime <= 0 && this.organCount > 0) {

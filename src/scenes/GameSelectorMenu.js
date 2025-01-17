@@ -60,6 +60,23 @@ export default class GameSelectorMenu extends Phaser.Scene {
         music.play();
         this.sound.pauseOnBlur = true;
 
+        // fade
+        this.fade = this.add.image(0, 0, 'Fade').setScale(20,10);   
+        this.fade.depth = 100;
+        this.fade.setAlpha(0);
+        this.fadeTween = this.tweens.add({
+            targets: this.fade,
+            alpha: 1,
+            duration: 800,
+            ease: 'Bezier',
+            yoyo: true,
+            paused: true
+        })
+        this.fadeTween.on('complete', () => {
+            this.fadeTween.restart(); 
+            this.fadeTween.paused = true;
+        });
+
         this.cameras.main.setBackgroundColor(0x181818);
         if(gameState.gameSelectorMenuHasStartedBefore === false){
             
@@ -292,7 +309,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         else{
             this.createGameSelectorMenu();
         }
-        
     }
 
     createGameSelectorMenu(){
@@ -432,6 +448,8 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     nextDay() {
+        this.fadeTween.play();
+
         if (gameState.currentDay < gameState.maxDays) {
           this.resetDay();
         } else {
