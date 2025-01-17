@@ -169,7 +169,7 @@ export default class Game1 extends Phaser.Scene {
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
         // --- GOAL
-        let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Organ, key: "goal" });
+        let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Goal, key: "goal" });
         this.goal = react[0]; //solo hay 1 y es el goal
         this.goal.body.immovable = true;
 		//this.react.setCollision(0, true); // Los tiles de esta capa tienen colisiones
