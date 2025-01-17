@@ -167,7 +167,19 @@ export default class Game2 extends Phaser.Scene {
         this.distanceCounter = this.add.text(
             400, 
             35,
-            'Distancia: 0m', // inicialmench 0m..
+            'Distancia: 0 codos', // inicialmench 0m..
+            {
+                fontSize: '24px',
+                color: 'white',
+                fontFamily: 'yatra'
+            }
+        ).setDepth(10).setScrollFactor(0); // pq es UI.
+
+        // contador de distancia.
+        this.winCounter = this.add.text(
+            this.distanceCounter.x, 
+            this.distanceCounter.y + 40,
+            'Codos para ganar: 0 codos', // inicialmench 0m..
             {
                 fontSize: '24px',
                 color: 'white',
@@ -246,7 +258,7 @@ export default class Game2 extends Phaser.Scene {
 
     update(){
         // Esto es pq en el primer tick del update las cosas no se han creado :)
-        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.vessel && this.vessel.body){
+        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.vessel && this.vessel.body && this.winCounter){
             
             // parallax scroller.
             if(this.vessel.isLaunched){
@@ -266,17 +278,37 @@ export default class Game2 extends Phaser.Scene {
             //this.bg.setPosition(scrollX,scrollY);
             //this.rio.setPosition(scrollX, 600);
             
+            // VICTORIA Y DERROTA.
+            this.winCondition = false;
+            let day = this.gameState.currentDay;
+
             let distance = this.vessel.x - this.vessel.initialPosX; // distancia recorrida
             let codoDistance = (distance * 0.524).toFixed(2)
             if(!this.vessel.isLaunched){ // si no se ha lanzado...
                 this.distanceCounter.setText('Distancia: 0 codos');
+                if(day === 1 || day === 2){
+                    this.winCounter.setText('Codos para ganar: 5000 codos');
+                }
+                else if (day === 3 || day === 4){
+                    this.winCounter.setText('Codos para ganar: 2700 codos');
+                }
+                else if(day === 5){
+                    this.winCounter.setText('Codos para ganar: 2500 codos');
+                }
             }
             else{
                 this.distanceCounter.setText('Distancia: ' + codoDistance + ' codos'); // el tofixed es para que tenga solo 2 decimales y se multiplica por '0.524 para convertirlo a codos reales.
+                if(day === 1 || day === 2){
+                    this.winCounter.setText('Codos para ganar: ' + (5000 - codoDistance).toFixed(2) + ' codos');
+                }
+                else if (day === 3 || day === 4){
+                    this.winCounter.setText('Codos para ganar: ' + (2700 - codoDistance).toFixed(2) + ' codos');
+                }
+                else if(day === 5){
+                    this.winCounter.setText('Codos para ganar: ' + (2500 - codoDistance).toFixed(2) + ' codos');
+                }
             }
 
-            this.winCondition = false;
-            let day = this.gameState.currentDay;
             if((codoDistance > 5000 && (day === 1 || day === 2))
              ||(codoDistance > 2700 && (day === 3 || day === 4))
              ||(codoDistance > 2500 && day === 5))
