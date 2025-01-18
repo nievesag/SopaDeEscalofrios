@@ -57,76 +57,77 @@ export default class LogrosMenu extends Phaser.Scene {
     }
 
     savelogrosEnd() {
-        // logros 1
-        for(var i = 0; i < this.gameState.logros1.length; i++){
-            logrosEnd.push(this.gameState.logros1[i]);
-        }
-        // logros 2
-        for(var i = 0; i < this.gameState.logros2.length; i++){
-            logrosEnd.push(this.gameState.logros2[i]);
-        }
-        // logros 3
-        for(var i = 0; i < this.gameState.logros3.length; i++){
-            logrosEnd.push(this.gameState.logros3[i]);
-        }
-        // logros 4
-        for(var i = 0; i < this.gameState.logros4.length; i++){
-            logrosEnd.push(this.gameState.logros4[i]);
-        }
-        // logros 5
-        for(var i = 0; i < this.gameState.logros5.length; i++){
-            logrosEnd.push(this.gameState.logros5[i]);
+        let logroLengthArray = [
+            this.gameState.logros1, 
+            this.gameState.logros2, 
+            this.gameState.logros3, 
+            this.gameState.logros4, 
+            this.gameState.logros5
+        ];
+
+        for(var i = 0; i < logroLengthArray.length; i++){
+            for(var j = 0; j < logroLengthArray[i].length; j++)
+            logrosEnd.push(logrosLengthArray[i][j])
         }
     }
 
     showLogros() {
 
         // --- Textos
+        let textoLogros;
+
+        let i = 0;
+        let logroLengthArray = [
+            this.gameState.logros1.length, 
+            this.gameState.logros2.length, 
+            this.gameState.logros3.length, 
+            this.gameState.logros4.length, 
+            this.gameState.logros5.length
+        ];
+
+        let hasAnyAward = false;
+        while(i<logroLengthArray.length && !hasAnyAward){
+            hasAnyAward = logroLengthArray[i] != 0;
+            i++;
+        }
         // si hay algun logro
-        if(this.gameState.logros1.length != 0 || this.gameState.logros2.length != 0 || this.gameState.logros3.length != 0 || this.gameState.logros4.length != 0 || this.gameState.logros5.length != 0) 
+        if(hasAnyAward) 
         {
-            // -- Logros, nombres
-            this.ningunLogroText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                logrosEnd,
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 40,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);         
+            textoLogros = logrosEnd;     
         }
         // ningun logro
         else
         {
-            this.ningunLogroText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                'No has obtenido ningún logro',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 40,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);    
+            textoLogros = 'No has obtenido ningún logro';   
         }
+
+        this.ningunLogroText = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            textoLogros,
+            {
+                fontFamily: 'yatra',
+                fontSize: 40,
+                color: '#ffffff',
+                align: 'center',
+                wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5, 0.5).setDepth(1);
     }
 
     resetLogros() {
-        this.gameState.logros1 = [];
-        this.gameState.logros2 = [];
-        this.gameState.logros3 = [];
-        this.gameState.logros4 = [];
-        this.gameState.logros5 = [];
+        let logroLengthArray = [
+            this.gameState.logros1, 
+            this.gameState.logros2, 
+            this.gameState.logros3, 
+            this.gameState.logros4, 
+            this.gameState.logros5
+        ];
 
+        for(var i = 0; i < logroLengthArray.length; i++) logroLengthArray[i] = [];
         logrosEnd = [];
+
 
         this.gameState.endResults = {
             Game1: [null, null, null, null, null] ,
@@ -135,8 +136,6 @@ export default class LogrosMenu extends Phaser.Scene {
             Game4: [null, null, null, null, null] ,
             Game5: [null, null, null, null, null] 
         };
-
-    
         console.log(this.gameState);
     }
 }
