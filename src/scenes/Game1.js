@@ -370,7 +370,7 @@ export default class Game1 extends Phaser.Scene {
 
     update(time, dt)
     {
-        if(this.playerG1 != null) {
+        if(this.playerG1 != null && this.organsGroup != null && this.boxesGroup != null) {
             this.playerG1.setGrabIzq(this.playerG1.x-15, this.playerG1.y);
             this.playerG1.setGrabDer(this.playerG1.x+15, this.playerG1.y);
             this.playerG1.setGrabArr(this.playerG1.x, this.playerG1.y-15);
@@ -391,19 +391,15 @@ export default class Game1 extends Phaser.Scene {
                     obj.setisAbj(false);
                 });
             }
-        }
 
-        if(this.playerG1 != null) {
             this.boxesGroup.getChildren().forEach(obj => {
                 obj?.update();
             });
+
             this.organsGroup.getChildren().forEach(obj => {
                 obj?.update();
             });
         }
-
-
-        //console.log(this.organCount);
 
         // -- derrota
         if(this.gameTime <= 0 && this.organCount > 0) {
@@ -417,7 +413,7 @@ export default class Game1 extends Phaser.Scene {
         }
 
         // organs
-        if(this.organsGroup) {
+        if(this.organsGroup != null) {
             this.organsGroup.getChildren().forEach(obj => {
                 // le metes por la der -> mov izq
                 if(this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisS() && !this.playerG1.getisD()
@@ -443,7 +439,7 @@ export default class Game1 extends Phaser.Scene {
         }
 
         // cajas
-        if(this.boxesGroup) {
+        if(this.boxesGroup != null) {
             this.boxesGroup.getChildren().forEach(obj => {
                 // le metes por la der -> mov izq
                 if(this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisS() && !this.playerG1.getisD()
