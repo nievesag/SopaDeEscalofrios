@@ -356,6 +356,9 @@ export default class Game3 extends Phaser.Scene
                 }
             }
         }
+
+        //Destruimos los que hayan podido quedar sueltos
+        this.destroySueltos();
     }
  
     destroyNeighbour(y , x){
@@ -374,6 +377,7 @@ export default class Game3 extends Phaser.Scene
                 neighbourCount++;
                 destroyArray.push(this.level.lvl[y-1][x + 1]);
             }
+
             //Abajo-Dcha
             if ((y+1) < this.level.fils && (x+1) < this.level.cols && this.level.lvl[y + 1][x + 1].texture.key == myBeetle.texture.key) 
             {    
@@ -446,6 +450,46 @@ export default class Game3 extends Phaser.Scene
         if (this.points >= this.victory){
             //Victoria
             this.endGame(true);
+        }
+    }
+
+    destroySueltos(){
+        //Recorremos la matriz en busca de bichos sueltos
+        for (let j = 0; j < this.level.fils; j++)
+        {
+            for (let i = 0; i < this.level.cols; i++) 
+            {
+                //Si el bicho de ahora no es vacío
+                if (this.level.lvl[j][i].texture.key != "EmptyBeetle")
+                {
+                    //Fila par
+                    if (j % 2 == 1)
+                    {   
+                        //Pero el de Arriba-Dcha y Arriba si lo son
+                        if ((j-1) > 0 && (i+1) < this.level.cols && this.level.lvl[j-1][i + 1].texture.key == "EmptyBeetle"
+                            && (j-1) > 0 && this.level.lvl[j-1][i].texture.key == "EmptyBeetle") 
+                        {    
+                            //Cambiamos la textura
+                            this.level.lvl[j][i].setTexture("EmptyBeetle");
+                            //Lo destruimos
+                            this.level.lvl[j][i].selfDestroy();
+                        }
+                    }
+                    //Fila Impar
+                    else
+                    {
+                        //Pero el de Arriba-Izqd y Arriba  si lo son
+                        if ((j-1) > 0 && (i-1) > 0 && this.level.lvl[j-1][i - 1].texture.key == "EmptyBeetle"
+                            && (j-1) > 0 && this.level.lvl[j-1][i].texture.key == "EmptyBeetle") 
+                        {    
+                            //Cambiamos la textura
+                            this.level.lvl[j][i].setTexture("EmptyBeetle");
+                            //Lo destruimos
+                            this.level.lvl[j][i].selfDestroy();
+                        }
+                    }
+                }
+            }
         }
     }
 
