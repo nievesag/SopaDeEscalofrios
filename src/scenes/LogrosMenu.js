@@ -67,7 +67,7 @@ export default class LogrosMenu extends Phaser.Scene {
 
         for(var i = 0; i < logroLengthArray.length; i++){
             for(var j = 0; j < logroLengthArray[i].length; j++)
-            logrosEnd.push(logrosLengthArray[i][j])
+            logrosEnd.push(logroLengthArray[i][j])
         }
     }
 

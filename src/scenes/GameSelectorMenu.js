@@ -406,6 +406,8 @@ export default class GameSelectorMenu extends Phaser.Scene {
         });
     }
 
+    createText()
+
 	createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
            x,
@@ -482,11 +484,26 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
    saveEndResults(){
-        gameState.endResults.Game1 = gameState.minigamesResults.Game1;
-        gameState.endResults.Game2 = gameState.minigamesResults.Game2;
-        gameState.endResults.Game3 = gameState.minigamesResults.Game3;
-        gameState.endResults.Game4 = gameState.minigamesResults.Game4;
-        gameState.endResults.Game5 = gameState.minigamesResults.Game5;
+
+        let endResultsArray = [
+            gameState.endResults.Game1,
+            gameState.endResults.Game2,
+            gameState.endResults.Game3,
+            gameState.endResults.Game4,
+            gameState.endResults.Game5
+        ];
+
+        let minigamesResultsArray = [
+            gameState.minigamesResults.Game1,
+            gameState.minigamesResults.Game2,
+            gameState.minigamesResults.Game3,
+            gameState.minigamesResults.Game4,
+            gameState.minigamesResults.Game5
+        ];
+
+        for(var i = 0; i < gameState.endResultsArray.length; i++){
+            endResultsArray[i] = minigamesResultsArray[i];
+        }
    }
 
    resetGame() {
