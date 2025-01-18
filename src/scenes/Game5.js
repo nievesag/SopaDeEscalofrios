@@ -360,6 +360,86 @@ export default class Game5 extends Phaser.Scene {
         this.gameState.minigamesResults.Game5[currentDayIndex] = result;
         this.scene.start("GameSelectorMenu");
     }
+
+    pantallaResultado(finish)
+    {
+        //La imagen del final
+        let endImage;
+        //El mensaje que aparece abajo
+        let cartaEnviada;
+
+        //Si ha ganado, se envía la carta
+        if (finish == 1) 
+        {
+            endImage = this.make.image({
+                x: this.cameras.main.centerX, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1, // anchura
+                    y: 1.1, // altura
+                },
+                key: 'Enviada',
+            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
+    
+            cartaEnviada = this.add.text( 
+                this.cameras.main.centerX - 200,
+                this.cameras.main.centerY - 250,
+                'Carta correctamente enviada \n ¿Regresar?',
+                {
+                    fontSize: '30px',
+                    color: '#bbb8b1',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                }
+            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
+        }
+        //Si no se ha enviado
+        else if (finish == 2)
+        {
+            endImage = this.make.image({
+                x: this.cameras.main.centerX, // x
+                y: this.cameras.main.centerY, // y
+                scale:{
+                    x: 1, // anchura
+                    y: 1.1, // altura
+                },
+                key: 'NoEnviada',
+            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);
+    
+            cartaEnviada = this.add.text( 
+                this.cameras.main.centerX - 200,
+                this.cameras.main.centerY - 250, 
+                'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
+                {
+                    fontSize: '30px',
+                    color: '#bbb8b1',
+                    align: 'center',
+                    fontFamily: 'yatra',
+                }
+            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
+        }
+
+        if (finish != 0)
+        {
+            cartaEnviada.on('pointerdown', ()=>{
+                // Destruye todo y vuelve al menu principal
+                endImage.destroy();
+                cartaEnviada.destroy();
+                this.scene.start('GameSelectorMenu');
+            });
+    
+            cartaEnviada.on('pointerover', () => // Al pasar el ratón por encima...
+            {
+                cartaEnviada.setColor('#0032c3');
+            });
+    
+            cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
+            {
+                cartaEnviada.setColor('#bbb8b1');
+            });
+        }
+
+    }
     
     createButton(text, x, y, textColor) {
         let button = this.add.text(
