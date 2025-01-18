@@ -130,8 +130,8 @@ export default class Game2 extends Phaser.Scene {
         this.rio = this.add.tileSprite(0, 600, 3200, 1992, 'river').setOrigin(0,0).setScrollFactor(0).setScale(1, 0.1);
 
         // creación de los objetos del juego.
-        this.background = new Background(this);
-        this.background.initialLandscape();
+        this.landscape = new Background(this);
+        this.landscape.initialLandscape();
         this.cannon = new Cannon(this);
         this.colorBug = new ColorBug(this);
 
@@ -186,36 +186,6 @@ export default class Game2 extends Phaser.Scene {
                 fontFamily: 'yatra'
             }
         ).setDepth(10).setScrollFactor(0); // pq es UI.
-
-        // botón de regreso.
-        this.buttonMainMenu = this.add.text(
-            960, 
-            35, 
-            'Volver', 
-            {
-                fontFamily: 'yatra',
-                fontSize: 20,
-                color: 'white'
-            }
-        ).setOrigin(0.5, 0.5).setInteractive().setDepth(100).setScrollFactor(0).setVisible(false);
-
-        this.buttonMainMenu.on('pointerover', () => // Al pasar el ratón por encima...
-        {
-            this.buttonMainMenu.setColor(0x181818);
-        });
-
-        this.buttonMainMenu.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            this.buttonMainMenu.setColor(0xffffff);
-        });
-
-        this.buttonMainMenu.on("pointerdown", () => { // Al hacer clic...
-            this.isGameOver = false;
-            this.isClickingOnUI = true; 
-            this.destroyAll();
-            this.scene.stop(); // detiene la escena.
-            this.scene.start('GameSelectorMenu');
-        });
         
         // VASIJA.
         this.input.on('pointerup', () => // AL HACER CLIC.
@@ -258,7 +228,7 @@ export default class Game2 extends Phaser.Scene {
 
     update(){
         // Esto es pq en el primer tick del update las cosas no se han creado :)
-        if(this.bg && this.rio && this.background && this.vessel && this.obstacleGen && this.buttonMainMenu && this.vessel && this.vessel.body && this.winCounter){
+        if(this.bg && this.rio && this.landscape && this.vessel && this.obstacleGen && this.vessel && this.vessel.body && this.winCounter){
             
             // parallax scroller.
             if(this.vessel.isLaunched){
@@ -266,7 +236,7 @@ export default class Game2 extends Phaser.Scene {
             }
             this.rio.tilePositionX -=6;
 
-            this.background.update();
+            this.landscape.update();
             this.vessel.update();
             this.obstacleGen.update();
             this.colorBug.update();
@@ -429,10 +399,10 @@ export default class Game2 extends Phaser.Scene {
     }
 
     destroyAll(){ // elimina todos los objetos del juego.
-        if(this.background)
+        if(this.landscape)
         {
-            this.background.destroy();
-            this.background = null; // limpia referencia.
+            this.landscape.destroy();
+            this.landscape = null; // limpia referencia.
         } 
 
         if(this.cannon)
@@ -457,48 +427,6 @@ export default class Game2 extends Phaser.Scene {
             this.obstacleGen.obsGroup.clear(true, true); // limpia el grupo (objetos, referencias).
             this.obstacleGen.destroy();
         } 
-
-        if(this.buttonMainMenu)
-        {
-            this.buttonMainMenu.destroy();
-            this.buttonMainMenu = null;
-        } 
-
-        /*if(this.musicButton)
-        {
-            this.musicButton.destroy();
-            this.buttonMainMenu = null;
-        } */
-    }
-
-    // botón de la UI.
-    createButton(text, x, y, textColor, fontsize, sceneName) {
-        let button = this.add.text(
-            x, 
-            y, 
-            text, 
-            {
-                fontFamily: 'yatra',
-                fontSize: fontsize,
-                color: textColor
-            }
-        ).setOrigin(0.5, 0.5).setInteractive();
-
-        button.on('pointerover', () => // Al pasar el ratón por encima...
-        {
-            button.setTint(0xdfa919);
-        });
-
-        button.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            button.clearTint();
-        });
-
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start(sceneName);
-        });
-
-        return button;
     }
     
 }
