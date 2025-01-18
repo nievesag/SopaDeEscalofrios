@@ -468,6 +468,18 @@ export default class Game3 extends Phaser.Scene
         }
     }
 
+    quitarVoladoras()
+    {
+        // ACOPLAR LANZADO A LVL
+        for (let j = 0; j < this.level.fils; j++)
+        {
+            for (let i = 0; i < this.level.cols; i++) 
+            {
+                if()
+            }
+        }
+    }
+
     // --- BOTONES ---.
     createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
