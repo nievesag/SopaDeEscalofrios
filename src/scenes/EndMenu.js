@@ -11,14 +11,6 @@ export default class EndMenu extends Phaser.Scene {
 	create() {
         this.cameras.main.setBackgroundColor(0x181818);
 
-        /*// Paramos el audio
-        this.sound.stopAll();
-        
-        // Música.
-        const music = this.sound.add('f3ale');
-        music.play();
-        this.sound.pauseOnBlur = true;*/
-
         // Texto del Título con borde de color aleatorio
         let title = this.add.text(
             this.cameras.main.centerX,
