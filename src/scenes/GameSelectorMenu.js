@@ -501,6 +501,8 @@ export default class GameSelectorMenu extends Phaser.Scene {
             Game4: [null, null, null, null, null] ,
             Game5: [null, null, null, null, null] 
         };
+
+   
         gameState.hasStartedBefore = [ false, false, false, false, false ];
     }
 }

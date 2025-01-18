@@ -24,6 +24,8 @@ export default class Game1 extends Phaser.Scene {
     
     create () {
         this.cameras.main.setBackgroundColor(0x181818);
+
+        console.log(this.gameState);
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[0]){
             this.gameState.hasStartedBefore[0] = true; // ala ya ha salio el tutorial.
@@ -506,7 +508,7 @@ export default class Game1 extends Phaser.Scene {
         let result;
         let finish = 0;
         if (this.ganar) {
-            console.log("victoria");
+           // console.log("victoria");
             result = 'victoria';
             finish = 1;
         }

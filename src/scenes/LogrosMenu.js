@@ -125,11 +125,18 @@ export default class LogrosMenu extends Phaser.Scene {
         this.gameState.logros3 = [];
         this.gameState.logros4 = [];
         this.gameState.logros5 = [];
-        this.gameState.endResults.Game1 = [null, null, null, null, null];
-        this.gameState.endResults.Game2 = [null, null, null, null, null];
-        this.gameState.endResults.Game3 = [null, null, null, null, null];
-        this.gameState.endResults.Game4 = [null, null, null, null, null];
-        this.gameState.endResults.Game5 = [null, null, null, null, null];
+
         logrosEnd = [];
+
+        this.gameState.endResults = {
+            Game1: [null, null, null, null, null] ,
+            Game2: [null, null, null, null, null] ,
+            Game3: [null, null, null, null, null] ,
+            Game4: [null, null, null, null, null] ,
+            Game5: [null, null, null, null, null] 
+        };
+
+    
+        console.log(this.gameState);
     }
 }
