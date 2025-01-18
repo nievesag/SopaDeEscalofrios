@@ -57,7 +57,7 @@ export default class LogrosMenu extends Phaser.Scene {
     }
 
     savelogrosEnd() {
-        /*let logroLengthArray = [
+        let logroLengthArray = [
             this.gameState.logros1, 
             this.gameState.logros2, 
             this.gameState.logros3, 
@@ -68,70 +68,11 @@ export default class LogrosMenu extends Phaser.Scene {
         for(var i = 0; i < logroLengthArray.length; i++){
             for(var j = 0; j < logroLengthArray[i].length; j++)
             logrosEnd.push(logroLengthArray[i][j])
-        }*/
-
-        // logros 1
-        for(var i = 0; i < this.gameState.logros1.length; i++){
-            logrosEnd.push(this.gameState.logros1[i]);
-        }
-        // logros 2
-        for(var i = 0; i < this.gameState.logros2.length; i++){
-            logrosEnd.push(this.gameState.logros2[i]);
-        }
-        // logros 3
-        for(var i = 0; i < this.gameState.logros3.length; i++){
-            logrosEnd.push(this.gameState.logros3[i]);
-        }
-        // logros 4
-        for(var i = 0; i < this.gameState.logros4.length; i++){
-            logrosEnd.push(this.gameState.logros4[i]);
-        }
-        // logros 5
-        for(var i = 0; i < this.gameState.logros5.length; i++){
-            logrosEnd.push(this.gameState.logros5[i]);
         }
     }
 
     showLogros() {
-
         // --- Textos
-        // si hay algun logro
-        if(this.gameState.logros1.length != 0 || this.gameState.logros2.length != 0 || this.gameState.logros3.length != 0 || this.gameState.logros4.length != 0 || this.gameState.logros5.length != 0) 
-            {
-                // -- Logros, nombres
-                this.ningunLogroText = this.add.text(
-                    this.cameras.main.centerX,
-                    this.cameras.main.centerY,
-                    logrosEnd,
-                    {
-                        fontFamily: 'yatra',
-                        fontSize: 40,
-                        color: '#ffffff',
-                        align: 'center',
-                        wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                        wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                    }
-                ).setOrigin(0.5, 0.5).setDepth(1);         
-            }
-            // ningun logro
-            else
-            {
-                this.ningunLogroText = this.add.text(
-                    this.cameras.main.centerX,
-                    this.cameras.main.centerY,
-                    'No has obtenido ningún logro',
-                    {
-                        fontFamily: 'yatra',
-                        fontSize: 40,
-                        color: '#ffffff',
-                        align: 'center',
-                        wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                        wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                    }
-                ).setOrigin(0.5, 0.5).setDepth(1);    
-            }
-
-        /*// --- Textos
         let textoLogros;
 
         let i = 0;
@@ -171,7 +112,7 @@ export default class LogrosMenu extends Phaser.Scene {
                 wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
                 wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
             }
-        ).setOrigin(0.5, 0.5).setDepth(1);*/
+        ).setOrigin(0.5, 0.5).setDepth(1);
     }
 
     resetLogros() {
@@ -183,7 +124,7 @@ export default class LogrosMenu extends Phaser.Scene {
         this.gameState.logros5 = [];
         logrosEnd = [];
 
-        /*let logroLengthArray = [
+        let logroLengthArray = [
             this.gameState.logros1, 
             this.gameState.logros2, 
             this.gameState.logros3, 
@@ -192,7 +133,7 @@ export default class LogrosMenu extends Phaser.Scene {
         ];
 
         for(var i = 0; i < logroLengthArray.length; i++) logroLengthArray[i] = [];
-        logrosEnd = [];*/
+        logrosEnd = [];
 
 
         this.gameState.endResults = {

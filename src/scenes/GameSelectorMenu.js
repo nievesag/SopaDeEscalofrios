@@ -84,150 +84,42 @@ export default class GameSelectorMenu extends Phaser.Scene {
             let actualDiapo = 0; // inicialmente la 0.
             
             // ----- TEXTOS -----.
-            let D1Text = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                'Querido escriba mío, no sé si eres si quiera consciente de la magnitud del motivo por el que he pedido que te reúnas conmigo hoy aquí...',
-                {
-                    fontSize: '20px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5); // danzhu lo tenia y funciona.
+            let D1Text = this.createEndText(1);
+            D1Text.setVisible(true);
 
-            let D2Text = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                '... He estado últimamente manteniendo infinidad de conversaciones con la Luna y esta me ha susurrado al oído una inconmesurable cantidad de secretos... secretos que hoy te vengo a confiar:',
-                {
-                    fontSize: '20px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+            let D2Text = this.createEndText(2);
+            D2Text.setVisible(false);
 
-            let D3Text = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                'El destino apunta a que pronto voy a convertirme en diosa. Mi sangre se volverá oro, mi dientes y ojos se transmutarán en perlas, mi gloriosa corona desprenderá una imperecedera luz que iluminará hasta el rincón más recóndito de Kemet, esta nuestra tierra negra.',
-                {
-                    fontSize: '20px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 700}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+            let D3Text = this.createEndText(3);
+            D3Text.setVisible(false);
 
-            let D4Text = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                'Para ello necesito que mandes unas cartas de recomendación a algunos dioses para convencerlos de que yo también he de formar parte de su panteón. Estas cartas han de realizarse por medio de rituales, si estos son completados con éxito yo podré ascender y ser uno más de ellos.',
-                {
-                    fontSize: '20px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 800}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+            let D4Text = this.createEndText(4);
+            D4Text.setVisible(false);
 
-            let D5Text = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                'Solo serás capaz de realizar tres rituales por día antes de desfallecer, así que ten en cuenta a qué dioses veneras con mayor frecuencia, porque los hilos del destino pueden verse alterados.',
-                {
-                    fontSize: '20px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+            let D5Text = this.createEndText(5);
+            D5Text.setVisible(false);
 
-            let D6Text = this.add.text( // diapo 1 text.
-                this.cameras.main.centerX, 
-                this.cameras.main.centerY - 310, 
-                'Los dioses con los que necesito que contactes son: Socar, dios protector de los muertos, Anuket, diosa del agua, Jepri, dios solar, Inheret, dios de la guerra y de la caza y Shu, dios de luz.',
-                {
-                    fontSize: '20px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                    wordWrap: {width: 500}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5).setVisible(false); // danzhu lo tenia y funciona.
+            let D6Text = this.createEndText(6);
+            D6Text.setVisible(false);
 
             // ----- IMÁGENES -----.
-            let D1Image = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 0.7, // anchura
-                    y: 0.7, // altura
-                },
-                key: 'Intro1',
-            });
+            let D1Image = this.createEndImage(1);
+            D1Image.setVisible(true);
 
-            let D2Image = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 0.7, // anchura
-                    y: 0.7, // altura
-                },
-                key: 'Intro2',
-            }).setVisible(false);;
+            let D2Image = this.createEndImage(2);
+            D2Image.setVisible(false);
 
-            let D3Image = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 0.7, // anchura
-                    y: 0.7, // altura
-                },
-                key: 'Intro3',
-            }).setVisible(false);;
+            let D3Image = this.createEndImage(3);
+            D3Image.setVisible(false);
 
-            let D4Image = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 0.7, // anchura
-                    y: 0.7, // altura
-                },
-                key: 'Intro4',
-            }).setVisible(false);
+            let D4Image = this.createEndImage(4);
+            D4Image.setVisible(false);
 
-            let D5Image = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 0.7, // anchura
-                    y: 0.7, // altura
-                },
-                key: 'Intro5',
-            }).setVisible(false);;
+            let D5Image = this.createEndImage(5);
+            D5Image.setVisible(false);
 
-            let D6Image = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 0.7, // anchura
-                    y: 0.7, // altura
-                },
-                key: 'Intro6',
-            }).setVisible(false);;
+            let D6Image = this.createEndImage(6);
+            D6Image.setVisible(false);
 
             this.continueButton = this.add.text(
                 this.cameras.main.centerX, 
@@ -311,6 +203,74 @@ export default class GameSelectorMenu extends Phaser.Scene {
         }
     }
 
+    createEndImage(numberCode){
+        let text = 'Intro' + numberCode;
+        
+        return this.make.image({
+            x: this.cameras.main.centerX, // x
+            y: this.cameras.main.centerY, // y
+            scale:{
+                x: 0.7, // anchura
+                y: 0.7, // altura
+            },
+            key: text,
+        });
+    }
+
+    createEndText(numberCode){
+        let text;
+        let number;
+        let textArray = 
+        [
+            'Querido escriba mío, no sé si eres si quiera consciente de la magnitud del motivo por el que he pedido que te reúnas conmigo hoy aquí...',
+            '... He estado últimamente manteniendo infinidad de conversaciones con la Luna y esta me ha susurrado al oído una inconmesurable cantidad de secretos... secretos que hoy te vengo a confiar:',
+            'El destino apunta a que pronto voy a convertirme en diosa. Mi sangre se volverá oro, mi dientes y ojos se transmutarán en perlas, mi gloriosa corona desprenderá una imperecedera luz que iluminará hasta el rincón más recóndito de Kemet, esta nuestra tierra negra.',
+            'Para ello necesito que mandes unas cartas de recomendación a algunos dioses para convencerlos de que yo también he de formar parte de su panteón. Estas cartas han de realizarse por medio de rituales, si estos son completados con éxito yo podré ascender y ser uno más de ellos.',
+            'Solo serás capaz de realizar tres rituales por día antes de desfallecer, así que ten en cuenta a qué dioses veneras con mayor frecuencia, porque los hilos del destino pueden verse alterados.',
+            'Los dioses con los que necesito que contactes son: Socar, dios protector de los muertos, Anuket, diosa del agua, Jepri, dios solar, Inheret, dios de la guerra y de la caza y Shu, dios de luz.'
+        ];
+        let n = [500, 700, 800]
+
+        if(numberCode == 1){
+            text = textArray[0];
+            number = n[0];
+        }
+        else if (numberCode == 2){
+            text = textArray[1];
+            number = n[0];
+        }
+        else if (numberCode == 3){
+            text = textArray[2];
+            number = n[1];
+        }
+        else if (numberCode == 4){
+            text = textArray[3];
+            number = n[2];
+        }
+        else if (numberCode == 5){
+            text = textArray[4];
+            number = n[0];
+        }
+        else if (numberCode == 6){
+            text = textArray[5];
+            number = n[0];
+        }
+        
+        return this.add.text( // diapo 1 text.
+            this.cameras.main.centerX, 
+            this.cameras.main.centerY - 310, 
+            text,
+            {
+                fontSize: '20px',
+                color: '#ffffff',
+                align: 'center',
+                fontFamily: 'yatra',
+                wordWrap: {width: number}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5);
+    }
+
     createGameSelectorMenu(){
 
         this.bg = this.make.image({ 
@@ -338,26 +298,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         this.createInfoText(textCode);
 
-        // Boton para pasar al siguiente día
-        this.nextDayButton = this.add.text(this.cameras.main.width - 100, 30, 'Dormir', {
-            fontFamily: 'yatra',
-            fontSize: '40px',
-            color: '#735500',
-        }).setOrigin(0.5, 0.5);
-
-        this.nextDayButton.setInteractive();
-
-        this.nextDayButton.on('pointerover', () => // Al pasar el ratón por encima...
-        {
-            this.nextDayButton.setColor('#0032c3');
-        });
-
-        this.nextDayButton.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            this.nextDayButton.setColor('#735500');
-        });
-
-        this.nextDayButton.on('pointerdown', () => this.nextDay());
+        this.createButton('Dormir', this.cameras.main.width - 100, 30, '#735500', '40px');
     }
 
     createIcon(sprite, x, y, sceneName) {
@@ -418,33 +359,16 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         button.on('pointerover', () => // Al pasar el ratón por encima...
         {
-            button.setTint(0xdfa919);
+            button.setColor('#0032c3');
         });
 
         button.on('pointerout', () => // Al quitar el ratón de encima...
         {
-            button.clearTint();
+            button.setColor('#735500');
         });
 
         button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            const gameIndex = parseInt(sceneName.split('Game')[1]) - 1;
-
-            if(gameState.playedInCurrentDay[gameIndex])
-            {
-                alert('Ya has jugado este minijuego hoy.');
-                return;
-            }
-
-            if (gameState.actionsLeft > 0) {
-                gameState.actionsLeft--;
-                gameState.playedInCurrentDay[gameIndex] = true;
-                this.scene.start(sceneName, { gameState: gameState });
-            } else {
-                alert('No te quedan acciones hoy. Pasa al siguiente dia.');
-            }
-
-        });
+        button.on("pointerdown", () => this.nextDay());
     }
 
     nextDay() {
@@ -480,32 +404,11 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
    saveEndResults(){
-
-    gameState.endResults.Game1 = gameState.minigamesResults.Game1;
+        gameState.endResults.Game1 = gameState.minigamesResults.Game1;
         gameState.endResults.Game2 = gameState.minigamesResults.Game2;
         gameState.endResults.Game3 = gameState.minigamesResults.Game3;
         gameState.endResults.Game4 = gameState.minigamesResults.Game4;
         gameState.endResults.Game5 = gameState.minigamesResults.Game5;
-
-        /*let endResultsArray = [
-            gameState.endResults.Game1,
-            gameState.endResults.Game2,
-            gameState.endResults.Game3,
-            gameState.endResults.Game4,
-            gameState.endResults.Game5
-        ];
-
-        let minigamesResultsArray = [
-            gameState.minigamesResults.Game1,
-            gameState.minigamesResults.Game2,
-            gameState.minigamesResults.Game3,
-            gameState.minigamesResults.Game4,
-            gameState.minigamesResults.Game5
-        ];
-
-        for(var i = 0; i < endResultsArray.length; i++){
-            endResultsArray[i] = minigamesResultsArray[i];
-        }*/
    }
 
    resetGame() {
