@@ -242,11 +242,6 @@ export default class Game3 extends Phaser.Scene
         
         // Modificamos el marcador de puntos
         this.pointUI.setText('Puntos: ' + this.points);
-
-        // Verificamos si se ha acabado el nivel
-        // +this.victory puntos - victoria
-        // bichos en fila 11 - derrota
-        if (this.finish) this.endGame();
     }
 
     updateTime(){ 
@@ -473,6 +468,9 @@ export default class Game3 extends Phaser.Scene
                             this.level.lvl[j][i].setTexture("EmptyBeetle");
                             //Lo destruimos
                             this.level.lvl[j][i].selfDestroy();
+                            //Suma puntos (menos, porque es efecto secundario)
+                            this.points += 50;
+
                         }
                     }
                     //Fila Impar
@@ -486,6 +484,8 @@ export default class Game3 extends Phaser.Scene
                             this.level.lvl[j][i].setTexture("EmptyBeetle");
                             //Lo destruimos
                             this.level.lvl[j][i].selfDestroy();
+                            //Suma puntos (menos, porque es efecto secundario)
+                            this.points += 50;
                         }
                     }
                 }
@@ -526,16 +526,19 @@ export default class Game3 extends Phaser.Scene
     endGame(finish){
 
         let result; 
+        let mode = -1;
         //Victoria, alcanzar this.victory puntos
         if (finish){
             console.log("Victoria");
             alert('Has obtenido el logro ' + this.gameState.logros.Game3[this.gameState.currentDay - 1] + ' por enviarle una carta a Jepri el día ' + this.gameState.currentDay);
             result = 'victoria';
+            mode = 0;
         }
         //Derrota si hay en la fila final 
         else {
             console.log("Derrota");
             result = 'derrota';
+            mode = 1;
         }
 
         this.freeBeetle = true;
@@ -551,16 +554,14 @@ export default class Game3 extends Phaser.Scene
             this.gameState.minigamesResults.Game3[currentDayIndex] = result;
         }
 
-        // ENDLEVEL.
-        let mode;
-        if(finish){
-            mode = 0;
+        // Final de nivel 
+        if (mode != -1)
+        {
             this.scene.start('EndLevel', {mode: mode});
         }
-        else if(!finish){
-            mode = 1;
-            this.scene.start('EndLevel', {mode: mode});
-        }
+
+
+
     }
 
     // --- DIFICULTAD ---.
@@ -572,31 +573,31 @@ export default class Game3 extends Phaser.Scene
         this.pointUI.setVisible(true);
         if(this.gameState.currentDay == 1)
         {
-            this.victory = 3000;
+            this.victory = 900;
             this.beetles.length = 4;
             this.level.filIni = 3;
         }
         else if (this.gameState.currentDay == 2)
         {
-            this.victory = 2500;
+            this.victory = 800;
             this.beetles.length = 7;
             this.level.filIni = 4;
         }
         else if(this.gameState.currentDay == 3)
         {
-            this.victory = 2000;
+            this.victory = 700;
             this.beetles.length = 6;
             this.level.filIni = 5;
         }
         else if(this.gameState.currentDay == 4)
         {
-            this.victory = 1500;
+            this.victory = 600;
             this.beetles.length = 5;
             this.level.filIni = 6;
         }
         else if(this.gameState.currentDay == 5)
         {
-            this.victory = 1000;
+            this.victory = 500;
             this.beetles.length = 5;
             this.level.filIni = 7;
         }
