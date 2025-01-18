@@ -109,26 +109,7 @@ export default class Game4 extends Phaser.Scene {
     }
 
     startGame(){
-        console.log(this.gameState.currentDay);
-        /*// Música.
-        this.music = this.sound.add('theme4');
-        this.music.play();
-        this.sound.pauseOnBlur = true;
-
-        // Botón de la música.
-        this.musicButton = this.add.image(this.cameras.main.width - 50, 40, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
-        
+      
           // Background
           this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
           .setOrigin(0.5, 0.5)
@@ -186,12 +167,14 @@ export default class Game4 extends Phaser.Scene {
             this.physics.add.collider(this.activeArrowsPool, this.obstaclePool, (arrow, obstacle) => {
                 if (arrow.type === 'explosive') {
                     arrow.handleCollision(obstacle);
-                } else {
+                } 
+                else
+                {
                     obstacle.checkCollisionWithArrowObs(this, arrow);
                 }
             });
             
-
+            //Actualiza la rotacion de la flecha
             if (this.bow && this.bow.projectile) {
                 this.bow.projectile.updateRotation();
             }
@@ -206,7 +189,7 @@ export default class Game4 extends Phaser.Scene {
     }
 
 
-    createObstacles() {
+    createObstacles() { //Crea los obstaculos dependiendo del dia
 
         this.obstaclePool = [];
 
@@ -259,7 +242,7 @@ export default class Game4 extends Phaser.Scene {
        
     }
 
-    createEnemies() {
+    createEnemies() { //Crea lso enemigos dependiendo del dia
 
         this.enemiesPool = [];
 
@@ -279,7 +262,7 @@ export default class Game4 extends Phaser.Scene {
        
     }
 
-    createButton(text, x, y, textColor, fontsize, sceneName) {
+    createButton(text, x, y, textColor, fontsize, sceneName) { //Crea un boton
         let button = this.add.text(
            x,
            y,
@@ -308,7 +291,7 @@ export default class Game4 extends Phaser.Scene {
         });
     }
 
-    endLevel()
+    endLevel() //Metodo que gestiona el final del nivel
     {
         let result;
         let finish = 0; //Ni gana ni pierde
@@ -340,7 +323,7 @@ export default class Game4 extends Phaser.Scene {
         }
     }
 
-    createInfoTexts()
+    createInfoTexts() //Crea los textos de informacion(tipo de flecha, enemigos restantes, flechas restantes)
     {
           this.enemiesText = this.add.text(10, 10, `Enemigos restantes: ${this.enemiesPool.length}`, {
             fontFamily: 'yatra',
@@ -363,7 +346,7 @@ export default class Game4 extends Phaser.Scene {
     }
 
 
-    updateInfoTexts() {
+    updateInfoTexts() {  //Actualiza la informacion de los textos conforme avanza el minijuego
 
         this.enemiesText.setText(`Enemigos restantes: ${this.enemiesPool.length - this.enemiesCounter}`);
         this.arrowsText.setText(`Flechas restantes: ${this.bow.totalArrows}`);
@@ -372,15 +355,16 @@ export default class Game4 extends Phaser.Scene {
     }
 
 
-    setDifficulty() {
+    setDifficulty() //Ajusta la dificulad dandote un determinado numero de flechas dependiendo del dia
+    {
 
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
-               
-                { type: 'Normal', count: 5 },
+              
+                //{ type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 2 },
-                { type: 'Ball Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 5 },
                 { type: 'Split Arrow', count: 2 }
 
             ]);

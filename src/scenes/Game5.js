@@ -121,20 +121,7 @@ export default class Game5 extends Phaser.Scene {
           .setOrigin(0.5, 0.5)
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
-        // --- CONTROL DE TIEMPO PARA PODER PERDER ---
-        this.gameTime = 20; 
-
-        this.timerText = this.add.text(
-            30, 
-            30, 
-            this.gameTime,
-            { 
-                fontFamily: 'yatra', 
-                fontSize: 30, 
-                color: 'White' 
-            }).setOrigin(0.5, 0.5);
-            
-        this.timerHUD();
+        
 
         // Los tableros contienen una array de array. 
         // La primera fila de cada tablero solo tiene dos numero que representan:
@@ -210,18 +197,32 @@ export default class Game5 extends Phaser.Scene {
 
         this.caunter;
         this.mirrorCaunter();
+        this.timerCaunter();
+    }
+
+    timerCaunter() {
+        // --- CONTROL DE TIEMPO PARA PODER PERDER ---
+        this.gameTime = 20; 
+
+        this.timerText = this.add.text(
+            80,
+            80,
+            this.gameTime,
+             {
+                 fontFamily: 'yatra',
+                 fontSize: 40,
+                 color: 'black'
+             }
+         ).setOrigin(0.5, 0.5);
+            
+        this.timerHUD();
     }
 
     timerHUD() {
         const updateTimer = () => {
             this.gameTime -= 1; // disminuye contador
-            this.timerText.destroy(); // borra texto anterior
-
-            if(this.gameTime > 0) {
-                // crea texto nuevo
-                this.timerText = this.add.text(30, 30, this.gameTime,
-                    { fontFamily: 'yatra', fontSize: 30, color: 'White' }).setOrigin(0.5, 0.5);
-            }
+            this.timerText.setText(this.gameTime);
+            
         };
 
         // temporizador

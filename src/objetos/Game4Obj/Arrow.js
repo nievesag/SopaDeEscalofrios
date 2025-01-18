@@ -15,9 +15,10 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.body.onCollide = true;
 
         this.scene.events.on('update', this.updateRotation, this);
+        this.type = 'normal';
     }
 
-    launch(velocityX, velocityY) {
+    launch(velocityX, velocityY) { //Metodo que gestiona el lanzamiento de la flecha
 
         this.velX = velocityX;
         this.velY = velocityY;
@@ -43,15 +44,15 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.scene.activeArrowsPool.push(this);
     }
 
-    getVelX(){
+    getVelX(){ //Getter de la vel X
         return this.velX;
     }
 
-    getVelY() {
+    getVelY() { //Getter de la vel Y
         return this.velY;
     }
 
-    updateRotation() {
+    updateRotation() {  //Actualiza la rotacion de la flecha
         
         if (this.body && (this.body.velocity.x !== 0 || this.body.velocity.y !== 0)) {
             const angle = Phaser.Math.Angle.Between(0, 0, this.body.velocity.x, this.body.velocity.y);

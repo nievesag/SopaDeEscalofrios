@@ -373,6 +373,7 @@ export default class Game1 extends Phaser.Scene {
     update(time, dt)
     {
         if(this.playerG1 != null && this.organsGroup != null && this.boxesGroup != null) {
+
             this.playerG1.setGrabIzq(this.playerG1.x-15, this.playerG1.y);
             this.playerG1.setGrabDer(this.playerG1.x+15, this.playerG1.y);
             this.playerG1.setGrabArr(this.playerG1.x, this.playerG1.y-15);

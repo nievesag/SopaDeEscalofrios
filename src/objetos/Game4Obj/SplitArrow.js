@@ -7,7 +7,7 @@ export default class SplitArrow extends Arrow {
         this.arrow = this; 
     }
 
-    split() {
+    split() { //Metodo que divide las flechas en 3
         const angle1 = Phaser.Math.Angle.Between(0, 0, 1, 1);
         const angle2 = Phaser.Math.Angle.Between(0, 0, -1, 1);
         const angle3 = Phaser.Math.Angle.Between(0, 0, 0, 1);  
