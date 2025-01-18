@@ -297,6 +297,7 @@ export default class Game4 extends Phaser.Scene {
         let finish = 0; //Ni gana ni pierde
         if (this.enemiesCounter == this.enemiesPool.length) {
             console.log("victoria");
+            alert('Has obtenido el logro ' + this.gameState.logros.Game4[this.gameState.currentDay - 1] + ' por enviarle una carta a Inheret el día ' + this.gameState.currentDay);
             result = 'victoria';
             finish = 1; //gana 
         } 

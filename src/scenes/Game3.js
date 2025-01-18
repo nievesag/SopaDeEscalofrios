@@ -504,6 +504,7 @@ export default class Game3 extends Phaser.Scene
         //Victoria, alcanzar this.victory puntos
         if (finish){
             console.log("Victoria");
+            alert('Has obtenido el logro ' + this.gameState.logros.Game3[this.gameState.currentDay - 1] + ' por enviarle una carta a Jepri el día ' + this.gameState.currentDay);
             result = 'victoria';
         }
         //Derrota si hay en la fila final 

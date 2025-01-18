@@ -332,6 +332,7 @@ export default class Game5 extends Phaser.Scene {
         }
 
         if (victory) {
+            alert('Has obtenido el logro ' + this.gameState.logros.Game5[this.gameState.currentDay - 1] + ' por enviarle una carta a Shu el día ' + this.gameState.currentDay);
             result = 'victoria';
         }
         
