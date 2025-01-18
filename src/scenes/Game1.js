@@ -341,10 +341,10 @@ export default class Game1 extends Phaser.Scene {
             //this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
             
             // -----------------------------------
-        }
+    }
         
-        timerHUD() {
-            const updateTimer = () => {
+    timerHUD() {
+        const updateTimer = () => {
             this.gameTime -= 1; // disminuye contador
             this.timerText.destroy(); // borra texto anterior
 

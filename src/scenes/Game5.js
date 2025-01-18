@@ -140,6 +140,21 @@ export default class Game5 extends Phaser.Scene {
             }
         }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
 
+        // --- CONTROL DE TIEMPO PARA PODER PERDER ---
+        this.gameTime = 20; 
+
+        this.timerText = this.add.text(
+            20, 
+            20, 
+            this.gameTime,
+            { 
+                fontFamily: 'yatra', 
+                fontSize: 15, 
+                color: 'White' 
+            }).setOrigin(0.5, 0.5);
+            
+        this.timerHUD();
+
         // Los tableros contienen una array de array. 
         // La primera fila de cada tablero solo tiene dos numero que representan:
         // 0 -> el numero de espejos maximo
@@ -219,6 +234,28 @@ export default class Game5 extends Phaser.Scene {
         this.createButton('MAIN MENU',  50,  this.cameras.main.height - 50, 'white');
     }
 
+    timerHUD() {
+        const updateTimer = () => {
+            this.gameTime -= 1; // disminuye contador
+            this.timerText.destroy(); // borra texto anterior
+
+            if(this.gameTime > 0) {
+                // crea texto nuevo
+                this.timerText = this.add.text(20, 20, this.gameTime,
+                    { fontFamily: 'yatra', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+            }
+        };
+
+        // temporizador
+        this.time.addEvent({
+            delay: 1000,
+            loop: true,
+            callback: updateTimer,
+            callbackScope: this
+        });
+
+    }
+
     getDirection(number) {
         let direction;
         switch (number) {
@@ -265,6 +302,11 @@ export default class Game5 extends Phaser.Scene {
     }
 
     update() {
+
+        if(this.gameTime <= 0) {
+            this.EndGame();
+        }
+
         if (this.laser) {
             if (this.laser.x < this.boardMinX ||
                 this.laser.x > this.boardMaxX ||
@@ -293,7 +335,6 @@ export default class Game5 extends Phaser.Scene {
     
     startEndGame(){
         this.gameOver = true;
-
         this.stopTimer = this.time.addEvent({
             delay: 1500, // tiempo de espera
             callback: () => 
@@ -301,15 +342,23 @@ export default class Game5 extends Phaser.Scene {
                 this.EndGame();
             }
         });
-        
     }
 
-    EndGame(){
-        if (this.gameOver){
-            this.scene.start("GameSelectorMenu");
-            const currentDayIndex = this.gameState.currentDay - 1; 
-            this.gameState.minigamesResults.Game5[currentDayIndex] = 'victoria';
+    EndGame() {
+        let result;
+        if(this.gameTime <= 0 && !this.gameOver) {
+            result = 'derrota';
         }
+
+        if (this.gameTime > 0 && this.gameOver) {
+            result = 'victoria';
+        }
+        
+        console.log(result);
+
+        const currentDayIndex = this.gameState.currentDay - 1; 
+        this.gameState.minigamesResults.Game5[currentDayIndex] = result;
+        this.scene.start("GameSelectorMenu");
     }
     
     createButton(text, x, y, textColor) {
