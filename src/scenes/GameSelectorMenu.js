@@ -336,7 +336,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
             textCode = `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`
         }
 
-        
+        this.createInfoText(textCode);
 
         // Boton para pasar al siguiente día
         this.nextDayButton = this.add.text(this.cameras.main.width - 100, 30, 'Dormir', {
