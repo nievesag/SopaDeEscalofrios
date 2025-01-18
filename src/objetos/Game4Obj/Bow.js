@@ -30,7 +30,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         this.setupInputEvents();
     }
 
-    setProjectile() {
+    setProjectile() {  //Settea el tipo de flecha dependiendo del ajuste de flechas que tenga el jugador
         const arrowType = this.arrowOrder[this.currentArrowIndex].type;
         let ArrowClass;
 
@@ -45,12 +45,12 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         this.projectile.setInteractive({ draggable: true });
     }
 
-    setupInputEvents() {
-        this.scene.input.on('dragstart', (pointer, gameObject) => {
+    setupInputEvents() { //Input del lanzamiento de la flecha
+        this.scene.input.on('dragstart', (pointer, gameObject) => {  //Comienzo de drag
             if (gameObject === this.projectile) this.isDragging = true;
         });
 
-        this.scene.input.on('drag', (pointer, gameObject, dragX, dragY) => {
+        this.scene.input.on('drag', (pointer, gameObject, dragX, dragY) => { //MOvimiento mientras estas cogiendo la flecha
             if (gameObject === this.projectile && this.isDragging) {
                 const dx = dragX - this.origin.x;
                 const dy = dragY - this.origin.y;
@@ -69,14 +69,14 @@ export default class Bow extends Phaser.GameObjects.Sprite {
             }
         });
 
-        this.scene.input.on('dragend', (pointer, gameObject) => {
+        this.scene.input.on('dragend', (pointer, gameObject) => { //Cuando suelta la flecha
             if (gameObject === this.projectile && this.isDragging) {
                 this.isDragging = false;
                 this.launchProjectile();
             }
         });
 
-        this.scene.input.keyboard.on('keydown-E', () => {
+        this.scene.input.keyboard.on('keydown-E', () => {  //Input del efecto de las flechas especiales
             if (this.projectile && this.hasBeenLaunched) {
                 // Si la flecha es de tipo SplitArrow
                 if (this.projectile instanceof SplitArrow) {
@@ -90,7 +90,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         });
     }
 
-    launchProjectile() {
+    launchProjectile() {  //Lanzamiento de la flecha
         const distance = Phaser.Math.Distance.Between(this.origin.x, this.origin.y, this.projectile.x, this.projectile.y);
         const power = Phaser.Math.Clamp((distance / this.maxStretch) * this.maxPower, this.minPower, this.maxPower);
 
@@ -125,6 +125,7 @@ export default class Bow extends Phaser.GameObjects.Sprite {
         });
     }
 
+    //Getter del tipo de flecha actual
     getCurrentArrowType() {
         return this.arrowOrder[this.currentArrowIndex].type;
     }

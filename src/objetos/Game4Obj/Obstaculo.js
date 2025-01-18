@@ -27,7 +27,7 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
         super.preUpdate(t, dt);   
     }
 
-    breakApart() {
+    breakApart() {  //efecto de cuando se destruye un obstaculo
         this.setVisible(false); 
         this.body.destroy(); 
 
@@ -65,7 +65,7 @@ export default class Obstaculo extends Phaser.Physics.Arcade.Sprite {
         this.destroy();
     }
 
-    checkCollisionWithArrowObs(scene, arrow) 
+    checkCollisionWithArrowObs(scene, arrow)   //Colision de flecha con obstaculos
     {
        
         if (this.isDead) 

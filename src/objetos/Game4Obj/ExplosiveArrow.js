@@ -8,7 +8,7 @@ export default class ExplosiveArrow extends Arrow {
     }
 
     
-    handleCollision(obstacle) {
+    handleCollision(obstacle) {  //Gestiona la explosion de la flecha explosiva
       
         this.body.setVelocity(0);
         this.body.setAllowGravity(false);
@@ -20,7 +20,7 @@ export default class ExplosiveArrow extends Arrow {
     }
 
  
-    explode() {
+    explode() {  //Efecto de la explosion de la flecha
         const explosionRadius = 120; 
         
         const obstaclesToDestroy = this.scene.obstaclePool.filter(obstacle => {
@@ -45,7 +45,7 @@ export default class ExplosiveArrow extends Arrow {
     }
 
 
-    explosionAnim() {
+    explosionAnim() { //Animacion de explosion
         const explosionSprite = this.scene.add.sprite(this.x, this.y, 'explosion'); 
         explosionSprite.setScale(0.5); 
 

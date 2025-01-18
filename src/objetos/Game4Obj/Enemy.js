@@ -39,7 +39,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         super.preUpdate(t, dt);   
     }
 
-    checkCollisionWithArrow(scene, arrow) {
+    checkCollisionWithArrow(scene, arrow) { //Colisiones del enemigo con flecha
         if (this.isDead) {
             return false;
         }

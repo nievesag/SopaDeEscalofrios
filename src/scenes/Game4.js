@@ -174,7 +174,7 @@ export default class Game4 extends Phaser.Scene {
                 }
             });
             
-
+            //Actualiza la rotacion de la flecha
             if (this.bow && this.bow.projectile) {
                 this.bow.projectile.updateRotation();
             }
@@ -189,7 +189,7 @@ export default class Game4 extends Phaser.Scene {
     }
 
 
-    createObstacles() {
+    createObstacles() { //Crea los obstaculos dependiendo del dia
 
         this.obstaclePool = [];
 
@@ -242,7 +242,7 @@ export default class Game4 extends Phaser.Scene {
        
     }
 
-    createEnemies() {
+    createEnemies() { //Crea lso enemigos dependiendo del dia
 
         this.enemiesPool = [];
 
@@ -262,7 +262,7 @@ export default class Game4 extends Phaser.Scene {
        
     }
 
-    createButton(text, x, y, textColor, fontsize, sceneName) {
+    createButton(text, x, y, textColor, fontsize, sceneName) { //Crea un boton
         let button = this.add.text(
            x,
            y,
@@ -291,7 +291,7 @@ export default class Game4 extends Phaser.Scene {
         });
     }
 
-    endLevel()
+    endLevel() //Metodo que gestiona el final del nivel
     {
         let result;
         let finish = 0; //Ni gana ni pierde
@@ -323,7 +323,7 @@ export default class Game4 extends Phaser.Scene {
         }
     }
 
-    createInfoTexts()
+    createInfoTexts() //Crea los textos de informacion(tipo de flecha, enemigos restantes, flechas restantes)
     {
           this.enemiesText = this.add.text(10, 10, `Enemigos restantes: ${this.enemiesPool.length}`, {
             fontFamily: 'yatra',
@@ -346,7 +346,7 @@ export default class Game4 extends Phaser.Scene {
     }
 
 
-    updateInfoTexts() {
+    updateInfoTexts() {  //Actualiza la informacion de los textos conforme avanza el minijuego
 
         this.enemiesText.setText(`Enemigos restantes: ${this.enemiesPool.length - this.enemiesCounter}`);
         this.arrowsText.setText(`Flechas restantes: ${this.bow.totalArrows}`);
@@ -355,13 +355,14 @@ export default class Game4 extends Phaser.Scene {
     }
 
 
-    setDifficulty() {
+    setDifficulty() //Ajusta la dificulad dandote un determinado numero de flechas dependiendo del dia
+    {
 
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
               
-                { type: 'Normal', count: 5 },
+                //{ type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 2 },
                 { type: 'Ball Arrow', count: 5 },
                 { type: 'Split Arrow', count: 2 }

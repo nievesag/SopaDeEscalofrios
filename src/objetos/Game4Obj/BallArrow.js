@@ -6,7 +6,7 @@ export default class BallArrow extends Arrow {
         this.type = 'ball';  
     }
 
-    transformToBall() {
+    transformToBall() {  //Transofrma la pelota en una bola que rebota
 
         console.log(this.scene);
        
@@ -25,37 +25,26 @@ export default class BallArrow extends Arrow {
 
      
         this.arrowBall = this.scene.add.sprite(posX, posY, 'bola'); 
-        this.arrowBall.setScale(0.5); 
-        //this.arrowBall.setFillStyle(0x740101);  
-        // this.arrowBall.setSize(80, 80);  
-        // this.arrowBall.body.setCircle(100);  
+        this.arrowBall.setScale(0.5);  
         this.scene.physics.world.enable(this.arrowBall);
         this.arrowBall.body.setCircle(150); 
         this.arrowBall.body.setBounce(1);  
 
-     
-
-      
-
 
         this.arrowBall.body.setCollideWorldBounds(true);
-
-      
         this.arrowBall.body.setVelocity(velX, velY);
         this.arrowBall.setRotation(auxAngle);
 
-        // this.scene.physics.add.collider(this.arrowBall, this.scene.ground, () => {
-        //    // this.arrowBall.body.setVelocityX(0); 
-        //     this.arrowBall.body.setVelocityY(0); 
-        // });
 
-        this.scene.physics.add.collider(this.arrowBall, this.scene.ground);
+        this.scene.physics.add.collider(this.arrowBall, this.scene.ground);  //Colision con el suelo
     
-        this.scene.enemiesPool.forEach(enemy => {
+        this.scene.enemiesPool.forEach(enemy => {  //Colisiones con los enemigos
             enemy.checkCollisionWithArrow(this, this.arrowBall);
 
         });
 
+
+        //Colisiones con los obstaculos
         this.scene.physics.add.collider(this.arrowBall, this.scene.obstaclePool, (arrowBall, obstacle) => {
             const bounceFactor = 2; // Factor de rebote personalizado
             const newVelX = arrowBall.body.velocity.x * bounceFactor;
@@ -65,6 +54,8 @@ export default class BallArrow extends Arrow {
     
         this.scene.activeArrowsPool.push(this.arrowBall);
 
+
+        //Se destruye a los 4 segundos de lanzarla
         this.scene.time.delayedCall(4000, () => {
             if (this.arrowBall) {
                 this.arrowBall.destroy(); 
