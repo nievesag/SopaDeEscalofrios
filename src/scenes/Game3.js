@@ -181,9 +181,6 @@ export default class Game3 extends Phaser.Scene
         gameOverLine.body.setImmovable(true); // No se moverá
         gameOverLine.body.setAllowGravity(false); // No tendrá gravedad
 
-        //Boton SALIR
-        //this.createButton('Exit',  100, 200, 'white', 30, 'GameSelectorMenu');
-
         // --- PLAYER ---.
         this.player = new Player(this, 500, 730);
         // Línea de input
@@ -220,6 +217,8 @@ export default class Game3 extends Phaser.Scene
         {
             //Paramos el pitidito
             this.beep.stop();
+            //Bloquea el input para que no se pueda mover el escarabajo en el aire
+            this.input.mouse.enabled = false;
             //Disparamos
             this.player.shoot(this.shootingBeetle);
             // --- COLISIONES CON BORDERS ---.
@@ -346,7 +345,8 @@ export default class Game3 extends Phaser.Scene
                             this.shootingBeetle.selfDestroy();
                             //Ya no hay escarabajo pululando por ahí
                             this.level.freeBeetle = false;
-        
+                            //Volvemos a activar el input
+                            this.input.mouse.enabled = true;
                             //Creamos el siguiente bicho  
                             this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 28).setDepth(5).setScale(1.25);
                             //Destruir vecinos contiguos
@@ -446,18 +446,6 @@ export default class Game3 extends Phaser.Scene
         if (this.points >= this.victory){
             //Victoria
             this.endGame(true);
-        }
-    }
-
-    quitarVoladoras()
-    {
-        // ACOPLAR LANZADO A LVL
-        for (let j = 0; j < this.level.fils; j++)
-        {
-            for (let i = 0; i < this.level.cols; i++) 
-            {
-                if()
-            }
         }
     }
 
@@ -571,6 +559,7 @@ export default class Game3 extends Phaser.Scene
     }
 
 }
+
 
 /*
 Fuentes: 
