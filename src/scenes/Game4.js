@@ -363,7 +363,7 @@ export default class Game4 extends Phaser.Scene {
               
                 { type: 'Normal', count: 5 },
                 { type: 'Explosive Arrow', count: 2 },
-                { type: 'Ball Arrow', count: 2 },
+                { type: 'Ball Arrow', count: 5 },
                 { type: 'Split Arrow', count: 2 }
 
             ]);
