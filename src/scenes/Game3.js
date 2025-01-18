@@ -524,7 +524,8 @@ export default class Game3 extends Phaser.Scene
     }
 
     endGame(finish){
-
+        //Vuelve a activar el input
+        this.input.mouse.enabled = true;
         let result; 
         let mode = -1;
         //Victoria, alcanzar this.victory puntos
