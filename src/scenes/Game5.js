@@ -120,36 +120,17 @@ export default class Game5 extends Phaser.Scene {
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
           .setOrigin(0.5, 0.5)
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
-          
-        /*// Música.
-        this.music = this.sound.add('theme2');
-        this.music.play();
-        this.sound.pauseOnBlur = true;
-
-        // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
 
         // --- CONTROL DE TIEMPO PARA PODER PERDER ---
         this.gameTime = 20; 
 
         this.timerText = this.add.text(
-            20, 
-            20, 
+            30, 
+            30, 
             this.gameTime,
             { 
                 fontFamily: 'yatra', 
-                fontSize: 15, 
+                fontSize: 30, 
                 color: 'White' 
             }).setOrigin(0.5, 0.5);
             
@@ -229,9 +210,6 @@ export default class Game5 extends Phaser.Scene {
 
         this.caunter;
         this.mirrorCaunter();
-
-        // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MAIN MENU',  50,  this.cameras.main.height - 50, 'white');
     }
 
     timerHUD() {
@@ -241,8 +219,8 @@ export default class Game5 extends Phaser.Scene {
 
             if(this.gameTime > 0) {
                 // crea texto nuevo
-                this.timerText = this.add.text(20, 20, this.gameTime,
-                    { fontFamily: 'yatra', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+                this.timerText = this.add.text(30, 30, this.gameTime,
+                    { fontFamily: 'yatra', fontSize: 30, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
 
@@ -346,11 +324,13 @@ export default class Game5 extends Phaser.Scene {
 
     EndGame() {
         let result;
-        if(this.gameTime <= 0 && !this.gameOver) {
+        let victory = this.gameTime > 0 && this.gameOver;
+        let defeat = this.gameTime <= 0 && !this.gameOver;
+        if(defeat) {
             result = 'derrota';
         }
 
-        if (this.gameTime > 0 && this.gameOver) {
+        if (victory) {
             result = 'victoria';
         }
         
@@ -358,117 +338,16 @@ export default class Game5 extends Phaser.Scene {
 
         const currentDayIndex = this.gameState.currentDay - 1; 
         this.gameState.minigamesResults.Game5[currentDayIndex] = result;
-        this.scene.start("GameSelectorMenu");
-    }
-
-    pantallaResultado(finish)
-    {
-        //La imagen del final
-        let endImage;
-        //El mensaje que aparece abajo
-        let cartaEnviada;
-
-        //Si ha ganado, se envía la carta
-        if (finish == 1) 
-        {
-            endImage = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 1, // anchura
-                    y: 1.1, // altura
-                },
-                key: 'Enviada',
-            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
-    
-            cartaEnviada = this.add.text( 
-                this.cameras.main.centerX - 200,
-                this.cameras.main.centerY - 250,
-                'Carta correctamente enviada \n ¿Regresar?',
-                {
-                    fontSize: '30px',
-                    color: '#bbb8b1',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                }
-            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
+        
+        // ENDLEVEL.
+        let mode;
+        if(victory){
+            mode = 0;
+            this.scene.start('EndLevel', {mode: mode});
         }
-        //Si no se ha enviado
-        else if (finish == 2)
-        {
-            endImage = this.make.image({
-                x: this.cameras.main.centerX, // x
-                y: this.cameras.main.centerY, // y
-                scale:{
-                    x: 1, // anchura
-                    y: 1.1, // altura
-                },
-                key: 'NoEnviada',
-            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);
-    
-            cartaEnviada = this.add.text( 
-                this.cameras.main.centerX - 200,
-                this.cameras.main.centerY - 250, 
-                'Has fallado en tu cometido. \n La carta no se ha enviado \n ¿Regresar?',
-                {
-                    fontSize: '30px',
-                    color: '#bbb8b1',
-                    align: 'center',
-                    fontFamily: 'yatra',
-                }
-            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
+        else if(defeat){
+            mode = 1;
+            this.scene.start('EndLevel', {mode: mode});
         }
-
-        if (finish != 0)
-        {
-            cartaEnviada.on('pointerdown', ()=>{
-                // Destruye todo y vuelve al menu principal
-                endImage.destroy();
-                cartaEnviada.destroy();
-                this.scene.start('GameSelectorMenu');
-            });
-    
-            cartaEnviada.on('pointerover', () => // Al pasar el ratón por encima...
-            {
-                cartaEnviada.setColor('#0032c3');
-            });
-    
-            cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
-            {
-                cartaEnviada.setColor('#bbb8b1');
-            });
-        }
-
-    }
-    
-    createButton(text, x, y, textColor) {
-        let button = this.add.text(
-           x,
-           y,
-            text,
-            {
-                fontFamily: 'yatra',
-                fontSize: 40,
-
-                color: textColor
-            }
-        ).setOrigin(0, 0);
-
-        button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
-        });
-
-        button.on('pointerover', () => // Al pasar el ratón por encima...
-        {
-            button.setTint(0xdfa919);
-            //button.fontSize = '70px';
-        });
-    
-        button.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            button.clearTint();
-            //button.fontSize = '50px';
-        });
     }
 }
