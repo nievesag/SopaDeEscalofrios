@@ -404,7 +404,9 @@ export default class GameSelectorMenu extends Phaser.Scene {
         });
     }
 
-    createText()
+    createText(){
+        
+    }
 
 	createButton(text, x, y, textColor, fontsize, sceneName) {
         let button = this.add.text(
