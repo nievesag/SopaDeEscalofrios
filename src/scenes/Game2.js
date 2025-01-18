@@ -327,6 +327,7 @@ export default class Game2 extends Phaser.Scene {
             let result;
             if (this.winCondition) {
                 console.log("victoria");
+                alert('Has obtenido el logro ' + this.gameState.logros.Game2[this.gameState.currentDay - 1] + ' por enviarle una carta a Nun el día ' + this.gameState.currentDay);
                 result = 'victoria';
             }
             else
