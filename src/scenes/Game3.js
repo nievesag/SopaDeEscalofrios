@@ -535,7 +535,7 @@ export default class Game3 extends Phaser.Scene
         let cartaEnviada;
 
         //Si ha ganado, se envía la carta
-        if (finish) 
+        if (finish == 1) 
         {
             endImage = this.make.image({
                 x: this.cameras.main.centerX, // x
@@ -545,7 +545,7 @@ export default class Game3 extends Phaser.Scene
                     y: 1.1, // altura
                 },
                 key: 'Enviada',
-            }).setDepth(10);
+            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
     
             cartaEnviada = this.add.text( 
                 this.cameras.main.centerX - 200,
@@ -557,10 +557,10 @@ export default class Game3 extends Phaser.Scene
                     align: 'center',
                     fontFamily: 'yatra',
                 }
-            ).setOrigin(0.5).setDepth(11).setInteractive();
+            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
         }
         //Si no se ha enviado
-        else
+        else if (finish == 2)
         {
             endImage = this.make.image({
                 x: this.cameras.main.centerX, // x
@@ -570,7 +570,7 @@ export default class Game3 extends Phaser.Scene
                     y: 1.1, // altura
                 },
                 key: 'NoEnviada',
-            }).setDepth(10);
+            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);
     
             cartaEnviada = this.add.text( 
                 this.cameras.main.centerX - 200,
@@ -582,25 +582,29 @@ export default class Game3 extends Phaser.Scene
                     align: 'center',
                     fontFamily: 'yatra',
                 }
-            ).setOrigin(0.5).setDepth(11).setInteractive();
+            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
         }
 
-        cartaEnviada.on('pointerdown', ()=>{
-            // Destruye todo y vuelve al menu principal
-            endImage.destroy();
-            cartaEnviada.destroy();
-            this.scene.start('GameSelectorMenu');
-        });
-
-        cartaEnviada.on('pointerover', () => // Al pasar el ratón por encima...
+        if (finish != 0)
         {
-            cartaEnviada.setColor('#0032c3');
-        });
+            cartaEnviada.on('pointerdown', ()=>{
+                // Destruye todo y vuelve al menu principal
+                endImage.destroy();
+                cartaEnviada.destroy();
+                this.scene.start('GameSelectorMenu');
+            });
+    
+            cartaEnviada.on('pointerover', () => // Al pasar el ratón por encima...
+            {
+                cartaEnviada.setColor('#0032c3');
+            });
+    
+            cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
+            {
+                cartaEnviada.setColor('#bbb8b1');
+            });
+        }
 
-        cartaEnviada.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            cartaEnviada.setColor('#bbb8b1');
-        });
     }
 
     // --- DIFICULTAD ---.

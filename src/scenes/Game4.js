@@ -327,7 +327,7 @@ export default class Game4 extends Phaser.Scene {
                     y: 1.1, // altura
                 },
                 key: 'Enviada',
-            }).setDepth(10);
+            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
     
             cartaEnviada = this.add.text( 
                 this.cameras.main.centerX - 200,
@@ -339,7 +339,7 @@ export default class Game4 extends Phaser.Scene {
                     align: 'center',
                     fontFamily: 'yatra',
                 }
-            ).setOrigin(0.5).setDepth(11).setInteractive();
+            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
         }
         //Si no se ha enviado
         else if (finish == 2)
@@ -352,7 +352,7 @@ export default class Game4 extends Phaser.Scene {
                     y: 1.1, // altura
                 },
                 key: 'NoEnviada',
-            }).setDepth(10);
+            }).setDepth(10).setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);
     
             cartaEnviada = this.add.text( 
                 this.cameras.main.centerX - 200,
@@ -364,7 +364,7 @@ export default class Game4 extends Phaser.Scene {
                     align: 'center',
                     fontFamily: 'yatra',
                 }
-            ).setOrigin(0.5).setDepth(11).setInteractive();
+            ).setDepth(11).setInteractive().setPosition(this.cameras.main.centerX, this.cameras.main.centerY).setOrigin(0.5).setScale(1, 1.1);;
         }
 
         if (finish != 0)
