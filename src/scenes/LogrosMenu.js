@@ -57,7 +57,7 @@ export default class LogrosMenu extends Phaser.Scene {
     }
 
     savelogrosEnd() {
-        let logroLengthArray = [
+        /*let logroLengthArray = [
             this.gameState.logros1, 
             this.gameState.logros2, 
             this.gameState.logros3, 
@@ -68,6 +68,27 @@ export default class LogrosMenu extends Phaser.Scene {
         for(var i = 0; i < logroLengthArray.length; i++){
             for(var j = 0; j < logroLengthArray[i].length; j++)
             logrosEnd.push(logroLengthArray[i][j])
+        }*/
+
+        // logros 1
+        for(var i = 0; i < this.gameState.logros1.length; i++){
+            logrosEnd.push(this.gameState.logros1[i]);
+        }
+        // logros 2
+        for(var i = 0; i < this.gameState.logros2.length; i++){
+            logrosEnd.push(this.gameState.logros2[i]);
+        }
+        // logros 3
+        for(var i = 0; i < this.gameState.logros3.length; i++){
+            logrosEnd.push(this.gameState.logros3[i]);
+        }
+        // logros 4
+        for(var i = 0; i < this.gameState.logros4.length; i++){
+            logrosEnd.push(this.gameState.logros4[i]);
+        }
+        // logros 5
+        for(var i = 0; i < this.gameState.logros5.length; i++){
+            logrosEnd.push(this.gameState.logros5[i]);
         }
     }
 
