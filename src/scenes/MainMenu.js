@@ -11,8 +11,6 @@ export default class MainMenu extends Phaser.Scene {
 
         // Botones
         this.createButton('JUGAR',  this.cameras.main.width -100,  this.cameras.main.scrollY + 50, '#735500');
-        
-
     }
 
 	createButton(text, x, y, textColor) {
@@ -44,5 +42,4 @@ export default class MainMenu extends Phaser.Scene {
             button.setColor('#735500');
         });
     }
-
-  }
+}

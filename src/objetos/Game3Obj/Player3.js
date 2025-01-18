@@ -1,5 +1,3 @@
-import Beetle from './Beetle.js';
-
 export default class Player3 extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto
@@ -14,17 +12,9 @@ export default class Player3 extends Phaser.GameObjects.Sprite
     this.y = y; //Pos en y
     this.angle = 90; //Angulo de disparo
     this.scale = 0.3;
-    //this.speed = 1000; //Esto al bicho
-
-    //Tiempos relativos al disparo
-    this.shotTime = 0;  // Tiempo para disparar
-    this.lastShotTime = 0;  // Tiempo del último disparo
-    this.shootCooldown = 1000;  // Cooldown en milisegundos
 
     //Textura del sprite
     this.setTexture('player3').setDepth(2);
-
-    this.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
   }
   
   //Dispara en la dirección del input

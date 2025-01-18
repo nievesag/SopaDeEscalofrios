@@ -157,25 +157,6 @@ export default class Game3 extends Phaser.Scene
         this.beep.play();
         //Cronómetro del lanzamiento
         this.updateTime();
-
-        /*// --- MUSIC ---.
-        this.music = this.sound.add('theme3');
-        this.music.play();
-        this.sound.pauseOnBlur = true;
-
-        // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
     
         // --- BACKGROUND ---.
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
@@ -199,9 +180,6 @@ export default class Game3 extends Phaser.Scene
         this.physics.world.enable(gameOverLine);
         gameOverLine.body.setImmovable(true); // No se moverá
         gameOverLine.body.setAllowGravity(false); // No tendrá gravedad
-
-        //Boton SALIR
-        //this.createButton('Exit',  100, 200, 'white', 30, 'GameSelectorMenu');
 
         // --- PLAYER ---.
         this.player = new Player(this, 500, 730);
@@ -239,6 +217,8 @@ export default class Game3 extends Phaser.Scene
         {
             //Paramos el pitidito
             this.beep.stop();
+            //Bloquea el input para que no se pueda mover el escarabajo en el aire
+            this.input.mouse.enabled = false;
             //Disparamos
             this.player.shoot(this.shootingBeetle);
             // --- COLISIONES CON BORDERS ---.
@@ -365,7 +345,8 @@ export default class Game3 extends Phaser.Scene
                             this.shootingBeetle.selfDestroy();
                             //Ya no hay escarabajo pululando por ahí
                             this.level.freeBeetle = false;
-        
+                            //Volvemos a activar el input
+                            this.input.mouse.enabled = true;
                             //Creamos el siguiente bicho  
                             this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 28).setDepth(5).setScale(1.25);
                             //Destruir vecinos contiguos

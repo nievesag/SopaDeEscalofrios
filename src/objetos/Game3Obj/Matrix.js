@@ -1,5 +1,3 @@
-import MatrixBeetle from './MatrixBeetle.js';
-
 export default class Matrix extends Phaser.GameObjects.Sprite
 {
   //Constructora del objeto

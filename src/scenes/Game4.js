@@ -108,16 +108,12 @@ export default class Game4 extends Phaser.Scene {
         });
     }
 
-    startGame(){
+    startGame() {
       
-          // Background
-          this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
-          .setOrigin(0.5, 0.5)
-          .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
-
-         // --- BOTON VOLVER A MAIN MENU ---
-         //this.createButton('MAIN MENU',  900,  70, 'white', 30, 'GameSelectorMenu');
-
+        // Background
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg1')
+        .setOrigin(0.5, 0.5)
+        .setDisplaySize(this.cameras.main.width, this.cameras.main.height); 
 
         // Crear el suelo invisible en la parte inferior de la pantalla
         const groundHeight = 50; // Altura del suelo invisible
@@ -130,15 +126,12 @@ export default class Game4 extends Phaser.Scene {
         this.ground.setOrigin(0.5, 0.5);
         this.ground.setVisible(false); 
 
-       
         this.physics.world.enable(this.ground);
         this.ground.body.setImmovable(true); 
         this.ground.body.setAllowGravity(false); 
 
-    
         this.setDifficulty();
 
-      
         this.createEnemies();
         this.createObstacles();
 
@@ -152,7 +145,6 @@ export default class Game4 extends Phaser.Scene {
 
         this.createInfoTexts();
     }
-
 
     update()
     {
@@ -182,12 +174,8 @@ export default class Game4 extends Phaser.Scene {
             this.updateInfoTexts();
 
             this.endLevel();
-
-         
         }
-        
     }
-
 
     createObstacles() { //Crea los obstaculos dependiendo del dia
 
@@ -237,13 +225,9 @@ export default class Game4 extends Phaser.Scene {
                 leftObstacle2, rightObstacle2, topObstacle2,
                 topObstacle3, leftObstacle3, rightObstacle3, topObstacle4);
         }
-
-
-       
     }
 
     createEnemies() { //Crea lso enemigos dependiendo del dia
-
         this.enemiesPool = [];
 
         if(this.gameState.currentDay == 5)
@@ -259,7 +243,6 @@ export default class Game4 extends Phaser.Scene {
             const enemy3 = new Enemy(this, 725, 530, 'lion');
             this.enemiesPool.push(enemy1, enemy2, enemy3);
         }
-       
     }
 
     createButton(text, x, y, textColor, fontsize, sceneName) { //Crea un boton
@@ -346,7 +329,6 @@ export default class Game4 extends Phaser.Scene {
         });
     }
 
-
     updateInfoTexts() {  //Actualiza la informacion de los textos conforme avanza el minijuego
 
         this.enemiesText.setText(`Enemigos restantes: ${this.enemiesPool.length - this.enemiesCounter}`);
@@ -355,10 +337,8 @@ export default class Game4 extends Phaser.Scene {
             this.arrowTypeText.setText(`Tipo de flecha: ${this.bow.getCurrentArrowType()}`);
     }
 
-
     setDifficulty() //Ajusta la dificulad dandote un determinado numero de flechas dependiendo del dia
     {
-
         if(this.gameState.currentDay == 1 || this.gameState.currentDay == 2)
         {
             this.bow = new Bow(this, 150, 600, [
