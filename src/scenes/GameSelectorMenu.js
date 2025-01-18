@@ -324,27 +324,19 @@ export default class GameSelectorMenu extends Phaser.Scene {
         this.createIcon('Icon5', this.cameras.main.centerX - 7, this.cameras.main.centerY - 50, 'Game5');
 
         this.infoText;
+        let textCode;
+        let genericTextCode = `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`
         if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) {
-            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} cartas`, {
-                fontFamily: 'yatra',
-                fontSize: '24px',
-                color: '#ffffff',
-            });
+            textCode = genericTextCode +'s';
         }
         else if(gameState.actionsLeft == 1) {
-            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`, {
-                fontFamily: 'yatra',
-                fontSize: '24px',
-                color: '#ffffff',
-            });
+            textCode = genericTextCode;
         }
         else {
-            this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`, {
-                fontFamily: 'yatra',
-                fontSize: '24px',
-                color: '#ffffff',
-            });
+            textCode = `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`
         }
+
+        
 
         // Boton para pasar al siguiente día
         this.nextDayButton = this.add.text(this.cameras.main.width - 100, 30, 'Dormir', {
@@ -404,8 +396,8 @@ export default class GameSelectorMenu extends Phaser.Scene {
         });
     }
 
-    createInfoText(key){
-        this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`, {
+    createInfoText(textCode){
+        this.infoText = this.add.text(10, 10, textCode, {
             fontFamily: 'yatra',
             fontSize: '24px',
             color: '#ffffff',
