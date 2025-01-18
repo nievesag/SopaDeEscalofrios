@@ -9,7 +9,7 @@ export default class ShootingBeetle extends Beetle
     this.setDisplaySize(40, 40);
     this.setOrigin(0, 0); 
 
-    this.speed = 1000;
+    this.speed = 500;
 
     this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
     this.body.setBounce(1); // rebote con colisiones.

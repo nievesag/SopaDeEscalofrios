@@ -217,8 +217,8 @@ Para activar el efecto especial de cada flecha mágica hay que pulsar la tecla E
 
 - **Tipos de flechas:**
   - **Flecha triple:** Se multiplica en 3 flechas.
-  - **Flecha expansiva:** Su efecto es convertirse en una bola gigante.
-  - **Flecha explosiva:** Causa una explosión en área.
+  - **Flecha expansiva:** Su efecto es convertirse en una bola gigante que rebota por el mapa.
+  - **Flecha explosiva:** Causa una explosión en área, afecta solo a obstáculos.
 
 #### 5.4.4. Coleccionables
 - **Primer día:** «Flecha», punta de flecha destrozada.

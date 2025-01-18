@@ -182,7 +182,7 @@ export default class Game3 extends Phaser.Scene
         gameOverLine.body.setAllowGravity(false); // No tendrá gravedad
 
         // --- PLAYER ---.
-        this.player = new Player(this, 500, 730);
+        this.player = new Player(this, 500, 775);
         // Línea de input
         const graphics = this.add.graphics({ lineStyle: { width: 10, color: 0xffffff , alpha: 0.5 } });
         const line = new Phaser.Geom.Line(); 
