@@ -327,7 +327,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
         let textCode;
         let genericTextCode = `DÍA: ${gameState.currentDay} - Aún puedes escribir ${gameState.actionsLeft} carta`
         if(gameState.actionsLeft > 0 && gameState.actionsLeft != 1) {
-            textCode = genericTextCode +'s';
+            textCode = genericTextCode + 's';
         }
         else if(gameState.actionsLeft == 1) {
             textCode = genericTextCode;
@@ -481,7 +481,13 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
    saveEndResults(){
 
-        let endResultsArray = [
+    gameState.endResults.Game1 = gameState.minigamesResults.Game1;
+        gameState.endResults.Game2 = gameState.minigamesResults.Game2;
+        gameState.endResults.Game3 = gameState.minigamesResults.Game3;
+        gameState.endResults.Game4 = gameState.minigamesResults.Game4;
+        gameState.endResults.Game5 = gameState.minigamesResults.Game5;
+
+        /*let endResultsArray = [
             gameState.endResults.Game1,
             gameState.endResults.Game2,
             gameState.endResults.Game3,
@@ -499,7 +505,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
 
         for(var i = 0; i < endResultsArray.length; i++){
             endResultsArray[i] = minigamesResultsArray[i];
-        }
+        }*/
    }
 
    resetGame() {
