@@ -138,7 +138,15 @@ export default class LogrosMenu extends Phaser.Scene {
     }
 
     resetLogros() {
-        let logroLengthArray = [
+
+        this.gameState.logros1 = [];
+        this.gameState.logros2 = [];
+        this.gameState.logros3 = [];
+        this.gameState.logros4 = [];
+        this.gameState.logros5 = [];
+        logrosEnd = [];
+
+        /*let logroLengthArray = [
             this.gameState.logros1, 
             this.gameState.logros2, 
             this.gameState.logros3, 
@@ -147,7 +155,7 @@ export default class LogrosMenu extends Phaser.Scene {
         ];
 
         for(var i = 0; i < logroLengthArray.length; i++) logroLengthArray[i] = [];
-        logrosEnd = [];
+        logrosEnd = [];*/
 
 
         this.gameState.endResults = {
