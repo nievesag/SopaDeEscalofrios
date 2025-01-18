@@ -275,7 +275,6 @@ export default class Game2 extends Phaser.Scene {
                         delay: 2000, // espera 2 segs.
                         callback: () => 
                         {
-
                             this.gameOver(); // se nos ha jodio la flesbos.
                         }
                     });
@@ -313,8 +312,6 @@ export default class Game2 extends Phaser.Scene {
                 result = 'derrota';
             }
 
-            
-
             if (result) {
                 const currentDayIndex = this.gameState.currentDay - 1; 
                 this.gameState.minigamesResults.Game3[currentDayIndex] = result;
@@ -330,7 +327,6 @@ export default class Game2 extends Phaser.Scene {
                 mode = 1;
                 this.scene.start('EndLevel', {mode: mode});
             }
-
             /*let gameOverBg = this.make.image({
                 x: this.cameras.main.centerX, // x
                 y: this.cameras.main.centerY + 50, // y
@@ -372,39 +368,6 @@ export default class Game2 extends Phaser.Scene {
 
             this.buttonMainMenu.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 100).setFontSize(40).setVisible(true);
 */
-            
         }
     }
-
-    destroyAll(){ // elimina todos los objetos del juego.
-        if(this.landscape)
-        {
-            this.landscape.destroy();
-            this.landscape = null; // limpia referencia.
-        } 
-
-        if(this.cannon)
-        {
-            this.cannon.destroy();
-            this.cannon = null;
-        } 
-
-        if(this.vessel)
-        {
-            this.vessel.destroy();
-            this.vessel = null;
-        } 
-
-        if(this.obstacleGen)
-        {
-            let items = this.obstacleGen.obsGroup.getChildren(); // saca los items de dentro.
-
-            for(let i = 0; i < items.length; i++){
-            items[i].destroy();
-            }
-            this.obstacleGen.obsGroup.clear(true, true); // limpia el grupo (objetos, referencias).
-            this.obstacleGen.destroy();
-        } 
-    }
-    
 }
