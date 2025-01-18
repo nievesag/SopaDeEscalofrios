@@ -114,14 +114,11 @@ export default class Game5 extends Phaser.Scene {
         });
     }
 
-
-    startGame(){
+    startGame() {
 
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
           .setOrigin(0.5, 0.5)
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
-
-        
 
         // Los tableros contienen una array de array. 
         // La primera fila de cada tablero solo tiene dos numero que representan:
@@ -232,7 +229,6 @@ export default class Game5 extends Phaser.Scene {
             callback: updateTimer,
             callbackScope: this
         });
-
     }
 
     getDirection(number) {
