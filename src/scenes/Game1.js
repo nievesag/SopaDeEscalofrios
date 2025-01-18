@@ -20,13 +20,12 @@ export default class Game1 extends Phaser.Scene {
         this.load.tilemapTiledJSON('tilemap2', './assets/tilemap/map2.json');
         // -- mapa 3
         this.load.tilemapTiledJSON('tilemap3', './assets/tilemap/map3.json');
-
-        // Música
-        this.load.audio('theme1', './assets/audio/m1c.mp3');
     }
     
     create () {
         this.cameras.main.setBackgroundColor(0x181818);
+
+        console.log(this.gameState);
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[0]){
             this.gameState.hasStartedBefore[0] = true; // ala ya ha salio el tutorial.
@@ -172,7 +171,7 @@ export default class Game1 extends Phaser.Scene {
 		// Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
         
         // --- GOAL
-        let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Organ, key: "goal" });
+        let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Goal, key: "goal" });
         this.goal = react[0]; //solo hay 1 y es el goal
         this.goal.body.immovable = true;
 		//this.react.setCollision(0, true); // Los tiles de esta capa tienen colisiones
@@ -208,6 +207,23 @@ export default class Game1 extends Phaser.Scene {
         this.physics.add.collider(this.playerG1, this.wallLayer);
         this.physics.add.collider(this.playerG1, this.organsGroup);
         this.physics.add.collider(this.playerG1, this.boxesGroup);
+        this.physics.add.collider(this.boxesGroup, this.goal);
+
+        this.boxesGroup.getChildren().forEach(obj => {
+            obj.setPlayer(this.playerG1);
+            obj.setRangeUp();
+            this.physics.add.overlap(this.playerG1, obj.range, () => {
+                obj.setTouched(true);
+            });
+        });
+
+        this.organsGroup.getChildren().forEach(obj => {
+            obj.setPlayer(this.playerG1);
+            obj.setRangeUp();
+            this.physics.add.overlap(this.playerG1, obj.range, () => {
+                obj.setTouched(true);
+            });
+        });
 
         // ---- GRAB ----
         // -- organs
@@ -327,17 +343,17 @@ export default class Game1 extends Phaser.Scene {
             //this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
             
             // -----------------------------------
-        }
+    }
         
-        timerHUD() {
-            const updateTimer = () => {
+    timerHUD() {
+        const updateTimer = () => {
             this.gameTime -= 1; // disminuye contador
             this.timerText.destroy(); // borra texto anterior
 
-            if(this.gameTime > 0) {
-                // crea texto nuevo
-                this.timerText = this.add.text(20, 20, this.gameTime,
-                    { fontFamily: 'yatra', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
+        if(this.gameTime > 0) {
+            // crea texto nuevo
+            this.timerText = this.add.text(20, 20, this.gameTime,
+                { fontFamily: 'yatra', fontSize: 15, color: 'White' }).setOrigin(0.5, 0.5);
             }
         };
 
@@ -356,7 +372,8 @@ export default class Game1 extends Phaser.Scene {
 
     update(time, dt)
     {
-        if(this.playerG1 != null) {
+        if(this.playerG1 != null && this.organsGroup != null && this.boxesGroup != null) {
+
             this.playerG1.setGrabIzq(this.playerG1.x-15, this.playerG1.y);
             this.playerG1.setGrabDer(this.playerG1.x+15, this.playerG1.y);
             this.playerG1.setGrabArr(this.playerG1.x, this.playerG1.y-15);
@@ -377,9 +394,15 @@ export default class Game1 extends Phaser.Scene {
                     obj.setisAbj(false);
                 });
             }
-        }
 
-        console.log(this.organCount);
+            this.boxesGroup.getChildren().forEach(obj => {
+                obj?.update();
+            });
+
+            this.organsGroup.getChildren().forEach(obj => {
+                obj?.update();
+            });
+        }
 
         // -- derrota
         if(this.gameTime <= 0 && this.organCount > 0) {
@@ -393,7 +416,7 @@ export default class Game1 extends Phaser.Scene {
         }
 
         // organs
-        if(this.organsGroup) {
+        if(this.organsGroup != null) {
             this.organsGroup.getChildren().forEach(obj => {
                 // le metes por la der -> mov izq
                 if(this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisS() && !this.playerG1.getisD()
@@ -419,7 +442,7 @@ export default class Game1 extends Phaser.Scene {
         }
 
         // cajas
-        if(this.boxesGroup) {
+        if(this.boxesGroup != null) {
             this.boxesGroup.getChildren().forEach(obj => {
                 // le metes por la der -> mov izq
                 if(this.playerG1.getisA() && !this.playerG1.getisW() && !this.playerG1.getisS() && !this.playerG1.getisD()
@@ -485,7 +508,7 @@ export default class Game1 extends Phaser.Scene {
     {
         let result;
         if (this.ganar) {
-            console.log("victoria");
+           // console.log("victoria");
             result = 'victoria';
         }
 
@@ -501,7 +524,16 @@ export default class Game1 extends Phaser.Scene {
 
         if(this.ganar || this.perder) {
             console.log(`Resultados hasta ahora: ${this.gameState.minigamesResults.Game1}`);
-            this.scene.start("GameSelectorMenu");
+
+            let mode;
+            if(this.ganar){
+                mode = 0;
+                this.scene.start('EndLevel', {mode: mode});
+            }
+            else if(this.perder){
+                mode = 1;
+                this.scene.start('EndLevel', {mode: mode});
+            }
         }
     }
 

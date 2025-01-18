@@ -122,7 +122,7 @@ Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sa
 
 #### 5.2.2. Mecánicas
 
-- **Lanzamiento:** El jugador tendrá la capacidad de lanzar el vaso canopo con una dirección y fuerza determinadas.
+- **Lanzamiento:** el jugador tendrá la capacidad de lanzar el vaso canopo con una dirección y fuerza determinadas.
   - La dirección se establece según la posición a la que apunte el ratón.
   - La fuerza de disparo se mide manteniendo el clic, haciendo aparecer una barra que sube y baja. Se debe soltar en el momento justo para conseguir una mayor o menor fuerza.
 - **Obstáculos que favorecen al jugador:**
@@ -131,7 +131,8 @@ Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sa
 - **Obstáculos que entorpecen al jugador:**
   - **Vorágine:** al entrar en contacto con una vorágine, esta se tragará la vasija, terminando su partida en el minijuego y parando su puntuación.
   - **Hipopótamo:**  el hipopótamo impulsará a la vasija con menor velocidad de la que traía de base.
-- **Medidor de distancia:** En la parte superior de la pantalla habrá un medidor de distancia en metros, que irá contando conforme vaya avanzando longitudinalmente el vaso.
+- **Medidor de distancia:** en la parte superior de la pantalla habrá un medidor de distancia en metros, que irá contando conforme vaya avanzando longitudinalmente el vaso.
+- **Medidor de fuerza:** en la parte superior izquierda de la pantalla habrá un medidor de la fuerza con la que se ha lanzado la vasija, indicando si ha habido más o menos de dicha fuerza.
 
 #### 5.2.3. Coleccionables
 - **Primer día:** Se obtendrá el logro «Pluma de la corona», que será una pluma de la corona de plumas de Anuket.
@@ -141,25 +142,31 @@ Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sa
 - **Quinto día:** Se obtendrá el logro «Cefalea bóvida», que será la cabeza decapitada de una gacela dorcas, como muestra máxima de gratitud por parte de la diosa Anuket cuyo símbolo consagrado es este. 
 
 #### 5.2.4. Dificultades
-- **Fácil (primer y segundo día):** La partida se compondrá de obstáculos: agua, cocodrilo,.
+- **Fácil (primer y segundo día):** La partida se compondrá de obstáculos: agua, cocodrilo.
 - **Normal (tercer y cuarto día):** La partida incluirá el hipopótamo, contando además con los obstáculos de anteriores días.
 - **Difícil (quinto día):** La partida incluirá la vorágine, contando además con los obstáculos de anteriores días.
----
+
+#### 5.2.4. Victoria y derrota
+- **Derrota**: el juego se podrá perder de dos formas, si la vasija llega al punto de pararse o si se la traga un obstáculo vorágine que aparece en la dificultad difícil del quinto día. Si se pierde se volverá al menú selector de minijuegos y no se obtendrán logros. 
+- **Victoria**: la forma de ganar el juego dependerá de la dificultad en la que se juegue. Si se gana se volverá al menú selector de minijuegos y no se obtendrá el logro correspondiente.
+  - Para ganar en la dificultad **fácil (primer y segundo día)** se tendrá que superar la distancia de **5000 codos**.
+  - Para ganar en la dificultad **normal (tercer y cuarto día)** se tendrá que superar la distancia de **2700 codos**.
+  - Para ganar en la dificultad **difícil (quinto día)** se tendrá que superar la distancia de **2500 codos**.
 
 ### 5.3. Minijuego 3: «Al rescate de los escarabajos»
 La idea es rescatar a unos escarabajos que han sido pegados con miel de su dulce cárcel. A mayor número de escarabajos rescatados, mayor puntuación. Es un bubble shot.
 
 ![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.PNG)
 
-#### 4.3.1. Contexto
+#### 5.3.1. Contexto
 > "Jepri, el dios del sol autocreado, sufre de una fuerte tristeza: sus adorados ahijados, los escarabajos de todo Egipto, han sido capturados. Para contentarle de nuevo, y evitar su ira, deberás rescatar al mayor número de escarabajos posibles, en el menor tiempo posible."
 
-#### 4.3.2. Dificultades
+#### 5.3.2. Dificultades
 - **Fácil (Días 1 y 2):** Empezaremos con 3 filas iniciales completas. 
 - **Intermedio (Días 3 y 4):**  Empezaremos con 4 filas iniciales completas. 
 - **Difícil (Día 5):**  Empezaremos con 5 filas iniciales completas. 
 
-#### 4.3.3. Mecánicas
+#### 5.3.3. Mecánicas
 - **Lanzamiento:** Con el ratón, apuntaremos hacia el lugar al que queremos disparar y click izquierdo para disparar. Podrá rebotar con las paredes. 
 
 - **Escarabajos Especiales:** 
@@ -168,7 +175,7 @@ La idea es rescatar a unos escarabajos que han sido pegados con miel de su dulce
 
 - **Caída:** Cuando haya 3 o más vecinos justamente contiguos, los eliminará.
 
-#### 4.3.4. Coleccionables
+#### 5.3.4. Coleccionables
 - **Primer día:** Tras completar el juego el primer día recibirá un escarabajo negro.
 - **Segundo día:** Tras completar el juego el primer día recibirá un escarabajo verde.
 - **Tercer día:** Tras completar el juego el primer día recibirá un escarabajo azul.
@@ -182,11 +189,11 @@ La idea es hacer un juego tipo Angry Birds, en donde el jugador puede utilizar d
 
 ![El Tiro del Arco Mágico](./assets/images//gddREADME/G4/captura.png)
 
-#### 4.4.1. Contexto
+#### 5.4.1. Contexto
 > "Inheret, “aquel que ha traído la diosa lejana  y aquel que simboliza el poder creativo del sol”, te ha encargado dar exterminio a aquellos animales indignos de vivir en su desierto.
 Se te será otorgado su arco mágico para cumplir con tu deber o serás castigado con cien años perdido en las arenas infinitas de su desierto."
 
-#### 4.4.2. Dificultades
+#### 5.4.2. Dificultades
 - **Fácil (Días 1 y 2):**
 Flecha normal: 5
 Flecha explosiva: 2
@@ -204,7 +211,7 @@ Flecha normal: 10
 Flecha explosiva: 1
 Flecha triple: 1
 
-#### 4.4.3. Mecánicas
+#### 5.4.3. Mecánicas
 - **Lanzamiento:** Con el ratón, arrastraremos hacia atrás desde el jugador para cargar la fecha. Deslizamos el ratón hacia arriba o abajo para cambiar la trayectoria de la flecha. Al soltar el click izquierdo del ratón se lanzará la flecha.
 Para activar el efecto especial de cada flecha mágica hay que pulsar la tecla E cuando está en el aire.
 
@@ -213,7 +220,7 @@ Para activar el efecto especial de cada flecha mágica hay que pulsar la tecla E
   - **Flecha expansiva:** Su efecto es convertirse en una bola gigante.
   - **Flecha explosiva:** Causa una explosión en área.
 
-#### 4.4.4. Coleccionables
+#### 5.4.4. Coleccionables
 - **Primer día:** «Flecha», punta de flecha destrozada.
 - **Segundo día:** «Lanza», punta de lanza destrozada.
 - **Tercer día:** «Flecha mágica», punta de flecha mágica.

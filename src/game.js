@@ -7,6 +7,7 @@ import Game3 from './scenes/Game3.js';
 import Game4 from './scenes/Game4.js';
 import Game5 from './scenes/Game5.js';
 import EndMenu from './scenes/EndMenu.js';
+import EndLevel from './scenes/EndLevel.js';
 import LogrosMenu from './scenes/LogrosMenu.js';
 
 /**
@@ -30,7 +31,7 @@ let config = {
      
   },
   
-  scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, EndMenu, LogrosMenu],
+  scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, EndLevel, EndMenu, LogrosMenu],
   physics: {
     default: 'arcade', 
     arcade: {

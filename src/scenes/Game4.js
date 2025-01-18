@@ -291,36 +291,37 @@ export default class Game4 extends Phaser.Scene {
         });
     }
 
-
     endLevel()
     {
         let result;
+        let finish = 0; //Ni gana ni pierde
         if (this.enemiesCounter == this.enemiesPool.length) {
             console.log("victoria");
             result = 'victoria';
-            this.time.delayedCall(2000, () => {
-                this.scene.start('GameSelectorMenu');
-            });
+            finish = 1; //gana 
         } 
         else if (this.bow.totalArrows == 0 && this.enemiesCounter < this.enemiesPool.length) {
             console.log("derrota");
             result = 'derrota';
-            this.time.delayedCall(2000, () => {
-                this.scene.start('GameSelectorMenu');
-            });
+            finish = 2; //pierde
         }
- 
 
         if (result) {
             const currentDayIndex = this.gameState.currentDay - 1; 
             this.gameState.minigamesResults.Game4[currentDayIndex] = result;
         }
+
+        // ENDLEVEL.
+        let mode;
+        if(finish === 1){
+            mode = 0;
+            this.scene.start('EndLevel', {mode: mode});
+        }
+        else if(finish === 2){
+            mode = 1;
+            this.scene.start('EndLevel', {mode: mode});
+        }
     }
-
-   
-
-
-
 
     createInfoTexts()
     {

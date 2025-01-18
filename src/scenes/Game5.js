@@ -14,9 +14,6 @@ export default class Game5 extends Phaser.Scene {
     }
     
     preload () {
-        // Música.
-        this.load.audio('theme5', './assets/audio/m5c.mp3');
-
         this.load.json('tableroData', './src/objetos/Game5Obj/tablero.json');
     }
     
@@ -123,25 +120,8 @@ export default class Game5 extends Phaser.Scene {
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
           .setOrigin(0.5, 0.5)
           .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
-          
-        /*// Música.
-        this.music = this.sound.add('theme2');
-        this.music.play();
-        this.sound.pauseOnBlur = true;
 
-        // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
+        
 
         // Los tableros contienen una array de array. 
         // La primera fila de cada tablero solo tiene dos numero que representan:
@@ -217,9 +197,42 @@ export default class Game5 extends Phaser.Scene {
 
         this.caunter;
         this.mirrorCaunter();
+        this.timerCaunter();
+    }
 
-        // --- BOTON VOLVER A MAIN MENU ---
-        this.createButton('MAIN MENU',  50,  this.cameras.main.height - 50, 'white');
+    timerCaunter() {
+        // --- CONTROL DE TIEMPO PARA PODER PERDER ---
+        this.gameTime = 20; 
+
+        this.timerText = this.add.text(
+            80,
+            80,
+            this.gameTime,
+             {
+                 fontFamily: 'yatra',
+                 fontSize: 40,
+                 color: 'black'
+             }
+         ).setOrigin(0.5, 0.5);
+            
+        this.timerHUD();
+    }
+
+    timerHUD() {
+        const updateTimer = () => {
+            this.gameTime -= 1; // disminuye contador
+            this.timerText.setText(this.gameTime);
+            
+        };
+
+        // temporizador
+        this.time.addEvent({
+            delay: 1000,
+            loop: true,
+            callback: updateTimer,
+            callbackScope: this
+        });
+
     }
 
     getDirection(number) {
@@ -268,6 +281,11 @@ export default class Game5 extends Phaser.Scene {
     }
 
     update() {
+
+        if(this.gameTime <= 0) {
+            this.EndGame();
+        }
+
         if (this.laser) {
             if (this.laser.x < this.boardMinX ||
                 this.laser.x > this.boardMaxX ||
@@ -296,7 +314,6 @@ export default class Game5 extends Phaser.Scene {
     
     startEndGame(){
         this.gameOver = true;
-
         this.stopTimer = this.time.addEvent({
             delay: 1500, // tiempo de espera
             callback: () => 
@@ -304,45 +321,34 @@ export default class Game5 extends Phaser.Scene {
                 this.EndGame();
             }
         });
-        
     }
 
-    EndGame(){
-        if (this.gameOver){
-            this.scene.start("GameSelectorMenu");
-            const currentDayIndex = this.gameState.currentDay - 1; 
-            this.gameState.minigamesResults.Game5[currentDayIndex] = 'victoria';
+    EndGame() {
+        let result;
+        let victory = this.gameTime > 0 && this.gameOver;
+        let defeat = this.gameTime <= 0 && !this.gameOver;
+        if(defeat) {
+            result = 'derrota';
         }
-    }
-    
-    createButton(text, x, y, textColor) {
-        let button = this.add.text(
-           x,
-           y,
-            text,
-            {
-                fontFamily: 'yatra',
-                fontSize: 40,
 
-                color: textColor
-            }
-        ).setOrigin(0, 0);
+        if (victory) {
+            result = 'victoria';
+        }
+        
+        console.log(result);
 
-        button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start("GameSelectorMenu");
-        });
-
-        button.on('pointerover', () => // Al pasar el ratón por encima...
-        {
-            button.setTint(0xdfa919);
-            //button.fontSize = '70px';
-        });
-    
-        button.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            button.clearTint();
-            //button.fontSize = '50px';
-        });
+        const currentDayIndex = this.gameState.currentDay - 1; 
+        this.gameState.minigamesResults.Game5[currentDayIndex] = result;
+        
+        // ENDLEVEL.
+        let mode;
+        if(victory){
+            mode = 0;
+            this.scene.start('EndLevel', {mode: mode});
+        }
+        else if(defeat){
+            mode = 1;
+            this.scene.start('EndLevel', {mode: mode});
+        }
     }
 }

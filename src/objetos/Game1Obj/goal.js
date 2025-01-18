@@ -9,7 +9,7 @@ export default class Goal extends Phaser.GameObjects.Sprite {
 
         this.scene.physics.add.existing(this);
 
-        this.body.setBounce(1,1);
+        this.body.setBounce(0);
         this.body.setAllowGravity(false);
     }
 

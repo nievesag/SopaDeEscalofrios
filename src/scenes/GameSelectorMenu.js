@@ -55,10 +55,29 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     create () {
+        console.log(gameState);
+
         // Música.
         const music = this.sound.add('ambience');
         music.play();
         this.sound.pauseOnBlur = true;
+
+        // fade
+        this.fade = this.add.image(0, 0, 'Fade').setScale(20,10);   
+        this.fade.depth = 100;
+        this.fade.setAlpha(0);
+        this.fadeTween = this.tweens.add({
+            targets: this.fade,
+            alpha: 1,
+            duration: 800,
+            ease: 'Bezier',
+            yoyo: true,
+            paused: true
+        })
+        this.fadeTween.on('complete', () => {
+            this.fadeTween.restart(); 
+            this.fadeTween.paused = true;
+        });
 
         this.cameras.main.setBackgroundColor(0x181818);
         if(gameState.gameSelectorMenuHasStartedBefore === false){
@@ -292,7 +311,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         else{
             this.createGameSelectorMenu();
         }
-        
     }
 
     createGameSelectorMenu(){
@@ -432,6 +450,8 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     nextDay() {
+        this.fadeTween.play();
+
         if (gameState.currentDay < gameState.maxDays) {
           this.resetDay();
         } else {
@@ -442,7 +462,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
             this.resetGame();
         }
     }
-
 
     resetDay() {
         gameState.currentDay++;
@@ -474,7 +493,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         gameState.currentDay = 1;
         gameState.actionsLeft = 3;
         gameState.maxDays = 5;
-        gameState.playedInCurrentDay = [false, false, false, false, false]; 
         gameState.minigamesResults = {
             Game1: [null, null, null, null, null] ,
             Game2: [null, null, null, null, null] ,
@@ -482,6 +500,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
             Game4: [null, null, null, null, null] ,
             Game5: [null, null, null, null, null] 
         };
-        gameState.hasStartedBefore = [ false, false, false, false, false ];
+        //gameState.hasStartedBefore = [ false, false, false, false, false ];
     }
 }
