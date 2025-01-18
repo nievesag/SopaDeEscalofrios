@@ -493,7 +493,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
         gameState.currentDay = 1;
         gameState.actionsLeft = 3;
         gameState.maxDays = 5;
-        gameState.playedInCurrentDay = [false, false, false, false, false]; 
         gameState.minigamesResults = {
             Game1: [null, null, null, null, null] ,
             Game2: [null, null, null, null, null] ,
@@ -501,8 +500,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
             Game4: [null, null, null, null, null] ,
             Game5: [null, null, null, null, null] 
         };
-
-   
-        gameState.hasStartedBefore = [ false, false, false, false, false ];
+        //gameState.hasStartedBefore = [ false, false, false, false, false ];
     }
 }
