@@ -31,7 +31,7 @@ export default class EndLevel extends Phaser.Scene {
 
         let cartaEnviada = this.add.text( 
             this.cameras.main.centerX - 250,
-            this.cameras.main.centerY - 250,
+            this.cameras.main.centerY - 270,
             textCode,
             {
                 fontSize: '30px',
