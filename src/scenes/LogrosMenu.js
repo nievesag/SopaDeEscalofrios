@@ -82,41 +82,39 @@ export default class LogrosMenu extends Phaser.Scene {
     showLogros() {
 
         // --- Textos
+        let textoLogros;
+
+        let i = 0;
+        let logroLengthArray = [this.gameState.logros1.length, this.gameState.logros2.length, this.gameState.logros3.length, this.gameState.logros4.length, this.gameState.logros5.length];
+        let hasAnyAward = false;
+        while(i<logroLengthArray.length && !hasAnyAward){
+            hasAnyAward = logroLengthArray[i] != 0;
+            i++;
+        }
         // si hay algun logro
-        if(this.gameState.logros1.length != 0 || this.gameState.logros2.length != 0 || this.gameState.logros3.length != 0 || this.gameState.logros4.length != 0 || this.gameState.logros5.length != 0) 
+        if(hasAnyAward) 
         {
-            // -- Logros, nombres
-            this.ningunLogroText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                logrosEnd,
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 40,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);         
+            textoLogros = logrosEnd;     
         }
         // ningun logro
         else
         {
-            this.ningunLogroText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                'No has obtenido ningún logro',
-                {
-                    fontFamily: 'yatra',
-                    fontSize: 40,
-                    color: '#ffffff',
-                    align: 'center',
-                    wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
-                    wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
-                }
-            ).setOrigin(0.5, 0.5).setDepth(1);    
+            textoLogros = 'No has obtenido ningún logro';   
         }
+
+        this.ningunLogroText = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            textoLogros,
+            {
+                fontFamily: 'yatra',
+                fontSize: 40,
+                color: '#ffffff',
+                align: 'center',
+                wordWrap: {width: 750}, // la puta polla: es lo de \n pero pro.
+                wordWrapUseAdvanced: true, // sirve para que no se coma palabras.
+            }
+        ).setOrigin(0.5, 0.5).setDepth(1);
     }
 
     resetLogros() {
