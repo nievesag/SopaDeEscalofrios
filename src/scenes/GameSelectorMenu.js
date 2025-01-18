@@ -55,6 +55,8 @@ export default class GameSelectorMenu extends Phaser.Scene {
     }
 
     create () {
+        console.log(gameState);
+
         // Música.
         const music = this.sound.add('ambience');
         music.play();
@@ -460,7 +462,6 @@ export default class GameSelectorMenu extends Phaser.Scene {
             this.resetGame();
         }
     }
-
 
     resetDay() {
         gameState.currentDay++;
