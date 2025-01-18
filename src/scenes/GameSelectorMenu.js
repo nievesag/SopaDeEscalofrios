@@ -404,8 +404,12 @@ export default class GameSelectorMenu extends Phaser.Scene {
         });
     }
 
-    createText(){
-        
+    createInfoText(key){
+        this.infoText = this.add.text(10, 10, `DÍA: ${gameState.currentDay} - Estás muy cansado para mandar cartas, ve a dormir`, {
+            fontFamily: 'yatra',
+            fontSize: '24px',
+            color: '#ffffff',
+        });
     }
 
 	createButton(text, x, y, textColor, fontsize, sceneName) {
@@ -501,7 +505,7 @@ export default class GameSelectorMenu extends Phaser.Scene {
             gameState.minigamesResults.Game5
         ];
 
-        for(var i = 0; i < gameState.endResultsArray.length; i++){
+        for(var i = 0; i < endResultsArray.length; i++){
             endResultsArray[i] = minigamesResultsArray[i];
         }
    }
