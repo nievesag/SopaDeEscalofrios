@@ -25,7 +25,6 @@ export default class Game1 extends Phaser.Scene {
     create () {
         this.cameras.main.setBackgroundColor(0x181818);
 
-        console.log(this.gameState);
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[0]){
             this.gameState.hasStartedBefore[0] = true; // ala ya ha salio el tutorial.
@@ -118,27 +117,7 @@ export default class Game1 extends Phaser.Scene {
         });
     }
 
-    startGame(){
-        /*// Música.
-        this.music = this.sound.add('theme1');
-        this.music.play();
-        this.sound.pauseOnBlur = true;
-
-        // Botón de la música.
-        this.musicButton = this.add.image(this.cameras.main.centerX - 5, this.cameras.main.center-5, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.1).setInteractive().setDepth(1000).setScrollFactor(0); // pq es UI*/
-
-        
+    startGame() {
         this.cameras.main.setBounds(-65,-65,416,256).setZoom(window.screen.availWidth/1000);
         
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -174,7 +153,6 @@ export default class Game1 extends Phaser.Scene {
         let react = this.map.createFromObjects('GameObjects', { name: "goal", classType: Goal, key: "goal" });
         this.goal = react[0]; //solo hay 1 y es el goal
         this.goal.body.immovable = true;
-		//this.react.setCollision(0, true); // Los tiles de esta capa tienen colisiones
 
         // --- CAJAS
         let boxes = this.map.createFromObjects('GameObjects', { name: "box", classType: Box, key: 'box' });
@@ -231,7 +209,6 @@ export default class Game1 extends Phaser.Scene {
         this.organsGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabDer(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("der");
                     obj.setisDer(true); // caja agarrada por la der
                 }
             });
@@ -241,7 +218,6 @@ export default class Game1 extends Phaser.Scene {
         this.organsGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabIzq(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("izq");
                     obj.setisIzq(true); // caja agarrada por la izq
                 }
             });
@@ -251,7 +227,6 @@ export default class Game1 extends Phaser.Scene {
         this.organsGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabArr(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("arr");
                     obj.setisArr(true); // caja agarrada por arr
                 }
             });
@@ -261,7 +236,6 @@ export default class Game1 extends Phaser.Scene {
         this.organsGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabAbj(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("abj");
                     obj.setisAbj(true); // caja agarrada por la abj
                 }
             });
@@ -272,7 +246,6 @@ export default class Game1 extends Phaser.Scene {
         this.boxesGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabDer(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("der");
                     obj.setisDer(true); // caja agarrada por la der
                 }
             });
@@ -282,7 +255,6 @@ export default class Game1 extends Phaser.Scene {
         this.boxesGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabIzq(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("izq");
                     obj.setisIzq(true); // caja agarrada por la izq
                 }
             });
@@ -292,7 +264,6 @@ export default class Game1 extends Phaser.Scene {
         this.boxesGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabArr(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("arr");
                     obj.setisArr(true); // caja agarrada por arr
                 }
             });
@@ -302,7 +273,6 @@ export default class Game1 extends Phaser.Scene {
         this.boxesGroup.getChildren().forEach(obj => {
             this.physics.add.collider(this.playerG1.getGrabAbj(), obj, () => {
                 if(this.playerG1.getGrabbing()) {
-                    console.log("abj");
                     obj.setisAbj(true); // caja agarrada por la abj
                 }
             });
@@ -338,9 +308,6 @@ export default class Game1 extends Phaser.Scene {
             }).setOrigin(0.5, 0.5);
             
             this.timerHUD();
-            
-            // boton
-            //this.createButton('MAIN MENU',  this.cameras.main.centerX - 30, this.cameras.main.centerY, 'white', 30, 'GameSelectorMenu');
             
             // -----------------------------------
     }
@@ -406,12 +373,10 @@ export default class Game1 extends Phaser.Scene {
 
         // -- derrota
         if(this.gameTime <= 0 && this.organCount > 0) {
-            //alert('HAS PERDIDO');
             this.perder = true;
         }
     
         if(this.organCount == 0 && this.gameTime > 0) {
-            //alert('HAS GANADO');
             this.ganar = true;
         }
 

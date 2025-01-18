@@ -8,7 +8,6 @@ export default class Boot extends Phaser.Scene {
         // ----- CARGAR IMAGENES DEL JUEGO -----
     
         // -------- MAINMENU
-       // this.load.image('bgProvisional', './assets/images/bgProvisional.jpg');
         this.load.image('backgroundMenu', './assets/images/menuBackground.png');
         this.load.audio('f3ale', './assets/audio/f3ale.mp3');
         this.load.audio('ambience', './assets/audio/ambience.mp3');
@@ -49,8 +48,6 @@ export default class Boot extends Phaser.Scene {
 
         // -------- GAME 2
         // Carga el sprite animado del pollito con dimensiones de cada frame (LUEGO).
-        // this.load.spritesheet('chick', 'assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18 });
-       // this.load.image('cannon', 'assets/images/cannon.png')
         this.load.image('cannonBody', './assets/images/Game2/cannonBody.png');
         this.load.image('cannonHead', './assets/images/Game2/cannonHead.png');
         this.load.image('vessel', './assets/images/Game2/vessel.png');
@@ -63,7 +60,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('muteButton', './assets/images/Game2/mute.png');
         this.load.image('obstacleGenerator', './assets/images/Game2/obstaclesGenerator.png');
         this.load.image('rectUI', './assets/images/Game2/rectUI.png');
-       // this.load.audio('theme2', './assets/audio/m2c.mp3');
         this.load.css('EagleLake', 'style.css');
 
         // -------- GAME 3
@@ -80,7 +76,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('CianBeetle', './assets/images/Game3/BurbujaCian.png')
         this.load.image('BlueBeetle', './assets/images/Game3/BurbujaAzul.png')
         this.load.image('PurpleBeetle', './assets/images/Game3/BurbujaMorada.png')
-      //this.load.audio('theme3', './assets/audio/Egipto.mp3');
         this.load.audio('beep', './assets/audio/beep.wav');
 
         // ------- GAME 4
@@ -120,53 +115,11 @@ export default class Boot extends Phaser.Scene {
         this.load.image('Final4', 'assets/images/endings/png/g4.png');
         this.load.image('Final5', 'assets/images/endings/png/g5.png');
         this.load.image('Final6', 'assets/images/endings/png/g6.png');
-
-        //other
-       // this.load.image('collectableWall', 'assets/images/collectableWall.png');
-
-        // -------- LOGROS
-        // G1
-        /*
-        this.load.image('l11', 'assets/images/logros/g1/G1logro1.png');
-        this.load.image('l12', 'assets/images/logros/g1/G1logro2.png');
-        this.load.image('l13', 'assets/images/logros/g1/G1logro3.png');
-        this.load.image('l14', 'assets/images/logros/g1/G1logro4.png');
-        this.load.image('l15', 'assets/images/logros/g1/G1logro5.png');
-
-        // G2
-        this.load.image('l21', 'assets/images/logros/g2/G2logro1.png');
-        this.load.image('l22', 'assets/images/logros/g2/G2logro2.png');
-        this.load.image('l23', 'assets/images/logros/g2/G2logro3.png');
-        this.load.image('l24', 'assets/images/logros/g2/G2logro4.png');
-        this.load.image('l25', 'assets/images/logros/g2/G2logro5.png');
-
-        // G3
-        this.load.image('l31', 'assets/images/logros/g3/G3logro1.png');
-        this.load.image('l32', 'assets/images/logros/g3/G3logro2.png');
-        this.load.image('l33', 'assets/images/logros/g3/G3logro3.png');
-        this.load.image('l34', 'assets/images/logros/g3/G3logro4.png');
-        this.load.image('l35', 'assets/images/logros/g3/G3logro5.png');
-
-        // G4
-        this.load.image('l41', 'assets/images/logros/g4/G4logro1.png');
-        this.load.image('l42', 'assets/images/logros/g4/G4logro2.png');
-        this.load.image('l43', 'assets/images/logros/g4/G4logro3.png');
-        this.load.image('l44', 'assets/images/logros/g4/G4logro4.png');
-        this.load.image('l45', 'assets/images/logros/g4/G4logro5.png');
-
-        // G5
-        this.load.image('l51', 'assets/images/logros/g5/G5logro1.png');
-        this.load.image('l52', 'assets/images/logros/g5/G5logro2.png');
-        this.load.image('l53', 'assets/images/logros/g5/G5logro3.png');
-        this.load.image('l54', 'assets/images/logros/g5/G5logro4.png');
-        this.load.image('l55', 'assets/images/logros/g5/G5logro5.png');
-        */
     }
     
     create()
     {
         console.log("Boot");
-        //this.loadAnimations();
         this.scene.start("MainMenu");
     }
 }

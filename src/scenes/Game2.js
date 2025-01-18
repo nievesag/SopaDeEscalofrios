@@ -112,18 +112,12 @@ export default class Game2 extends Phaser.Scene {
         });
     }
 
-    startGame(){
-
+    startGame() {
         this.isClickingOnUI = true; // al inicio desactiva el input.
         // durante 100 milisegs bloquea el input.
         this.time.delayedCall(100, ()=>{
             this.isClickingOnUI = false; // permite interaccion tras 2 segs
         })
-
-        /*// música.
-        this.music = this.sound.add('theme2');
-        this.music.play();
-        this.sound.pauseOnBlur = true;*/
 
         // background y rio.
         this.bg = this.add.tileSprite(0, this.cameras.main.centerY - 400, 5220, 1080, 'background').setOrigin(0, 0).setScrollFactor(0).setScale(1, 0.6);
@@ -142,26 +136,10 @@ export default class Game2 extends Phaser.Scene {
         this.vessel = new Vessel(this, this.cannon, this.obstacleGen, this.colorBug);
         this.vessel.vesselCollisions();
 
-        
-
         // establece los límites del mundo y de la cámara.
         // x, y, width, height
         this.physics.world.setBounds(0, -350, Number.MAX_SAFE_INTEGER, 1050);
         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 600);
-
-        /*// Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
         
         // contador de distancia.
         this.distanceCounter = this.add.text(
@@ -313,7 +291,6 @@ export default class Game2 extends Phaser.Scene {
         }
     }
     
-
     gameOver(){ // ¡¡¡¡¡¡¡¡PENDIENTE: PQ GAME OVER SALE SOLO UNA VEZ???? EL RESTO DE VECES NO.....
 
         if(!this.isGameOver){ // SI NO HAY GAME OVER AÚN...

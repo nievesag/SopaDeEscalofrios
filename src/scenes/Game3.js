@@ -157,25 +157,6 @@ export default class Game3 extends Phaser.Scene
         this.beep.play();
         //Cronómetro del lanzamiento
         this.updateTime();
-
-        /*// --- MUSIC ---.
-        this.music = this.sound.add('theme3');
-        this.music.play();
-        this.sound.pauseOnBlur = true;
-
-        // Botón de la música.
-        this.musicButton = this.add.image(40, 40, 'musicButton');
-        this.musicButton.on("pointerdown", () => { // PARAR Y REANUDAR MUSICA.
-            this.isClickingOnUI = true; 
-            if (this.music.isPlaying) {
-                this.music.pause();
-                this.musicButton.setTexture('muteButton');
-            } 
-            else {
-                this.music.resume();
-                this.musicButton.setTexture('musicButton');
-            }
-        }).setScale(0.3).setInteractive().setDepth(10).setScrollFactor(0); // pq es UI*/
     
         // --- BACKGROUND ---.
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
@@ -578,7 +559,6 @@ export default class Game3 extends Phaser.Scene
     }
 
 }
-
 
 /*
 Fuentes: 
