@@ -23,7 +23,7 @@ nievesag.github.io/SopaDeEscalofrios/
 ![La Vasija Entresija](./assets/images/gddREADME/G2/captura.png)
 ![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.PNG)
 ![El Tiro del Arco Mágico](./assets/images//gddREADME/G4/captura.png)
-![Al Sendero del Sol](./assets/images//gddREADME/G1)
+![Al Sendero del Sol](./assets/images//gddREADME/G5/captura.png)
 
 # Introito Antiapotropaico GDD 
 
@@ -315,7 +315,7 @@ No hay ka tan puro como el mío. No hay cuerpo, no hay sangre, ni carne más lim
 - **Nun** Convence a La regente de Nubia, y tendré el favor de las aguas, fuente de la que todo nace y emerge, existencia misma, germen de todo.
 - **Jepri** Seduce a El que es transformado, y no habrá eclipse que ennegrezca mi optimismo, el sendero de mi apoteosis se trazará cada día más claro.
 - **Inheret** Fascina a Quien trae a la lejana, y jamás necesitaré escudo, pues cualquier conflagración que emerja no será rival para mi férreo poder de dominación. 
-- **Shy** Atrae a La Luz y toda mi sangre acabará por envenenarse de ese preciado fulgor que se deja tras las tinieblas de aquellos ojos que decoran el firmamento. 
+- **Shu** Atrae a La Luz y toda mi sangre acabará por envenenarse de ese preciado fulgor que se deja tras las tinieblas de aquellos ojos que decoran el firmamento. 
 
 
 #### 8.3. Coleccionables
