@@ -1,5 +1,5 @@
 export default class Gate extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, , offsprite, onsprite) {
+    constructor(scene, x, y, eje, offsprite, onsprite) {
         super(scene, x, y, offsprite);
 
         scene.add.existing(this);
@@ -22,6 +22,7 @@ export default class Gate extends Phaser.Physics.Arcade.Sprite {
             case 'vertical':
                 this.entryDirection1 = 'up';
                 this.entryDirection2 = 'down';
+                this.angle += 90;
             case 'horizontal':
                 this.entryDirection1 = 'left';
                 this.entryDirection2 = 'rigth';
@@ -33,8 +34,10 @@ export default class Gate extends Phaser.Physics.Arcade.Sprite {
     laserColision(laser) {
         if (this.scene.physics.overlap(this, laser)) {
             if (!this.active) {
-                this.active = true;
-                this.setTexture(this.onsprite);
+                if (laser.direction == this.entryDirection1 || laser.direction == this.entryDirection2){
+                    this.active = true;
+                    this.setTexture(this.onsprite);
+                }
             }
         }
     }
