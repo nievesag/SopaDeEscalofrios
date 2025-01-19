@@ -102,7 +102,9 @@ export default class Boot extends Phaser.Scene {
         this.load.image('DestinoEncendido', 'assets/images/Game5/DestinoEncendidoTablero.png');
         this.load.image('BotonRotar', 'assets/images/Game5/BotonRotar.png');
         this.load.image('BotonEliminar', 'assets/images/Game5/BotonEliminar.png');
-
+        this.load.image('PuertaEncendida', 'assets/images/Game5/PuertaEncendidaTablero.png');
+        this.load.image('PuertaApagada', 'assets/images/Game5/PuertaApagadaTablero.png');
+        
         // -------- FEEDBACK
         this.load.image('Enviada', 'assets/images/feedback/enviada.png');
         this.load.image('NoEnviada', 'assets/images/feedback/noenviada.png');

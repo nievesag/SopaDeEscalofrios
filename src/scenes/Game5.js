@@ -3,6 +3,7 @@ import Wall from '../objetos/Game5Obj/Wall.js';
 import Gun from '../objetos/Game5Obj/Gun.js';
 import Void from '../objetos/Game5Obj/Void.js';
 import Destiny from '../objetos/Game5Obj/Destiny.js';
+import Gate from '../objetos/Game5Obj/Gate.js';
 
 export default class Game5 extends Phaser.Scene {
     constructor() {
@@ -140,6 +141,7 @@ export default class Game5 extends Phaser.Scene {
         this.voids = [];
         this.walls = [];
         this.mirrors = [];
+        this.gates = [];
         this.laser = null;
         let gun = null;
         let destiny = null;
@@ -160,6 +162,12 @@ export default class Game5 extends Phaser.Scene {
                     gun = new Gun(this, x, y, direction, tileSize);
                 } else if (tileValue === 3 && destiny == null) {
                     destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
+                } else if (tileValue === 4) {
+                    const g = new Gate(this, x, y, 'horizontal', 'PuertaApagada', 'PuertaEncendida');
+                    this.gates.push(g);
+                } else if (tileValue === 5) {
+                    const g = new Gate(this, x, y, 'vertical', 'PuertaApagada', 'PuertaEncendida');
+                    this.gates.push(g);
                 } else {
                     const v = new Void(this, x, y, tileSize);
                     this.voids.push(v);
@@ -180,6 +188,9 @@ export default class Game5 extends Phaser.Scene {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
                     });
                     this.physics.add.overlap(this.laser, destiny, this.CollideWithDestiny, null, this);
+                    this.gates.forEach(gate => {
+                        this.physics.add.overlap(this.laser, gate, this.CollideWithGate, null, this);
+                    });
                 }
             });
             gun.on('pointerover', () => 
@@ -306,6 +317,12 @@ export default class Game5 extends Phaser.Scene {
     CollideWithDestiny(laser, destiny) {
         destiny.laserColision(laser);
         this.DestroyLaser(laser);
+    }
+
+    CollideWithGate(laser, gate){
+        if (gate.laserColision(laser) === false) {
+            this.DestroyLaser(laser);
+        }
     }
     
     startEndGame(){
