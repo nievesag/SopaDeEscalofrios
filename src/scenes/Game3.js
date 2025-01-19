@@ -201,6 +201,13 @@ export default class Game3 extends Phaser.Scene
         this.setDifficulty();
         //Creamos el nivel en base a esos parámetros
         this.createLevel();
+
+        // --- GESTION VECINOS ---
+        //Creamos un array de visitados
+        this.visitados = [];
+        //Iniciamos los índices en 0
+        this.final = 0;
+        this.pendientes = 0;
         
         //Colisiones Level - Shooting Beetle
         this.colisionesBichoNivel();
@@ -237,13 +244,6 @@ export default class Game3 extends Phaser.Scene
 
     update ()
     {   
-        /*if (this.start) {
-
-            //Según se disparen escarabajos, se añaden a la matriz del nivel
-            //this.addToMatrix();
-            
-        }*/
-        
         // Modificamos el marcador de puntos
         this.pointUI.setText('Puntos: ' + this.points);
     }
@@ -258,12 +258,12 @@ export default class Game3 extends Phaser.Scene
                 // Paramos el pitido
                 this.beep.stop();
                 // Dispara
-                this.player.shoot(this.shootingBeetle);
+                //this.player.shoot(this.shootingBeetle);
                 // --- COLISIONES CON BORDERS ---.
-                this.physics.add.collider(this.borders, this.shootingBeetle);
-                this.level.freeBeetle = true;
-                this.shootTime = 10;
-                this.start = true;
+                //this.physics.add.collider(this.borders, this.shootingBeetle);
+                //this.level.freeBeetle = true;
+                //this.shootTime = 10;
+                //this.start = true;
             } 
 
         };
@@ -291,12 +291,12 @@ export default class Game3 extends Phaser.Scene
                 //Color random
                 if (j < this.level.filIni)
                 {
-                    this.level.lvl[j][i] = new MatrixBeetle(this, this.level.x + this.level.width * i,  this.level.y).setScale(1.25);
+                    this.level.lvl[j][i] = new MatrixBeetle(this, this.level.x + this.level.width * i,  this.level.y, i, j).setScale(1.25);
                 }
                 //Color Empty
                 else 
                 {
-                    this.level.lvl[j][i] = new MatrixBeetle(this, this.level.x + this.level.width * i,  this.level.y).setScale(1.25);
+                    this.level.lvl[j][i] = new MatrixBeetle(this, this.level.x + this.level.width * i,  this.level.y, i , j).setScale(1.25);
                     this.level.lvl[j][i].setTexture("EmptyBeetle");
                 }
             }
@@ -339,7 +339,7 @@ export default class Game3 extends Phaser.Scene
                 //Destruye lo que había antes
                 this.level.lvl[j][i].selfDestroy();
                 //Añade otro sprite 
-                this.level.lvl[j][i] = new MatrixBeetle(this, this.level.lvl[j][i].x, this.level.lvl[j][i].y).setScale(1.25);
+                this.level.lvl[j][i] = new MatrixBeetle(this, this.level.lvl[j][i].x, this.level.lvl[j][i].y, i, j).setScale(1.25);
                 //console.log(this.level.lvl[j][i].x + ", " + this.level.lvl[j+1][i].y);
                 this.level.lvl[j][i].setTexture(this.shootingBeetle.texture);
                 //Destruimos el lanzado
@@ -356,10 +356,197 @@ export default class Game3 extends Phaser.Scene
         }
 
         //Destruir vecinos contiguos
-        //this.destroyNeighbour(j, i);
+        this.processNeighbours(this.level.lvl[j][i]);
         //Destruimos los que hayan podido quedar sueltos
         this.destroySueltos();
 
+    }
+
+    // Determina si el beetle está en la estructura de beetles visitados
+    visitedNeighbour(beetle)
+    {
+        //Damos por hecho que inicialmente no se ha visitado
+        let visitado = false;
+
+        //Buscamos pos en el array de posiciones visitadas
+        let i = 0;
+        //Buscará hasta que llegue al final del array o encuentre el beetle
+        while (i < this.final && this.visitados[i] != beetle)
+        { 
+            i++;
+        }
+
+        //Si coinciden ambas coordenadas de la posicion
+        if (this.visitados[i] == beetle)
+        {
+            //Significara que dicha posición se ha visitado
+            visitado = true;
+        }
+        //Si no, seguirá como al principio
+
+        //Devolvemos visitado
+        return visitado;
+    }
+
+    //Añade al array visitados las posiciones adyacentes al escarabajo actual que aun no han sido visitadas
+    addNeighbours(beetle){
+        let j = beetle.j;
+        let i = beetle.i;
+
+        //Miraremos si han sido visitados los vecinos adyacentes, y si no lo han sido, se añadirán al array para procesarlos
+        //Fila par
+        if (j % 2 == 1)
+        {
+            //Arriba-Dcha
+            if ((j-1) > 0 && (i+1) < this.level.cols 
+            && !this.visitedNeighbour(this.level.lvl[j-1][i + 1])
+            && this.level.lvl[j-1][i + 1].texture.key != "EmptyBeetle") 
+            {    
+                this.visitados.push(this.level.lvl[j-1][i + 1]);
+                //Se aumenta el índice de fin
+                this.final++;
+            }
+
+            //Abajo-Dcha
+            if ((j+1) < this.level.fils && (i+1) < this.level.cols 
+            && !this.visitedNeighbour(this.level.lvl[j+ 1][i + 1])
+            && this.level.lvl[j+ 1][i + 1].texture.key != "EmptyBeetle") 
+            {    
+                this.visitados.push(this.level.lvl[j+ 1][i + 1]);
+                //Se aumenta el índice de fin
+                this.final++;
+            }
+        }
+        //Fila impar
+        else
+        {
+            //Arriba-Izqd
+            if ((j-1) > 0 && (i-1) > 0 
+            && !this.visitedNeighbour(this.level.lvl[j-1][i - 1])
+            && this.level.lvl[j-1][i - 1].texture.key != "EmptyBeetle") 
+            {    
+                this.visitados.push(this.level.lvl[j-1][i - 1]);
+                //Se aumenta el índice de fin
+                this.final++;
+            }
+            //Abajo-Izqd
+            if ((j+1) < this.level.fils && (i-1) > 0 
+            && !this.visitedNeighbour(this.level.lvl[j+1][i - 1])
+            && this.level.lvl[j+1][i - 1].texture.key != "EmptyBeetle" )
+            {    
+                this.visitados.push(this.level.lvl[j+1][i - 1]);
+                //Se aumenta el índice de fin
+                this.final++;
+            }
+        }
+
+        //Arriba
+        if ((j-1) > 0 
+        && !this.visitedNeighbour(this.level.lvl[j-1][i])
+        && this.level.lvl[j-1][i].texture.key != "EmptyBeetle" )
+        {    
+            this.visitados.push(this.level.lvl[j-1][i]);
+            //Se aumenta el índice de fin
+            this.final++;
+        } 
+        //Abajo
+        if ((j+1) < this.levelfils 
+        && !this.visitedNeighbour(this.level.lvl[j+1][i])
+        && this.level.lvl[j+1][i].texture.key!= "EmptyBeetle") 
+        {    
+            this.visitados.push(this.level.lvl[j+1][i]);
+            //Se aumenta el índice de fin
+            this.final++;
+        } 
+        //Dcha
+        if ((i+1) < this.level.cols 
+        && !this.visitedNeighbour(this.level.lvl[j][i+1])
+        && this.level.lvl[j][i+1].texture.key != "EmptyBeetle") 
+        {    
+            this.visitados.push(this.level.lvl[j][i+1]);
+            //Se aumenta el índice de fin
+            this.final++;
+        } 
+        //Izqd
+        if ((i-1) > 0 
+        && !this.visitedNeighbour(this.level.lvl[j][i-1])
+        && this.level.lvl[j][i-1].texture.key != "EmptyBeetle")
+        {    
+            this.visitados.push(this.level.lvl[j][i-1]);
+            //Se aumenta el índice de fin
+            this.final++;
+        }
+
+        for (let i = 0; i <this.visitados.length; i++)
+        {
+            console.log(this.visitados[i].texture.key);
+        }
+        console.log(this.final);
+    }
+
+    //Algoritmo de propagación
+    processNeighbours(beetle){
+   
+        //Array de beetles a destruir
+        let destroyArray = [];
+        
+        //Añadimos el beetle actual al array
+        this.visitados.push(beetle);
+        //Y se le añadirá también al de para destruir
+        destroyArray.push(beetle);
+        //Se aumenta el índice de fin y de pendientes, porque la casilla de referencia ya está procesada
+        this.final++;
+        this.pendientes++;
+      
+        //Analizamos las adyacentes
+        this.addNeighbours(beetle);
+        //console.log(this.visitados);
+        //console.log(destroyArray);
+        console.log(this.final);
+        //console.log(this.pendientes);
+      
+        //Mientras que queden pendientes por procesar
+        while (this.pendientes < this.final && this.final <= (this.level.cols * this.level.fils))
+        {
+            //Actualizamos el beetle referencia
+            let beetleVecino = this.visitados[this.pendientes];
+
+            //Si el beetle vecino tiene el color del que lanzamos
+            if (beetleVecino.texture.key == beetle.texture.key)
+            {
+                //se le añadirá también al de para destruir
+                destroyArray.push(beetleVecino);
+                //Anadimos a pendientes a sus vecinos
+                this.addNeighbours(beetleVecino);
+            }
+      
+            //Y el escarabajo nuevo queda procesado
+            this.pendientes++;
+        }
+
+        //Si hay 3 o mas vecinos de ese color, los destruye
+        if (destroyArray.length >= 3)
+        {
+            for (let i = destroyArray.length - 1; i >= 0; i--){
+                //Suma puntos
+                this.points += 100;
+
+                //Cambiamos la textura
+                destroyArray[i].setTexture("EmptyBeetle");
+                //Nos lo cargamos
+                destroyArray[i].selfDestroy();
+                //Lo sacamos del array
+                destroyArray.pop(); 
+            }
+        }
+
+        //Reinicia el sonido del pitidito
+        this.beep.play();
+
+        if (this.points >= this.victory){
+            //Victoria
+            this.endGame(true);
+        }
     }
 
     followMouse(pointer)
@@ -367,56 +554,6 @@ export default class Game3 extends Phaser.Scene
         this.player.angle = Phaser.Math.Angle.BetweenPoints(this.player, pointer);
         this.player.rotation = this.player.angle + 1.5708; // Pone la rotación del cañón mirando al mouse en radianes
     }
-
-    /*addToMatrix()
-    {
-        // ACOPLAR LANZADO A LVL
-        for (let j = 0; j < this.level.fils; j++)
-        {
-            for (let i = 0; i < this.level.cols; i++) 
-            {
-                if (this.shootingBeetle.y <= this.level.lvl[j][i].y + this.level.height //Entonces lo pone en j+1
-                    && this.shootingBeetle.x >= this.level.lvl[j][i].x
-                    && this.shootingBeetle.x < this.level.lvl[j][i].x + this.level.width 
-                    && this.level.lvl[j][i].texture.key != "EmptyBeetle" //Si el de encima esá lleno
-                    && this.level.freeBeetle
-                    )   
-                {
-                    if (j == this.level.fils - 1)
-                    {
-                        //Derrota
-                        this.endGame(false);
-                    }
-                    else 
-                    {
-                        console.log("ShootingBeetle " + this.shootingBeetle.x + ", " + this.shootingBeetle.y);
-                        if (this.level.lvl[j+1][i].texture.key == "EmptyBeetle") //Y la posición nueva está vacía
-                        {
-                            //Destruye lo que había antes
-                            this.level.lvl[j+1][i].selfDestroy();
-                            //Añade otro sprite 
-                            this.level.lvl[j+1][i] = new MatrixBeetle(this, this.level.lvl[j+1][i].x, this.level.lvl[j+1][i].y).setScale(1.25);
-                            console.log(this.level.lvl[j+1][i].x + ", " + this.level.lvl[j+1][i].y);
-                            this.level.lvl[j+1][i].setTexture(this.shootingBeetle.texture);
-                            //Destruimos el lanzado
-                            this.shootingBeetle.selfDestroy();
-                            //Ya no hay escarabajo pululando por ahí
-                            this.level.freeBeetle = false;
-                            //Volvemos a activar el input
-                            this.input.mouse.enabled = true;
-                            //Creamos el siguiente bicho  
-                            this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 28).setDepth(5).setScale(1.25);
-                            //Destruir vecinos contiguos
-                            this.destroyNeighbour(j+1, i);
-                        }
-                    }
-                }
-            }
-        }
-
-        //Destruimos los que hayan podido quedar sueltos
-        this.destroySueltos();
-    }*/
  
     destroyNeighbour(y , x){
 
@@ -498,7 +635,6 @@ export default class Game3 extends Phaser.Scene
                 //Lo sacamos del array
                 destroyArray.pop(); 
             }
-
         }
 
         //Reinicia el sonido del pitidito
@@ -555,36 +691,6 @@ export default class Game3 extends Phaser.Scene
         }
     }
 
-    // --- BOTONES ---.
-    createButton(text, x, y, textColor, fontsize, sceneName) {
-        let button = this.add.text(
-            x,
-            y,
-            text,
-            {
-                fontFamily: 'yatra',
-                fontSize: fontsize,
-                color: textColor
-            }
-        ).setOrigin(0.5, 0.5);
-
-        button.on('pointerover', () => // Al pasar el ratón por encima...
-        {
-            button.setTint(0xdfa919);
-        });
-
-        button.on('pointerout', () => // Al quitar el ratón de encima...
-        {
-            button.clearTint();
-        });
-
-        button.setInteractive();
-        button.on("pointerdown", () => { // Al hacer clic...
-            this.scene.start(sceneName);
-
-        });
-    }
-
     endGame(finish){
         //Vuelve a activar el input
         this.input.mouse.enabled = true;
@@ -622,9 +728,6 @@ export default class Game3 extends Phaser.Scene
         {
             this.scene.start('EndLevel', {mode: mode});
         }
-
-
-
     }
 
     // --- DIFICULTAD ---.
@@ -636,7 +739,7 @@ export default class Game3 extends Phaser.Scene
         this.pointUI.setVisible(true);
         if(this.gameState.currentDay == 1)
         {
-            this.victory = 900;
+            this.victory = 3000;
             this.beetles.length = 4;
             this.level.filIni = 3;
         }
@@ -667,7 +770,6 @@ export default class Game3 extends Phaser.Scene
     }
 
 }
-
 
 /*
 Fuentes: 
