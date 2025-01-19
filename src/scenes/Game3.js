@@ -315,13 +315,13 @@ export default class Game3 extends Phaser.Scene
             {
                 if (this.level.lvl[j][i].texture.key != "EmptyBeetle")
                 {
-                    this.physics.add.collider(this.level.lvl[j][i], this.shootingBeetle, null, this.mensaje, this);
+                    this.physics.add.collider(this.level.lvl[j][i], this.shootingBeetle, null, this.addToMatrix, this);
                 }
             }
         }
     }
 
-    mensaje(level, shootingBeetle)
+    addToMatrix(level, shootingBeetle)
     {
         let j = (shootingBeetle.y - shootingBeetle.y % this.level.height) / this.level.height; //Fila en la que toca anadirlo
         let i = (shootingBeetle.x - 180 - ((shootingBeetle.x - 180) % this.level.width)) / this.level.width; //Columna en la que toca anadirlo
@@ -354,6 +354,12 @@ export default class Game3 extends Phaser.Scene
                 this.colisionesBichoNivel();
             }
         }
+
+        //Destruir vecinos contiguos
+        //this.destroyNeighbour(j, i);
+        //Destruimos los que hayan podido quedar sueltos
+        this.destroySueltos();
+
     }
 
     followMouse(pointer)
@@ -362,7 +368,7 @@ export default class Game3 extends Phaser.Scene
         this.player.rotation = this.player.angle + 1.5708; // Pone la rotación del cañón mirando al mouse en radianes
     }
 
-    addToMatrix()
+    /*addToMatrix()
     {
         // ACOPLAR LANZADO A LVL
         for (let j = 0; j < this.level.fils; j++)
@@ -410,7 +416,7 @@ export default class Game3 extends Phaser.Scene
 
         //Destruimos los que hayan podido quedar sueltos
         this.destroySueltos();
-    }
+    }*/
  
     destroyNeighbour(y , x){
 
