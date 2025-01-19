@@ -391,4 +391,29 @@ export default class Game5 extends Phaser.Scene {
             this.scene.start('EndLevel', {mode: mode});
         }
     }
+
+    shutdown() {
+
+        this.gates.forEach(g => {
+            g.destroy();
+        });
+        this.mirrors.forEach(m => {
+            m.destroy();
+        });
+        this.voids.forEach(v => {
+            v.destroy();
+        });
+        this.walls.forEach(w => {
+            w.destroy();
+        });
+
+        this.gates.length = 0;
+        this.mirror.length = 0;
+        this.walls.length = 0;
+        this.voids.length = 0;
+
+        destiny.destroy();
+        gun.destroy();
+        this.DestroyLaser(laser);
+    }
 }
