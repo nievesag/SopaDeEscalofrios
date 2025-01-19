@@ -202,6 +202,9 @@ export default class Game3 extends Phaser.Scene
         //Creamos el nivel en base a esos parámetros
         this.createLevel();
         
+        //Colisiones Level - Shooting Beetle
+        this.colisionesBichoNivel();
+        
         // --- INPUT ---.
         // SIGUE AL MOUSE.
         this.input.on('pointermove', (pointer) =>
@@ -234,11 +237,12 @@ export default class Game3 extends Phaser.Scene
 
     update ()
     {   
-        if (this.start) {
+        /*if (this.start) {
 
             //Según se disparen escarabajos, se añaden a la matriz del nivel
-            this.addToMatrix();
-        }
+            //this.addToMatrix();
+            
+        }*/
         
         // Modificamos el marcador de puntos
         this.pointUI.setText('Puntos: ' + this.points);
@@ -302,6 +306,56 @@ export default class Game3 extends Phaser.Scene
             }
     }
 
+    colisionesBichoNivel()
+    {
+        //Colisiones Level - Shooting Beetle
+        for (let j = 0; j < this.level.fils; j++)
+        {
+            for (let i = 0; i < this.level.cols; i++) 
+            {
+                if (this.level.lvl[j][i].texture.key != "EmptyBeetle")
+                {
+                    this.physics.add.collider(this.level.lvl[j][i], this.shootingBeetle, null, this.mensaje, this);
+                }
+            }
+        }
+    }
+
+    mensaje(level, shootingBeetle)
+    {
+        let j = (shootingBeetle.y - shootingBeetle.y % this.level.height) / this.level.height; //Fila en la que toca anadirlo
+        let i = (shootingBeetle.x - 180 - ((shootingBeetle.x - 180) % this.level.width)) / this.level.width; //Columna en la que toca anadirlo
+        //Forzamos por el límite derecho
+        if (i>12) i = 12;
+        if (j == this.level.fils)
+        {
+            //Derrota
+            this.endGame(false);
+        }
+        else 
+        {
+            if (this.level.lvl[j][i].texture.key == "EmptyBeetle") //Y la posición nueva está vacía
+            {    
+                //Destruye lo que había antes
+                this.level.lvl[j][i].selfDestroy();
+                //Añade otro sprite 
+                this.level.lvl[j][i] = new MatrixBeetle(this, this.level.lvl[j][i].x, this.level.lvl[j][i].y).setScale(1.25);
+                //console.log(this.level.lvl[j][i].x + ", " + this.level.lvl[j+1][i].y);
+                this.level.lvl[j][i].setTexture(this.shootingBeetle.texture);
+                //Destruimos el lanzado
+                this.shootingBeetle.selfDestroy();
+                //Ya no hay escarabajo pululando por ahí
+                this.level.freeBeetle = false;
+                //Volvemos a activar el input
+                this.input.mouse.enabled = true;
+                //Creamos el siguiente bicho  
+                this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 28).setDepth(5).setScale(1.25);
+                //Reseteamos los coliders para el nuevo shooting beetle
+                this.colisionesBichoNivel();
+            }
+        }
+    }
+
     followMouse(pointer)
     {
         this.player.angle = Phaser.Math.Angle.BetweenPoints(this.player, pointer);
@@ -329,12 +383,14 @@ export default class Game3 extends Phaser.Scene
                     }
                     else 
                     {
+                        console.log("ShootingBeetle " + this.shootingBeetle.x + ", " + this.shootingBeetle.y);
                         if (this.level.lvl[j+1][i].texture.key == "EmptyBeetle") //Y la posición nueva está vacía
                         {
                             //Destruye lo que había antes
                             this.level.lvl[j+1][i].selfDestroy();
                             //Añade otro sprite 
                             this.level.lvl[j+1][i] = new MatrixBeetle(this, this.level.lvl[j+1][i].x, this.level.lvl[j+1][i].y).setScale(1.25);
+                            console.log(this.level.lvl[j+1][i].x + ", " + this.level.lvl[j+1][i].y);
                             this.level.lvl[j+1][i].setTexture(this.shootingBeetle.texture);
                             //Destruimos el lanzado
                             this.shootingBeetle.selfDestroy();
