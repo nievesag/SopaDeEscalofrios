@@ -29,6 +29,10 @@ export default class Gate extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
+    getActive() {
+        return this.active;
+    }
+
     Reset() {
         this.active = false;
         this.setTexture(this.offsprite);

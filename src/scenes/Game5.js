@@ -289,7 +289,7 @@ export default class Game5 extends Phaser.Scene {
 
     update() {
 
-        if(this.gameTime <= 0) {
+        if(this.gameTime <= 0 && !this.gameOver) {
             this.EndGame();
         }
 
@@ -310,6 +310,9 @@ export default class Game5 extends Phaser.Scene {
     }
 
     DestroyLaser(laser) {
+        if (this.gameOver === false){
+            this.ResetGates();
+        }
         laser.destroy();
         this.laser = null;
     }
@@ -326,14 +329,37 @@ export default class Game5 extends Phaser.Scene {
     }
     
     startEndGame(){
-        this.gameOver = true;
-        this.stopTimer = this.time.addEvent({
-            delay: 1500, // tiempo de espera
-            callback: () => 
-            {
-                this.EndGame();
+        if (this.CheckGates()) {
+            this.gameOver = true;
+            this.stopTimer = this.time.addEvent({
+                delay: 1500, // tiempo de espera
+                callback: () => 
+                {
+                    this.EndGame();
+                }
+            });
+        }
+    }
+
+    CheckGates() {
+        let i = 0;
+        if (this.gates) {
+            while (i < this.gates.length) {
+                if (this.gates[i].getActive() === false){
+                    return false;
+                }
+                i++;
             }
-        });
+        }
+        return true;
+    }
+
+    ResetGates() {
+        if (this.gates) {
+            this.gates.forEach(gate => {
+                gate.Reset();
+            });
+        }
     }
 
     EndGame() {
