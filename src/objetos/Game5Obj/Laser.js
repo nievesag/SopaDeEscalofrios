@@ -10,7 +10,7 @@ export default class Laser extends Phaser.GameObjects.Rectangle {
         this.setDirection(direction);
     }
 
-    setDirection(direction){
+    setDirection(direction){ // asigna la velecidad al laser segun su dirección
         this.direction = direction;
         this.body.setVelocityX(0);
         this.body.setVelocityY(0);

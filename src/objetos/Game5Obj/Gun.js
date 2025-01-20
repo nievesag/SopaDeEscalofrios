@@ -17,7 +17,7 @@ export default class Gun extends Phaser.GameObjects.Sprite {
         this.rotatesprite(this.direction);
     }
 
-    rotatesprite(direction) {
+    rotatesprite(direction) { // para iniciarlo en la direccion correcta
         this.direction = direction;
 
         switch (direction) {
@@ -39,7 +39,7 @@ export default class Gun extends Phaser.GameObjects.Sprite {
         }
     }
 
-    shootLaser(scene) {
+    shootLaser(scene) { // devuelve el laser que genera
         const laser = new Laser(scene, this.x, this.y, this.direction);
         scene.add.existing(laser);
         return laser;

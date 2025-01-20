@@ -20,7 +20,8 @@ export default class Void extends Phaser.GameObjects.Sprite {
             this.clearTint();
         });
     }
-    createMirror(scene) {
+
+    createMirror(scene) { // genera un espejo en la posicion de ese vacio y luego lo destruye
         
         if(scene.currMirrors < scene.maxMirros){
             const mirror = new Mirror(scene, this.x, this.y, 'left', 'up');
