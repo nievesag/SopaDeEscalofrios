@@ -7,7 +7,7 @@ export default class Matrix extends Phaser.GameObjects.Sprite
 
     this.scene = scene;
     this.scene.add.existing(this);
-
+    this.setOrigin(0, 0); 
     this.x = x; 
     this.y = y;
 
