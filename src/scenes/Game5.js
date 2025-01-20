@@ -118,13 +118,15 @@ export default class Game5 extends Phaser.Scene {
     startGame() {
 
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
-          .setOrigin(0.5, 0.5)
-          .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
+        .setOrigin(0.5, 0.5)
+        .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
         // Los tableros contienen una array de array. 
-        // La primera fila de cada tablero solo tiene dos numero que representan:
+        // La primera fila de cada tablero solo tiene tres numeros que representan:
         // 0 -> el numero de espejos maximo
         // 1 -> la direccion del disparador
+        // 2 -> el tiempo maximo 
+
         const level = this.gameState.currentDay; // Nivel actual
         const tableroData = this.cache.json.get('tableroData');
         const tablero = tableroData.levels[level];
@@ -147,6 +149,7 @@ export default class Game5 extends Phaser.Scene {
         let destiny = null;
         this.maxMirros = tablero[0][0];
         this.currMirrors = 0;
+        this.gameTime = tablero[0][2];
 
         for (let row = 1; row < tablero.length; row++) {
             for (let col = 0; col < tablero[1].length; col++) {
@@ -209,8 +212,7 @@ export default class Game5 extends Phaser.Scene {
     }
 
     timerCaunter() {
-        // --- CONTROL DE TIEMPO PARA PODER PERDER ---
-        this.gameTime = 20; 
+        // --- CONTROL DE TIEMPO PARA PODER PERDER --- 
 
         this.timerText = this.add.text(
             80,
