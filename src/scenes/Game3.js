@@ -196,10 +196,10 @@ export default class Game3 extends Phaser.Scene
         this.beetles = ['RedBeetle', 'OrangeBeetle', 'YellowBeetle', 'GreenBeetle', 'CianBeetle', 'BlueBeetle', 'PurpleBeetle'];
         // El que vamos a disparar
         //Instancia escarabajo   
-        this.shootingBeetle = new ShootingBeetle(this, this.player.x - 29, this.player.y - 28).setDepth(5).setScale(1.25);
+        this.shootingBeetle = new ShootingBeetle(this, this.player.x, this.player.y - 28).setDepth(5).setScale(1.25);
 
         // --- GRID DE BICHOS ---.
-        this.level = new Matrix(this, 192, 11);
+        this.level = new Matrix(this, 220, 40);
         //La dificultad, que depende de beetles
         this.setDifficulty();
         //Ponemos el texto del objetivo
@@ -256,11 +256,11 @@ export default class Game3 extends Phaser.Scene
                 // Paramos el pitido
                 this.beep.stop();
                 // Dispara
-                this.player.shoot(this.shootingBeetle);
+                //this.player.shoot(this.shootingBeetle);
                 // --- COLISIONES CON BORDERS ---.
-                this.physics.add.collider(this.borders, this.shootingBeetle);
-                this.level.freeBeetle = true;
-                this.shootTime = 10;
+                //this.physics.add.collider(this.borders, this.shootingBeetle);
+                //this.level.freeBeetle = true;
+                //this.shootTime = 10;
             } 
 
         };
@@ -299,7 +299,7 @@ export default class Game3 extends Phaser.Scene
             }
 
             //Reseteamos la x 
-            this.level.x = 192;
+            this.level.x = 220;
             this.level.y += this.level.height;
         }
     }
@@ -321,10 +321,26 @@ export default class Game3 extends Phaser.Scene
 
     addToMatrix(level, shootingBeetle)
     {
-        let j = (shootingBeetle.y - shootingBeetle.y % this.level.height) / this.level.height; //Fila en la que toca anadirlo
-        let i = (shootingBeetle.x - 192 - ((shootingBeetle.x - 192) % this.level.width)) / this.level.width; //Columna en la que toca anadirlo
+        //Fila en la que toca anadirlo con el offset de la primera fila (10)
+        let j = (shootingBeetle.y - 10 - ((shootingBeetle.y - 10) % this.level.height)) / this.level.height; 
+        console.log ("la y: " + shootingBeetle.y + "y la x: " + shootingBeetle.x);
+        console.log ("j: " + j);
+        let i = 0;
+        //Columna en la que toca anadirlo
+        //Impares con offset fila impar (214.5 = 192 + (this.level.width/2))
+        if (j % 2 == 1){
+            i = (shootingBeetle.x - 220 - (this.level.width/2) - ((shootingBeetle.x - 220 - (this.level.width/2)) % this.level.width)) / this.level.width;
+            console.log("i impar: " + i);
+        }
+        //Pares con offset fila par (192)
+        else{
+            i = (shootingBeetle.x - 220 - ((shootingBeetle.x - 220) % this.level.width)) / this.level.width;
+            console.log("i par: " + i);
+        }
+
         //Forzamos por el límite derecho
         if (i>12) i = 12;
+
         if (j == this.level.fils)
         {
             //Derrota
@@ -346,15 +362,13 @@ export default class Game3 extends Phaser.Scene
                 //Volvemos a activar el input
                 this.input.mouse.enabled = true;
                 //Creamos el siguiente bicho  
-                this.shootingBeetle = new ShootingBeetle(this, this.player.x - 28, this.player.y - 25).setDepth(5).setScale(1.25);
+                this.shootingBeetle = new ShootingBeetle(this, this.player.x, this.player.y - 28).setDepth(5).setScale(1.25);
                 //Reseteamos los coliders para el nuevo shooting beetle
                 this.colisionesBichoNivel();
-                //Destruir vecinos contiguos
+                //Destruir vecinos del mismo color
                 this.processNeighbours(this.level.lvl[j][i]);
             }
         }
-        //Destruimos los que hayan podido quedar sueltos
-        this.destroySueltos();
 
     }
 
@@ -520,6 +534,9 @@ export default class Game3 extends Phaser.Scene
                 //Lo sacamos del array
                 destroyArray.pop(); 
             }
+
+            //Destruimos los que hayan podido quedar sueltos
+            this.destroySueltos();
         }
         //Reiniciamos los arrays y reseteamos los valores
         else
@@ -545,6 +562,7 @@ export default class Game3 extends Phaser.Scene
             //Victoria
             this.endGame(true);
         }
+
     }
 
     followMouse(pointer)

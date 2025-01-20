@@ -6,12 +6,6 @@ export default class Beetle extends Phaser.GameObjects.Sprite
 
     this.scene = scene;
     this.scene.add.existing(this);
-    this.setOrigin(0, 0); 
-
-    this.scene.physics.world.enable(this);
-    this.body.setSize(30, 30);
-    this.body.setCollideWorldBounds(true); // Para que no se salga de los límites del mundo.
-    this.body.setAllowGravity(false); //Inicialmente no tienen. La activamos cuando nos conviene
 
     this.x = x;
     this.y = y;
