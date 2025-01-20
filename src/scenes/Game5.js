@@ -21,7 +21,8 @@ export default class Game5 extends Phaser.Scene {
     create() {
         this.cameras.main.setBackgroundColor(0x181818);
 
-        this.gameOver = false;
+        this.gameOver = false; // comprueba si se ha terminado el juego (aunque solo lo uso para saber si ha ganado)
+
         // si es la primera vez q se inicia...
         if(!this.gameState.hasStartedBefore[4]){
             this.gameState.hasStartedBefore[4] = true; // ala ya ha salio el tutorial.
@@ -117,11 +118,12 @@ export default class Game5 extends Phaser.Scene {
 
     startGame() {
 
+        // Fondo
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'bg3')
         .setOrigin(0.5, 0.5)
         .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
-        // Los tableros contienen una array de array. 
+        // Los tableros son un array de arrays
         // La primera fila de cada tablero solo tiene tres numeros que representan:
         // 0 -> el numero de espejos maximo
         // 1 -> la direccion del disparador
@@ -129,17 +131,18 @@ export default class Game5 extends Phaser.Scene {
 
         const level = this.gameState.currentDay; // Nivel actual
         const tableroData = this.cache.json.get('tableroData');
-        const tablero = tableroData.levels[level];
+        const tablero = tableroData.levels[level]; // Acceder al nivel requerido
 
+        // variables auxiliares para recorrer el tablero y crearlo
         const tileSize = 100;
         const centroX = this.cameras.main.centerX - tablero[1].length * tileSize / 2;
         const centroY = this.cameras.main.centerY - (tablero.length - 1) * tileSize / 2 - tileSize;
-
         this.boardMinX = centroX;
         this.boardMaxX = centroX + tablero[1].length * tileSize;
         this.boardMinY = centroY + tileSize;
         this.boardMaxY = centroY + tablero.length * tileSize;
 
+        // arrays y objetos del juego
         this.voids = [];
         this.walls = [];
         this.mirrors = [];
@@ -147,10 +150,12 @@ export default class Game5 extends Phaser.Scene {
         this.laser = null;
         let gun = null;
         let destiny = null;
-        this.maxMirros = tablero[0][0];
-        this.currMirrors = 0;
-        this.gameTime = tablero[0][2];
+        
+        this.maxMirros = tablero[0][0]; // numero maximo de espejos
+        this.currMirrors = 0; // numero actual de espejos
+        this.gameTime = tablero[0][2]; // tiempo maximo de la partida
 
+        // generar los objetos del tablero
         for (let row = 1; row < tablero.length; row++) {
             for (let col = 0; col < tablero[1].length; col++) {
                 const tileValue = tablero[row][col];
@@ -161,7 +166,7 @@ export default class Game5 extends Phaser.Scene {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
                 } else if (tileValue === 2 && gun == null) {
-                    let direction = this.getDirection(tablero[0][1]);
+                    let direction = this.getDirection(tablero[0][1]); // para sacra la dirección del gun
                     gun = new Gun(this, x, y, direction, tileSize);
                 } else if (tileValue === 3 && destiny == null) {
                     destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
@@ -179,6 +184,7 @@ export default class Game5 extends Phaser.Scene {
             }
         }
 
+        // generar el laser y sus colisiones del laser
         if (gun) {
             gun.setInteractive();
             gun.on('pointerdown', () => {
@@ -206,8 +212,9 @@ export default class Game5 extends Phaser.Scene {
                 });
         }
 
+        // generar contadores de espejos y tiempo
         this.caunter;
-        this.mirrorCaunter();
+        this.mirrorCaunter(); 
         this.timerCaunter();
     }
 
@@ -244,7 +251,7 @@ export default class Game5 extends Phaser.Scene {
         });
     }
 
-    getDirection(number) {
+    getDirection(number) { // para sacar una direccion dependiendo de un numero del 1 al 4
         let direction;
         switch (number) {
             case 1:
@@ -291,7 +298,7 @@ export default class Game5 extends Phaser.Scene {
 
     update() {
 
-        if(this.gameTime <= 0 && !this.gameOver) {
+        if(this.gameTime <= 0 && !this.gameOver) { // comprueba si ha perdido
             this.EndGame();
         }
 
@@ -307,11 +314,11 @@ export default class Game5 extends Phaser.Scene {
         this.updateMirrorCaunter();
     }
 
-    TrayChangeDirection(laser, mirror) {
+    TrayChangeDirection(laser, mirror) { // colision laser-espejo
         mirror.changeLaserDirection(laser);
     }
 
-    DestroyLaser(laser) {
+    DestroyLaser(laser) { // destruir laser / colision laser-muro
         if (this.gameOver === false){
             this.ResetGates();
         }
@@ -319,18 +326,18 @@ export default class Game5 extends Phaser.Scene {
         this.laser = null;
     }
 
-    CollideWithDestiny(laser, destiny) {
+    CollideWithDestiny(laser, destiny) { // colision laser-destino
         destiny.laserColision(laser);
         this.DestroyLaser(laser);
     }
 
-    CollideWithGate(laser, gate){
-        if (gate.laserColision(laser) === false) {
+    CollideWithGate(laser, gate){ // colision laser-puerta
+        if (gate.laserColision(laser) === false) { // si la colision no es la correcta la puerta(gate) actua como un muro(wall)
             this.DestroyLaser(laser);
         }
     }
     
-    startEndGame(){
+    startEndGame(){ // comprueba si realmente has ganadao llamanado a CheckGates() y, si es así, que cuando ganes no te vayas del juego tan rapido
         if (this.CheckGates()) {
             this.gameOver = true;
             this.stopTimer = this.time.addEvent({
@@ -343,7 +350,7 @@ export default class Game5 extends Phaser.Scene {
         }
     }
 
-    CheckGates() {
+    CheckGates() { // comprueba que todas las puertas estén activas
         let i = 0;
         if (this.gates) {
             while (i < this.gates.length) {
@@ -356,7 +363,7 @@ export default class Game5 extends Phaser.Scene {
         return true;
     }
 
-    ResetGates() {
+    ResetGates() { // resetea todas las puertas
         if (this.gates) {
             this.gates.forEach(gate => {
                 gate.Reset();
@@ -364,7 +371,7 @@ export default class Game5 extends Phaser.Scene {
         }
     }
 
-    EndGame() {
+    EndGame() { // final del juego con el resultado y el cambio de escena
         let result;
         let victory = this.gameTime > 0 && this.gameOver;
         let defeat = this.gameTime <= 0 && !this.gameOver;
@@ -394,7 +401,7 @@ export default class Game5 extends Phaser.Scene {
         }
     }
 
-    shutdown() {
+    shutdown() { // eliminar elementos dinamicos al cambiar de escena
 
         this.gates.forEach(g => {
             g.destroy();

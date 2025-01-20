@@ -9,6 +9,7 @@ export default class Gate extends Phaser.Physics.Arcade.Sprite {
         this.entryDirection2;
         this.setEntrances(eje);
 
+        // guarda sprites
         this.offsprite = offsprite
         this.onsprite = onsprite;
         this.active = false;
@@ -17,7 +18,7 @@ export default class Gate extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = false;
     }
 
-    setEntrances(eje) {
+    setEntrances(eje) { // guarda las dos direcciones validas en las que se puede introducir el laser
         if (eje === 'vertical') {
             this.entryDirection1 = 'up';
             this.entryDirection2 = 'down';
@@ -38,7 +39,7 @@ export default class Gate extends Phaser.Physics.Arcade.Sprite {
         this.setTexture(this.offsprite);
     }
 
-    laserColision(laser) {
+    laserColision(laser) { // comprueba si la dirección del laser es buena y activa la puerta, sino devuelve false
         if (laser.direction == this.entryDirection1 || laser.direction == this.entryDirection2){
             if (!this.active) {
                 this.active = true;

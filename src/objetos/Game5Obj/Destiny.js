@@ -5,7 +5,8 @@ export default class Destiny extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.offsprite = offsprite
+        // guarda sprites
+        this.offsprite = offsprite;
         this.onsprite = onsprite;
         this.active = false;
 
@@ -13,7 +14,7 @@ export default class Destiny extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = false;
     }
 
-    laserColision(laser) {
+    laserColision(laser) { // comprueba la colision con el laser y cambia el sprite y llama a startEndGame() 
         if (this.scene.physics.overlap(this, laser)) {
             if (!this.active) {
                 this.active = true;
