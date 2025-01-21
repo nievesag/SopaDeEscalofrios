@@ -334,12 +334,12 @@ export default class Game3 extends Phaser.Scene
         console.log ("j: " + j);
         let i = 0;
         //Columna en la que toca anadirlo
-        //Impares con offset fila impar (214.5 = 192 + (this.level.width/2))
+        //Impares con offset fila impar (245.5 = 220 + (this.level.width/2))
         if (j % 2 == 1){
             i = (shootingBeetle.x - 220 - (this.level.width/2) - ((shootingBeetle.x - 220 - (this.level.width/2)) % this.level.width)) / this.level.width;
             console.log("i impar: " + i);
         }
-        //Pares con offset fila par (192)
+        //Pares con offset fila par (220)
         else{
             i = (shootingBeetle.x - 220 - ((shootingBeetle.x - 220) % this.level.width)) / this.level.width;
             console.log("i par: " + i);
