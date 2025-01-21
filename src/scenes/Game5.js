@@ -148,7 +148,7 @@ export default class Game5 extends Phaser.Scene {
         this.mirrors = [];
         this.gates = [];
         this.laser = null;
-        let gun = null;
+        this.gun = null;
         this.destiny = null;
         
         this.maxMirros = tablero[0][0]; // numero maximo de espejos
@@ -165,9 +165,9 @@ export default class Game5 extends Phaser.Scene {
                 if (tileValue === 1) {
                     const wall = new Wall(this, x, y, tileSize);
                     this.walls.push(wall);
-                } else if (tileValue === 2 && gun == null) {
+                } else if (tileValue === 2 && this.gun == null) {
                     let direction = this.getDirection(tablero[0][1]); // para sacra la dirección del gun
-                    gun = new Gun(this, x, y, direction, tileSize);
+                    this.gun = new Gun(this, x, y, direction, tileSize);
                 } else if (tileValue === 3 && this.destiny == null) {
                     this.destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
                 } else if (tileValue === 4) {
@@ -185,11 +185,11 @@ export default class Game5 extends Phaser.Scene {
         }
 
         // generar el laser y sus colisiones del laser
-        if (gun) {
-            gun.setInteractive();
-            gun.on('pointerdown', () => {
+        if (this.gun) {
+            this.gun.setInteractive();
+            this.gun.on('pointerdown', () => {
                 if (this.laser == null && this.gameOver == false) {
-                    this.laser = gun.shootLaser(this);
+                    this.laser = this.gun.shootLaser(this);
                     this.mirrors.forEach(mirror => {
                         this.physics.add.overlap(this.laser, mirror, this.TrayChangeDirection, null, this);
                     });
@@ -202,13 +202,13 @@ export default class Game5 extends Phaser.Scene {
                     });
                 }
             });
-            gun.on('pointerover', () => 
+            this.gun.on('pointerover', () => 
                 {
-                    gun.setTint(0xdddddd);
+                    this.gun.setTint(0xdddddd);
                 });
-            gun.on('pointerout', () => 
+            this.gun.on('pointerout', () => 
                 {
-                    gun.clearTint();
+                    this.gun.clearTint();
                 });
         }
 
@@ -421,7 +421,7 @@ export default class Game5 extends Phaser.Scene {
         this.voids.length = 0;
 
         this.destiny.destroy();
-        //gun.destroy();
+        this.gun.destroy();
         this.DestroyLaser(laser);
     }
 }
