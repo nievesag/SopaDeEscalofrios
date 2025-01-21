@@ -263,11 +263,11 @@ export default class Game3 extends Phaser.Scene
                 // Paramos el pitido
                 this.beep.stop();
                 // Dispara
-                //this.player.shoot(this.shootingBeetle);
+                this.player.shoot(this.shootingBeetle);
                 // --- COLISIONES CON BORDERS ---.
-                //this.physics.add.collider(this.borders, this.shootingBeetle);
-                //this.level.freeBeetle = true;
-                //this.shootTime = 10;
+                this.physics.add.collider(this.borders, this.shootingBeetle);
+                this.level.freeBeetle = true;
+                this.shootTime = 10;
             } 
 
         };
@@ -696,7 +696,6 @@ export default class Game3 extends Phaser.Scene
             this.finSueltos++;
         }
     }
-
 
     //Algoritmo de propagación de los sueltos
     //A partir del this.level.lvl[1][0] (primero de la fila 1)
