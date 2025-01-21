@@ -149,7 +149,7 @@ export default class Game5 extends Phaser.Scene {
         this.gates = [];
         this.laser = null;
         let gun = null;
-        let destiny = null;
+        this.destiny = null;
         
         this.maxMirros = tablero[0][0]; // numero maximo de espejos
         this.currMirrors = 0; // numero actual de espejos
@@ -168,8 +168,8 @@ export default class Game5 extends Phaser.Scene {
                 } else if (tileValue === 2 && gun == null) {
                     let direction = this.getDirection(tablero[0][1]); // para sacra la dirección del gun
                     gun = new Gun(this, x, y, direction, tileSize);
-                } else if (tileValue === 3 && destiny == null) {
-                    destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
+                } else if (tileValue === 3 && this.destiny == null) {
+                    this.destiny = new Destiny(this, x, y, 'DestinoApagado', 'DestinoEncendido');
                 } else if (tileValue === 4) {
                     const g = new Gate(this, x, y, 'horizontal', 'PuertaApagada', 'PuertaEncendida');
                     this.gates.push(g);
@@ -196,7 +196,7 @@ export default class Game5 extends Phaser.Scene {
                     this.walls.forEach(wall => {
                         this.physics.add.collider(this.laser, wall, this.DestroyLaser, null, this);
                     });
-                    this.physics.add.overlap(this.laser, destiny, this.CollideWithDestiny, null, this);
+                    this.physics.add.overlap(this.laser, this.destiny, this.CollideWithDestiny, null, this);
                     this.gates.forEach(gate => {
                         this.physics.add.overlap(this.laser, gate, this.CollideWithGate, null, this);
                     });
@@ -321,6 +321,7 @@ export default class Game5 extends Phaser.Scene {
     DestroyLaser(laser) { // destruir laser / colision laser-muro
         if (this.gameOver === false){
             this.ResetGates();
+            this.destiny.Reset();
         }
         laser.destroy();
         this.laser = null;
@@ -337,17 +338,15 @@ export default class Game5 extends Phaser.Scene {
         }
     }
     
-    startEndGame(){ // comprueba si realmente has ganadao llamanado a CheckGates() y, si es así, que cuando ganes no te vayas del juego tan rapido
-        if (this.CheckGates()) {
-            this.gameOver = true;
-            this.stopTimer = this.time.addEvent({
-                delay: 1500, // tiempo de espera
-                callback: () => 
-                {
-                    this.EndGame();
-                }
-            });
-        }
+    startEndGame(){ // hace que cuando ganes no te vayas del juego tan rapido
+        this.gameOver = true;
+        this.stopTimer = this.time.addEvent({
+            delay: 1500, // tiempo de espera
+            callback: () => 
+            {
+                this.EndGame();
+            }
+        });
     }
 
     CheckGates() { // comprueba que todas las puertas estén activas
@@ -421,8 +420,8 @@ export default class Game5 extends Phaser.Scene {
         this.walls.length = 0;
         this.voids.length = 0;
 
-        destiny.destroy();
-        gun.destroy();
+        this.destiny.destroy();
+        //gun.destroy();
         this.DestroyLaser(laser);
     }
 }

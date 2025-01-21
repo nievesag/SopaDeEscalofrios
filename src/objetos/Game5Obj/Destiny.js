@@ -14,8 +14,13 @@ export default class Destiny extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = false;
     }
 
-    laserColision(laser) { // comprueba la colision con el laser y cambia el sprite y llama a startEndGame() 
-        if (this.scene.physics.overlap(this, laser)) {
+    Reset() { // para resetear el destino
+        this.active = false;
+        this.setTexture(this.offsprite);
+    }
+
+    laserColision(laser) { // comprueba si todas la puertas están activas y, si es así, cambia el sprite y llama a startEndGame() 
+        if (this.scene.CheckGates()) {
             if (!this.active) {
                 this.active = true;
                 this.setTexture(this.onsprite);
