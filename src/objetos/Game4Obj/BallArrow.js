@@ -4,12 +4,17 @@ export default class BallArrow extends Arrow {
     constructor(scene, x, y) {
         super(scene, x, y, 'arrow3');
         this.type = 'ball';  
+        this.hasTransformed = false;
     }
 
     transformToBall() {  //Transofrma la pelota en una bola que rebota
 
-        console.log(this.scene);
+        if (this.hasTransformed) {
+            return;
+        }
        
+        this.hasTransformed = true; 
+
         const posX = this.x;
         const posY = this.y;
         let velX = this.getVelX();
@@ -27,7 +32,7 @@ export default class BallArrow extends Arrow {
         this.arrowBall = this.scene.add.sprite(posX, posY, 'bola'); 
         this.arrowBall.setScale(0.5);  
         this.scene.physics.world.enable(this.arrowBall);
-        this.arrowBall.body.setCircle(150); 
+        this.arrowBall.body.setCircle(130); 
         this.arrowBall.body.setBounce(1);  
 
 
