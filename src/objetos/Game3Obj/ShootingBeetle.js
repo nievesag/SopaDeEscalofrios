@@ -6,8 +6,7 @@ export default class ShootingBeetle extends Beetle
   constructor(scene, x, y) {
     super(scene, x, y)
     this.scene.physics.world.enable(this);
-    this.body.setSize(35, 35);
-    this.setOrigin(0.5, 0); 
+    this.body.setSize(40, 40);
 
     this.speed = 500;
 

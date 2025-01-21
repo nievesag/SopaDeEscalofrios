@@ -10,7 +10,7 @@ export default class Player3 extends Phaser.GameObjects.Sprite
 
     this.x = x; //Pos en x
     this.y = y; //Pos en y
-    this.angle = 90; //Angulo de disparo
+    this.angle = 0; //Angulo de disparo
     this.scale = 0.3;
 
     //Textura del sprite

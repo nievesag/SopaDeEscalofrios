@@ -263,11 +263,11 @@ export default class Game3 extends Phaser.Scene
                 // Paramos el pitido
                 this.beep.stop();
                 // Dispara
-                this.player.shoot(this.shootingBeetle);
+                //this.player.shoot(this.shootingBeetle);
                 // --- COLISIONES CON BORDERS ---.
-                this.physics.add.collider(this.borders, this.shootingBeetle);
-                this.level.freeBeetle = true;
-                this.shootTime = 10;
+                //this.physics.add.collider(this.borders, this.shootingBeetle);
+                //this.level.freeBeetle = true;
+                //this.shootTime = 10;
             } 
 
         };
@@ -330,23 +330,39 @@ export default class Game3 extends Phaser.Scene
     {
         //Fila en la que toca anadirlo con el offset de la primera fila (10)
         let j = (shootingBeetle.y - 10 - ((shootingBeetle.y - 10) % this.level.height)) / this.level.height; 
-        console.log ("la y: " + shootingBeetle.y + "y la x: " + shootingBeetle.x);
+        console.log ("Shooting x: " + shootingBeetle.x + ", y: " + shootingBeetle.y);
         console.log ("j: " + j);
+        console.log("Bicho matriz: j: " + level.j + ", i: " + level.i + ", x: " + level.x + ", y: " + level.y);
         let i = 0;
         //Columna en la que toca anadirlo
         //Impares con offset fila impar (245.5 = 220 + (this.level.width/2))
         if (j % 2 == 1){
-            i = (shootingBeetle.x - 220 - (this.level.width/2) - ((shootingBeetle.x - 220 - (this.level.width/2)) % this.level.width)) / this.level.width;
+            if (shootingBeetle.x > level.x)
+            {
+                i = level.i;
+            }
+            else 
+            {
+                i = level.i - 1;
+                //Forzamos por el límite izquierdo
+                if (i < 0) i = 0;
+            }
             console.log("i impar: " + i);
         }
         //Pares con offset fila par (220)
         else{
-            i = (shootingBeetle.x - 220 - ((shootingBeetle.x - 220) % this.level.width)) / this.level.width;
+            if (shootingBeetle.x > level.x)
+                {
+                    i = level.i + 1;
+                    //Forzamos por el límite derecho
+                    if (i>12) i = 12;
+                }
+                else 
+                {
+                    i = level.i;
+                }
             console.log("i par: " + i);
         }
-
-        //Forzamos por el límite derecho
-        if (i>12) i = 12;
 
         if (j == this.level.fils)
         {
