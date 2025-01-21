@@ -8,10 +8,12 @@ export default class MatrixBeetle extends Beetle
 
     this.i = i;  //Indice columna dentro de la matriz
     this.j = j;  //Indice fila dentro de la matriz
-    this.scene.physics.world.enable(this);
-    this.body.setSize(35, 35);
 
-    this.isDead = false;
+    //Habilitar físicas
+    this.scene.physics.world.enable(this); 
+    //Tamaño del cuerpo
+    this.body.setSize(35, 35);
+    //Propiedades fisicas
     this.body.setImmovable(true); // Para que no se salga de los límites del mundo.
     this.body.setBounce(0); // rebote con colisiones.
     this.body.setAllowGravity(false); //Inicialmente no tienen. La activamos cuando nos conviene
