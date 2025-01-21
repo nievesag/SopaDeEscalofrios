@@ -213,6 +213,13 @@ export default class Game3 extends Phaser.Scene
         //Iniciamos los índices en 0
         this.final = 0;
         this.pendientes = 0;
+
+        // --- GESTION SUELTOS ---
+        //Creamos un arrays de posibles sueltos
+        this.posiblesSueltos = [];
+        //Iniciamos los índices en 0
+        this.finSueltos = 0;
+        this.pendSueltos = 0;
         
         //Colisiones Level - Shooting Beetle
         this.colisionesBichoNivel();
@@ -484,7 +491,7 @@ export default class Game3 extends Phaser.Scene
         }
     }
 
-    //Algoritmo de propagación
+    //Algoritmo de propagación de los vecinos de color
     processNeighbours(beetle){
    
         //Array de beetles a destruir
@@ -535,9 +542,22 @@ export default class Game3 extends Phaser.Scene
                 destroyArray.pop(); 
             }
 
-            //Destruimos los que hayan podido quedar sueltos
-            this.destroySueltos();
+            //Procesamos la matriz, en busca de los que hayan podido quedar sueltos para destruirlos
+            //Partimos de la fila 1, ya que los de la fila 0 sabemos que no están sueltos
+            //Solo miraremos donde haya bicho. Si no lo hay no puede estar suelto
+            for (let j = 1; j <  this.level.fils; j++)
+            {
+                for(let i = 0; i <this.level.cols; i++)
+                {
+                    if (this.level.lvl[j][i].texture.key != "EmptyBeetle")
+                    {
+                        //Destruimos los que hayan podido quedar sueltos
+                        this.processSueltos(this.level.lvl[j][i]);
+                    }
+                }
+            }
         }
+
         //Reiniciamos los arrays y reseteamos los valores
         else
         {
@@ -565,6 +585,181 @@ export default class Game3 extends Phaser.Scene
 
     }
 
+    // Determina si el beetle está en la estructura de beetles visitados
+    visitedSueltos(beetle)
+    {
+        //Damos por hecho que inicialmente no se ha visitado
+        let visitado = false;
+
+        //Buscamos pos en el array de posiciones visitadas
+        let i = 0;
+        //Buscará hasta que llegue al final del array o encuentre el beetle
+        while (i < this.finSueltos && this.posiblesSueltos[i] != beetle)
+        { 
+            i++;
+        }
+
+        //Si coinciden ambas coordenadas de la posicion
+        if (this.posiblesSueltos[i] == beetle)
+        {
+            //Significara que dicha posición se ha visitado
+            visitado = true;
+        }
+        //Si no, seguirá como al principio
+
+        //Devolvemos visitado
+        return visitado;
+    }
+
+    //Añade al array visitados las posiciones adyacentes al escarabajo actual que aun no han sido visitadas
+    addSueltos(beetle){
+        let j = beetle.j;
+        let i = beetle.i;
+
+        //Miraremos si han sido visitados los vecinos adyacentes, y si no lo han sido, se añadirán al array para procesarlos
+        //Fila impar
+        if (j % 2 == 1)
+        {
+            //Arriba-Dcha
+            if ((j-1) >= 0 && (i+1) < this.level.cols 
+            && !this.visitedSueltos(this.level.lvl[j-1][i + 1])
+            && this.level.lvl[j-1][i + 1].texture.key != "EmptyBeetle") 
+            {    
+                this.posiblesSueltos.push(this.level.lvl[j-1][i + 1]);
+                //Se aumenta el índice de fin
+                this.finSueltos++;
+            }
+
+            //Abajo-Dcha
+            if ((j+1) < this.level.fils && (i+1) < this.level.cols 
+            && !this.visitedSueltos(this.level.lvl[j+ 1][i + 1])
+            && this.level.lvl[j+ 1][i + 1].texture.key != "EmptyBeetle") 
+            {    
+                this.posiblesSueltos.push(this.level.lvl[j+ 1][i + 1]);
+                //Se aumenta el índice de fin
+                this.finSueltos++;
+            }
+        }
+        //Fila par
+        else
+        {
+            //Arriba-Izqd
+            if ((j-1) >= 0 && (i-1) >= 0 
+            && !this.visitedSueltos(this.level.lvl[j-1][i - 1])
+            && this.level.lvl[j-1][i - 1].texture.key != "EmptyBeetle") 
+            {    
+                this.posiblesSueltos.push(this.level.lvl[j-1][i - 1]);
+                //Se aumenta el índice de fin
+                this.finSueltos++;
+            }
+            //Abajo-Izqd
+            if ((j+1) < this.level.fils && (i-1) >= 0 
+            && !this.visitedSueltos(this.level.lvl[j+1][i - 1])
+            && this.level.lvl[j+1][i - 1].texture.key != "EmptyBeetle" )
+            {    
+                this.posiblesSueltos.push(this.level.lvl[j+1][i - 1]);
+                //Se aumenta el índice de fin
+                this.finSueltos++;
+            }
+        }
+
+        //Arriba
+        if ((j-1) >= 0 && !this.visitedSueltos(this.level.lvl[j-1][i])
+        && this.level.lvl[j-1][i].texture.key != "EmptyBeetle" )
+        {    
+            this.posiblesSueltos.push(this.level.lvl[j-1][i]);
+            //Se aumenta el índice de fin
+            this.finSueltos++;
+        } 
+        //Abajo
+        if ((j+1) < this.levelfils && !this.visitedSueltos(this.level.lvl[j+1][i])
+        && this.level.lvl[j+1][i].texture.key!= "EmptyBeetle") 
+        {    
+            this.posiblesSueltos.push(this.level.lvl[j+1][i]);
+            //Se aumenta el índice de fin
+            this.finSueltos++;
+        } 
+        //Dcha
+        if ((i+1) < this.level.cols && !this.visitedSueltos(this.level.lvl[j][i+1])
+        && this.level.lvl[j][i+1].texture.key != "EmptyBeetle") 
+        {    
+            this.posiblesSueltos.push(this.level.lvl[j][i+1]);
+            //Se aumenta el índice de fin
+            this.finSueltos++;
+        } 
+        //Izqd
+        if ((i-1) >= 0 && !this.visitedSueltos(this.level.lvl[j][i-1])
+        && this.level.lvl[j][i-1].texture.key != "EmptyBeetle")
+        {    
+            this.posiblesSueltos.push(this.level.lvl[j][i-1]);
+            //Se aumenta el índice de fin
+            this.finSueltos++;
+        }
+    }
+
+
+    //Algoritmo de propagación de los sueltos
+    //A partir del this.level.lvl[1][0] (primero de la fila 1)
+    processSueltos(bettleSuelto){
+        //Añadimos el beetle actual al array
+        this.posiblesSueltos.push(bettleSuelto);
+        //Se aumenta el índice de fin y de pendientes, porque la casilla de referencia ya está procesada
+        this.finSueltos++;
+        this.pendSueltos++;
+
+        //Analizamos las adyacentes
+        this.addSueltos(bettleSuelto);
+
+        //Mientras que queden pendientes por procesar
+        while (this.pendSueltos < this.finSueltos && this.finSueltos <= (this.level.cols * this.level.fils))
+        {
+            //Actualizamos el beetle referencia
+            let beetleVecinoSuelto = this.posiblesSueltos[this.pendSueltos];
+            //Anadimos a pendientes a sus vecinos
+            this.addSueltos(beetleVecinoSuelto);
+            //Y el escarabajo nuevo queda procesado
+            //console.log(this.posiblesSueltos[this.pendSueltos].texture.key + " ")
+            this.pendSueltos++;
+            
+        }
+        //Recorremos posiblesSueltos en busca de algunos que esté en la fila j = 0. 
+        //En ese caso, no son sueltos, y no se destruyen. En el caso contrario, se destruyen.
+        let k = 0;
+        //En un principio destruyo todo
+        let destruir = true;
+        while(k < this.posiblesSueltos.length && destruir)
+        {
+            if (this.posiblesSueltos[k].j == 0)
+            {
+                destruir = false;
+            }
+            k++;
+        }
+
+        if (destruir && this.posiblesSueltos.length>0)
+        {
+            console.log(" length:" + this.posiblesSueltos.length);
+            for (let i = this.posiblesSueltos.length - 1; i >= 0; i--){
+                //Suma puntos
+                this.points += 50;
+                this.pointUI.setText('Puntos\n' + this.points);
+                //Cambiamos la textura
+                this.posiblesSueltos[i].setTexture("EmptyBeetle");
+                //Nos lo cargamos
+                this.posiblesSueltos[i].selfDestroy();
+            }
+        }
+
+        //Lo vacíamos al final
+        for (let i = this.posiblesSueltos.length - 1; i >= 0; i--){
+            //Lo sacamos del array
+            this.posiblesSueltos.pop(); 
+        }
+
+        this.finSueltos = 0;
+        this.pendSueltos = 0;
+    }
+
     followMouse(pointer)
     {
         this.player.angle = Phaser.Math.Angle.BetweenPoints(this.player, pointer);
@@ -573,7 +768,7 @@ export default class Game3 extends Phaser.Scene
  
     destroySueltos(){
         //Recorremos la matriz en busca de bichos sueltos
-        for (let j = this.level.fils-1; j >= 0; j--)
+        for (let j = 0; j < this.level.fils; j--)
         {
             for (let i = 0; i < this.level.cols; i++) 
             {
