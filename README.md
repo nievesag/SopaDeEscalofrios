@@ -16,7 +16,7 @@ El jugador contactará con distintos dioses a través de rituales, para enviar u
 Podrá jugar a diferentes minijuegos para poder ser más afín a según qué dios, y así, conseguir el objetivo de la faraona: Convertirse en una diosa más.
 
 ### Web del juego
-[Link a la web](nievesag.github.io/SopaDeEscalofrios/)
+[Link a la web](https://nievesag.github.io/SopaDeEscalofrios/)
 
 ### UML del juego
 [UML pdf](https://github.com/nievesag/SopaDeEscalofrios/blob/main/docs/Introito%20Antiapotropaico%20UML.pdf)
