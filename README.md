@@ -231,17 +231,24 @@ Para activar el efecto especial de cada flecha mágica hay que pulsar la tecla E
 ---
 
 ### 5.5. Minijuego 5: «El sendero del Sol»
-Un minijuego de tipo puzle en el objetivo es guiar un rayo de sol a través de distintos niveles utilizando espejos. Los jugadores deberán mover y rotar los espejos estratégicamente para hacer que el rayo de luz rebote en la dirección correcta y resolviendo rompecabezas visuales.
+Un minijuego de tipo puzle en el que el objetivo es guiar un rayo de sol a través de distintos niveles utilizando espejos. Los jugadores deberán colocar y rotar los espejos estratégicamente para hacer que el rayo de luz rebote en la dirección correcta hasta llegar a una zona destino y antes de que se termine el tiempo. Aparte de la zona destino el rayo tendrá que pasar por todas las compuertas que haya en el tablero para completar el nivel.
 
 #### 5.5.1. Contexto
 > "Shu, divinidad danzante del aire, él desea iluminar todo a su paso,  él es la sequedad, él es el tenue brillo de atardecer… Ayuda a Shu a apartar la tenebrosa oscuridad de las profundidades de la pirámide para completar su destino. Coloca y mueve los espejos para guiar a Shu, y él te dará su bendición."
 
 #### 5.5.2. Dificultades
-Para cada uno de los cinco días habrá un tablero diferente que tendrá más o menos espejos.
+Para cada uno de los cinco días habrá un tablero diferente que tendrá un maximo espejos a utilizar y tiempo asignados:
+- **Primer día:** 4 espejos, 40 segundos
+- **Segundo día:** 6 espejos, 40 segundos
+- **Tercer día:**  11 espejos, 50 segundos
+- **Cuarto día:**  7 espejos, 50 segundos
+- **Quinto día:**  11 espejos, 80 segundos
+Estas cantidades están ajustadas para que sea mas complejo el puzle a medida que pasan los dias.
 
 #### 5.5.3. Mecánicas
 - **Espejos:** El jugador podrá poner espejos en cualquier casilla vacía del tablero y también podrá girarlo 90 grados cada vez que de a su botón de girar. También podrá eliminarlos si da a su botón de eliminar.
-- **Activar la luz:** Para comprobar que todos los espejos están correctamente posicionados el jugador tendrá que presionar sobre la compuerta disparadora para que el rayo comience su recorrido. Si este consigue llegar a la zona requerida el juego termina y consigues el respectivo logro.
+- **Compuertas:** El rayo tiene obligatoriamente que pasar por cada compuerta para ganar. Estas compuertas solo pueden ser activadas si el rayo las atraviesa en la dirección correcta. De lo contrario, el rayo no continua su ruta.
+- **Activar la luz:** Para comprobar que todos los espejos están correctamente posicionados el jugador tendrá que presionar sobre el disparador para que el rayo comience su recorrido. Si este consigue llegar a la zona requerida y todas la compuertas están activas, el juego termina y consigues el respectivo logro.
 
 #### 5.5.4. Coleccionables
 - **Primer día:** «Pequeña estrella», estrella de cuatro puntas.
