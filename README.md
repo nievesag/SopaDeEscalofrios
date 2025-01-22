@@ -5,7 +5,7 @@ Esto es un proyecto para la asignatura de Programación de Videojuegos en Lengua
 
 ### Redes Sociales
 
-Twitter (X): @Sopa de Escalofríos [https://x.com/SopaEscalofrios]
+Twitter (X): [@SopaEscalofrios](https://x.com/SopaEscalofrios)
 
 Email: sopadeescalofrios@gmail.com
 
