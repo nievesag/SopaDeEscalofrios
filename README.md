@@ -156,24 +156,22 @@ Contacta con Anuket, diosa del agua enviándole una carta y órganos de gente sa
 ### 5.3. Minijuego 3: «Al rescate de los escarabajos»
 La idea es rescatar a unos escarabajos que han sido pegados con miel de su dulce cárcel. A mayor número de escarabajos rescatados, mayor puntuación. Es un bubble shot.
 
-![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.PNG)
+![Al Rescate de los Escarabajos](./assets/images//gddREADME/G3/Captura.JPG)
 
 #### 5.3.1. Contexto
 > "Jepri, el dios del sol autocreado, sufre de una fuerte tristeza: sus adorados ahijados, los escarabajos de todo Egipto, han sido capturados. Para contentarle de nuevo, y evitar su ira, deberás rescatar al mayor número de escarabajos posibles, en el menor tiempo posible."
 
 #### 5.3.2. Dificultades
-- **Fácil (Días 1 y 2):** Empezaremos con 3 filas iniciales completas. 
-- **Intermedio (Días 3 y 4):**  Empezaremos con 4 filas iniciales completas. 
-- **Difícil (Día 5):**  Empezaremos con 5 filas iniciales completas. 
+- **Día 1 :** Empezaremos con 3 filas iniciales completas y un objetivo de 3000 puntos
+- **Día 2 :** Empezaremos con 4 filas iniciales completas y un objetivo de 4000 puntos
+- **Día 3 :** Empezaremos con 5 filas iniciales completas y un objetivo de 5000 puntos
+- **Día 4 :** Empezaremos con 6 filas iniciales completas y un objetivo de 5500 puntos
+- **Día 5 :** Empezaremos con 7 filas iniciales completas y un objetivo de 6000 puntos
 
 #### 5.3.3. Mecánicas
 - **Lanzamiento:** Con el ratón, apuntaremos hacia el lugar al que queremos disparar y click izquierdo para disparar. Podrá rebotar con las paredes. 
 
-- **Escarabajos Especiales:** 
-  - **Escarabomba:** Eliminarán todos los escarabajos en un área. Todos los 	vecinos a 1 hueco de distancia. Está identificada con 	un jeroglífico de una ola, como si se tratase de una onda expansiva y un color negro.	(Pendiente)
-  - **Escolorobajo:** Elimina todos los escarabajos de dicho color de la pantalla.Está identificada con un jeroglífico de un sol y el escarabajo será del color correspondiente. (Pendiente)
-
-- **Caída:** Cuando haya 3 o más vecinos justamente contiguos, los eliminará.
+- **Caída:** Cuando haya 3 o más vecinos del mismo color que el lanzado, los eliminará, otorgando al jugador 100 puntos por escarabajo liberado. Como consecuencia, también liberará los que hayan podido quedar sueltos, ororgando 50 puntos adicionales por escaarabajo
 
 #### 5.3.4. Coleccionables
 - **Primer día:** Tras completar el juego el primer día recibirá un escarabajo negro.
