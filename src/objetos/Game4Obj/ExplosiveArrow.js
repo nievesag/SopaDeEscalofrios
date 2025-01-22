@@ -34,10 +34,11 @@ export default class ExplosiveArrow extends Arrow {
             obstaclesToDestroy.forEach(obstacle => {
                 obstacle.breakApart();
 
-                this.explosionAnim();
+              
 
             });
-            this.destroy();
+            this.explosionAnim();
+           
         });
 
 
@@ -46,12 +47,14 @@ export default class ExplosiveArrow extends Arrow {
 
 
     explosionAnim() { //Animacion de explosion
+        console.log(this.scene);
         const explosionSprite = this.scene.add.sprite(this.x, this.y, 'explosion'); 
         explosionSprite.setScale(0.5); 
 
         this.scene.time.delayedCall(150, () => {
            
             explosionSprite.destroy();
+            this.destroy();
         });
     }
 }

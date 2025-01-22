@@ -343,8 +343,8 @@ export default class Game4 extends Phaser.Scene {
         {
             this.bow = new Bow(this, 150, 600, [
               
-                { type: 'Normal', count: 3 },
-                { type: 'Explosive Arrow', count: 2 },
+              //  { type: 'Normal', count: 3 },
+                { type: 'Explosive Arrow', count: 5 },
                 { type: 'Ball Arrow', count: 2 },
                 { type: 'Split Arrow', count: 2 }
 
