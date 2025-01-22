@@ -22,6 +22,8 @@ export default class ExplosiveArrow extends Arrow {
  
     explode() {  //Efecto de la explosion de la flecha
         const explosionRadius = 120; 
+
+        this.sceneAux = this.scene;
         
         const obstaclesToDestroy = this.scene.obstaclePool.filter(obstacle => {
             const distance = Phaser.Math.Distance.Between(this.x, this.y, obstacle.x, obstacle.y);
@@ -30,12 +32,9 @@ export default class ExplosiveArrow extends Arrow {
 
    
 
-        this.scene.time.delayedCall(2000, () => {
+        this.sceneAux.time.delayedCall(2000, () => {
             obstaclesToDestroy.forEach(obstacle => {
                 obstacle.breakApart();
-
-              
-
             });
             this.explosionAnim();
            
@@ -47,11 +46,11 @@ export default class ExplosiveArrow extends Arrow {
 
 
     explosionAnim() { //Animacion de explosion
-        console.log(this.scene);
-        const explosionSprite = this.scene.add.sprite(this.x, this.y, 'explosion'); 
+      
+        const explosionSprite = this.sceneAux.add.sprite(this.x, this.y, 'explosion'); 
         explosionSprite.setScale(0.5); 
 
-        this.scene.time.delayedCall(150, () => {
+        this.sceneAux.time.delayedCall(150, () => {
            
             explosionSprite.destroy();
             this.destroy();
