@@ -10,7 +10,7 @@ import EndMenu from './scenes/EndMenu.js';
 import EndLevel from './scenes/EndLevel.js';
 import LogrosMenu from './scenes/LogrosMenu.js';
 
-/**
+/*
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
  * Doc: https://photonstorm.github.io/phaser3-docs/Phaser.Types.Core.html#.GameConfig
@@ -21,14 +21,8 @@ let config = {
   type: Phaser.AUTO,      
 
   scale: {
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-     
+    autoCenter: Phaser.Scale.CENTER,
     mode: Phaser.Scale.FIT,  
-    max: {
-      width: 1280,   
-      height: 720, 
-    }
-     
   },
   
   scene: [Boot, MainMenu, GameSelectorMenu, Game1, Game2, Game3, Game4, Game5, EndLevel, EndMenu, LogrosMenu],
